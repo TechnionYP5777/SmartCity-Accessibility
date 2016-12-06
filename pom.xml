@@ -33,6 +33,34 @@
 		</dependency>
 		<dependency>
 			<groupId>com.teamdev.jxmaps</groupId>
+			<artifactId>jxmaps</artifactId>
+			<version>1.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/jxmaps-linux32-1.2.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.teamdev.jxmaps</groupId>
+			<artifactId>jxmaps</artifactId>
+			<version>1.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/jxmaps-linux64-1.2.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.teamdev.jxmaps</groupId>
+			<artifactId>jxmaps</artifactId>
+			<version>1.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/jxmaps-mac-1.2.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.teamdev.jxmaps</groupId>
+			<artifactId>jxmaps</artifactId>
+			<version>1.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/jxmaps-win-1.2.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.teamdev.jxmaps</groupId>
 			<artifactId>jxmaps-license</artifactId>
 			<version>1.2</version>
 			<scope>system</scope>
