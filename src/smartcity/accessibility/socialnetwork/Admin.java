@@ -1,5 +1,10 @@
 package smartcity.accessibility.socialnetwork;
 
+/**
+ * @author ArthurSap
+ *
+ */
+
 public class Admin implements User {
 
 	String userName;
