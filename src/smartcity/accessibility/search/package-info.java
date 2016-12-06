@@ -5,4 +5,4 @@
  * @author KaplanAlexander
  *
  */
-package smartcity.accessibilty.search;
+package smartcity.accessibility.search;
