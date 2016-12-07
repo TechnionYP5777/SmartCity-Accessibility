@@ -1,4 +1,3 @@
-
 package smartcity.accessibility.database;
 
 /**
