@@ -5,7 +5,8 @@
 	<artifactId>SmartCity-Accessibility</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -22,6 +23,53 @@
 			<groupId>com.github.thiagolocatelli</groupId>
 			<artifactId>parse4j</artifactId>
 			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.teamdev.jxmaps</groupId>
+			<artifactId>jxmaps</artifactId>
+			<version>1.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/jxmaps-1.2.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.teamdev.jxmaps</groupId>
+			<artifactId>jxmaps</artifactId>
+			<version>1.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/jxmaps-linux32-1.2.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.teamdev.jxmaps</groupId>
+			<artifactId>jxmaps</artifactId>
+			<version>1.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/jxmaps-linux64-1.2.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.teamdev.jxmaps</groupId>
+			<artifactId>jxmaps</artifactId>
+			<version>1.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/jxmaps-mac-1.2.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.teamdev.jxmaps</groupId>
+			<artifactId>jxmaps</artifactId>
+			<version>1.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/jxmaps-win-1.2.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.teamdev.jxmaps</groupId>
+			<artifactId>jxmaps-license</artifactId>
+			<version>1.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/license.jar</systemPath>
+		</dependency>
+		<dependency>
+		  	<groupId>junit</groupId>
+  			<artifactId>junit</artifactId>
+ 			<version>4.12</version>
 		</dependency>
 	</dependencies>
 </project>
