@@ -1,7 +1,7 @@
 /**
  * 
  */
-package smartcity.accessibility.database;
+package test.java.smartcity.accessibility.database;
 
 import static org.junit.Assert.*;
 

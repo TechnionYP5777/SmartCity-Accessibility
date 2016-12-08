@@ -27,14 +27,13 @@ public class Admin implements User {
 	}
 
 	@Override
-	public String setPassword() {
+	public void setPassword() {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
-	public String getPassword() {
-		return password;
+	public void getPassword() {
+		// TODO Auto-generated method stub
 	}
 
 }
