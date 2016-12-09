@@ -7,13 +7,13 @@ import org.parse4j.Parse;
  *
  */
 public abstract class DatabaseManager {
-	public static final String serverUrl = "https://github.com/TechnionYP5777/SmartCity-Accessibility";
-	public static final String masterKey = "0ef32e07-dec4-4ab0-cfdf4-a2628bd39";
+	public static final String serverUrl = "https://smartcityaccessibility.herokuapp.com/parse";
+	public static final String restKey = "2139d-231cb2-738fe";
 	public static final String appId = "smartcityaccessibility";
 
 	public static void initialize() {
-		Parse.initialize(appId, masterKey, serverUrl);
-
+		Parse.initialize(appId, restKey, serverUrl);
+		
 	}
 
 	public Object getValue(final String clas, final String key) {
