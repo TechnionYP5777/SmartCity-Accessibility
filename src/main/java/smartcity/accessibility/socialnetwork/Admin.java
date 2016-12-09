@@ -12,6 +12,9 @@ public class Admin extends AuthenticatedUser {
 	private String userName;
 	private String password;	
 
+	public Admin(String userName, String password) {
+		super(userName, password);
+	}
 	
 	@Override
 	String getUserName() {

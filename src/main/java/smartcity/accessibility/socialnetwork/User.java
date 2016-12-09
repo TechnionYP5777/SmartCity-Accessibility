@@ -15,7 +15,7 @@ public interface User {
 	/**
 	 * @param ï¿½ is the query to be used for the search
 	 */
-	static void search(SearchQuery q){
-		q.Search().showResults();
+	static void search(SearchQuery ¢){
+		¢.Search().showResults();
 	}
 }

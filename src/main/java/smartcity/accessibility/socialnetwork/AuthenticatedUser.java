@@ -7,8 +7,13 @@ import smartcity.accessibility.mapmanagement.Location;
  *
  */
 public class AuthenticatedUser implements User {
-	String name;
-	String password;
+	private String name;
+	private String password;
+	
+	public AuthenticatedUser(String name, String password) {
+		this.name = name;
+		this.password = password;
+	}
 	
 	String getUserName() {
 		return null;
