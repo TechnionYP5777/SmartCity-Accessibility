@@ -13,4 +13,6 @@ public class User extends Client{
 	void setPassword();
 	
 	void getPassword();
+	
+	void addReview(Location l, String Review);
 }

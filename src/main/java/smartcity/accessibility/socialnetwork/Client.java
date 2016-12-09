@@ -5,5 +5,5 @@ package smartcity.accessibility.socialnetwork;
  *
  */
 public class Cient {
-
+	
 }
