@@ -4,7 +4,7 @@ import smartcity.accessibility.navigation.Route;
 
 /**
  * 
- * @author Koeal Chapnik
+ * @author Koral Chapnik
  * This class represents a review of some route
  */
 public class Review {
