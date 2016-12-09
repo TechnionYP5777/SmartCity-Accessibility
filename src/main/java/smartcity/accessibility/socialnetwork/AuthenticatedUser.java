@@ -14,15 +14,14 @@ public class AuthenticatedUser implements User {
 		return null;
 	}
 
-	String setUserName() {
+	void setUserName(String un) {
+	}
+
+	String getPassword() {
 		return null;
 	}
-
-	void setPassword() {
-
-	}
-
-	void getPassword() {
+	
+	void setPassword(String pass) {
 
 	}
 
