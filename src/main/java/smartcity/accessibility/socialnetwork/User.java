@@ -4,7 +4,8 @@ package smartcity.accessibility.socialnetwork;
  * @author Kolikant
  *
  */
-public interface User {
+public class User extends Client{
+	String name;
 	String getUserName();
 	
 	String setUserName();

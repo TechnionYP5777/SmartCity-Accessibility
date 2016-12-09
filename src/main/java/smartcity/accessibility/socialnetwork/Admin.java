@@ -5,7 +5,7 @@ package smartcity.accessibility.socialnetwork;
  *
  */
 
-public class Admin implements User {
+public class Admin extends User {
 
 	String userName;
 	String password;
