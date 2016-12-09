@@ -29,9 +29,10 @@ public class AuthenticatedUser implements User {
 	/**
 	 * @param __ is the location on which we wish to add a review
 	 * @param Review is the review that we wish to add as a free text
-	 *//*Review r = new Review(Location, rating, Review)*/
-	void addReview(Location __, String Review) {
-		ReviewManager.uploadReview(null);
+	 */
+	void addReview(Location __, int r, String Review) {
+		//TODO: when Review accepts Location, add it to the constructor
+		ReviewManager.uploadReview(new Review(/*__*/null, r ,Review));
 	}
 	
 }
