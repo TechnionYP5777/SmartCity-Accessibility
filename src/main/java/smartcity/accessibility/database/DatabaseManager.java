@@ -5,8 +5,8 @@ package smartcity.accessibility.database;
  *
  */
 public interface DatabaseManager {
-	final String serverUrl = "https://github.com/TechnionYP5777/SmartCity-Accessibility";
-	final String masterKey = "key";
+	String serverUrl = "https://github.com/TechnionYP5777/SmartCity-Accessibility";
+	String masterKey = "key";
 
 	Object getValue(String clas, String key);
 
