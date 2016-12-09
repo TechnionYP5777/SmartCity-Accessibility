@@ -5,6 +5,6 @@ package smartcity.accessibility.mapmanagement;
  *         our implementation "Location" should contain the connection between
  *         global adresses and reviews
  */
-public class Location {
+public interface Location {
 
 }
