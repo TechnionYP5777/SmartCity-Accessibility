@@ -27,13 +27,7 @@ public class AuthenticatedUser implements User {
 	}
 
 	void addReview(Location __, String Review) {
-
+		
 	}
 	
-	/*
-	 * make a search using an existing query and show the user the results
-	 */
-	void search(SearchQuery ¢){
-		¢.Search().showResults();
-	}
 }
