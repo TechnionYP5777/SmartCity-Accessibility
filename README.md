@@ -32,9 +32,8 @@ The application will allow the user to navigate in the city effectively taking i
 
 
 
-**Basic System Functionalities**
-Fully detailed at github: https://github.com/TechnionYP5777/SmartCity-Accessibility/projects/1
-Will be detailed in the final report.
+### Use Cases
+Fully detailed at  https://github.com/TechnionYP5777/SmartCity-Accessibility/projects/1
 
 
 ### Software Implementation
