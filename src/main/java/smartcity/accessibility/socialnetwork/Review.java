@@ -1,4 +1,4 @@
-package smartcity.accessibility.database;
+package smartcity.accessibility.socialnetwork;
 
 import smartcity.accessibility.navigation.Route;
 

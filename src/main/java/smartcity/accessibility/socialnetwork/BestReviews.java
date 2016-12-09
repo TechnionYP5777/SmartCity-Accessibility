@@ -3,8 +3,6 @@ package smartcity.accessibility.socialnetwork;
 import java.util.ArrayList;
 import java.util.List;
 
-import smartcity.accessibility.database.Review;
-
 /**
  * 
  * @author Koral Chapnik
