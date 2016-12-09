@@ -4,6 +4,11 @@ import java.net.URISyntaxException;
 
 import com.nimbusds.oauth2.sdk.*;
 import com.nimbusds.oauth2.sdk.id.*;
+
+/**
+ * @author Kolikant
+ *
+ */
 public class UserManager {
 	
 	public AuthorizationRequest AuthorisationRequest(){
