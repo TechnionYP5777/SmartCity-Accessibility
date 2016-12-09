@@ -1,4 +1,4 @@
-package smartcity.accessibility.navegation;
+package smartcity.accessibility.navigation;
 
 /**
  * 
