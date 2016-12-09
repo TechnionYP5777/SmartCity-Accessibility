@@ -10,10 +10,10 @@ import smartcity.accessibility.mapmanagement.Location;
  * @author yael This class help finds routs in the city. The class contains
  *         segments of the map that should be avoided in the routes it returns.
  */
-public class Navegation {
+public class Navigation {
 	List<MapSegment> segmentsToAvoid;
 
-	public Navegation() {
+	public Navigation() {
 		this.segmentsToAvoid = new ArrayList<MapSegment>();
 	}
 
