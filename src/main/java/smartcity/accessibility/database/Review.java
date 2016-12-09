@@ -1,6 +1,6 @@
 package smartcity.accessibility.database;
 
-import smartcity.accessibility.navegation.Route;
+import smartcity.accessibility.navigation.Route;
 
 /**
  * 
