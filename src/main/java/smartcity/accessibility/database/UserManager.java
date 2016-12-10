@@ -23,14 +23,6 @@ public class UserManager {
 		return name+seperator+password;
 	}
 	
-	/**
-	 * @author assaflu
-	 *
-	 */
-	private boolean validString(String str){
-		return false;
-	}
-	
 	public AuthenticatedUser Authenticate(String name, String password){
 		String key = makeKey(name, password);
 		currentUser = null;
@@ -61,10 +53,26 @@ public class UserManager {
 	
 	/**
 	 * @author assaflu
+	 * @throws ParseException 
 	 *
 	 */
-	public void SaveUser(AuthenticatedUser user) throws InvalidStringException, UsernameAlreadyTakenException{
-		String key = makeKey(user.getUserName(),user.getPassword());
-		
+	public void SaveUser(AuthenticatedUser user) throws InvalidStringException, UsernameAlreadyTakenException, ParseException{
+		try{
+			ParseQuery<ParseObject> q = ParseQuery.getQuery("AuthenticatedUser").whereEqualTo("UserName",user.getUserName());
+			if(q==null){
+				final ParseObject obj = new ParseObject("AuthenticatedUser");
+				obj.put("UserName",user.getUserName());
+				obj.put("Password",user.getPassword());
+				obj.put("FavoritQueries",user.getfavouriteSearchQueries());
+				obj.save();
+			}
+			else{
+				throw new UsernameAlreadyTakenException();
+			}
+		}
+		catch(ParseException e){
+			throw e;
+		}
+
 	}
 }
