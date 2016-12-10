@@ -1,5 +1,7 @@
 # SmartCity-Accessibility
 
+![](http://163.172.171.65:8080/job/SmartCity-Accessibility/badge/icon)
+
 ## The Project
 
 ### Introduction 
