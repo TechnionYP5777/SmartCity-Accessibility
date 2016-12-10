@@ -44,6 +44,13 @@ public class AuthenticatedUser implements User {
 	public void setPassword(String pass) {
 		this.password = pass;
 	}
+	
+	public void addToFavourites(SearchQuery ¢){
+		if (!favouriteSearchQueries.contains(¢))
+			this.favouriteSearchQueries.add(¢);
+	}
+	
+	
 
 	/**
 	 * @param __ is the location on which we wish to add a review
