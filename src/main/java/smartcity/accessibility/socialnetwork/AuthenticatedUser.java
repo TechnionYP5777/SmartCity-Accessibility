@@ -15,6 +15,10 @@ public class AuthenticatedUser implements User {
 	private String password;
 	private List<SearchQuery> favouriteSearchQueries;
 	
+	public AuthenticatedUser() {
+
+	}
+	
 	public AuthenticatedUser(String name, String password) {
 		this.name = name;
 		this.password = password;

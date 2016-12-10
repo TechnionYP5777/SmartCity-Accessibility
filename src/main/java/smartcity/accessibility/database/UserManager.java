@@ -5,7 +5,8 @@ import java.util.List;
 import org.parse4j.ParseException;
 import org.parse4j.ParseObject;
 import org.parse4j.ParseQuery;
-import org.parse4j.callback.FindCallback;
+import org.parse4j.ParseUser;
+import org.parse4j.callback.SignUpCallback;
 
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.AuthenticatedUser;
@@ -16,34 +17,34 @@ import smartcity.accessibility.socialnetwork.AuthenticatedUser;
  */
 public class UserManager {
 	
-	private final char seperator = '%';
-	private static AuthenticatedUser currentUser;
-	
-	private String makeKey(String name, String password){
-		return name+seperator+password;
-	}
-	
-	public AuthenticatedUser Authenticate(String name, String password){
-		String key = makeKey(name, password);
-		currentUser = null;
+	public void SignUpUser(AuthenticatedUser u){
+		ParseUser user = new ParseUser();
+		user.setUsername(u.getUserName());
+		user.setPassword(u.getPassword());
+		user.put("List<SearchQuery>", u.getfavouriteSearchQueries());
 		
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("AuthenticatedUser");
-		query.whereEqualTo("key", key);
-		query.findInBackground(new FindCallback<ParseObject>() {
-			@SuppressWarnings("unchecked")
+		user.signUpInBackground(new SignUpCallback() {
+			
 			@Override
-		    public void done(List<ParseObject> users, ParseException x) {
-				if (x != null || users.isEmpty())
-					return;
-				currentUser = new AuthenticatedUser(name, password);
-				currentUser.setfavouriteSearchQueries((List<SearchQuery>) users.get(0).get("favouriteSearchQueries"));
+			public void done(ParseException arg0) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
-		if(currentUser == null)
+	}
+	
+	@SuppressWarnings("unchecked")
+	public AuthenticatedUser Authenticate(String name, String password){
+		ParseUser pu;
+		try {
+			pu = ParseUser.login(name, password);
+		} catch (ParseException e) {
 			return null;
-		AuthenticatedUser $ = new AuthenticatedUser(name, password);
-		$.setfavouriteSearchQueries(currentUser.getfavouriteSearchQueries());
-		currentUser = null;
+		}
+		AuthenticatedUser $ = new AuthenticatedUser();
+		$.setUserName(name);
+		$.setPassword(password);
+		$.setfavouriteSearchQueries((List<SearchQuery>)pu.get("FavoritQueries"));
 		return $;
 	}
 	
