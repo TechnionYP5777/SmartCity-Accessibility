@@ -24,7 +24,7 @@ public class UserManager {
 	
 	public boolean Authenticate(String name, String password){
 		String key = makeKey(name, password);
-		
+		DatabaseManager.getValue("AuthenticatedUser", key);
 		return false;
 	}
 	
