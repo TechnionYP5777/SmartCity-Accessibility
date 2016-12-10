@@ -32,7 +32,7 @@ public class UserManager {
 	 * @author assaflu
 	 *
 	 */
-	public void SaveUser(AuthenticatedUser user) throws InvalidString, UsernameAlreadyTaken{
+	public void SaveUser(AuthenticatedUser user) throws InvalidStringException, UsernameAlreadyTakenException{
 		String key = makeKey(user.getUserName(),user.getPassword());
 		
 	}
