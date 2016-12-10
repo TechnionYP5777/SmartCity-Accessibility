@@ -1,5 +1,7 @@
 package smartcity.accessibility.database;
 
+import org.parse4j.ParseObject;
+
 import smartcity.accessibility.socialnetwork.AuthenticatedUser;
 
 /**
@@ -22,10 +24,14 @@ public class UserManager {
 		return false;
 	}
 	
-	public boolean Authenticate(String name, String password){
+	public AuthenticatedUser Authenticate(String name, String password){
 		String key = makeKey(name, password);
-		DatabaseManager.getValue("AuthenticatedUser", key);
-		return false;
+		ParseObject po = DatabaseManager.getValue("AuthenticatedUser", key);
+		if(po == null){
+			return null;
+		}
+		return null;
+		//TODO: figure out how to get the user information
 	}
 	
 	/**
