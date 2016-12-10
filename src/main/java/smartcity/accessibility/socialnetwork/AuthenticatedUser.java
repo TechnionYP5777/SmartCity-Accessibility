@@ -1,7 +1,11 @@
 package smartcity.accessibility.socialnetwork;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.search.SearchQuery;
 /**
  * @author Kolikant
  *
@@ -9,16 +13,22 @@ import smartcity.accessibility.mapmanagement.Location;
 public class AuthenticatedUser implements User {
 	private String name;
 	private String password;
+	private List<SearchQuery> favouriteSearchQueries;
 	
 	public AuthenticatedUser(String name, String password) {
 		this.name = name;
 		this.password = password;
+		this.favouriteSearchQueries = new ArrayList<>();
 	}
 	
 	public String getUserName() {
 		return name;
 	}
 
+	public List<SearchQuery> getfavouriteSearchQueries() {
+		return favouriteSearchQueries;
+	}
+	
 	public void setUserName(String un) {
 		this.name = un;
 	}
