@@ -1,45 +1,39 @@
 package smartcity.accessibility.socialnetwork;
 
-import smartcity.accessibility.mapmanagement.Location;
-
 /**
  * @author ArthurSap
  *
  */
 
-public class Admin extends AuthenticatedUser {
+public class Admin implements User {
 
-	private String userName;
-	private String password;	
-
-	public Admin(String userName, String password) {
-		super(userName, password);
+	String userName;
+	String password;
+	
+	public Admin(String un, String pass){
+		userName = un;
+		password = pass;
 	}
 	
 	@Override
 	public String getUserName() {
 		return userName;
 	}
-	
+
 	@Override
-	public void setUserName(String un) {
-		userName = un;
-	}
-	
-	@Override
-	public String getPassword() {
-		return password;
-	}
-	
-	@Override
-	public void setPassword(String pass) {
-		password = pass;
-	}
-	
-	@Override
-	void addReview(Location __, int r, String Review) {
+	public String setUserName() {
 		// TODO Auto-generated method stub
-		super.addReview(__, r, Review);
+		return null;
+	}
+
+	@Override
+	public void setPassword() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void getPassword() {
+		// TODO Auto-generated method stub
 	}
 
 }
