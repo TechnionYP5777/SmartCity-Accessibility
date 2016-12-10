@@ -29,6 +29,10 @@ public class AuthenticatedUser implements User {
 		return favouriteSearchQueries;
 	}
 	
+	public void setfavouriteSearchQueries(List<SearchQuery> lq) {
+		this.favouriteSearchQueries = lq;
+	}
+	
 	public void setUserName(String un) {
 		this.name = un;
 	}
