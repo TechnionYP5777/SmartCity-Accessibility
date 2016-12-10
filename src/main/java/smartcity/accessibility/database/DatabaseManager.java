@@ -11,4 +11,9 @@ public interface DatabaseManager {
 	Object getValue(String clas, String key);
 
 	void putValue(String objectClass, String key, Object value);
+
+	static void initialize() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -5,12 +5,13 @@ package smartcity.accessibility.socialnetwork;
  *
  */
 
-public class Admin implements User {
+public class Admin extends AuthenticatedUser {
 
 	String userName;
 	String password;
 	
 	public Admin(String un, String pass){
+		super(un,pass);
 		userName = un;
 		password = pass;
 	}
@@ -21,19 +22,19 @@ public class Admin implements User {
 	}
 
 	@Override
-	public String setUserName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setPassword() {
+	public void setUserName(String un) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public void getPassword() {
+	public void setPassword(String un) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return password;
 	}
 
 }
