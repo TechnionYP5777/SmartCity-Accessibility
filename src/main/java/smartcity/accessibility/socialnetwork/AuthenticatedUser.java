@@ -50,6 +50,11 @@ public class AuthenticatedUser implements User {
 			this.favouriteSearchQueries.add(¢);
 	}
 	
+	public void RemoveFromFavourites(SearchQuery ¢){
+		if (favouriteSearchQueries.contains(¢))
+			this.favouriteSearchQueries.remove(¢);
+	}
+	
 	
 
 	/**
