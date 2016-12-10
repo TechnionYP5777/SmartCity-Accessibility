@@ -19,7 +19,7 @@ public class UserManager {
 	 *
 	 */
 	private boolean validString(String str){
-		
+		return false;
 	}
 	
 	public boolean Authenticate(String name, String password){
@@ -32,7 +32,7 @@ public class UserManager {
 	 * @author assaflu
 	 *
 	 */
-	public void SaveUser(AuthenticatedUser user) throw InvalidString, UsernameAlreadyTaken{
+	public void SaveUser(AuthenticatedUser user) throws InvalidString, UsernameAlreadyTaken{
 		String key = makeKey(user.getUserName(),user.getPassword());
 		
 	}

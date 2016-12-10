@@ -29,7 +29,7 @@ public abstract class DatabaseManager {
 	 * @return ParseObject result of query or null if failed
 	 * @throws ParseException
 	 */
-	public ParseObject getValue(final String objectClass, final String id) {
+	public static ParseObject getValue(final String objectClass, final String id) {
 		try {
 			return ParseQuery.getQuery(objectClass).get(id);
 		} catch (ParseException e) {
@@ -47,7 +47,7 @@ public abstract class DatabaseManager {
 	 * @param id
 	 * @param o
 	 */
-	public void getValue(final String objectClass, final String id, GetCallback<ParseObject> o) {
+	public static void getValue(final String objectClass, final String id, GetCallback<ParseObject> o) {
 		ParseQuery.getQuery(objectClass).getInBackground(id, o);
 	}
 
@@ -59,7 +59,7 @@ public abstract class DatabaseManager {
 	 * @param value
 	 * @throws ParseException
 	 */
-	public void putValue(final String objectClass, final String key, final Object value) throws ParseException {
+	public static void putValue(final String objectClass, final String key, final Object value) throws ParseException {
 		final ParseObject obj = new ParseObject(objectClass);
 		obj.put(key, value);
 		obj.save();
@@ -75,7 +75,7 @@ public abstract class DatabaseManager {
 	 * @param value
 	 * @param c
 	 */
-	public void putValue(final String objectClass, final String key, final Object value, SaveCallback c) {
+	public static void putValue(final String objectClass, final String key, final Object value, SaveCallback c) {
 		final ParseObject obj = new ParseObject(objectClass);
 		obj.put(key, value);
 		obj.saveInBackground(c);
