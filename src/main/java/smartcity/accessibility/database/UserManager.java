@@ -6,8 +6,9 @@ package smartcity.accessibility.database;
  */
 public class UserManager {
 	
+	private final char seperator = '%';
+	
 	public boolean Authenticate(String name, String password){
-		
 		return false;
 	}
 	
