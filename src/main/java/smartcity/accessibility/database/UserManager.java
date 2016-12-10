@@ -30,18 +30,14 @@ public class UserManager {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("AuthenticatedUser");
 		query.whereEqualTo("key", key);
 		query.findInBackground(new FindCallback<ParseObject>() {
+			@SuppressWarnings("unchecked")
 			@Override
-		    public void done(List<ParseObject> users, ParseException e) {
-		        if (e == null) {
-		        	if(users.size()==0){
-		        		return;
-		        	}
-		        	currentUser = new AuthenticatedUser(name, password);
-		        	currentUser.setfavouriteSearchQueries((List<SearchQuery>)users.get(0).get("favouriteSearchQueries"));
-		        } else {
-		        	return;
-		        }
-		    }
+		    public void done(List<ParseObject> users, ParseException x) {
+				if (x != null || users.isEmpty())
+					return;
+				currentUser = new AuthenticatedUser(name, password);
+				currentUser.setfavouriteSearchQueries((List<SearchQuery>) users.get(0).get("favouriteSearchQueries"));
+			}
 		});
 		if(currentUser == null)
 			return null;
