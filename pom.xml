@@ -18,11 +18,17 @@
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
-			<groupId>com.github.thiagolocatelli</groupId>
-			<artifactId>parse4j</artifactId>
-			<version>1.4</version>
+	    	<groupId>com.github.abdielou</groupId>
+	    	<artifactId>parse4j</artifactId>
+	    	<version>1.5-1216d3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.teamdev.jxmaps</groupId>
@@ -71,5 +77,20 @@
   			<artifactId>junit</artifactId>
  			<version>4.12</version>
 		</dependency>
+	   <dependency>
+	       <groupId>org.slf4j</groupId>
+	       <artifactId>slf4j-api</artifactId>
+	       <version>1.7.5</version>
+	   </dependency>
+	   <dependency>
+	       <groupId>org.slf4j</groupId>
+	       <artifactId>slf4j-simple</artifactId>
+	       <version>1.6.4</version>
+	   </dependency>
+       <dependency>
+		   <groupId>com.nimbusds</groupId>
+		   <artifactId>oauth2-oidc-sdk</artifactId>
+		   <version>5.18.1</version>
+	   </dependency>
 	</dependencies>
 </project>

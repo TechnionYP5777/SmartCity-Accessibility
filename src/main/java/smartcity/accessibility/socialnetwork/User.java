@@ -1,15 +1,19 @@
 package smartcity.accessibility.socialnetwork;
 
+import smartcity.accessibility.search.SearchQuery;
+
 /**
+ * 
  * @author Kolikant
  *
  */
+
 public interface User {
-	String getUserName();
-	
-	String setUserName();
-	
-	void setPassword();
-	
-	void getPassword();
+	/**
+	 * make a search using an existing query and show the user the results
+	 * @param ï¿½ is the query to be used for the search
+	 */
+	static void search(SearchQuery ¢){
+		¢.Search().showResults();
+	}
 }
