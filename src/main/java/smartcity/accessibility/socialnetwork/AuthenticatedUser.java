@@ -15,19 +15,20 @@ public class AuthenticatedUser implements User {
 		this.password = password;
 	}
 	
-	String getUserName() {
-		return null;
+	public String getUserName() {
+		return name;
 	}
 
-	void setUserName(String un) {
+	public void setUserName(String un) {
+		this.name = un;
 	}
 
-	String getPassword() {
-		return null;
+	public String getPassword() {
+		return password;
 	}
 	
-	void setPassword(String pass) {
-
+	public void setPassword(String pass) {
+		this.password = pass;
 	}
 
 	/**

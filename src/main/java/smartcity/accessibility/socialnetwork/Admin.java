@@ -17,22 +17,22 @@ public class Admin extends AuthenticatedUser {
 	}
 	
 	@Override
-	String getUserName() {
+	public String getUserName() {
 		return userName;
 	}
 	
 	@Override
-	void setUserName(String un) {
+	public void setUserName(String un) {
 		userName = un;
 	}
 	
 	@Override
-	String getPassword() {
+	public String getPassword() {
 		return password;
 	}
 	
 	@Override
-	void setPassword(String pass) {
+	public void setPassword(String pass) {
 		password = pass;
 	}
 	
