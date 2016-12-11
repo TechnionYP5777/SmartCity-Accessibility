@@ -8,5 +8,18 @@ import java.util.List;
  *         for communication with mapQuest servers.
  */
 public class Leg {
-	List<Maneuver> maneuvers;
+	private List<Maneuver> maneuvers;
+
+	public Leg() {
+
+	}
+
+	public List<Maneuver> getManeuvers() {
+		return maneuvers;
+	}
+
+	public void setManeuvers(List<Maneuver> ms) {
+		this.maneuvers = ms;
+	}
+	
 }

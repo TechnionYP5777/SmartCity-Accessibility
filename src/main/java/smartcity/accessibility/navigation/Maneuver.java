@@ -8,7 +8,35 @@ import java.util.List;
  *         for communication with the servers.
  */
 public class Maneuver {
-	List<Integer> linkIds;
-	List<String> street_names;
-	Direction direction;
+	private List<Integer> linkIds;
+	private List<String> street_names;
+	private Direction direction;
+
+	public Maneuver() {
+
+	}
+
+	public List<Integer> getLinkIds() {
+		return linkIds;
+	}
+
+	public void setLinkIds(List<Integer> linkIds) {
+		this.linkIds = linkIds;
+	}
+
+	public List<String> getStreet_names() {
+		return street_names;
+	}
+
+	public void setStreet_names(List<String> street_names) {
+		this.street_names = street_names;
+	}
+
+	public Direction getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Direction d) {
+		this.direction = d;
+	}
 }

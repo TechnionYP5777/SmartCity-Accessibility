@@ -2,7 +2,7 @@ package smartcity.accessibility.navigation;
 
 /**
  * 
- * @author yael This enum represent a dircetion of a maneuver in the route. This
+ * @author yael This enum represent a direction of a maneuver in the route. This
  *         class is needed for communication with mapquest servers.
  */
 public enum Direction {
