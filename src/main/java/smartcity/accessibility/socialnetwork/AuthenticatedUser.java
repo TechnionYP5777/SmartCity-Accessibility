@@ -49,14 +49,14 @@ public class AuthenticatedUser implements User {
 		this.password = pass;
 	}
 	
-	public void addToFavourites(SearchQuery ¢){
-		if (!favouriteSearchQueries.contains(¢))
-			this.favouriteSearchQueries.add(¢);
+	public void addToFavourites(SearchQuery q){
+		if (!favouriteSearchQueries.contains(q))
+			this.favouriteSearchQueries.add(q);
 	}
 	
-	public void RemoveFromFavourites(SearchQuery ¢){
-		if (favouriteSearchQueries.contains(¢))
-			this.favouriteSearchQueries.remove(¢);
+	public void RemoveFromFavourites(SearchQuery q){
+		if (favouriteSearchQueries.contains(q))
+			this.favouriteSearchQueries.remove(q);
 	}
 	
 	

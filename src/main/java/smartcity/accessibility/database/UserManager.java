@@ -58,11 +58,11 @@ public class UserManager {
 			
 			//TODO: @assflu (by Kolikant) this doesn't check if user exist, it check if the query is null. please change it to check if user exists.
 			if (ParseQuery.getQuery("AuthenticatedUser").whereEqualTo("UserName", u.getUserName()) == null) {
-				final ParseObject obj = new ParseObject("AuthenticatedUser");
+			final ParseObject obj = new ParseObject("AuthenticatedUser");
 				obj.put("UserName", u.getUserName());
 				obj.put("Password", u.getPassword());
 				obj.put("FavoritQueries", u.getfavouriteSearchQueries());
-				obj.save();
+			obj.save();
 			} else {
 				throw new UsernameAlreadyTakenException();
 			}

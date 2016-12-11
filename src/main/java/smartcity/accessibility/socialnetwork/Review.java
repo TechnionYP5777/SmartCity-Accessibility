@@ -56,23 +56,23 @@ public class Review {
 	/**
 	 * Kolikant
 	 */
-	public void Like(User ¢){
-		if(Likes.contains(¢))
+	public void Like(User u){
+		if(Likes.contains(u))
 			return;
-		if(DissLikes.contains(¢))
-			DissLikes.remove(¢);
-		Likes.add(¢);
+		if(DissLikes.contains(u))
+			DissLikes.remove(u);
+		Likes.add(u);
 	}
 	
 	/**
 	 * Kolikant
 	 */
-	public void DissLike(User ¢){
-		if(DissLikes.contains(¢))
+	public void DissLike(User u){
+		if(DissLikes.contains(u))
 			return;
-		if(Likes.contains(¢))
-			Likes.remove(¢);
-		DissLikes.add(¢);
+		if(Likes.contains(u))
+			Likes.remove(u);
+		DissLikes.add(u);
 	}
 	
 }
