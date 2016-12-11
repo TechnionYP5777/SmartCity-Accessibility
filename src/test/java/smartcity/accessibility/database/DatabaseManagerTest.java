@@ -30,7 +30,7 @@ public class DatabaseManagerTest {
 			e.printStackTrace();
 			fail("could not save test object");
 		}
-		// test 7
+		// test 8
 	}
 
 }
