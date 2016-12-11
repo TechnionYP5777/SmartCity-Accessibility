@@ -3,16 +3,17 @@ package smartcity.accessibility.socialnetwork;
 import java.util.ArrayList;
 import java.util.List;
 
+import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.navigation.Route;
 
 /**
  * 
  * @author Koral Chapnik
- * This class represents a review of some route
+ * This class represents a review of some location
  */
 public class Review {
 	
-	private Route route;
+	private Location location;
 	private int rating;
 	private String comment;
 	
@@ -22,8 +23,8 @@ public class Review {
 	private List<User> Likes;
 	private List<User> DissLikes;
 	
-	public Review(Route route, int rating, String comment) {
-		this.route = route;
+	public Review(Location location , int rating, String comment) {
+		this.location = location;
 		this.rating = rating;
 		this.comment = comment;
 		
@@ -38,8 +39,8 @@ public class Review {
 		return this.rating;
 	}
 	
-	public Route getRoute() {
-		return this.route;
+	public Location getLocation() {
+		return this.location;
 	}
 	
 	public String getComment() {
