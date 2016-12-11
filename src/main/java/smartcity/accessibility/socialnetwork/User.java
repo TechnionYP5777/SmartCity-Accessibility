@@ -13,7 +13,7 @@ public interface User {
 	 * make a search using an existing query and show the user the results
 	 * @param ï¿½ is the query to be used for the search
 	 */
-	static void search(SearchQuery ¢){
-		¢.Search().showResults();
+	static void search(SearchQuery Â¢){
+		Â¢.Search().showResults();
 	}
 }

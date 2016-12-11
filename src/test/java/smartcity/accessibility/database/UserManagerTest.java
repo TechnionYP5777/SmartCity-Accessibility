@@ -38,7 +38,7 @@ public class UserManagerTest {
 			fail("could not save test object");
 		}
 		
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("test1");
+		ParseQuery.getQuery("test1");
 		// test
 	}
 }
