@@ -55,13 +55,17 @@ public class UserManager {
 	 */
 	public void SaveUser(AuthenticatedUser u) throws InvalidStringException, UsernameAlreadyTakenException, ParseException{
 		try{
-			if (ParseQuery.getQuery("AuthenticatedUser").whereEqualTo("UserName", u.getUserName()) != null)
-				throw new UsernameAlreadyTakenException();
+			
+			//TODO: @assflu (by Kolikant) this doesn't check if user exist, it check if the query is null. please change it to check if user exists.
+			if (ParseQuery.getQuery("AuthenticatedUser").whereEqualTo("UserName", u.getUserName()) == null) {
 			final ParseObject obj = new ParseObject("AuthenticatedUser");
-			obj.put("UserName", u.getUserName());
-			obj.put("Password", u.getPassword());
-			obj.put("FavoritQueries", u.getfavouriteSearchQueries());
+				obj.put("UserName", u.getUserName());
+				obj.put("Password", u.getPassword());
+				obj.put("FavoritQueries", u.getfavouriteSearchQueries());
 			obj.save();
+			} else {
+				throw new UsernameAlreadyTakenException();
+			}
 		}
 		catch(ParseException e){
 			throw e;
