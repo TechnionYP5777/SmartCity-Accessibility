@@ -8,6 +8,8 @@ import org.parse4j.ParseQuery;
 import org.parse4j.ParseUser;
 import org.parse4j.callback.SignUpCallback;
 
+import smartcity.accessibility.exceptions.InvalidStringException;
+import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.AuthenticatedUser;
 

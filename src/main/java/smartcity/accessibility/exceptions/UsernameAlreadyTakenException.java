@@ -1,4 +1,4 @@
-package smartcity.accessibility.database;
+package smartcity.accessibility.exceptions;
 
 public class UsernameAlreadyTakenException extends Exception {
 
