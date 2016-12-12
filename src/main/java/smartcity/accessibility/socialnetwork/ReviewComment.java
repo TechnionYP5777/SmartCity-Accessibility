@@ -38,11 +38,10 @@ public class ReviewComment {
 	
 	/**
 	 * not implemented
-	 * @param comments
+	 * @param cs
 	 * @return
 	 */
-	static int summarizeComments(List<ReviewComment> comments){
-		
+	static int summarizeComments(List<ReviewComment> __){
 		return 0;
 	}
 

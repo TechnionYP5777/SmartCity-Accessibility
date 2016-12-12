@@ -49,19 +49,22 @@ public class Review {
 	}
 	
 	/**
-	 * Kolikant
+	 * @author KaplanAlexander
 	 */
 	public void like(User u){
 		comment(u,ReviewComment.POSITIVE_RATING);
 	}
 	
 	/**
-	 * Kolikant
+	 * @author KaplanAlexander
 	 */
 	public void dislike(User u){
 		comment(u,ReviewComment.NEGATIVE_RATING);
 	}
 	
+	/**
+	 * @author KaplanAlexander
+	 */
 	protected void comment(User u, int rating){
 		if(comments.contains(new ReviewComment(u)))
 			comments.remove(new ReviewComment(u));
