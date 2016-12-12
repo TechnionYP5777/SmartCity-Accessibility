@@ -1,6 +1,8 @@
 
 package smartcity.accessibility.database;
 
+import java.util.Map;
+
 import org.parse4j.Parse;
 import org.parse4j.ParseException;
 import org.parse4j.ParseObject;
@@ -80,4 +82,31 @@ public abstract class DatabaseManager {
 		obj.put(key, value);
 		obj.saveInBackground(c);
 	}
+	
+	/**
+	 * created a new object based on a mapping from strings to obejcts
+	 * @param objectClass
+	 * @param fields a mapping from a string to an object to be saved inside the ParseObject
+	 */
+	public static void putValue(final String objectClass, Map<String, Object> fields) throws ParseException {
+		final ParseObject obj = new ParseObject(objectClass);
+		for(String key : fields.keySet())
+			fields.put(key, fields.get(key));
+		obj.save();
+	}
+	
+	/**
+	 * created a new object based on a mapping from strings to obejcts
+	 * @param objectClass
+	 * @param fields a mapping from a string to an object to be saved inside the ParseObject
+	 * @param c call back to be used for getting the result
+	 */
+	public static void putValue(final String objectClass, Map<String, Object> fields, SaveCallback c){
+		final ParseObject obj = new ParseObject(objectClass);
+		for(String key : fields.keySet())
+			fields.put(key, fields.get(key));
+		obj.saveInBackground(c);
+	}
+	
+	
 }
