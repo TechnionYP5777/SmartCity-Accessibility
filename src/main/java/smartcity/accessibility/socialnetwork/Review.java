@@ -16,23 +16,13 @@ public class Review {
 	private User user;
 	private int rating;
 	private String comment;
-	
-	/**
-	 * Kolikant
-	 */
-	private List<User> Likes;
-	private List<User> DissLikes;
+	private List<ReviewComment> comments = new ArrayList<ReviewComment>();
 	
 	public Review(Location location , int rating, String comment, User u) {
 		this.location = location;
 		this.rating = rating;
 		this.comment = comment;
 		this.user = u;
-		/**
-		 * Kolikant
-		 */
-		this.Likes = new ArrayList<User>();
-		this.DissLikes = new ArrayList<User>();
 	}
 	
 	public int getRating() {
@@ -52,32 +42,30 @@ public class Review {
 	}
 	
 	/**
-	 * Kolikant
+	 * @author AlexanderKaplan
 	 */
 	public int calculateOpinion(){
-		return Likes.size()-DissLikes.size();
+		return ReviewComment.summarizeComments(comments);
 	}
 	
 	/**
 	 * Kolikant
 	 */
-	public void Like(User u){
-		if(Likes.contains(u))
-			return;
-		if(DissLikes.contains(u))
-			DissLikes.remove(u);
-		Likes.add(u);
+	public void like(User u){
+		comment(u,ReviewComment.POSITIVE_RATING);
 	}
 	
 	/**
 	 * Kolikant
 	 */
-	public void DissLike(User u){
-		if(DissLikes.contains(u))
-			return;
-		if(Likes.contains(u))
-			Likes.remove(u);
-		DissLikes.add(u);
+	public void dislike(User u){
+		comment(u,ReviewComment.NEGATIVE_RATING);
+	}
+	
+	protected void comment(User u, int rating){
+		if(comments.contains(new ReviewComment(u)))
+			comments.remove(new ReviewComment(u));
+		comments.add(new ReviewComment(rating,u));
 	}
 	
 	
