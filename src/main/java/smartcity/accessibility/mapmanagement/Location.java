@@ -1,10 +1,14 @@
 package smartcity.accessibility.mapmanagement;
 
-/**
- * @author Kolikant I just needed the stub for adding the clients method. due to
- *         our implementation "Location" should contain the connection between
- *         global adresses and reviews
- */
-public interface Location {
+import smartcity.accessibility.database.ReviewManager;
+import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.Review;
 
+/**
+ * @author Kolikant 
+ */
+public abstract class Location {
+	public void addReview(User u, int rating, String review) {
+		ReviewManager.uploadReview((new Review(this, rating, review, u)), u);
+	}
 }

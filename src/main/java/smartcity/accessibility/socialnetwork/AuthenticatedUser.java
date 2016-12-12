@@ -58,16 +58,5 @@ public class AuthenticatedUser implements User {
 		if (favouriteSearchQueries.contains(q))
 			this.favouriteSearchQueries.remove(q);
 	}
-	
-	
 
-	/**
-	 * @param __ is the location on which we wish to add a review
-	 * @param Review is the review that we wish to add as a free text
-	 */
-	void addReview(Location __, int r, String Review) {
-		//TODO: when Review accepts Location, add it to the constructor
-		ReviewManager.uploadReview(new Review(/*__*/null, r ,Review));
-	}
-	
 }

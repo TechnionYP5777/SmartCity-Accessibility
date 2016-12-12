@@ -3,6 +3,7 @@ package smartcity.accessibility.socialnetwork;
 import java.util.ArrayList;
 import java.util.List;
 
+import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.navigation.Route;
 
@@ -14,6 +15,7 @@ import smartcity.accessibility.navigation.Route;
 public class Review {
 	
 	private Location location;
+	private User user;
 	private int rating;
 	private String comment;
 	
@@ -23,11 +25,11 @@ public class Review {
 	private List<User> Likes;
 	private List<User> DissLikes;
 	
-	public Review(Location location , int rating, String comment) {
+	public Review(Location location , int rating, String comment, User u) {
 		this.location = location;
 		this.rating = rating;
 		this.comment = comment;
-		
+		this.user = u;
 		/**
 		 * Kolikant
 		 */
@@ -75,5 +77,6 @@ public class Review {
 			Likes.remove(u);
 		DissLikes.add(u);
 	}
+	
 	
 }

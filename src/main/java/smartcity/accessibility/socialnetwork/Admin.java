@@ -26,12 +26,7 @@ public class Admin extends AuthenticatedUser {
 		//issue #32
 	}
 	
-	@Override
-	void addReview(Location __, int r, String Review) {
-		super.addReview(__, r, Review);
-		//TODO once decided on github, add special treatment
-		//issue #49
-	}
+
 	
 
 	@Override
