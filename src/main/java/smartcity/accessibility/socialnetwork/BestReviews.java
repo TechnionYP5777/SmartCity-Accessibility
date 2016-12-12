@@ -26,7 +26,7 @@ public class BestReviews {
 	 * @return the n reviews with the highest rating
 	 */
 	public List<Review> getMostRated() {
-		reviews.sort((Review r1, Review r2) -> r2.getRating() - r1.getRating());
+		reviews.sort((Review r1, Review r2) -> r2.getRating().getScore() - r1.getRating().getScore());
 		return reviews.subList(0, n-1);
 	}
 }

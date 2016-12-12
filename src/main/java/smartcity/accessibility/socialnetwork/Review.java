@@ -14,18 +14,18 @@ public class Review {
 	
 	private Location location;
 	private User user;
-	private int rating;
+	private Score rating;
 	private String comment;
 	private List<ReviewComment> comments = new ArrayList<ReviewComment>();
 	
-	public Review(Location location , int rating, String comment, User u) {
-		this.location = location;
-		this.rating = rating;
-		this.comment = comment;
+	public Review(Location l , int r, String c, User u) {
+		this.location = l;
+		this.rating = new Score(r);
+		this.comment = c;
 		this.user = u;
 	}
 	
-	public int getRating() {
+	public Score getRating() {
 		return this.rating;
 	}
 	
