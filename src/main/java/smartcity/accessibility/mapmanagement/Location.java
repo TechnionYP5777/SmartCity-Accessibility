@@ -3,6 +3,8 @@ package smartcity.accessibility.mapmanagement;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import com.teamdev.jxmaps.LatLng;
+
 import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.Review;
@@ -24,6 +26,8 @@ public abstract class Location {
 		return new Score(
 				reviews.stream().collect(Collectors.summingInt(r -> r.getRating().getScore())) / reviews.size());
 	}
+	
+	public abstract LatLng getCoordinates();
 	
 	/**
 	 * @author Kolikant
