@@ -29,6 +29,8 @@ public abstract class Location {
 	
 	public abstract LatLng getCoordinates();
 	
+	public abstract String getAddress();
+	
 	/**
 	 * @author Kolikant
 	 */
