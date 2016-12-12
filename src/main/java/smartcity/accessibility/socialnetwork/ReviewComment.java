@@ -10,16 +10,16 @@ import java.util.List;
 public class ReviewComment {
 	public static final int POSITIVE_RATING = 1;
 	public static final int NEGATIVE_RATING = -1;
-	
+
 	private int rating;
 	private final User commentator;
-	
-	public ReviewComment(User commentator){
+
+	public ReviewComment(User commentator) {
 		rating = 0;
 		this.commentator = commentator;
 	}
-	
-	public ReviewComment(int rating,User commentator){
+
+	public ReviewComment(int rating, User commentator) {
 		this.rating = rating;
 		this.commentator = commentator;
 	}
@@ -35,14 +35,12 @@ public class ReviewComment {
 	public User getCommentator() {
 		return commentator;
 	}
-	
-	/**
-	 * not implemented
-	 * @param cs
-	 * @return
-	 */
-	static int summarizeComments(List<ReviewComment> __){
-		return 0;
+
+	static int summarizeComments(List<ReviewComment> cs) {
+		int $ = 0;
+		for (ReviewComment rc : cs)
+			$ += rc.getRating();
+		return $;
 	}
 
 	@Override
@@ -59,11 +57,5 @@ public class ReviewComment {
 			return false;
 		return true;
 	}
-
-
-	
-	
-	
-	
 
 }

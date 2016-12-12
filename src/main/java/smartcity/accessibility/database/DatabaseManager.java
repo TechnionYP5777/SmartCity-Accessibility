@@ -82,31 +82,39 @@ public abstract class DatabaseManager {
 		obj.put(key, value);
 		obj.saveInBackground(c);
 	}
-	
+
 	/**
-	 * create a new object based on a mapping from strings to objects and put in server
+	 * create a new object based on a mapping from strings to objects and put in
+	 * server
+	 * 
 	 * @param objectClass
-	 * @param fields a mapping from a string to an object to be saved inside the ParseObject
+	 * @param fields
+	 *            a mapping from a string to an object to be saved inside the
+	 *            ParseObject
 	 */
 	public static void putValue(final String objectClass, Map<String, Object> fields) throws ParseException {
 		final ParseObject obj = new ParseObject(objectClass);
-		for(String key : fields.keySet())
+		for (String key : fields.keySet())
 			fields.put(key, fields.get(key));
 		obj.save();
 	}
-	
+
 	/**
-	 * create a new object based on a mapping from strings to objects and put in server
+	 * create a new object based on a mapping from strings to objects and put in
+	 * server
+	 * 
 	 * @param objectClass
-	 * @param fields a mapping from a string to an object to be saved inside the ParseObject
-	 * @param c call back to be used for getting the result
+	 * @param fields
+	 *            a mapping from a string to an object to be saved inside the
+	 *            ParseObject
+	 * @param c
+	 *            call back to be used for getting the result
 	 */
-	public static void putValue(final String objectClass, Map<String, Object> fields, SaveCallback c){
+	public static void putValue(final String objectClass, Map<String, Object> fields, SaveCallback c) {
 		final ParseObject obj = new ParseObject(objectClass);
-		for(String key : fields.keySet())
+		for (String key : fields.keySet())
 			fields.put(key, fields.get(key));
 		obj.saveInBackground(c);
 	}
-	
-	
+
 }
