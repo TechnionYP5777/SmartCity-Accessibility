@@ -84,7 +84,7 @@ public abstract class DatabaseManager {
 	}
 	
 	/**
-	 * created a new object based on a mapping from strings to obejcts
+	 * create a new object based on a mapping from strings to objects and put in server
 	 * @param objectClass
 	 * @param fields a mapping from a string to an object to be saved inside the ParseObject
 	 */
@@ -96,7 +96,7 @@ public abstract class DatabaseManager {
 	}
 	
 	/**
-	 * created a new object based on a mapping from strings to obejcts
+	 * create a new object based on a mapping from strings to objects and put in server
 	 * @param objectClass
 	 * @param fields a mapping from a string to an object to be saved inside the ParseObject
 	 * @param c call back to be used for getting the result
