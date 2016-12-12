@@ -31,9 +31,9 @@ public class Admin extends AuthenticatedUser {
 
 	@Override
 	public String getUserName() {
-		String userName = super.getUserName();
+		String $ = super.getUserName();
 		//TODO special stuff on userName
-		return userName;
+		return $;
 	}
 
 	@Override
