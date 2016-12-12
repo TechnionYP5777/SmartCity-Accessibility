@@ -1,6 +1,5 @@
 package smartcity.accessibility.socialnetwork;
 
-import smartcity.accessibility.mapmanagement.Location;
 
 /**
  * @author ArthurSap

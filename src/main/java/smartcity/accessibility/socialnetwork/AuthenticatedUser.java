@@ -3,8 +3,6 @@ package smartcity.accessibility.socialnetwork;
 import java.util.ArrayList;
 import java.util.List;
 
-import smartcity.accessibility.database.ReviewManager;
-import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery;
 /**
  * @author Kolikant

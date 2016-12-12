@@ -3,9 +3,7 @@ package smartcity.accessibility.socialnetwork;
 import java.util.ArrayList;
 import java.util.List;
 
-import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.navigation.Route;
 
 /**
  * 
@@ -47,6 +45,10 @@ public class Review {
 	
 	public String getComment() {
 		return this.comment;
+	}
+	
+	public User getUser() {
+		return this.user;
 	}
 	
 	/**
