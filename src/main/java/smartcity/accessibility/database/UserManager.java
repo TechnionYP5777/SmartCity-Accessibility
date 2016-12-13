@@ -9,8 +9,10 @@ import org.parse4j.ParseUser;
 import org.parse4j.callback.SignUpCallback;
 
 import smartcity.accessibility.exceptions.InvalidStringException;
+import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
 import smartcity.accessibility.search.SearchQuery;
+import smartcity.accessibility.socialnetwork.Admin;
 import smartcity.accessibility.socialnetwork.AuthenticatedUser;
 
 /**
@@ -18,12 +20,14 @@ import smartcity.accessibility.socialnetwork.AuthenticatedUser;
  *
  */
 public class UserManager {
-	
+	private static final String FavouriteQueriesField = "FavoritQueries";
+	private static final String isAdminField = "isAdmin";
 	public void SignUpUser(AuthenticatedUser u){
 		ParseUser user = new ParseUser();
 		user.setUsername(u.getUserName());
 		user.setPassword(u.getPassword());
-		user.put("List<SearchQuery>", u.getfavouriteSearchQueries());
+		user.put(FavouriteQueriesField, u.getfavouriteSearchQueries());
+		user.put(isAdminField, u.getClass() == Admin.class);
 		
 		user.signUpInBackground(new SignUpCallback() {
 			
@@ -38,38 +42,27 @@ public class UserManager {
 	@SuppressWarnings("unchecked")
 	public AuthenticatedUser Authenticate(String name, String password){
 		ParseUser pu;
+		AuthenticatedUser $;
 		try {
 			pu = ParseUser.login(name, password);
 		} catch (ParseException e) {
 			return null;
 		}
-		AuthenticatedUser $ = new AuthenticatedUser();
-		$.setUserName(name);
-		$.setPassword(password);
-		$.setfavouriteSearchQueries((List<SearchQuery>)pu.get("FavoritQueries"));
+		$ = pu.getBoolean(isAdminField) ? new Admin(name, password) : new AuthenticatedUser(name, password);
+		$.setfavouriteSearchQueries((List<SearchQuery>)pu.get(FavouriteQueriesField));
 		return $;
 	}
 	
-	/**
-	 * @author assaflu
-	 * @throws ParseException 
-	 *
-	 */
-	public void SaveNewUser(AuthenticatedUser u) throws InvalidStringException, UsernameAlreadyTakenException, ParseException{
-		try{
+	
+	public void updateUserInformation(AuthenticatedUser u) throws InvalidStringException, UsernameAlreadyTakenException, ParseException, UserNotFoundException{
+			ParseUser pu;
+			try {
+				pu = ParseUser.login(u.getUserName(), u.getPassword());
+			} catch (ParseException e) {
+				throw new UserNotFoundException();
+			}
 			
-			if (ParseQuery.getQuery("AuthenticatedUser").whereEqualTo("UserName", u.getUserName()).find().isEmpty()) {
-			final ParseObject obj = new ParseObject("AuthenticatedUser");
-				obj.put("UserName", u.getUserName());
-				obj.put("Password", u.getPassword());
-				obj.put("FavoritQueries", u.getfavouriteSearchQueries());
-			obj.save();
-			} else
-				throw new UsernameAlreadyTakenException();
+			pu.put(FavouriteQueriesField, u.getfavouriteSearchQueries());
+			pu.saveInBackground();
 		}
-		catch(ParseException e){
-			throw e;
-		}
-
-	}
 }

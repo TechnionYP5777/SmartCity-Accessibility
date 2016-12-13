@@ -47,7 +47,9 @@ public abstract class Location {
 	 * @author Kolikant
 	 */
 	public void addReview(User u, int rating, String review) {
-		ReviewManager.uploadReview((new Review(this, rating, review, u)), u);
+		Review r = new Review(this, rating, review, u);
+		reviews.add(r);
+		ReviewManager.uploadReview(r, u);
 	}
 	
 	
