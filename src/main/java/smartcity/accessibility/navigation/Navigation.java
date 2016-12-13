@@ -19,21 +19,29 @@ public class Navigation {
 	 * [[SuppressWarningsSpartan]]
 	 */
 	public Route showRoute(Location source, Location destination, Integer accessabilityThreshold) {
-		// TODO request rout from S to D from mapquest and return it.
-		@SuppressWarnings("unused")
 		Double radiusOfRoute = calcRadius(source, destination);
+		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessabilityThreshold,radiusOfRoute);
 		@SuppressWarnings("unused")
-		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessabilityThreshold);
+		Route route = getRouteFromMapQuest(segmentsToAvoid);
+		//TODO display route for now
+		//TODO convert route to a format that can be displayed in JXMap
+		return null;
+	}
+
+	private Route getRouteFromMapQuest(List<MapSegment> segmentsToAvoid) {
+		//(1) TODO request from server to avoid the segments of segmentsToAvoid
+		//(2) TODO request route form servers
 		return null;
 	}
 
 	private Double calcRadius(Location source, Location destination) {
-		// calculate the radius of the circle which the route can pass through.
+		// TODO calculate the radius of the circle which the route can pass through.
 		return null;
 	}
 
-	private List<MapSegment> getSegmentsToAvoid(Location source, Location destination, Integer accessabilityThreshold) {
-		// return list of segment ot avoid
+	private List<MapSegment> getSegmentsToAvoid(Location source, Location destination, Integer accessabilityThreshold, Double radiusOfRoute) {
+		// TODO return list of segment to avoid within the given radius
+		//this method will use LocationManager to get the locations and then identify their MapSegment
 		return null;
 	}
 
