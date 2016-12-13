@@ -73,4 +73,8 @@ The interface availabe to the user will consist of the following :
 ## The Code 
 ### Instructions 
 To get started with the code, clone the project to your machine and open in eclipse as a maven project.
-After that you will need to follow the instructions in this wiki https://github.com/TechnionYP5777/SmartCity-Accessibility/wiki/JxMaps-dependency to set up the JxMaps dependency correctly.
+After that you will need to follow the instructions in this wiki 
+
+https://github.com/TechnionYP5777/SmartCity-Accessibility/wiki/JxMaps-dependency 
+
+to set up the JxMaps dependency correctly.
