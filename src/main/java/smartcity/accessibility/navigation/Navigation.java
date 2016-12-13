@@ -12,22 +12,28 @@ import smartcity.accessibility.navigation.mapquestcommunication.Route;
  *         segments of the map that should be avoided in the routes it returns.
  */
 public class Navigation {
-	List<MapSegment> segmentsToAvoid;
 
 	public Navigation() {
-		this.segmentsToAvoid = new ArrayList<MapSegment>();
 	}
 
-	public Route showRoute(Location source, Location destination) {
+	/**
+	 * [[SuppressWarningsSpartan]]
+	 */
+	public Route showRoute(Location source, Location destination, Integer accessabilityThreshold) {
 		// TODO request rout from S to D from mapquest and return it.
-		return new Route();
+		Double radiusOfRoute = calcRadius(source, destination);
+		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessabilityThreshold);
+		return null;
 	}
 
-	public void addLocationToAvoid(Location __) {
-		// TODO this function might get Location or MapSegment or something like
-		// that
-		// and add it to the segments that need to be avoid in the route.
-		// for now the method get location which mean the method will find the
-		// right MapSegement for this location.
+	private Double calcRadius(Location source, Location destination) {
+		// calculate the radius of the circle which the route can pass through.
+		return null;
 	}
+
+	private List<MapSegment> getSegmentsToAvoid(Location source, Location destination, Integer accessabilityThreshold) {
+		// return list of segment ot avoid
+		return null;
+	}
+
 }
