@@ -7,83 +7,85 @@
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.5.1</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	<repositories>
 		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
 		</repository>
 		<repository>
-		    <id>in-project</id>
-		    <name>In Project Repo</name>
-		    <url>file://${project.basedir}/libs</url>
+			<id>in-project</id>
+			<name>In Project Repo</name>
+			<url>file://${project.basedir}/libs</url>
 		</repository>
 	</repositories>
 	<dependencies>
 		<dependency>
-	    	<groupId>com.github.abdielou</groupId>
-	    	<artifactId>parse4j</artifactId>
-	    	<version>1.5-1216d3</version>
+			<groupId>com.github.abdielou</groupId>
+			<artifactId>parse4j</artifactId>
+			<version>1.5-1216d3</version>
 		</dependency>
 		<dependency>
-			<groupId>com.teamdev</groupId>
+			<groupId>teamdev</groupId>
 			<artifactId>jxmaps</artifactId>
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>com.teamdev</groupId>
+			<groupId>teamdev</groupId>
 			<artifactId>jxmaps-linux32</artifactId>
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>com.teamdev</groupId>
+			<groupId>teamdev</groupId>
 			<artifactId>jxmaps-linux64</artifactId>
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>com.teamdev</groupId>
+			<groupId>teamdev</groupId>
 			<artifactId>jxmaps-mac</artifactId>
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>com.teamdev</groupId>
+			<groupId>teamdev</groupId>
 			<artifactId>jxmaps-win</artifactId>
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>com.teamdev</groupId>
+			<groupId>teamdev</groupId>
 			<artifactId>license</artifactId>
-			<version>1.2</version>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
-		  	<groupId>junit</groupId>
-  			<artifactId>junit</artifactId>
- 			<version>4.12</version>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
 		</dependency>
-	   <dependency>
-	       <groupId>org.slf4j</groupId>
-	       <artifactId>slf4j-api</artifactId>
-	       <version>1.7.5</version>
-	   </dependency>
-	   <dependency>
-	       <groupId>org.slf4j</groupId>
-	       <artifactId>slf4j-simple</artifactId>
-	       <version>1.6.4</version>
-	   </dependency>
-       <dependency>
-		   <groupId>com.nimbusds</groupId>
-		   <artifactId>oauth2-oidc-sdk</artifactId>
-		   <version>5.18.1</version>
-	   </dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.6.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>oauth2-oidc-sdk</artifactId>
+			<version>5.18.1</version>
+		</dependency>
 	</dependencies>
 </project>
