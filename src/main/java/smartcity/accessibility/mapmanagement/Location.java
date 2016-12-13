@@ -17,9 +17,21 @@ import smartcity.accessibility.socialnetwork.Score;
 public abstract class Location {
 
 	private ArrayList<Review> reviews;
+	private ArrayList<Review> pinnedReviews;	//ArthurSap
+
+	//ArthurSap
+	public ArrayList<Review> getReviews() {
+		return reviews;
+	}
+
+	//ArthurSap
+	public ArrayList<Review> getPinnedReviews() {
+		return pinnedReviews;
+	}
 
 	public Location(){
 		this.reviews = new ArrayList<Review>();
+		this.pinnedReviews = new ArrayList<Review>();	// ArthurSap
 	}
 	
 	public Score getRating(){
