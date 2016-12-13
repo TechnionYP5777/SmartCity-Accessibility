@@ -23,6 +23,11 @@
 		    <id>jitpack.io</id>
 		    <url>https://jitpack.io</url>
 		</repository>
+		<repository>
+		    <id>in-project</id>
+		    <name>In Project Repo</name>
+		    <url>file://${project.basedir}/libs</url>
+		</repository>
 	</repositories>
 	<dependencies>
 		<dependency>
@@ -31,46 +36,34 @@
 	    	<version>1.5-1216d3</version>
 		</dependency>
 		<dependency>
-			<groupId>com.teamdev.jxmaps</groupId>
+			<groupId>com.teamdev</groupId>
 			<artifactId>jxmaps</artifactId>
 			<version>1.2</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/jxmaps-1.2.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>com.teamdev.jxmaps</groupId>
-			<artifactId>jxmaps</artifactId>
+			<groupId>com.teamdev</groupId>
+			<artifactId>jxmaps-linux32</artifactId>
 			<version>1.2</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/jxmaps-linux32-1.2.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>com.teamdev.jxmaps</groupId>
-			<artifactId>jxmaps</artifactId>
+			<groupId>com.teamdev</groupId>
+			<artifactId>jxmaps-linux64</artifactId>
 			<version>1.2</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/jxmaps-linux64-1.2.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>com.teamdev.jxmaps</groupId>
-			<artifactId>jxmaps</artifactId>
+			<groupId>com.teamdev</groupId>
+			<artifactId>jxmaps-mac</artifactId>
 			<version>1.2</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/jxmaps-mac-1.2.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>com.teamdev.jxmaps</groupId>
-			<artifactId>jxmaps</artifactId>
+			<groupId>com.teamdev</groupId>
+			<artifactId>jxmaps-win</artifactId>
 			<version>1.2</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/jxmaps-win-1.2.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>com.teamdev.jxmaps</groupId>
-			<artifactId>jxmaps-license</artifactId>
+			<groupId>com.teamdev</groupId>
+			<artifactId>license</artifactId>
 			<version>1.2</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/license.jar</systemPath>
 		</dependency>
 		<dependency>
 		  	<groupId>junit</groupId>
