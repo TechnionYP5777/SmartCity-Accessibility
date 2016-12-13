@@ -1,5 +1,7 @@
 package smartcity.accessibility.socialnetwork;
 
+import java.util.ArrayList;
+
 import smartcity.accessibility.database.ReviewManager;
 
 /**
@@ -21,14 +23,23 @@ public class Admin extends AuthenticatedUser {
 	 * Also, always show this review in the top reviews.
 	 **/
 	public void pinReview(Review r){
-		//TODO issue #48
+		pinUnpinElement(r, r.getLocation().getPinnedReviews(), r.getLocation().getReviews());
 	}
 	
 	/**
 	 * Reverts the effects of pinReview.
 	 */
 	public void unpinReview(Review r){
-		//TODO issue #48
+		pinUnpinElement(r, r.getLocation().getReviews(), r.getLocation().getPinnedReviews());
+	}
+	
+	private void pinUnpinElement(Review r, ArrayList<Review> toAdd, ArrayList<Review> toRemove){
+		if(toAdd.contains(r)){
+			toRemove.remove(r);
+			return;
+		}
+		toAdd.add(r);
+		toRemove.remove(r);
 	}
 	
 	public void deleteReview(Review r){
