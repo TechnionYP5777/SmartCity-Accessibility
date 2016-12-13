@@ -1,6 +1,5 @@
 package smartcity.accessibility.navigation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import smartcity.accessibility.mapmanagement.Location;
@@ -21,7 +20,9 @@ public class Navigation {
 	 */
 	public Route showRoute(Location source, Location destination, Integer accessabilityThreshold) {
 		// TODO request rout from S to D from mapquest and return it.
+		@SuppressWarnings("unused")
 		Double radiusOfRoute = calcRadius(source, destination);
+		@SuppressWarnings("unused")
 		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessabilityThreshold);
 		return null;
 	}
