@@ -1,4 +1,4 @@
-package smartcity.accessibility.navigation;
+package smartcity.accessibility.navigation.mapquestcommunication;
 
 /**
  * 
