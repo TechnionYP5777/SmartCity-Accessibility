@@ -11,8 +11,8 @@ import smartcity.accessibility.database.ReviewManager;
 
 public class Admin extends AuthenticatedUser {
 
-	public Admin(String un, String pass){
-		super(un,pass);
+	public Admin(String un, String pass, String FavouriteQueries){
+		super(un,pass,FavouriteQueries);
 		//TODO more stuff on Admin
 	}
 	

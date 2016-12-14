@@ -13,15 +13,17 @@ public class AuthenticatedUser implements User {
 	private String password;
 	private List<SearchQuery> favouriteSearchQueries;
 	
-	public AuthenticatedUser() {
-
-	}
 	
-	public AuthenticatedUser(String name, String password) {
+	public AuthenticatedUser(String name, String password,String FavouriteQueries) {
 		this.name = name;
 		this.password = password;
-		this.favouriteSearchQueries = new ArrayList<>();
+		this.favouriteSearchQueries = SearchQuery.String2QueriesList(FavouriteQueries);
 	}
+	
+	public AuthenticatedUser() {
+	}
+
+
 	
 	public String getUserName() {
 		return name;

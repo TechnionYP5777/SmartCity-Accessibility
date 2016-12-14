@@ -1,5 +1,6 @@
 package smartcity.accessibility.database;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.parse4j.ParseException;
@@ -19,45 +20,78 @@ import smartcity.accessibility.socialnetwork.AuthenticatedUser;
  * @author Kolikant
  *
  */
-public class UserManager {
-	private static final String FavouriteQueriesField = "FavoritQueries";
+public abstract class UserManager {
+	private static final String FavouriteQueriesField = "FavouritQueries";
 	private static final String isAdminField = "isAdmin";
-	public void SignUpUser(AuthenticatedUser u){
+	
+	/*
+	 * Users should be created only through here, as this shows if they can be added to the database
+	 */
+	public static AuthenticatedUser SignUpUser(String name, String password, boolean isAdmin){
 		ParseUser user = new ParseUser();
-		user.setUsername(u.getUserName());
-		user.setPassword(u.getPassword());
-		user.put(FavouriteQueriesField, u.getfavouriteSearchQueries());
-		user.put(isAdminField, u.getClass() == Admin.class);
+		user.setUsername(name);
+		user.setPassword(password);
 		
-		user.signUpInBackground(new SignUpCallback() {
-			
-			@Override
-			public void done(ParseException arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		List<String> fqDummy = new ArrayList<String>();
+		
+		user.put(isAdminField, String.valueOf(isAdmin));
+		String dummy = fqDummy + "";
+		user.put(FavouriteQueriesField, (dummy));
+		
+		try {
+			user.signUp();
+		} catch (ParseException e) {
+			return null;
+		}
+		
+		try {
+			user.logout();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return (new AuthenticatedUser(name, password, SearchQuery.EmptyList));
 	}
 	
+	
 	@SuppressWarnings("unchecked")
-	public AuthenticatedUser Authenticate(String name, String password){
-		ParseUser pu;
-		AuthenticatedUser $;
+	public static AuthenticatedUser LoginUser(String name, String password){
+		ParseUser pu=null;
+		AuthenticatedUser $=null;
 		try {
 			pu = ParseUser.login(name, password);
 		} catch (ParseException e) {
 			return null;
 		}
-		$ = pu.getBoolean(isAdminField) ? new Admin(name, password) : new AuthenticatedUser(name, password);
-		$.setfavouriteSearchQueries((List<SearchQuery>)pu.get(FavouriteQueriesField));
+		boolean isAdmin = java.lang.Boolean.parseBoolean(pu.getString(isAdminField));
+		String favouriteQueries = pu.getString(FavouriteQueriesField);
+		
+		$ = isAdmin ? new Admin(name, password,favouriteQueries) : new AuthenticatedUser(name, password,favouriteQueries);
+		try {
+			pu.logout();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return $;
 	}
 	
+	public static void DeleteUser(AuthenticatedUser u){
+		ParseUser pu;
+		try {
+			pu = ParseUser.login(u.getUserName(), u.getPassword());
+			pu.delete();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
 	
-	public void updateUserInformation(AuthenticatedUser u) throws InvalidStringException, UsernameAlreadyTakenException, ParseException, UserNotFoundException{
+	
+	public static void updateUserInformation(AuthenticatedUser u) throws InvalidStringException, UsernameAlreadyTakenException, ParseException, UserNotFoundException{
 			ParseUser pu;
 			try {
-				pu = ParseUser.login(u.getUserName(), u.getPassword());
+				pu = ParseUser.logIn(u.getUserName(), u.getPassword());
 			} catch (ParseException e) {
 				throw new UserNotFoundException();
 			}
