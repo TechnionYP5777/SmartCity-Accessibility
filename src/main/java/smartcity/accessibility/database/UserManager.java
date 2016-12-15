@@ -4,14 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.parse4j.ParseException;
-import org.parse4j.ParseObject;
-import org.parse4j.ParseQuery;
 import org.parse4j.ParseUser;
-import org.parse4j.callback.SignUpCallback;
 
-import smartcity.accessibility.exceptions.InvalidStringException;
 import smartcity.accessibility.exceptions.UserNotFoundException;
-import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.Admin;
 import smartcity.accessibility.socialnetwork.AuthenticatedUser;
@@ -54,7 +49,6 @@ public abstract class UserManager {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
 	public static AuthenticatedUser LoginUser(String name, String password){
 		ParseUser pu=null;
 		AuthenticatedUser $=null;
@@ -81,22 +75,53 @@ public abstract class UserManager {
 		try {
 			pu = ParseUser.login(u.getUserName(), u.getPassword());
 			pu.delete();
+			//TODO: check if logout is needed here
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
 	
-	
-	public static void updateUserInformation(AuthenticatedUser u) throws InvalidStringException, UsernameAlreadyTakenException, ParseException, UserNotFoundException{
-			ParseUser pu;
-			try {
-				pu = ParseUser.logIn(u.getUserName(), u.getPassword());
-			} catch (ParseException e) {
-				throw new UserNotFoundException();
-			}
-			
-			pu.put(FavouriteQueriesField, u.getfavouriteSearchQueries());
-			pu.saveInBackground();
+	public static void updateUserName(AuthenticatedUser u, String newName) throws UserNotFoundException{
+		ParseUser pu;
+		try {
+			pu = ParseUser.login(u.getUserName(), u.getPassword());
+			pu.setUsername(newName);
+			pu.save();
+			pu.logout();
+		}catch (ParseException e1) {
+			throw new UserNotFoundException();
 		}
+	}
+	
+	/*
+	 * safety of the server prevents from setting passworda after they have been set
+	 * in order to change passwords, email etc are required, if needed, would be implemented
+	 */
+	
+/*	public static void updatepassword(AuthenticatedUser u, String newPassword) throws UserNotFoundException{
+		ParseUser pu;
+		try {
+			pu = ParseUser.login(u.getUserName(), u.getPassword());
+			pu.setPassword(newPassword);
+			pu.save();
+			pu.logout();
+		}catch (ParseException e1) {
+			throw new UserNotFoundException();
+		}
+	}*/
+	
+	public static void updatefavouriteQueries(AuthenticatedUser u, List<SearchQuery> l) throws UserNotFoundException{
+		ParseUser pu;
+		try {
+			pu = ParseUser.login(u.getUserName(), u.getPassword());
+			pu.put(FavouriteQueriesField, SearchQuery.QueriesList2String(l));
+			pu.save();
+			pu.logout();
+		}catch (ParseException e1) {
+			throw new UserNotFoundException();
+		}
+	}
+	
+	
 }

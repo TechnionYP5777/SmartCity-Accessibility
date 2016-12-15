@@ -3,7 +3,6 @@ package smartcity.accessibility.search;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class SearchQuery {
 	
@@ -24,16 +23,27 @@ public class SearchQuery {
 		return locationType;
 	}
 	
-	public String QueriesList2String(List<SearchQuery> l){
+	public static SearchQuery toQuery(String s){
+		return new SearchQuery(s);
+	}
+	
+	public static String QueriesList2String(List<SearchQuery> qs){
 		List<String> sl = new ArrayList<String>();
-		for(SearchQuery q : l){
-			sl.add(q.toString());
-		}
-		return sl.toString();
+		for(SearchQuery q : qs)
+			sl.add((q + ""));
+		return sl + "";
 	}
 
 	public static List<SearchQuery> String2QueriesList(String favouriteQueries) {
-		return new ArrayList<SearchQuery>();
+		String p1 = favouriteQueries.replace("[", "").replace("]", "");
+		List<SearchQuery> $ = new ArrayList<SearchQuery>();
+		String[] split;
+		if (p1.isEmpty())
+			return $;
+		split = p1.split(", ");
+		for (String s : split)
+			$.add(SearchQuery.toQuery(s));
+		return $;
 	}
 	
 }

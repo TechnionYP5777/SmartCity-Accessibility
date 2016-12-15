@@ -1,6 +1,5 @@
 package smartcity.accessibility.socialnetwork;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import smartcity.accessibility.search.SearchQuery;
@@ -23,7 +22,6 @@ public class AuthenticatedUser implements User {
 	public AuthenticatedUser() {
 	}
 
-
 	
 	public String getUserName() {
 		return name;
@@ -33,20 +31,9 @@ public class AuthenticatedUser implements User {
 		return favouriteSearchQueries;
 	}
 	
-	public void setfavouriteSearchQueries(List<SearchQuery> lq) {
-		this.favouriteSearchQueries = lq;
-	}
-	
-	public void setUserName(String un) {
-		this.name = un;
-	}
 
 	public String getPassword() {
 		return password;
-	}
-	
-	public void setPassword(String pass) {
-		this.password = pass;
 	}
 	
 	public void addToFavourites(SearchQuery q){

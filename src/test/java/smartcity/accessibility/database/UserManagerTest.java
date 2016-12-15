@@ -3,14 +3,14 @@ package smartcity.accessibility.database;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.parse4j.ParseException;
-import org.parse4j.ParseObject;
-import org.parse4j.ParseQuery;
 
+import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.search.SearchQuery;
+import smartcity.accessibility.socialnetwork.Admin;
 import smartcity.accessibility.socialnetwork.AuthenticatedUser;
 
 /**
@@ -31,5 +31,37 @@ public class UserManagerTest {
 		assertEquals("password", u.getPassword());
 		assertEquals(new ArrayList<SearchQuery>(), u.getfavouriteSearchQueries());	
 		UserManager.DeleteUser(u);
+	}
+	
+	@Test 
+	public void test2(){
+		UserManager.SignUpUser("admin", "admin", true);
+		Admin a = (Admin) UserManager.LoginUser("admin", "admin");
+		assertEquals("admin", a.getUserName());
+		assertEquals("admin", a.getPassword());
+		assertEquals(new ArrayList<SearchQuery>(), a.getfavouriteSearchQueries());
+		
+		try {
+			UserManager.updateUserName(a, "badmin");
+		} catch (UserNotFoundException e) {
+			fail();
+		}
+		
+		Admin b = (Admin) UserManager.LoginUser("badmin", "admin");
+		assertNotNull(b);
+		
+		List<SearchQuery> l = new ArrayList<SearchQuery>();
+		l.add(new SearchQuery("cafe"));
+		try {
+			UserManager.updatefavouriteQueries(b, l);
+		} catch (UserNotFoundException e) {
+			fail();
+		}
+		
+		Admin c = ((Admin) UserManager.LoginUser("badmin", "admin"));
+		assertEquals(SearchQuery.QueriesList2String(l), SearchQuery.QueriesList2String(c.getfavouriteSearchQueries()));
+		
+		
+		UserManager.DeleteUser(b);
 	}
 }
