@@ -22,8 +22,4 @@ public class GeocoderLocation extends Location{
 	public String getAddress(){
 		return geocoderResult.getFormattedAddress();
 	}
-	
-	
-	
-	
 }
