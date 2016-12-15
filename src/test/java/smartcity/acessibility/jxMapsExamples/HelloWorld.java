@@ -23,11 +23,25 @@ public class HelloWorld extends MapView {
             public void onMapReady(MapStatus status) {
                 if (status == MapStatus.MAP_STATUS_OK) {
                     final Map map = getMap();
-                    map.setZoom(5.0);
+                    map.setZoom(17.0);
                     GeocoderRequest request = new GeocoderRequest(map);
-                    request.setAddress("Kharkiv, UA");
+                    request.setAddress("Tel-Aviv, Weizmann St, 30");
 
                     getServices().getGeocoder().geocode(request, new GeocoderCallback(map) {
+                        @Override
+                        public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
+                            if (status == GeocoderStatus.OK) {
+                                map.setCenter(result[0].getGeometry().getLocation());
+                                Marker marker = new Marker(map);
+                                marker.setPosition(result[0].getGeometry().getLocation());
+                            }
+                        }
+                    });
+                    
+                    GeocoderRequest request2 = new GeocoderRequest(map);
+                    request2.setAddress("Tel-Aviv, Weizmann St, 1");
+
+                    getServices().getGeocoder().geocode(request2, new GeocoderCallback(map) {
                         @Override
                         public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
                             if (status == GeocoderStatus.OK) {
