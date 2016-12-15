@@ -1,26 +1,47 @@
 package smartcity.accessibility.search;
 
+/**
+ * @author Kolikant
+ *
+ */
 import java.util.ArrayList;
 import java.util.List;
 
+import com.teamdev.jxmaps.Geocoder;
+import com.teamdev.jxmaps.GeocoderRequest;
+import com.teamdev.jxmaps.Map;
+import com.teamdev.jxmaps.swing.MapView;
 
-public class SearchQuery {
+
+public class SearchQuery extends MapView{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 	public static final String EmptyList = "[]";
 	
 	
-	String locationType;
+	String adress;
+	Map map;
 	
 	public SearchQuery(String parsedQuery) {
-		this.locationType = parsedQuery;
+		this.map = getMap();
+		this.adress = parsedQuery;
 	}
 	
 	public SearchQueryResult Search() {
-		return null;
+		GeocoderRequest request = new GeocoderRequest(getMap());
+        request.setAddress(adress);
+        List<GeocoderRequest> retvalList = new ArrayList<GeocoderRequest>();
+        retvalList.add(request);
+        return new SearchQueryResult(retvalList, map);
 	}
 	
 	public String toString(){
-		return locationType;
+		return adress;
 	}
 	
 	public static SearchQuery toQuery(String s){

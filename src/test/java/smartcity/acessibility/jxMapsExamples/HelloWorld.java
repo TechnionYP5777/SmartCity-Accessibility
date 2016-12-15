@@ -1,6 +1,7 @@
 package smartcity.acessibility.jxMapsExamples;
 
 import com.teamdev.jxmaps.GeocoderRequest;
+import com.teamdev.jxmaps.Geocoder;
 import com.teamdev.jxmaps.GeocoderCallback;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.MapViewOptions;
@@ -27,7 +28,8 @@ public class HelloWorld extends MapView {
                     GeocoderRequest request = new GeocoderRequest(map);
                     request.setAddress("Tel-Aviv, Weizmann St, 30");
 
-                    getServices().getGeocoder().geocode(request, new GeocoderCallback(map) {
+                    Geocoder g = getServices().getGeocoder();
+                    g.geocode(request, new GeocoderCallback(map) {
                         @Override
                         public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
                             if (status == GeocoderStatus.OK) {
@@ -38,10 +40,11 @@ public class HelloWorld extends MapView {
                         }
                     });
                     
-                    GeocoderRequest request2 = new GeocoderRequest(map);
+               /*    GeocoderRequest request2 = new GeocoderRequest(map);
                     request2.setAddress("Tel-Aviv, Weizmann St, 1");
 
-                    getServices().getGeocoder().geocode(request2, new GeocoderCallback(map) {
+                    Geocoder g2 =getServices().getGeocoder();
+                    g2.geocode(request2, new GeocoderCallback(map) {
                         @Override
                         public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
                             if (status == GeocoderStatus.OK) {
@@ -54,7 +57,7 @@ public class HelloWorld extends MapView {
                                 window.open(map, marker);
                             }
                         }
-                    });
+                    });*/
                 }
             }
         });
