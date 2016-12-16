@@ -29,14 +29,12 @@ public class SearchQuery extends MapView{
 	
 	
 	String adress;
-	Map map;
 	
 	public SearchQuery(String parsedQuery) {
-		this.map = getMap();
 		this.adress = parsedQuery;
 	}
 	
-	public SearchQueryResult Search() {
+	public SearchQueryResult Search(Map map) {
 		GeocoderRequest request = new GeocoderRequest(map);
         request.setAddress(adress);
         
