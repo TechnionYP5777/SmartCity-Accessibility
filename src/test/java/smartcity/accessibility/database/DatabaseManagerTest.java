@@ -3,6 +3,8 @@ package smartcity.accessibility.database;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.BeforeClass;
@@ -10,6 +12,7 @@ import org.junit.Test;
 import org.parse4j.ParseException;
 import org.parse4j.ParseObject;
 import org.parse4j.callback.GetCallback;
+import org.parse4j.callback.SaveCallback;
 
 /**
  * @author KaplanAlexander
@@ -66,6 +69,53 @@ public class DatabaseManagerTest {
 			value = res.getAndSet(0);
 
 		assertEquals(1, value);
+	}
+	
+	@Test
+	public void d(){
+		Map<String, Object> m = new HashMap<String, Object>();
+		m.put("a", "b");
+		m.put("c",5);
+		m.put("e", false);
+		ParseObject o = null;
+		try {
+			o = DatabaseManager.putValue(testParseClass, m);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			fail("failed to put value to server");
+		}
+		assertNotNull(o);
+
+		assertEquals(m.get("a"),o.get("a"));
+		assertEquals(m.get("c"),o.get("c"));
+		assertEquals(m.get("e"),o.get("e"));
+		
+	}
+	
+	@Test(timeout=20000)
+	public void e(){
+		final AtomicInteger res = new AtomicInteger();
+		
+		Map<String, Object> m = new HashMap<String, Object>();
+		m.put("a", "b");
+		m.put("c", 5);
+		m.put("e", false);
+		DatabaseManager.putValue(testParseClass, m, new SaveCallback() {
+			
+			@Override
+			public void done(ParseException arg0) {
+				if(arg0!=null)
+					res.compareAndSet(0, -1);
+				res.compareAndSet(0, 1);
+				
+			}
+		});
+		
+		int value = 0;
+		while (value==0)
+			value = res.getAndSet(0);
+		
+		assertEquals(1,value);
 	}
 
 }
