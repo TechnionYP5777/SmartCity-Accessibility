@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 import org.parse4j.ParseException;
 import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
@@ -26,13 +29,33 @@ import com.teamdev.jxmaps.LatLng;
  */
 public class DatabaseManagerTest {
 
-	public String testParseClass = "DatabaseManagerTestClass";
+	public static String testParseClass = "DatabaseManagerTestClass";
+	public static String id_result = "";
 
-	
+	@Rule
+	public Timeout globalTimeout = Timeout.seconds(20);
+
 	@BeforeClass
-	public static void init() {
+	public static void init() throws ParseException {
 		DatabaseManager.initialize();
+		Map<String, Object> m = new HashMap<String, Object>();
+		m.put("test2", "res1");
+		m.put("test1", 65);
+		DatabaseManager.putValue(testParseClass, m);
+
+		final AtomicInteger res = new AtomicInteger();
+		DatabaseManager.queryByFields(testParseClass, m, new FindCallback<ParseObject>() {
+
+			@Override
+			public void done(List<ParseObject> arg0, ParseException arg1) {
+				id_result = arg0.get(0).getObjectId();
+				res.compareAndSet(0, 1);
+			}
+		});
+		for (int value = 0; value == 0;)
+			value = res.getAndSet(0);
 	}
+
 
 	@Test
 	public void a() {
@@ -49,7 +72,7 @@ public class DatabaseManagerTest {
 
 	@Test
 	public void b() {
-		ParseObject pe = DatabaseManager.getValue(testParseClass, "4cWiwfWOWZ");
+		ParseObject pe = DatabaseManager.getValue(testParseClass, id_result);
 		assertNotNull(pe);
 		assertEquals("res1", pe.get("test2"));
 		assertEquals(65, pe.get("test1"));
@@ -59,7 +82,7 @@ public class DatabaseManagerTest {
 	public void c() {
 		final AtomicInteger res = new AtomicInteger();
 
-		DatabaseManager.getValue(testParseClass, "4cWiwfWOWZ", new GetCallback<ParseObject>() {
+		DatabaseManager.getValue(testParseClass, id_result, new GetCallback<ParseObject>() {
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
 				if (arg1 != null)
@@ -171,45 +194,44 @@ public class DatabaseManagerTest {
 
 	@Test
 	public void g() {
-		//TODO @KaplanAlexander :finish this 
+		// TODO @KaplanAlexander :finish this
 		final AtomicInteger res = new AtomicInteger();
-		try{
-			Map<String, Object> m = new HashMap<String,Object>();
+		try {
+			Map<String, Object> m = new HashMap<String, Object>();
 			m.put("location", new ParseGeoPoint(32.777891, 35.021760));
 			DatabaseManager.putValue(testParseClass, m);
 			m.put("location", new ParseGeoPoint(32.086690, 34.789864));
 			DatabaseManager.putValue(testParseClass, m);
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			fail("failed to put test values to server");
 		}
-		
-		DatabaseManager.queryByLocation(testParseClass, new LatLng(32.776520, 35.022962), 1, new FindCallback<ParseObject>() {
-			@Override
-			public void done(List<ParseObject> arg0, ParseException arg1) {
-				boolean sol = false;
-				
-				for(ParseObject po : arg0){
-					ParseGeoPoint point =(ParseGeoPoint)po.get("location");
-					System.out.println(point.getLatitude()+","+point.getLongitude());
-					if(point.getLatitude()==32.086690 && point.getLongitude()==34.789864)
-						res.compareAndSet(0, -1);
-					if(point.getLatitude()==32.777891 && point.getLongitude()==35.021760)
-						sol = true;
-				}
-				if(sol)
-					res.compareAndSet(0, 1);
-				res.compareAndSet(0, -2);
-			}
-		});
-		
-		
+
+		DatabaseManager.queryByLocation(testParseClass, new LatLng(32.776520, 35.022962), 1,
+				new FindCallback<ParseObject>() {
+					@Override
+					public void done(List<ParseObject> arg0, ParseException arg1) {
+						boolean sol = false;
+
+						for (ParseObject po : arg0) {
+							ParseGeoPoint point = (ParseGeoPoint) po.get("location");
+							if (point.getLatitude() == 32.086690 && point.getLongitude() == 34.789864)
+								res.compareAndSet(0, -1);
+							if (point.getLatitude() == 32.777891 && point.getLongitude() == 35.021760)
+								sol = true;
+						}
+						if (sol)
+							res.compareAndSet(0, 1);
+						res.compareAndSet(0, -2);
+					}
+				});
+
 		int value = 0;
 		while (value == 0)
 			value = res.getAndSet(0);
 
 		assertEquals(1, value);
-		
+
 	}
 
 }
