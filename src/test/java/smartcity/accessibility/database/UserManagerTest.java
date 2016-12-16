@@ -25,9 +25,10 @@ public class UserManagerTest {
 	
 	@Test
 	public void test() {
-		UserManager.SignUpUser("user", "password", false);
-		AuthenticatedUser u = UserManager.LoginUser("user", "password");
-		assertEquals("user", u.getUserName());
+		String UserName = "uuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
+		UserManager.SignUpUser(UserName, "password", false);
+		AuthenticatedUser u = UserManager.LoginUser(UserName, "password");
+		assertEquals(UserName, u.getUserName());
 		assertEquals("password", u.getPassword());
 		assertEquals(new ArrayList<SearchQuery>(), u.getfavouriteSearchQueries());	
 		UserManager.DeleteUser(u);
@@ -35,19 +36,20 @@ public class UserManagerTest {
 	
 	@Test 
 	public void test2(){
-		UserManager.SignUpUser("admin", "admin", true);
-		Admin a = (Admin) UserManager.LoginUser("admin", "admin");
-		assertEquals("admin", a.getUserName());
+		String UserName = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
+		UserManager.SignUpUser(UserName, "admin", true);
+		Admin a = (Admin) UserManager.LoginUser(UserName, "admin");
+		assertEquals(UserName, a.getUserName());
 		assertEquals("admin", a.getPassword());
 		assertEquals(new ArrayList<SearchQuery>(), a.getfavouriteSearchQueries());
 		
 		try {
-			UserManager.updateUserName(a, "badmin");
+			UserManager.updateUserName(a, "b"+UserName);
 		} catch (UserNotFoundException e) {
 			fail();
 		}
 		
-		Admin b = (Admin) UserManager.LoginUser("badmin", "admin");
+		Admin b = (Admin) UserManager.LoginUser("b"+UserName, "admin");
 		assertNotNull(b);
 		
 		List<SearchQuery> l = new ArrayList<SearchQuery>();
@@ -58,7 +60,7 @@ public class UserManagerTest {
 			fail();
 		}
 		
-		Admin c = ((Admin) UserManager.LoginUser("badmin", "admin"));
+		Admin c = ((Admin) UserManager.LoginUser("b"+UserName, "admin"));
 		assertEquals(SearchQuery.QueriesList2String(l), SearchQuery.QueriesList2String(c.getfavouriteSearchQueries()));
 		
 		
