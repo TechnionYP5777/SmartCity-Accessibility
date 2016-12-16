@@ -143,7 +143,7 @@ public abstract class DatabaseManager {
 	 * @throws ParseException
 	 */
 	public static void queryByLocation(final String objectClass, LatLng center, double radius, String locationKeyName,
-			FindCallback<ParseObject> o) throws ParseException {
+			FindCallback<ParseObject> o) {
 		ParseQuery<ParseObject> pq = ParseQuery.getQuery(objectClass);
 		pq.whereWithinKilometers(locationKeyName, new ParseGeoPoint(center.getLat(), center.getLng()), radius);
 		pq.findInBackground(o);
@@ -163,7 +163,7 @@ public abstract class DatabaseManager {
 	 * @throws ParseException
 	 */
 	public static void queryByLocation(final String objectClass, LatLng center, double radius,
-			FindCallback<ParseObject> o) throws ParseException {
+			FindCallback<ParseObject> o) {
 		queryByLocation(objectClass, center, radius, "location", o);
 	}
 
