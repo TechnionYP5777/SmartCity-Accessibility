@@ -28,6 +28,7 @@ public class DatabaseManagerTest {
 
 	public String testParseClass = "DatabaseManagerTestClass";
 
+	
 	@BeforeClass
 	public static void init() {
 		DatabaseManager.initialize();
@@ -174,19 +175,31 @@ public class DatabaseManagerTest {
 		final AtomicInteger res = new AtomicInteger();
 		try{
 			Map<String, Object> m = new HashMap<String,Object>();
-			m.put("location", new ParseGeoPoint(0, 0));
+			m.put("location", new ParseGeoPoint(32.777891, 35.021760));
 			DatabaseManager.putValue(testParseClass, m);
-			m.put("location", new ParseGeoPoint(0, 0));
+			m.put("location", new ParseGeoPoint(32.086690, 34.789864));
 			DatabaseManager.putValue(testParseClass, m);
 
 		}catch (Exception e) {
 			fail("failed to put test values to server");
 		}
 		
-		DatabaseManager.queryByLocation(testParseClass, new LatLng(0, 0), 1, new FindCallback<ParseObject>() {
+		DatabaseManager.queryByLocation(testParseClass, new LatLng(32.776520, 35.022962), 1, new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
-				res.compareAndSet(0, 1);
+				boolean sol = false;
+				
+				for(ParseObject po : arg0){
+					ParseGeoPoint point =(ParseGeoPoint)po.get("location");
+					System.out.println(point.getLatitude()+","+point.getLongitude());
+					if(point.getLatitude()==32.086690 && point.getLongitude()==34.789864)
+						res.compareAndSet(0, -1);
+					if(point.getLatitude()==32.777891 && point.getLongitude()==35.021760)
+						sol = true;
+				}
+				if(sol)
+					res.compareAndSet(0, 1);
+				res.compareAndSet(0, -2);
 			}
 		});
 		
