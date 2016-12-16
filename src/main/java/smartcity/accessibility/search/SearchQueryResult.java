@@ -25,41 +25,24 @@ import smartcity.acessibility.jxMapsExamples.HelloWorld;
 public class SearchQueryResult extends MapView{
 
 	Map map;
-	private List<GeocoderRequest> coordinations;
+	private List<GeocoderResult> coordinations;
 
-	SearchQueryResult(List<GeocoderRequest> c, Map m){
+	SearchQueryResult(List<GeocoderResult> c, Map m){
 		this.coordinations = c;
 		this.map = m;
 	}
 	
-	public List<GeocoderRequest> getCoordinations(){
+	public List<GeocoderResult> getCoordinations(){
 		return coordinations;
 	}
 	
 	public void showResults(){
-		for(GeocoderRequest gr: coordinations){
-			getServices().getGeocoder().geocode(gr, new GeocoderCallback(map) {
-                @Override
-                public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
-                    if (status == GeocoderStatus.OK) {
-                        map.setCenter(result[0].getGeometry().getLocation());
-                        Marker marker = new Marker(map);
-                        marker.setPosition(result[0].getGeometry().getLocation());
-                    }
-                }
-            });
+		for(GeocoderResult gr: coordinations){
+                    map.setCenter(gr.getGeometry().getLocation());
+                    Marker marker = new Marker(map);
+                    marker.setPosition(gr.getGeometry().getLocation());
 		}
-		
-		MapViewOptions options = new MapViewOptions();
-        options.importPlaces();
-        final HelloWorld mapView = new HelloWorld(options);
-
-        JFrame frame = new JFrame("JxMaps - Hello, World!");
-
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.add(mapView, BorderLayout.CENTER);
-        frame.setSize(700, 500);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-	}
+    }
 }
+	
+

@@ -40,7 +40,7 @@ public class HelloWorld extends MapView {
                         }
                     });
                     
-               /*    GeocoderRequest request2 = new GeocoderRequest(map);
+                   GeocoderRequest request2 = new GeocoderRequest(map);
                     request2.setAddress("Tel-Aviv, Weizmann St, 1");
 
                     Geocoder g2 =getServices().getGeocoder();
@@ -57,7 +57,7 @@ public class HelloWorld extends MapView {
                                 window.open(map, marker);
                             }
                         }
-                    });*/
+                    });
                 }
             }
         });

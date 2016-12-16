@@ -8,8 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.teamdev.jxmaps.Geocoder;
+import com.teamdev.jxmaps.GeocoderCallback;
 import com.teamdev.jxmaps.GeocoderRequest;
+import com.teamdev.jxmaps.GeocoderResult;
+import com.teamdev.jxmaps.GeocoderStatus;
 import com.teamdev.jxmaps.Map;
+import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.swing.MapView;
 
 
@@ -33,11 +37,22 @@ public class SearchQuery extends MapView{
 	}
 	
 	public SearchQueryResult Search() {
-		GeocoderRequest request = new GeocoderRequest(getMap());
+		GeocoderRequest request = new GeocoderRequest(map);
         request.setAddress(adress);
-        List<GeocoderRequest> retvalList = new ArrayList<GeocoderRequest>();
-        retvalList.add(request);
-        return new SearchQueryResult(retvalList, map);
+        
+        List<GeocoderResult> results = new ArrayList<GeocoderResult>();
+        
+        Geocoder g = getServices().getGeocoder();
+        g.geocode(request, new GeocoderCallback(map) {
+            @Override
+            public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
+                if (status == GeocoderStatus.OK) {
+                	results.add(result[0]);
+                }
+            }
+        });
+        return new SearchQueryResult(results, map);
+
 	}
 	
 	public String toString(){
