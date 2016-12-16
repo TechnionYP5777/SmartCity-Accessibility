@@ -51,8 +51,8 @@ public class Admin extends AuthenticatedUser {
 	 * Uploads Admins' reviews. 
 	 * Pins them automatically.
 	 */
-	//Ariel -> artuhr, don't forget to add the Review first (the function is at location) :)
 	public void uploadReview(Review r){
+		r.getLocation().addReview(this, r.getRating().getScore(), r.getComment());
 		ReviewManager.uploadReview(r, this);
 		pinReview(r);
 	}
