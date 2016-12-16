@@ -3,6 +3,8 @@ package smartcity.accessibility.mapmanagement;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import org.parse4j.ParseException;
+
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.database.ReviewManager;
@@ -45,11 +47,12 @@ public abstract class Location {
 	
 	/**
 	 * @author Kolikant
+	 * @throws ParseException 
 	 */
-	public void addReview(User u, int rating, String review) {
+	public void addReview(User u, int rating, String review) throws ParseException {
 		Review r = new Review(this, rating, review, u);
 		reviews.add(r);
-		ReviewManager.uploadReview(r, u);
+		ReviewManager.uploadReview(r);
 	}
 	
 	
