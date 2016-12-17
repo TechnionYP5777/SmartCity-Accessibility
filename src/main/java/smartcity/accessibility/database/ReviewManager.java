@@ -30,7 +30,7 @@ public class ReviewManager {
 		//TODO: is there anything that can make a review unvalid
 	}
 	
-	public Review getReviewByUserAndLocation(User u,Location l){
+	public static Review getReviewByUserAndLocation(User u,Location l){
 		final StringBuilder c = new StringBuilder();
 		final StringBuilder r = new StringBuilder();
 		FindCallback<ParseObject> p = new FindCallback<ParseObject>() {
@@ -38,8 +38,8 @@ public class ReviewManager {
 			public void done(List<ParseObject> arg0, ParseException arg1) {
 				// TODO Auto-generated method stub
                 if (arg1 == null) {
-                	c.append(arg0.get(1).get("rating"));
-                	r.append(arg0.get(1).get("comment"));
+                	c.append(arg0.get(0).get("rating"));
+                	r.append(arg0.get(0).get("comment"));
                 	//There might be a better way but for now i think it is ok
                 	//I look more into it later when i have time
                 } else {
@@ -53,8 +53,17 @@ public class ReviewManager {
 		m.put("location", l);
 		DatabaseManager.queryByFields("Review",m,p);
 		Review rev = new Review(l, Integer.valueOf(r.toString()), c.toString(), u);
-		return rev;
-		
+		return rev;	
+	}
+	
+	public static void deleteReview(Review r){
+		Map<String, Object> m = new HashMap<String,Object>();
+		m.put("user", r.getUser());
+		m.put("location", r.getLocation());
+		String id = DatabaseManager.getObjectId("Review",m);
+		DatabaseManager.deleteById("Review",id);
+		//TODO: handle Extreme case  - review not found
+		//TODO: maybe change the implementation to refer to the result value
 	}
 
 }

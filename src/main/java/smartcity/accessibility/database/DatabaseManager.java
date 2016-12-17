@@ -2,6 +2,7 @@
 package smartcity.accessibility.database;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.parse4j.Parse;
@@ -179,6 +180,16 @@ public abstract class DatabaseManager {
 		for (String key : values.keySet())
 			pq.whereEqualTo(key, values.get(key));
 		pq.findInBackground(o);
+	}
+	
+	/**
+	 * returns objects in class where results fields match values mapping
+	 * @param objectClass
+	 * @param values
+	 */
+	public static String getObjectId(final String objectClass, Map<String, Object> values){
+		//TODO: implemt this method
+		return null;		
 	}
 
 }
