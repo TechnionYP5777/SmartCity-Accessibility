@@ -60,8 +60,18 @@ public class ReviewManager {
 		Map<String, Object> m = new HashMap<String,Object>();
 		m.put("user", r.getUser());
 		m.put("location", r.getLocation());
-		String id = DatabaseManager.getObjectId("Review",m);
-		DatabaseManager.deleteById("Review",id);
+		
+		/* TODO : assaf, I change getObjectId to work in the background \
+		 * 			it's now called getObjectByFields, the callback will get 
+		 * 			get the ParseObject relevant and you can get the id with 
+		 * 			o.getObjectId()
+		 * 			update this to work correctly 
+		 * 												-alex
+		 */
+		//String id = DatabaseManager.getObjectId("Review",m);
+		//DatabaseManager.deleteById("Review",id);
+		
+		
 		//TODO: handle Extreme case  - review not found
 		//TODO: maybe change the implementation to refer to the result value
 	}

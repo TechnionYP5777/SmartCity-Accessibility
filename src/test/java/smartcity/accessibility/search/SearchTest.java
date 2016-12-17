@@ -104,12 +104,12 @@ public class SearchTest{
          frame.setSize(700, 500);
          frame.setLocationRelativeTo(null);
          frame.setVisible(true);
-		 try {
+		 /*try {
 			Thread.sleep(300000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
      }
             
 }
