@@ -22,6 +22,7 @@ public abstract class Location {
 	
 	private ArrayList<Review> reviews;
 	private ArrayList<Review> pinnedReviews;	//ArthurSap
+	private LatLng coordinates;
 
 	//ArthurSap
 	public ArrayList<Review> getReviews() {
@@ -34,8 +35,19 @@ public abstract class Location {
 	}
 
 	public Location(){
+		initiateArrays();
+		this.coordinates = null;
+	}
+	
+	public Location(LatLng c){
+		initiateArrays();
+		this.coordinates = c;
+		
+	}
+	
+	private void initiateArrays(){
 		this.reviews = new ArrayList<Review>();
-		this.pinnedReviews = new ArrayList<Review>();	// ArthurSap
+		this.pinnedReviews = new ArrayList<Review>();
 	}
 	
 	public Score getRating(){
@@ -48,9 +60,12 @@ public abstract class Location {
 		return null;
 	}
 	
-	public abstract LatLng getCoordinates();
 	
 	public abstract String getAddress();
+	
+	public LatLng getCoordinates() {
+		return this.coordinates;
+	}
 	
 	/**
 	 * @author Kolikant

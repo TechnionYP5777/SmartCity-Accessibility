@@ -1,6 +1,5 @@
 package smartcity.accessibility.mapmanagement;
 
-import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.PlacePhoto;
 import com.teamdev.jxmaps.PlaceResult;
 
@@ -9,12 +8,8 @@ public class PlaceLocation extends Location{
 	private PlaceResult placeResult;
 	
 	public PlaceLocation(PlaceResult pr){
+		super(pr.getGeometry().getLocation());
 		this.placeResult = pr;
-	}
-	
-	@Override
-	public LatLng getCoordinates(){
-		return placeResult.getGeometry().getLocation();
 	}
 	
 	@Override
