@@ -41,7 +41,7 @@ public class Navigation {
 	 * [[SuppressWarningsSpartan]]
 	 */
 	@SuppressWarnings("unused")
-	private Route getRouteFromMapQuest(Latlng from,Latlng to,List<MapSegment> segmentsToAvoid) {
+	public Route getRouteFromMapQuest(Latlng from,Latlng to,List<MapSegment> segmentsToAvoid) {
 		// (1) TODO request from server to avoid the segments of segmentsToAvoid
 		// (2) TODO request route form servers
 		Client client = ClientBuilder.newClient();
