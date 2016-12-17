@@ -3,11 +3,13 @@ package smartcity.accessibility.navigation;
 import java.util.List;
 
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 import smartcity.accessibility.navigation.mapquestcommunication.Route;
+import smartcity.accessibility.navigation.mapquestcommunication.RouteWraper;
 
 /**
  * 
- * @author yael This class help finds routs in the city. The class contains
+ * @author yael This class help finds routes in the city. The class contains
  *         segments of the map that should be avoided in the routes it returns.
  */
 public class Navigation {
@@ -24,16 +26,26 @@ public class Navigation {
 		Double radiusOfRoute = calcRadius(source, destination);
 		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessabilityThreshold,
 				radiusOfRoute);
-		@SuppressWarnings("unused")
-		Route route = getRouteFromMapQuest(segmentsToAvoid);
+		//Route route = getRouteFromMapQuest(source,destination,segmentsToAvoid);
 		// TODO display route for now
 		// TODO convert route to a format that can be displayed in JXMap
 		return null;
 	}
 
-	private Route getRouteFromMapQuest(List<MapSegment> segmentsToAvoid) {
+	/**
+	 * [[SuppressWarningsSpartan]]
+	 */
+	@SuppressWarnings("unused")
+	private Route getRouteFromMapQuest(Latlng from,Latlng to,List<MapSegment> segmentsToAvoid) {
 		// (1) TODO request from server to avoid the segments of segmentsToAvoid
 		// (2) TODO request route form servers
+		//Client client = ClientBuilder.newClient();
+		String path = "http://www.mapquestapi.com/directions/v2/route?";
+		path += "key="+ mapquestKey+"&";
+		path += "from="+from.getLat()+","+from.getLng()+"&";
+		path += "to="+to.getLat()+","+to.getLng();
+		//WebTarget resource = client.target(path);
+		//RouteWraper routeWraper = resource.get(RouteWraper.class);
 		return null;
 	}
 
