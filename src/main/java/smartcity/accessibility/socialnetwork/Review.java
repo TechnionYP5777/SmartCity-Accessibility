@@ -3,6 +3,7 @@ package smartcity.accessibility.socialnetwork;
 import java.util.ArrayList;
 import java.util.List;
 
+import smartcity.accessibility.exceptions.ScoreNotInRangeException;
 import smartcity.accessibility.mapmanagement.Location;
 
 /**
@@ -20,7 +21,11 @@ public class Review {
 	
 	public Review(Location l , int r, String c, User u) {
 		this.location = l;
-		this.rating = new Score(r);
+		try {
+			this.rating = new Score(r);
+		} catch (ScoreNotInRangeException e) {
+			// TODO: implement 
+		}
 		this.comment = c;
 		this.user = u;
 	}

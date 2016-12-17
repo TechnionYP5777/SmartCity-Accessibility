@@ -8,6 +8,7 @@ import org.parse4j.ParseException;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.database.ReviewManager;
+import smartcity.accessibility.exceptions.ScoreNotInRangeException;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
@@ -18,6 +19,7 @@ import smartcity.accessibility.socialnetwork.Score;
 
 public abstract class Location {
 
+	
 	private ArrayList<Review> reviews;
 	private ArrayList<Review> pinnedReviews;	//ArthurSap
 
@@ -37,8 +39,13 @@ public abstract class Location {
 	}
 	
 	public Score getRating(){
-		return new Score(
-				reviews.stream().collect(Collectors.summingInt(r -> r.getRating().getScore())) / reviews.size());
+		int rating = reviews.stream().collect(Collectors.summingInt(r -> r.getRating().getScore())) / reviews.size();
+		try {
+			return new Score(rating);
+		} catch (ScoreNotInRangeException e) {
+			// TODO: implement 
+		}
+		return null;
 	}
 	
 	public abstract LatLng getCoordinates();

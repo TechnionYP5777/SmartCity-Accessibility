@@ -1,5 +1,5 @@
 package smartcity.accessibility.exceptions;
 
-public class ScoreNotInRangeException {
+public class ScoreNotInRangeException extends Exception{
 
 }
