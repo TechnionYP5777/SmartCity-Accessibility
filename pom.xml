@@ -4,6 +4,7 @@
 	<groupId>SmartCity-Accessibility</groupId>
 	<artifactId>SmartCity-Accessibility</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
@@ -35,7 +36,26 @@
       		<snapshots><enabled>true</enabled><updatePolicy>always</updatePolicy></snapshots>
 		</repository>
 	</repositories>
+	<dependencyManagement> 
+		<dependencies> 
+			<dependency> 
+				<groupId>org.glassfish.jersey</groupId> 
+				<artifactId>jersey-bom</artifactId> 
+				<version>${jersey.version}</version> 
+				<type>pom</type> 
+				<scope>import</scope> 
+			</dependency> 
+		</dependencies> 
+	</dependencyManagement>
 	<dependencies>
+	 	<dependency> 
+	 		<groupId>org.glassfish.jersey.containers</groupId> 
+	 		<artifactId>jersey-container-servlet-core</artifactId> 
+	 	</dependency>
+	 	<dependency> 
+	 	 	<groupId>org.glassfish.jersey.media</groupId> 
+	 	 	<artifactId>jersey-media-moxy</artifactId> 
+	 	</dependency>
 		<dependency>
 			<groupId>com.github.abdielou</groupId>
 			<artifactId>parse4j</artifactId>
@@ -97,4 +117,8 @@
 			<version>2.3.0</version>
 		</dependency>
 	</dependencies>
+	<properties>
+        <jersey.version>2.23.2</jersey.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 </project>
