@@ -14,7 +14,7 @@ import smartcity.accessibility.mapmanagement.Location;
 public class Review {
 	
 	private Location location;
-	private User user;
+	private String user;
 	private Score rating;
 	private String comment;
 	private List<ReviewComment> comments = new ArrayList<ReviewComment>();
@@ -27,7 +27,7 @@ public class Review {
 			// TODO: implement 
 		}
 		this.comment = c;
-		this.user = u;
+		this.user = u.getName();
 	}
 	
 	public Score getRating() {
@@ -42,7 +42,7 @@ public class Review {
 		return this.comment;
 	}
 	
-	public User getUser() {
+	public String getUser() {
 		return this.user;
 	}
 	

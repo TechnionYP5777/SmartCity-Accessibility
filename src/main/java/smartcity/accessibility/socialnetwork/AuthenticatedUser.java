@@ -30,7 +30,6 @@ public class AuthenticatedUser implements User {
 	public List<SearchQuery> getfavouriteSearchQueries() {
 		return favouriteSearchQueries;
 	}
-	
 
 	public String getPassword() {
 		return password;
@@ -44,6 +43,11 @@ public class AuthenticatedUser implements User {
 	public void RemoveFromFavourites(SearchQuery q){
 		if (favouriteSearchQueries.contains(q))
 			this.favouriteSearchQueries.remove(q);
+	}
+
+	//koral
+	public String getName() {
+		return name;
 	}
 
 }

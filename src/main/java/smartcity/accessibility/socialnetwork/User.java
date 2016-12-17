@@ -16,4 +16,6 @@ public interface User {
 	static void search(SearchQuery q){
 		//q.Search();
 	}
+	
+	public String getName();
 }
