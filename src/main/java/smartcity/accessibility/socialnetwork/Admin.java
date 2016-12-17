@@ -2,6 +2,8 @@ package smartcity.accessibility.socialnetwork;
 
 import java.util.ArrayList;
 
+import org.parse4j.ParseException;
+
 import smartcity.accessibility.database.ReviewManager;
 
 /**
@@ -50,10 +52,11 @@ public class Admin extends AuthenticatedUser {
 	/**
 	 * Uploads Admins' reviews. 
 	 * Pins them automatically.
+	 * @throws ParseException 
 	 */
-	//Ariel -> artuhr, don't forget to add the Review first (the function is at location) :)
-	public void uploadReview(Review r){
-		ReviewManager.uploadReview(r, this);
+	public void uploadReview(Review r) throws ParseException{
+		r.getLocation().addReview(this, r.getRating().getScore(), r.getComment());
+		ReviewManager.uploadReview(r);
 		pinReview(r);
 	}
 	

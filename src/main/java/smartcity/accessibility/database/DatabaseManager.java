@@ -1,20 +1,27 @@
 
 package smartcity.accessibility.database;
 
+
+import java.util.List;
 import java.util.Map;
 
 import org.parse4j.Parse;
 import org.parse4j.ParseException;
+import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
 import org.parse4j.ParseQuery;
+import org.parse4j.callback.DeleteCallback;
+import org.parse4j.callback.FindCallback;
 import org.parse4j.callback.GetCallback;
 import org.parse4j.callback.SaveCallback;
+
+import com.teamdev.jxmaps.LatLng;
 
 /**
  * @author KaplanAlexander
  *
  */
-public abstract class DatabaseManager {
+public abstract class DatabaseManager { 
 	public static final String serverUrl = "https://smartcityaccessibility.herokuapp.com/parse";
 	public static final String restKey = "2139d-231cb2-738fe";
 	public static final String appId = "smartcityaccessibility";
@@ -54,36 +61,6 @@ public abstract class DatabaseManager {
 	}
 
 	/**
-	 * Try save object in parse server, if failed exception is thrown
-	 * 
-	 * @param objectClass
-	 * @param key
-	 * @param value
-	 * @throws ParseException
-	 */
-	public static void putValue(final String objectClass, final String key, final Object value) throws ParseException {
-		final ParseObject obj = new ParseObject(objectClass);
-		obj.put(key, value);
-		obj.save();
-	}
-
-	/**
-	 * Try and save the object in parse server in background, SaveCallback will
-	 * used to return the server result done is called on finish if error
-	 * occured ParseException!=null in done
-	 * 
-	 * @param objectClass
-	 * @param key
-	 * @param value
-	 * @param c
-	 */
-	public static void putValue(final String objectClass, final String key, final Object value, SaveCallback c) {
-		final ParseObject obj = new ParseObject(objectClass);
-		obj.put(key, value);
-		obj.saveInBackground(c);
-	}
-
-	/**
 	 * create a new object based on a mapping from strings to objects and put in
 	 * server
 	 * 
@@ -92,11 +69,12 @@ public abstract class DatabaseManager {
 	 *            a mapping from a string to an object to be saved inside the
 	 *            ParseObject
 	 */
-	public static void putValue(final String objectClass, Map<String, Object> fields) throws ParseException {
-		final ParseObject obj = new ParseObject(objectClass);
+	public static ParseObject putValue(final String objectClass, Map<String, Object> fields) throws ParseException {
+		final ParseObject $ = new ParseObject(objectClass);
 		for (String key : fields.keySet())
-			fields.put(key, fields.get(key));
-		obj.save();
+			$.put(key, fields.get(key));
+		$.save();
+		return $;
 	}
 
 	/**
@@ -113,8 +91,105 @@ public abstract class DatabaseManager {
 	public static void putValue(final String objectClass, Map<String, Object> fields, SaveCallback c) {
 		final ParseObject obj = new ParseObject(objectClass);
 		for (String key : fields.keySet())
-			fields.put(key, fields.get(key));
+			obj.put(key, fields.get(key));
 		obj.saveInBackground(c);
+	}
+
+	/**
+	 * delete object in background from class @objectClass with id= @id when
+	 * result is achieved c.done() is called
+	 * 
+	 * @param objectClass
+	 * @param id
+	 * @param c
+	 *            callback method to get result
+	 */
+	public static void deleteById(final String objectClass, String id, DeleteCallback c) {
+		final ParseObject obj = new ParseObject(objectClass);
+		obj.setObjectId(id);
+		obj.deleteInBackground(c);
+	}
+
+	/**
+	 * deletes object in background while ignoring result
+	 * 
+	 * @param objectClass
+	 * @param id
+	 */
+	public static void deleteById(final String objectClass, String id) {
+		deleteById(objectClass, id, new DeleteCallback() {
+			@Override
+			public void done(ParseException arg0) {
+				// do nothing
+			}
+		});
+	}
+
+	/**
+	 * returns all the objects from @objectClass where the value for
+	 * key @locationKeyName is a geo point and is within a @radius km distance
+	 * from @center
+	 * 
+	 * @param objectClass
+	 * @param center
+	 *            The point from which the distance is calculated
+	 * @param radius
+	 *            distance in KM from the point for query
+	 * @param locationKeyName
+	 *            Key name that holds the geo point for objects
+	 *            from @objectClass
+	 * @param o
+	 *            callback for result
+	 * @return
+	 * @throws ParseException
+	 */
+	public static void queryByLocation(final String objectClass, LatLng center, double radius, String locationKeyName,
+			FindCallback<ParseObject> o) {
+		ParseQuery<ParseObject> pq = ParseQuery.getQuery(objectClass);
+		pq.whereWithinKilometers(locationKeyName, new ParseGeoPoint(center.getLat(), center.getLng()), radius);
+		pq.findInBackground(o);
+	}
+
+	/**
+	 * Calls queryByLocation(final String objectClass, LatLng center, double
+	 * radius, String locationKeyName) with locationKeyName="location"
+	 * 
+	 * @param objectClass
+	 * @param center
+	 * @param radius
+	 *            in KM
+	 * @param o
+	 *            callback for result
+	 * @return
+	 * @throws ParseException
+	 */
+	public static void queryByLocation(final String objectClass, LatLng center, double radius,
+			FindCallback<ParseObject> o) {
+		queryByLocation(objectClass, center, radius, "location", o);
+	}
+
+	/**
+	 * returns objects in class where results fields match values mapping
+	 * @param objectClass
+	 * @param values
+	 * @param o
+	 */
+	public static void queryByFields(final String objectClass, Map<String, Object> values,
+			FindCallback<ParseObject> o) {
+		ParseQuery<ParseObject> pq = ParseQuery.getQuery(objectClass);
+		for (String key : values.keySet())
+			pq.whereEqualTo(key, values.get(key));
+		pq.findInBackground(o);
+	}
+	
+	/**
+	 * returns objects in class where results fields match values mapping
+	 * @param objectClass
+	 * @param values
+	 */
+	public static String getObjectId(final String objectClass, Map<String, Object> values){
+		//TODO: implemt this method
+		return null;		
 	}
 
 }
