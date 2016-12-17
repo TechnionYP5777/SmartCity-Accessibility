@@ -2,7 +2,6 @@
 package smartcity.accessibility.database;
 
 
-import java.util.List;
 import java.util.Map;
 
 import org.parse4j.Parse;
