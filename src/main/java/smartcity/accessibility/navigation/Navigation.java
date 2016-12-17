@@ -2,6 +2,10 @@ package smartcity.accessibility.navigation;
 
 import java.util.List;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 import smartcity.accessibility.navigation.mapquestcommunication.Route;
@@ -22,6 +26,7 @@ public class Navigation {
 	/**
 	 * [[SuppressWarningsSpartan]]
 	 */
+	@SuppressWarnings("unused")
 	public Route showRoute(Location source, Location destination, Integer accessabilityThreshold) {
 		Double radiusOfRoute = calcRadius(source, destination);
 		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessabilityThreshold,
@@ -39,14 +44,14 @@ public class Navigation {
 	private Route getRouteFromMapQuest(Latlng from,Latlng to,List<MapSegment> segmentsToAvoid) {
 		// (1) TODO request from server to avoid the segments of segmentsToAvoid
 		// (2) TODO request route form servers
-		//Client client = ClientBuilder.newClient();
+		Client client = ClientBuilder.newClient();
 		String path = "http://www.mapquestapi.com/directions/v2/route?";
 		path += "key="+ mapquestKey+"&";
 		path += "from="+from.getLat()+","+from.getLng()+"&";
 		path += "to="+to.getLat()+","+to.getLng();
-		//WebTarget resource = client.target(path);
-		//RouteWraper routeWraper = resource.get(RouteWraper.class);
-		return null;
+		WebTarget target = client.target(path);
+		RouteWraper routeWraper = target.request().get(RouteWraper.class);
+		return routeWraper.getRoute();
 	}
 
 	private Double calcRadius(Location source, Location destination) {
