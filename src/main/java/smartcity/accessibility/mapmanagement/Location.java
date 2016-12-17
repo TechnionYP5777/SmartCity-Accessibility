@@ -51,8 +51,7 @@ public abstract class Location {
 	 */
 	public void addReview(User u, int rating, String review) throws ParseException {
 		Review r = new Review(this, rating, review, u);
-		reviews.add(r);
-		ReviewManager.uploadReview(r);
+		actuallyAddReview(r);
 	}
 	
 	/**
@@ -60,6 +59,14 @@ public abstract class Location {
 	 * @throws ParseException 
 	 */
 	public void addReview(Review r) throws ParseException{
+		actuallyAddReview(r);
+	}
+
+	/**
+	 * @author ArthurSap
+	 * @throws ParseException
+	 */
+	private void actuallyAddReview(Review r) throws ParseException {
 		reviews.add(r);
 		ReviewManager.uploadReview(r);
 	}
