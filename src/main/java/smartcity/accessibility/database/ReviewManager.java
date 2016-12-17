@@ -22,7 +22,7 @@ public class ReviewManager {
 		Map<String, Object> m = new HashMap<String,Object>();
 		m.put("user", r.getUser());
 		m.put("location", r.getLocation());
-		m.put("rating",r.getRating());
+		m.put("rating",r.getRating().getScore());
 		m.put("comment",r.getComment());
 		ParseObject p = DatabaseManager.putValue("Review",m); // 
 		
