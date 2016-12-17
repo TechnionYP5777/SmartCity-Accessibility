@@ -55,5 +55,14 @@ public abstract class Location {
 		ReviewManager.uploadReview(r);
 	}
 	
+	/**
+	 * @author ArthurSap
+	 * @throws ParseException 
+	 */
+	public void addReview(Review r) throws ParseException{
+		reviews.add(r);
+		ReviewManager.uploadReview(r);
+	}
+	
 	
 }
