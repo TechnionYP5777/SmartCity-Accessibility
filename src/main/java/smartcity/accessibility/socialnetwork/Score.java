@@ -5,8 +5,10 @@ package smartcity.accessibility.socialnetwork;
  */
 public class Score {
 	private int score;
+	private static int MIN_SCORE;
+	private static int MAX_SCORE = 10;
 	
-	public Score(int s){
+	public Score(int s){	
 		this.score = s;
 	}
 	
