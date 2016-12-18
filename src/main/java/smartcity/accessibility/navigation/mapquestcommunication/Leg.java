@@ -1,6 +1,5 @@
 package smartcity.accessibility.navigation.mapquestcommunication;
 
-import java.util.List;
 
 /**
  * 
@@ -9,17 +8,17 @@ import java.util.List;
  *         Leg in a route is part of the route.(really, look it up)
  */
 public class Leg {
-	private List<Maneuver> maneuvers;
+	private Maneuver[] maneuvers;
 
 	public Leg() {
 
 	}
 
-	public List<Maneuver> getManeuvers() {
+	public Maneuver[] getManeuvers() {
 		return maneuvers;
 	}
 
-	public void setManeuvers(List<Maneuver> ms) {
+	public void setManeuvers(Maneuver[] ms) {
 		this.maneuvers = ms;
 	}
 	

@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 import smartcity.accessibility.navigation.mapquestcommunication.Route;
+import smartcity.accessibility.navigation.mapquestcommunication.Shape;
 
 public class NavigationTest {
 
@@ -12,18 +13,18 @@ public class NavigationTest {
 	 */
 	@Test
 	public void getSimpleRouteFromServers() {
-		//TODO this test is temporal for it relay on things that will change!
-		Latlng from = new Latlng(39.750307,-104.999472);
-		Latlng to =  new Latlng(40.750307,-105.999472);
-		@SuppressWarnings("unused")
+		// TODO this test is temporal for it relay on things that will change!
+		Latlng from = new Latlng(39.750307, -104.999472);
+		Latlng to = new Latlng(40.750307, -105.999472);
 		Route r = (new Navigation()).getRouteFromMapQuest(from, to, null);
-		/*for(Leg leg : r.getLegs()){
-			for(Maneuver m : leg.getManeuvers()){
-				for(String name : m.getStreet_names()){
-					System.out.println(name+"\n");
-				}
-			}
-		}*/
+		Shape shape = r.getShape();
+		Double[] shapePoints = shape.getShapePoints();
+		if (shapePoints.length % 2 != 0) {
+			System.out.println("something went wrong :(");
+		}
+		for (int i = 0; i < shapePoints.length - 1; i += 2) {
+			System.out.println("[" + shapePoints[i] + "," + shapePoints[i + 1] + "]");
+		}
 	}
 
 }

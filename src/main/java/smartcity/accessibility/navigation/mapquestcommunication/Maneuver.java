@@ -1,6 +1,5 @@
 package smartcity.accessibility.navigation.mapquestcommunication;
 
-import java.util.List;
 
 /**
  * 
@@ -8,30 +7,41 @@ import java.util.List;
  *         for communication with the servers.
  */
 public class Maneuver {
-	private List<Integer> linkIds;
-	private List<String> street_names;
+	private Long[] linkIds;
+	private String[] streets;
 	private Direction direction;
+	private Integer index;
 
 	public Maneuver() {
 
 	}
+	public Integer getIndex() {
+		return index;
+	}
 
-	public List<Integer> getLinkIds() {
+	public void setIndex(Integer index) {
+		this.index = index;
+	}
+
+	public Long[] getLinkIds() {
 		return linkIds;
 	}
 
-	public void setLinkIds(List<Integer> linkIds) {
+	public void setLinkIds(Long[] linkIds) {
 		this.linkIds = linkIds;
 	}
 
-	public List<String> getStreet_names() {
-		return street_names;
+	
+	public String[] getStreets() {
+		return streets;
 	}
 
-	public void setStreet_names(List<String> street_names) {
-		this.street_names = street_names;
+	public void setStreets(String[] streets) {
+		this.streets = streets;
 	}
 
+	
+	
 	public Direction getDirection() {
 		return direction;
 	}

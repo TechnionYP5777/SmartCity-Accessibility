@@ -1,24 +1,31 @@
 package smartcity.accessibility.navigation.mapquestcommunication;
 
-import java.util.List;
-
 /**
  * 
  * @author yael This class represent a route between 2 locations in the map.
  */
 public class Route {
-	private List<Leg> legs;
+	private Leg[] legs;
+	private Shape shape;
 
 	public Route() {
 
 	}
 
-	public List<Leg> getLegs() {
+	public Leg[] getLegs() {
 		return legs;
 	}
 
-	public void setLegs(List<Leg> ls) {
+	public void setLegs(Leg[] ls) {
 		this.legs = ls;
+	}
+
+	public Shape getShape() {
+		return shape;
+	}
+
+	public void setShape(Shape s) {
+		this.shape = s;
 	}
 
 }

@@ -40,15 +40,16 @@ public class Navigation {
 	/**
 	 * [[SuppressWarningsSpartan]]
 	 */
-	@SuppressWarnings("unused")
 	public Route getRouteFromMapQuest(Latlng from,Latlng to,List<MapSegment> segmentsToAvoid) {
 		// (1) TODO request from server to avoid the segments of segmentsToAvoid
 		// (2) TODO request route form servers
+		// TODO make this code more OOP style...
 		Client client = ClientBuilder.newClient();
 		String path = "http://www.mapquestapi.com/directions/v2/route?";
 		path += "key="+ mapquestKey+"&";
 		path += "from="+from.getLat()+","+from.getLng()+"&";
 		path += "to="+to.getLat()+","+to.getLng();
+		path+="&fullShape=true&shapeFormat=raw";
 		WebTarget target = client.target(path);
 		RouteWraper routeWraper = target.request().get(RouteWraper.class);
 		return routeWraper.getRoute();
