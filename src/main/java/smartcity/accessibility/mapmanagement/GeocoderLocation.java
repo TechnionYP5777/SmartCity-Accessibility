@@ -3,27 +3,18 @@ package smartcity.accessibility.mapmanagement;
 
 
 import com.teamdev.jxmaps.GeocoderResult;
-import com.teamdev.jxmaps.LatLng;
 
 public class GeocoderLocation extends Location{
 	
 	private GeocoderResult geocoderResult;
 	
 	public GeocoderLocation(GeocoderResult gr){
+		super(gr.getGeometry().getLocation());
 		this.geocoderResult = gr;
-	}
-	
-	@Override
-	public LatLng getCoordinates(){
-		return geocoderResult.getGeometry().getLocation();
 	}
 	
 	@Override
 	public String getAddress(){
 		return geocoderResult.getFormattedAddress();
 	}
-	
-	
-	
-	
 }

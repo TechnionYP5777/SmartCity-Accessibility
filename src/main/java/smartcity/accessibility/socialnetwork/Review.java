@@ -3,6 +3,7 @@ package smartcity.accessibility.socialnetwork;
 import java.util.ArrayList;
 import java.util.List;
 
+import smartcity.accessibility.exceptions.ScoreNotInRangeException;
 import smartcity.accessibility.mapmanagement.Location;
 
 /**
@@ -13,16 +14,20 @@ import smartcity.accessibility.mapmanagement.Location;
 public class Review {
 	
 	private Location location;
-	private User user;
+	private String user;
 	private Score rating;
 	private String comment;
 	private List<ReviewComment> comments = new ArrayList<ReviewComment>();
 	
 	public Review(Location l , int r, String c, User u) {
 		this.location = l;
-		this.rating = new Score(r);
+		try {
+			this.rating = new Score(r);
+		} catch (ScoreNotInRangeException e) {
+			// TODO: implement 
+		}
 		this.comment = c;
-		this.user = u;
+		this.user = u.getName();
 	}
 	
 	public Score getRating() {
@@ -37,7 +42,7 @@ public class Review {
 		return this.comment;
 	}
 	
-	public User getUser() {
+	public String getUser() {
 		return this.user;
 	}
 	
