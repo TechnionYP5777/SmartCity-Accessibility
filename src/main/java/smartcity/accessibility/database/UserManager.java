@@ -71,6 +71,8 @@ public abstract class UserManager {
 	}
 	
 	public static void DeleteUser(AuthenticatedUser u){
+		if(u == null)
+			return;
 		ParseUser pu;
 		try {
 			pu = ParseUser.login(u.getUserName(), u.getPassword());

@@ -21,6 +21,14 @@ public class UserManagerTest {
 	@BeforeClass
 	public static void init(){
 		DatabaseManager.initialize();
+		String UserName = "uuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
+		AuthenticatedUser u = UserManager.LoginUser(UserName, "password");
+		UserManager.DeleteUser(u);
+		String UserName2 = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
+		u = UserManager.LoginUser(UserName2, "admin");
+		UserManager.DeleteUser(u);
+		u = UserManager.LoginUser("b"+UserName2, "admin");
+		UserManager.DeleteUser(u);
 	}
 	
 	@Test
