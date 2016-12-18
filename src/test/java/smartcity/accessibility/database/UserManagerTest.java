@@ -5,11 +5,13 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.search.SearchQuery;
+import smartcity.accessibility.search.SearchTest;
 import smartcity.accessibility.socialnetwork.Admin;
 import smartcity.accessibility.socialnetwork.AuthenticatedUser;
 
@@ -44,6 +46,7 @@ public class UserManagerTest {
 	
 	@Test 
 	public void test2(){
+		Assume.assumeFalse(SearchTest.shouldIgnore());
 		String UserName = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
 		UserManager.SignUpUser(UserName, "admin", true);
 		Admin a = (Admin) UserManager.LoginUser(UserName, "admin");

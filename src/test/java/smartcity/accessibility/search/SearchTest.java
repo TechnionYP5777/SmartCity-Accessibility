@@ -38,7 +38,7 @@ import smartcity.acessibility.jxMapsExamples.HelloWorld;
  */
 public class SearchTest{
 	
-	public boolean shouldIgnore(){
+	public static boolean shouldIgnore(){
 		try {
 			MapView mp = new MapView();
 		} catch(Exception e){
