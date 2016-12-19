@@ -2,6 +2,7 @@ package smartcity.accessibility.socialnetwork;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 
@@ -28,5 +29,10 @@ public class BestReviews {
 	public List<Review> getMostRated() {
 		reviews.sort((Review r1, Review r2) -> r2.getRating().getScore() - r1.getRating().getScore());
 		return reviews.subList(0, n-1);
+	}
+	
+	public int getTotalRating() {
+		List<Review> mostRated = getMostRated();
+		return mostRated.stream().collect(Collectors.summingInt(a -> a.getRating().getScore())) / mostRated.size();
 	}
 }
