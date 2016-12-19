@@ -1,6 +1,7 @@
 package smartcity.accessibility.navigation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -39,5 +40,27 @@ public class NavigationTest {
 		MapSegment m = (new Navigation()).getMapSegmentOfLatLng(31.766932, 34.631666);
 		System.out.println(m.getLinkId());
 		System.out.println(m.getStreet());
+	}
+	
+	/**
+	 * [[SuppressWarningsSpartan]]
+	 */
+	@Test
+	public void getRouteFromServersWithLinksToAvoid() {
+		// TODO this test is temporal for it relay on things that will change!
+		Latlng from = new Latlng(31.766932, 34.631666);//sd tel hai 61 ashdod
+		Latlng to = new Latlng(31.770981, 34.620567);//HaYam HaTichon Blvd 1
+		List<MapSegment> segmentsToAvoid = new ArrayList<MapSegment>();
+		segmentsToAvoid.add((new Navigation()).getMapSegmentOfLatLng(31.769955, 34.623123));//bareket st
+		Route r = ((new Navigation()).getRouteFromMapQuest(from, to, segmentsToAvoid));
+		Shape shape = r.getShape();
+		Double[] shapePoints = shape.getShapePoints();
+		if (shapePoints.length % 2 != 0) {
+			System.out.println("something went wrong :(");
+		}
+		for (int i = 0; i < shapePoints.length - 1; i += 2) {
+			//i'm leaving it comment for now
+			//System.out.println("[" + shapePoints[i] + "," + shapePoints[i + 1] + "]");
+		}
 	}
 }
