@@ -5,9 +5,12 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.parse4j.ParseException;
+import org.parse4j.ParseUser;
 
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.search.SearchQuery;
@@ -31,6 +34,17 @@ public class UserManagerTest {
 		UserManager.DeleteUser(u);
 		u = UserManager.LoginUser("b"+UserName2, "admin");
 		UserManager.DeleteUser(u);
+	}
+	
+	@After
+	public void logout(){
+		if(ParseUser.currentUser != null)
+			try {
+				ParseUser.currentUser.logout();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	
 	@Test

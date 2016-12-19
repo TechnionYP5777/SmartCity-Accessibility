@@ -39,8 +39,6 @@ public class DatabaseManagerTest {
 	@BeforeClass
 	public static void init() throws ParseException {
 		try{
-			if(ParseUser.currentUser != null)
-				ParseUser.currentUser.logout();
 			DatabaseManager.initialize();
 			Map<String, Object> m = new HashMap<String, Object>();
 			m.put("test2", "res1");
