@@ -28,6 +28,10 @@
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>
 					<version>0.7.8</version>
+					<configuration>
+						<destFile>${basedir}/target/jacoco-unit.exec</destFile>
+						<dataFile>${basedir}/target/jacoco-unit.exec</dataFile>
+					</configuration>
 
 					<executions>
 						<execution>
