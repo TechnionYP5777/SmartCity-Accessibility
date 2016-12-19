@@ -13,8 +13,4 @@ public class GeocoderLocation extends Location{
 		this.geocoderResult = gr;
 	}
 	
-	@Override
-	public String getAddress(){
-		return geocoderResult.getFormattedAddress();
-	}
 }

@@ -7,8 +7,6 @@ import org.parse4j.ParseException;
 import org.parse4j.ParseObject;
 import org.parse4j.callback.FindCallback;
 
-import com.teamdev.jxmaps.internal.internal.s;
-
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.User;

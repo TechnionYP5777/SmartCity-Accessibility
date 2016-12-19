@@ -12,10 +12,6 @@ public class PlaceLocation extends Location{
 		this.placeResult = pr;
 	}
 	
-	@Override
-	public String getAddress(){
-		return placeResult.getFormattedAddress();
-	}
 	
 	public PlacePhoto[] getPhotos(){
 		return placeResult.getPhotos();

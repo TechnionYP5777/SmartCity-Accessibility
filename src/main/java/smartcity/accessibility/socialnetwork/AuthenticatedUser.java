@@ -46,6 +46,7 @@ public class AuthenticatedUser implements User {
 	}
 
 	//koral
+	@Override
 	public String getName() {
 		return name;
 	}

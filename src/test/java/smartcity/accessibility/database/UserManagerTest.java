@@ -5,16 +5,10 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.parse4j.ParseException;
-import org.parse4j.ParseUser;
-
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.search.SearchQuery;
-import smartcity.accessibility.search.SearchTest;
 import smartcity.accessibility.socialnetwork.Admin;
 import smartcity.accessibility.socialnetwork.AuthenticatedUser;
 

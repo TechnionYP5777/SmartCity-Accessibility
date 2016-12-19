@@ -8,10 +8,4 @@ package smartcity.accessibility.mapmanagement;
  */
 public class Coordinates extends Location {
 
-	@Override
-	public String getAddress() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

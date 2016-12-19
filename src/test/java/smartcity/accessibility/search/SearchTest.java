@@ -1,24 +1,13 @@
 package smartcity.accessibility.search;
 
-import static org.junit.Assert.*;
-
 import java.awt.BorderLayout;
-import java.io.IOException;
-import java.util.List;
-
-import javax.naming.directory.SearchResult;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import org.junit.Assume;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.teamdev.jxmaps.Geocoder;
-import com.teamdev.jxmaps.GeocoderCallback;
 import com.teamdev.jxmaps.GeocoderRequest;
-import com.teamdev.jxmaps.GeocoderResult;
-import com.teamdev.jxmaps.GeocoderStatus;
 import com.teamdev.jxmaps.InfoWindow;
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.Map;
@@ -27,10 +16,6 @@ import com.teamdev.jxmaps.MapStatus;
 import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.swing.MapView;
-
-import org.junit.BeforeClass;
-
-import smartcity.acessibility.jxMapsExamples.HelloWorld;
 
 /**
  * @author Kolikant
