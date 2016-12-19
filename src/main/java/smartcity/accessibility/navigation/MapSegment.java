@@ -8,5 +8,5 @@ package smartcity.accessibility.navigation;
  *
  */
 public class MapSegment {
-
+	
 }

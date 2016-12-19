@@ -1,5 +1,6 @@
 package smartcity.accessibility.navigation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.client.Client;
@@ -59,13 +60,32 @@ public class Navigation {
 	 * [[SuppressWarningsSpartan]]
 	 */
 	private List<MapSegment> getSegmentsToAvoid(Location source, Location destination, Integer accessibilityThreshold) {
-		@SuppressWarnings("unused")
 		List<Location> locationsToAvoid = LocationManager.getNonAccessibleLocationsInRadius(source, destination,
 				accessibilityThreshold);
+		List<MapSegment> mapSegmentsToAVoid = new ArrayList<MapSegment>();
+		for(Location l : locationsToAvoid){
+			MapSegment mapSegment = getMapSegmentOfLatLng(l.getCoordinates().getLat(),l.getCoordinates().getLng());
+			mapSegmentsToAVoid.add(mapSegment);
+		}
 		// TODO return list of segment to avoid within the given radius
 		// this method will use LocationManager to get the locations and then
 		// identify their MapSegment
 		return null;
+	}
+
+	/**
+	 * [[SuppressWarningsSpartan]]
+	 */
+	private MapSegment getMapSegmentOfLatLng(double lat, double lng) {
+		//convert lanlng to locationId
+		Client client = ClientBuilder.newClient();
+		String path = "http://www.mapquestapi.com/directions/v2/findlinkid?";
+		path += "key=" + mapquestKey + "&";
+		path += "lat="+lat+"&";
+		path += "lng="+lng;
+		WebTarget target = client.target(path);
+		MapSegment mapSegment = target.request().get(MapSegment.class);
+		return mapSegment;
 	}
 
 }
