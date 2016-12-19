@@ -36,17 +36,6 @@ public class UserManagerTest {
 		UserManager.DeleteUser(u);
 	}
 	
-	@After
-	public void logout(){
-		if(ParseUser.currentUser != null)
-			try {
-				ParseUser.currentUser.logout();
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	}
-	
 	@Test
 	public void test() {
 		String UserName = "uuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";

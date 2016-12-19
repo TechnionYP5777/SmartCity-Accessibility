@@ -19,6 +19,16 @@ public abstract class UserManager {
 	private static final String FavouriteQueriesField = "FavouritQueries";
 	private static final String isAdminField = "isAdmin";
 	
+	public static void logoutCurrUser(){
+		if(ParseUser.currentUser != null)
+			try {
+				ParseUser.currentUser.logout();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	
 	/*
 	 * Users should be created only through here, as this shows if they can be added to the database
 	 */
@@ -41,6 +51,7 @@ public abstract class UserManager {
 		
 		try {
 			user.logout();
+			logoutCurrUser();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,6 +74,7 @@ public abstract class UserManager {
 		$ = isAdmin ? new Admin(name, password,favouriteQueries) : new AuthenticatedUser(name, password,favouriteQueries);
 		try {
 			pu.logout();
+			logoutCurrUser();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,6 +89,7 @@ public abstract class UserManager {
 		try {
 			pu = ParseUser.login(u.getUserName(), u.getPassword());
 			pu.delete();
+			logoutCurrUser();
 			//TODO: check if logout is needed here
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -91,6 +104,7 @@ public abstract class UserManager {
 			pu.setUsername(newName);
 			pu.save();
 			pu.logout();
+			logoutCurrUser();
 		}catch (ParseException e1) {
 			throw new UserNotFoundException();
 		}
@@ -120,6 +134,7 @@ public abstract class UserManager {
 			pu.put(FavouriteQueriesField, SearchQuery.QueriesList2String(l));
 			pu.save();
 			pu.logout();
+			logoutCurrUser();
 		}catch (ParseException e1) {
 			throw new UserNotFoundException();
 		}
