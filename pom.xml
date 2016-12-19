@@ -28,11 +28,6 @@
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>
 					<version>0.7.8</version>
-					<configuration>
-						<destFile>${basedir}/target/jacoco-unit.exec</destFile>
-						<dataFile>${basedir}/target/jacoco-unit.exec</dataFile>
-					</configuration>
-
 					<executions>
 						<execution>
 							<id>default-prepare-agent</id>
@@ -42,9 +37,15 @@
 						</execution>
 						<execution>
 							<id>default-report</id>
-							<phase>test</phase>
+							<phase>prepare-package</phase>
 							<goals>
 								<goal>report</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>default-check</id>
+							<goals>
+								<goal>check</goal>
 							</goals>
 						</execution>
 					</executions>
