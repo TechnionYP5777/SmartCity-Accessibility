@@ -27,5 +27,15 @@ public class NavigationTest {
 			//System.out.println("[" + shapePoints[i] + "," + shapePoints[i + 1] + "]");
 		}
 	}
-
+	
+	/**
+	 * [[SuppressWarningsSpartan]]
+	 */
+	@Test
+	public void getMapSegmentFromLatLng() {
+		// TODO this test is temporal for it relay on things that will change!
+		MapSegment m = (new Navigation()).getMapSegmentOfLatLng(31.766932, 34.631666);
+		System.out.println(m.getLinkId());
+		System.out.println(m.getStreet());
+	}
 }

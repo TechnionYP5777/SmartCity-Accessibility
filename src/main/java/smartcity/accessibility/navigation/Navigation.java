@@ -76,7 +76,7 @@ public class Navigation {
 	/**
 	 * [[SuppressWarningsSpartan]]
 	 */
-	private MapSegment getMapSegmentOfLatLng(double lat, double lng) {
+	public MapSegment getMapSegmentOfLatLng(double lat, double lng) {
 		//convert lanlng to locationId
 		Client client = ClientBuilder.newClient();
 		String path = "http://www.mapquestapi.com/directions/v2/findlinkid?";
