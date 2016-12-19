@@ -42,8 +42,6 @@ public class Navigation {
 	 * [[SuppressWarningsSpartan]]
 	 */
 	public Route getRouteFromMapQuest(Latlng from, Latlng to, List<MapSegment> segmentsToAvoid) {
-		// (1) TODO request from server to avoid the segments of segmentsToAvoid
-		// (2) TODO request route form servers
 		// TODO make this code more OOP style...
 		Client client = ClientBuilder.newClient();
 		String path = "http://www.mapquestapi.com/directions/v2/route?";
@@ -51,6 +49,15 @@ public class Navigation {
 		path += "from=" + from.getLat() + "," + from.getLng() + "&";
 		path += "to=" + to.getLat() + "," + to.getLng();
 		path += "&fullShape=true&shapeFormat=raw";
+		if(!segmentsToAvoid.isEmpty()){
+			path += "&mustAvoidLinkIds=";
+			String mustAvoidLinkIds = "";
+			for (MapSegment m : segmentsToAvoid) {
+				mustAvoidLinkIds += m.getLinkId();
+			}
+			mustAvoidLinkIds = String.join((CharSequence) ",", (CharSequence) mustAvoidLinkIds);
+			path+=mustAvoidLinkIds;
+		}
 		WebTarget target = client.target(path);
 		RouteWraper routeWraper = target.request().get(RouteWraper.class);
 		return routeWraper.getRoute();
@@ -63,26 +70,23 @@ public class Navigation {
 		List<Location> locationsToAvoid = LocationManager.getNonAccessibleLocationsInRadius(source, destination,
 				accessibilityThreshold);
 		List<MapSegment> mapSegmentsToAVoid = new ArrayList<MapSegment>();
-		for(Location l : locationsToAvoid){
-			MapSegment mapSegment = getMapSegmentOfLatLng(l.getCoordinates().getLat(),l.getCoordinates().getLng());
+		for (Location l : locationsToAvoid) {
+			MapSegment mapSegment = getMapSegmentOfLatLng(l.getCoordinates().getLat(), l.getCoordinates().getLng());
 			mapSegmentsToAVoid.add(mapSegment);
 		}
-		// TODO return list of segment to avoid within the given radius
-		// this method will use LocationManager to get the locations and then
-		// identify their MapSegment
-		return null;
+		return mapSegmentsToAVoid;
 	}
 
 	/**
 	 * [[SuppressWarningsSpartan]]
 	 */
 	public MapSegment getMapSegmentOfLatLng(double lat, double lng) {
-		//convert lanlng to locationId
+		// convert lanlng to MapSegment
 		Client client = ClientBuilder.newClient();
 		String path = "http://www.mapquestapi.com/directions/v2/findlinkid?";
 		path += "key=" + mapquestKey + "&";
-		path += "lat="+lat+"&";
-		path += "lng="+lng;
+		path += "lat=" + lat + "&";
+		path += "lng=" + lng;
 		WebTarget target = client.target(path);
 		MapSegment mapSegment = target.request().get(MapSegment.class);
 		return mapSegment;

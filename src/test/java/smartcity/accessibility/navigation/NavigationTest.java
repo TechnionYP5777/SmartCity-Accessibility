@@ -1,5 +1,7 @@
 package smartcity.accessibility.navigation;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
@@ -16,7 +18,7 @@ public class NavigationTest {
 		// TODO this test is temporal for it relay on things that will change!
 		Latlng from = new Latlng(39.750307, -104.999472);
 		Latlng to = new Latlng(40.750307, -105.999472);
-		Route r = (new Navigation()).getRouteFromMapQuest(from, to, null);
+		Route r = (new Navigation()).getRouteFromMapQuest(from, to, new ArrayList<MapSegment>());
 		Shape shape = r.getShape();
 		Double[] shapePoints = shape.getShapePoints();
 		if (shapePoints.length % 2 != 0) {
