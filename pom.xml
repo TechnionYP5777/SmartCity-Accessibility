@@ -19,6 +19,11 @@
 					</configuration>
 				</plugin>
 			</plugins>
+			<plugin>
+			  <groupId>org.jacoco</groupId>
+			  <artifactId>jacoco-maven-plugin</artifactId>
+			  <version>0.7.9-SNAPSHOT</version>
+			</plugin>
 		</pluginManagement>
 	</build>
 	<repositories>
