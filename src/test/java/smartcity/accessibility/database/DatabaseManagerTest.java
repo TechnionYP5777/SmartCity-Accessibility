@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
+import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,6 +16,7 @@ import org.junit.rules.Timeout;
 import org.parse4j.ParseException;
 import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
+import org.parse4j.ParseUser;
 import org.parse4j.callback.DeleteCallback;
 import org.parse4j.callback.FindCallback;
 import org.parse4j.callback.GetCallback;
@@ -37,23 +38,31 @@ public class DatabaseManagerTest {
 
 	@BeforeClass
 	public static void init() throws ParseException {
-		DatabaseManager.initialize();
-		Map<String, Object> m = new HashMap<String, Object>();
-		m.put("test2", "res1");
-		m.put("test1", 65);
-		DatabaseManager.putValue(testParseClass, m);
-
-		final AtomicInteger res = new AtomicInteger();
-		DatabaseManager.queryByFields(testParseClass, m, new FindCallback<ParseObject>() {
-
-			@Override
-			public void done(List<ParseObject> arg0, ParseException arg1) {
-				id_result = arg0.get(0).getObjectId();
-				res.compareAndSet(0, 1);
-			}
-		});
-		for (int value = 0; value == 0;)
-			value = res.getAndSet(0);
+		try{
+			if(ParseUser.currentUser != null)
+				ParseUser.currentUser.logout();
+			DatabaseManager.initialize();
+			Map<String, Object> m = new HashMap<String, Object>();
+			m.put("test2", "res1");
+			m.put("test1", 65);
+			DatabaseManager.putValue(testParseClass, m);
+	
+			final AtomicInteger res = new AtomicInteger();
+			DatabaseManager.queryByFields(testParseClass, m, new FindCallback<ParseObject>() {
+	
+				@Override
+				public void done(List<ParseObject> arg0, ParseException arg1) {
+					id_result = arg0.get(0).getObjectId();
+					res.compareAndSet(0, 1);
+				}
+			});
+			for (int value = 0; value == 0;)
+				value = res.getAndSet(0);
+		} catch (ParseException e){
+			// failed to communicate with the server to create base for these tests
+			e.printStackTrace();
+			Assume.assumeFalse(true);
+		}
 	}
 
 
