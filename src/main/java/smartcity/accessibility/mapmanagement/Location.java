@@ -1,22 +1,18 @@
 package smartcity.accessibility.mapmanagement;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.parse4j.ParseException;
 
-import com.teamdev.jxmaps.Geocoder;
-import com.teamdev.jxmaps.GeocoderCallback;
-import com.teamdev.jxmaps.GeocoderRequest;
-import com.teamdev.jxmaps.GeocoderResult;
-import com.teamdev.jxmaps.GeocoderStatus;
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.Map;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.exceptions.ScoreNotInRangeException;
+import smartcity.accessibility.search.SearchQuery;
+import smartcity.accessibility.search.SearchQueryResult;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
@@ -72,19 +68,9 @@ public abstract class Location extends MapView{
 	}
 	
 	public String getAddress(Map map){
-		GeocoderRequest request = new GeocoderRequest(map);
-        request.setLocation(coordinates);
-        List<GeocoderResult> results = new ArrayList<GeocoderResult>();
-        Geocoder geocoder = getServices().getGeocoder();
-        geocoder.geocode(request, new GeocoderCallback(map) {
-            @Override
-            public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
-                if (status == GeocoderStatus.OK && result.length > 0) {
-                	results.add(result[0]);
-                }
-            }
-        });
-	    return results.get(0).getFormattedAddress();
+		SearchQuery sq = new SearchQuery("");
+		SearchQueryResult result = sq.searchByCoordinates(map, coordinates);
+		return result.getCoordinations().get(0).getFormattedAddress();
 	}
 	
 	public LatLng getCoordinates() {
