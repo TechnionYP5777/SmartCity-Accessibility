@@ -23,7 +23,8 @@ public class NavigationTest {
 			System.out.println("something went wrong :(");
 		}
 		for (int i = 0; i < shapePoints.length - 1; i += 2) {
-			System.out.println("[" + shapePoints[i] + "," + shapePoints[i + 1] + "]");
+			//i'm leaving it comment for now
+			//System.out.println("[" + shapePoints[i] + "," + shapePoints[i + 1] + "]");
 		}
 	}
 
