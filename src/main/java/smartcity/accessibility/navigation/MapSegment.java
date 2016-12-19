@@ -8,5 +8,22 @@ package smartcity.accessibility.navigation;
  *
  */
 public class MapSegment {
-	
+	private Long linkId;
+	private String street;
+
+	public Long getLinkId() {
+		return linkId;
+	}
+
+	public void setLinkId(Long linkId) {
+		this.linkId = linkId;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
 }
