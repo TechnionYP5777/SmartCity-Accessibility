@@ -20,10 +20,17 @@ public class Score {
 		return this.score;
 	}
 	
-	public void serScore(int s) {
+	public void setScore(int s) {
 		this.score = s;
 	}
 	
+	public static int getMinScore() {
+		return MIN_SCORE;
+	}
+	
+	public static int getMaxScore() {
+		return MAX_SCORE;
+	}
 	private boolean isValidScore(int s) {
 		return !(s < MIN_SCORE || s > MAX_SCORE);
 	}

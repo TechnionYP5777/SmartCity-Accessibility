@@ -1,8 +1,6 @@
 package smartcity.accessibility.mapmanagement;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
@@ -14,6 +12,7 @@ import smartcity.accessibility.exceptions.ScoreNotInRangeException;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.BestReviews;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 
@@ -57,15 +56,21 @@ public abstract class Location extends MapView{
 		this.pinnedReviews = new ArrayList<Review>();
 	}
 	
-	public Score getRating(){
-		int rating = reviews.stream().collect(Collectors.summingInt(r -> r.getRating().getScore())) / reviews.size();
+	// n is the number of reviews we want to calculate the Location's rating by
+	public Score getRating(int n){
+		int rating = -1;
 		try {
+			if( pinnedReviews.isEmpty() && reviews.isEmpty())
+				return new Score(Score.getMinScore());
+			BestReviews br = !pinnedReviews.isEmpty() ? new BestReviews(n, pinnedReviews) : new BestReviews(n, reviews);
+			rating = br.getTotalRating();
 			return new Score(rating);
 		} catch (ScoreNotInRangeException e) {
 			// TODO: implement 
 		}
 		return null;
 	}
+
 	
 	public String getAddress(Map map){
 		SearchQuery sq = new SearchQuery("");
