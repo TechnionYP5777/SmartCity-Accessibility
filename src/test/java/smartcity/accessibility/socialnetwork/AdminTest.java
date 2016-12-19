@@ -43,11 +43,31 @@ public class AdminTest {
 		
 		Mockito.verify(review, VerificationModeFactory.times(2)).getLocation();
 		//Added to pinned
-		Mockito.verify(location).getPinnedReviews();
 		Mockito.verify(location.getPinnedReviews()).add(review);
+		Mockito.verify(location, VerificationModeFactory.times(2)).getPinnedReviews();
 		//Removed from regular
-		Mockito.verify(location).getReviews();
 		Mockito.verify(location.getReviews()).remove(review);
+		Mockito.verify(location, VerificationModeFactory.times(2)).getReviews();
+		
+		Mockito.verifyNoMoreInteractions(review, location);
+	}
+	
+	@Test
+	public void testUnPinReview(){
+		admin.unpinReview(review);
+		
+		Mockito.verify(review, VerificationModeFactory.times(2)).getLocation();
+		
+		//Added to un-pinned
+		Mockito.verify(location.getReviews()).add(review);
+		Mockito.verify(location, VerificationModeFactory.times(2)).getReviews();
+
+		
+		//Removed from regular
+		Mockito.verify(location.getPinnedReviews()).remove(review);
+		Mockito.verify(location, VerificationModeFactory.times(2)).getPinnedReviews();
+		
+		Mockito.verifyNoMoreInteractions(review, location);
 	}
 
 }
