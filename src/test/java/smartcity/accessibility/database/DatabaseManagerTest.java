@@ -16,7 +16,6 @@ import org.junit.rules.Timeout;
 import org.parse4j.ParseException;
 import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
-import org.parse4j.ParseUser;
 import org.parse4j.callback.DeleteCallback;
 import org.parse4j.callback.FindCallback;
 import org.parse4j.callback.GetCallback;

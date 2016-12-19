@@ -60,7 +60,6 @@ public class UserManagerTest {
 	
 	@Test 
 	public void test2(){
-		Assume.assumeFalse(SearchTest.shouldIgnore());
 		String UserName = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
 		UserManager.SignUpUser(UserName, "admin", true);
 		Admin a = (Admin) UserManager.LoginUser(UserName, "admin");
