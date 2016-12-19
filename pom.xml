@@ -19,49 +19,70 @@
 					</configuration>
 				</plugin>
 				<plugin>
-				  <groupId>org.jacoco</groupId>
-				  <artifactId>jacoco-maven-plugin</artifactId>
-				  <version>0.7.8</version>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.7.8</version>
+					<executions>
+						<execution>
+							<id>default-test</id>
+							<phase>test</phase>
+							<goals>
+								<goal>test</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
-			
+
 		</pluginManagement>
 	</build>
 	<repositories>
 		<repository>
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
-			<releases><enabled>true</enabled><updatePolicy>always</updatePolicy></releases>
-            <snapshots><enabled>true</enabled><updatePolicy>always</updatePolicy></snapshots>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
 		</repository>
 		<repository>
 			<id>in-project</id>
 			<name>In Project Repo</name>
 			<url>file://${project.basedir}/libs</url>
-			<releases><enabled>true</enabled><updatePolicy>always</updatePolicy></releases>
-      		<snapshots><enabled>true</enabled><updatePolicy>always</updatePolicy></snapshots>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
 		</repository>
 	</repositories>
-	<dependencyManagement> 
-		<dependencies> 
-			<dependency> 
-				<groupId>org.glassfish.jersey</groupId> 
-				<artifactId>jersey-bom</artifactId> 
-				<version>${jersey.version}</version> 
-				<type>pom</type> 
-				<scope>import</scope> 
-			</dependency> 
-		</dependencies> 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.glassfish.jersey</groupId>
+				<artifactId>jersey-bom</artifactId>
+				<version>${jersey.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
 	</dependencyManagement>
 	<dependencies>
-	 	<dependency> 
-	 		<groupId>org.glassfish.jersey.containers</groupId> 
-	 		<artifactId>jersey-container-servlet-core</artifactId> 
-	 	</dependency>
-	 	<dependency> 
-	 	 	<groupId>org.glassfish.jersey.media</groupId> 
-	 	 	<artifactId>jersey-media-moxy</artifactId> 
-	 	</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-moxy</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.github.abdielou</groupId>
 			<artifactId>parse4j</artifactId>
@@ -124,7 +145,7 @@
 		</dependency>
 	</dependencies>
 	<properties>
-        <jersey.version>2.23.2</jersey.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+		<jersey.version>2.23.2</jersey.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 </project>
