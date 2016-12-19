@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import org.junit.Assume;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.teamdev.jxmaps.GeocoderRequest;
@@ -81,6 +82,7 @@ public class SearchTest{
 		}
 	}
 	
+	@Ignore
 	 @Test 
      public void test1(){
 		 Assume.assumeFalse(shouldIgnore());
