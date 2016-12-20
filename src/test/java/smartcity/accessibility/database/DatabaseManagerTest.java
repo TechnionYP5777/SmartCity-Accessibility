@@ -16,6 +16,7 @@ import org.junit.rules.Timeout;
 import org.parse4j.ParseException;
 import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
+import org.parse4j.ParseUser;
 import org.parse4j.callback.DeleteCallback;
 import org.parse4j.callback.FindCallback;
 import org.parse4j.callback.GetCallback;
@@ -43,7 +44,7 @@ public class DatabaseManagerTest {
 			m.put("test2", "res1");
 			m.put("test1", 65);
 			DatabaseManager.putValue(testParseClass, m);
-	
+			
 			final AtomicInteger res = new AtomicInteger();
 			DatabaseManager.queryByFields(testParseClass, m, new FindCallback<ParseObject>() {
 	
@@ -55,6 +56,9 @@ public class DatabaseManagerTest {
 			});
 			for (int value = 0; value == 0;)
 				value = res.getAndSet(0);
+			
+			m.put("test1", 65834);
+			DatabaseManager.putValue(testParseClass, m);
 		} catch (ParseException e){
 			// failed to communicate with the server to create base for these tests
 			e.printStackTrace();
