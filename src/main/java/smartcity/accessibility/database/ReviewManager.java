@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.parse4j.ParseException;
+import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
 import org.parse4j.callback.FindCallback;
 
@@ -19,7 +20,7 @@ public class ReviewManager {
 	public static void uploadReview(Review r) throws ParseException{
 		Map<String, Object> m = new HashMap<String,Object>();
 		m.put("user", r.getUser());
-		m.put("location", r.getLocation());
+		m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),r.getLocation().getCoordinates().getLng()));
 		m.put("rating",r.getRating().getScore());
 		m.put("comment",r.getComment());
 		ParseObject p = DatabaseManager.putValue("Review",m); // 
@@ -47,8 +48,8 @@ public class ReviewManager {
 			}
 		};
 		Map<String, Object> m = new HashMap<String,Object>();
-		m.put("user", u);
-		m.put("location", l);
+		m.put("user", u.getName());
+		m.put("location", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
 		DatabaseManager.queryByFields("Review",m,p);
 		Review rev = new Review(l, Integer.valueOf(r.toString()), c.toString(), u);
 		return rev;	
@@ -57,7 +58,7 @@ public class ReviewManager {
 	public static void deleteReview(Review r){
 		Map<String, Object> m = new HashMap<String,Object>();
 		m.put("user", r.getUser());
-		m.put("location", r.getLocation());
+		m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),r.getLocation().getCoordinates().getLng()));
 		
 		/* TODO : assaf, I change getObjectId to work in the background \
 		 * 			it's now called getObjectByFields, the callback will get 
