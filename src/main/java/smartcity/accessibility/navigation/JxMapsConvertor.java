@@ -34,8 +34,8 @@ public class JxMapsConvertor extends MapView {
 				controlOptions.setPosition(ControlPosition.TOP_RIGHT);
 				mapOptions.setMapTypeControlOptions(controlOptions);
 				map.setOptions(mapOptions);
-				map.setCenter(new LatLng(0, -180));
-				map.setZoom(3.0);
+				map.setCenter(new LatLng(31.768762, 34.632052));
+				map.setZoom(9.0);
 				Polyline polyline = new Polyline(map);
 				polyline.setPath(shapePoints);
 				PolylineOptions options = new PolylineOptions();
@@ -49,10 +49,13 @@ public class JxMapsConvertor extends MapView {
 	}
 
 	public static void displayRoute(Double[] shapePointsArr) {
-		List<LatLng> shapeLatlng = new ArrayList<LatLng>();
-		for(int i=0;i<shapePointsArr.length-1;i+=2)
-			shapeLatlng.add(new LatLng(shapePointsArr[i], shapePointsArr[i + 1]));
-		final JxMapsConvertor convertor = new JxMapsConvertor((LatLng[]) shapeLatlng.toArray());
+		LatLng[] shapeLatlng = new LatLng[shapePointsArr.length / 2];
+		int k = 0;
+		for (int i = 0; i < shapePointsArr.length - 1; i += 2) {
+			shapeLatlng[k] = (new LatLng(shapePointsArr[i], shapePointsArr[i + 1]));
+			++k;
+		}
+		final JxMapsConvertor convertor = new JxMapsConvertor(shapeLatlng);
 
 		JFrame frame = new JFrame("displayRoute");
 

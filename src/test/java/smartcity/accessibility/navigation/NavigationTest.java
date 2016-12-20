@@ -2,9 +2,11 @@ package smartcity.accessibility.navigation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 import org.junit.Test;
 
+import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 import smartcity.accessibility.navigation.mapquestcommunication.Route;
 import smartcity.accessibility.navigation.mapquestcommunication.Shape;
@@ -62,5 +64,27 @@ public class NavigationTest {
 			//i'm leaving it comment for now
 			//System.out.println("[" + shapePoints[i] + "," + shapePoints[i + 1] + "]");
 		}
+	}
+	
+	@Test
+	public void displayMap() {
+		// TODO this test is temporal for it relay on things that will change!
+		Latlng from = new Latlng(31.768762, 34.632052);//abba ahimeir
+		Latlng to = new Latlng(31.770981, 34.620567);//HaYam HaTichon Blvd 1
+		
+		List<MapSegment> segmentsToAvoid = new ArrayList<MapSegment>();
+
+		segmentsToAvoid.add((new Navigation()).getMapSegmentOfLatLng(31.768806, 34.627651));//sd tel hai 61 ashdod
+		Route r = ((new Navigation()).getRouteFromMapQuest(from, to, segmentsToAvoid));
+		Shape shape = r.getShape();
+		Double[] shapePoints = shape.getShapePoints();
+		JxMapsConvertor.displayRoute(shapePoints);
+//		try {
+//			Thread.sleep(1000000000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
 	}
 }

@@ -12,6 +12,7 @@ import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 import smartcity.accessibility.navigation.mapquestcommunication.Route;
 import smartcity.accessibility.navigation.mapquestcommunication.RouteWraper;
+import smartcity.accessibility.navigation.mapquestcommunication.Shape;
 
 /**
  * 
@@ -28,13 +29,14 @@ public class Navigation {
 	/**
 	 * [[SuppressWarningsSpartan]]
 	 */
-	@SuppressWarnings("unused")
 	public Route showRoute(Location source, Location destination, Integer accessibilityThreshold) {
 		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessibilityThreshold);
-		// Route route =
-		// getRouteFromMapQuest(source,destination,segmentsToAvoid);
-		// TODO display route for now
-		// TODO convert route to a format that can be displayed in JXMap
+		Latlng from = new Latlng(source.getCoordinates().getLat(),source.getCoordinates().getLng());
+		Latlng to = new Latlng(destination.getCoordinates().getLat(),destination.getCoordinates().getLng());
+		Route r = getRouteFromMapQuest(from,to,segmentsToAvoid);
+		Shape s = r.getShape();
+		JxMapsConvertor.displayRoute(s.getShapePoints());
+		//TODO deal with the return value
 		return null;
 	}
 
@@ -77,19 +79,10 @@ public class Navigation {
 		return mapSegmentsToAVoid;
 	}
 
-	/**
-	 * [[SuppressWarningsSpartan]]
-	 */
+	
 	public MapSegment getMapSegmentOfLatLng(double lat, double lng) {
-		// convert lanlng to MapSegment
-		Client client = ClientBuilder.newClient();
-		String path = "http://www.mapquestapi.com/directions/v2/findlinkid?";
-		path += "key=" + mapquestKey + "&";
-		path += "lat=" + lat + "&";
-		path += "lng=" + lng;
-		WebTarget target = client.target(path);
-		MapSegment mapSegment = target.request().get(MapSegment.class);
-		return mapSegment;
+		return ClientBuilder.newClient().target(("http://www.mapquestapi.com/directions/v2/findlinkid?" + "key="
+				+ mapquestKey + "&" + "lat=" + lat + "&" + "lng=" + lng)).request().get(MapSegment.class);
 	}
 
 }
