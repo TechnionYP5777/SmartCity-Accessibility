@@ -13,13 +13,14 @@ import com.teamdev.jxmaps.swing.MapView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * This class convert the route from mapquest to JxMap
+ * 
+ * @author yael
+ *
+ */
 public class JxMapsConvertor extends MapView {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public JxMapsConvertor(LatLng[] shapePoints) {
@@ -34,14 +35,13 @@ public class JxMapsConvertor extends MapView {
 				controlOptions.setPosition(ControlPosition.TOP_RIGHT);
 				mapOptions.setMapTypeControlOptions(controlOptions);
 				map.setOptions(mapOptions);
-				map.setCenter(new LatLng(31.768762, 34.632052));
-				map.setZoom(9.0);
+				map.setCenter(shapePoints[0]);
+				map.setZoom(20.0);
 				Polyline polyline = new Polyline(map);
 				polyline.setPath(shapePoints);
 				PolylineOptions options = new PolylineOptions();
 				options.setGeodesic(true);
 				options.setStrokeColor("#FF0000");
-				options.setStrokeOpacity(1.0);
 				options.setStrokeWeight(2.0);
 				polyline.setOptions(options);
 			}

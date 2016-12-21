@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
 
 import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.mapmanagement.Location;
@@ -26,9 +27,7 @@ public class Navigation {
 	public Navigation() {
 	}
 
-	/**
-	 * [[SuppressWarningsSpartan]]
-	 */
+	
 	public Route showRoute(Location source, Location destination, Integer accessibilityThreshold) {
 		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessibilityThreshold);
 		Latlng from = new Latlng(source.getCoordinates().getLat(),source.getCoordinates().getLng());
@@ -45,38 +44,37 @@ public class Navigation {
 	 */
 	public Route getRouteFromMapQuest(Latlng from, Latlng to, List<MapSegment> segmentsToAvoid) {
 		// TODO make this code more OOP style...
+
 		Client client = ClientBuilder.newClient();
 		String path = "http://www.mapquestapi.com/directions/v2/route?";
-		path += "key=" + mapquestKey + "&";
-		path += "from=" + from.getLat() + "," + from.getLng() + "&";
-		path += "to=" + to.getLat() + "," + to.getLng();
-		path += "&fullShape=true&shapeFormat=raw";
+		WebTarget target = client.target(path);
+		target = target.queryParam("key", mapquestKey)
+			  .queryParam("from", from.getLat() + "," + from.getLng())
+			  .queryParam("to", to.getLat() + "," + to.getLng())
+			  .queryParam("fullShape", true)
+			  .queryParam("shapeFormat", "raw");
+		String mustAvoidLinkIds = "";
 		if(!segmentsToAvoid.isEmpty()){
-			path += "&mustAvoidLinkIds=";
-			String mustAvoidLinkIds = "";
 			for (MapSegment m : segmentsToAvoid) {
 				mustAvoidLinkIds += m.getLinkId();
 			}
 			mustAvoidLinkIds = String.join((CharSequence) ",", (CharSequence) mustAvoidLinkIds);
-			path+=mustAvoidLinkIds;
+			//path+="&mustAvoidLinkIds="+mustAvoidLinkIds;
+			 target = target.queryParam("mustAvoidLinkIds", mustAvoidLinkIds);
 		}
-		WebTarget target = client.target(path);
-		RouteWraper routeWraper = target.request().get(RouteWraper.class);
+		
+		Response response = target.request().get();
+		RouteWraper routeWraper = response.readEntity(RouteWraper.class);
 		return routeWraper.getRoute();
 	}
 
-	/**
-	 * [[SuppressWarningsSpartan]]
-	 */
 	private List<MapSegment> getSegmentsToAvoid(Location source, Location destination, Integer accessibilityThreshold) {
 		List<Location> locationsToAvoid = LocationManager.getNonAccessibleLocationsInRadius(source, destination,
 				accessibilityThreshold);
-		List<MapSegment> mapSegmentsToAVoid = new ArrayList<MapSegment>();
-		for (Location l : locationsToAvoid) {
-			MapSegment mapSegment = getMapSegmentOfLatLng(l.getCoordinates().getLat(), l.getCoordinates().getLng());
-			mapSegmentsToAVoid.add(mapSegment);
-		}
-		return mapSegmentsToAVoid;
+		List<MapSegment> $ = new ArrayList<MapSegment>();
+		for (Location l : locationsToAvoid)
+			$.add(getMapSegmentOfLatLng(l.getCoordinates().getLat(), l.getCoordinates().getLng()));
+		return $;
 	}
 
 	
@@ -86,3 +84,4 @@ public class Navigation {
 	}
 
 }
+;
