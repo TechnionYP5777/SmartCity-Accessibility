@@ -24,14 +24,6 @@ import com.teamdev.jxmaps.swing.MapView;
  */
 public class SearchTest{
 	
-	public static boolean shouldIgnore(){
-		try {
-			MapView mp = new MapView();
-		} catch(Exception e){
-			return true;
-		}
-		return false;
-	}
 	
 	private class helper extends MapView{
 		helper(MapViewOptions options, SearchQuery sq, SearchQuery sq2) {
@@ -85,7 +77,6 @@ public class SearchTest{
 
 	 @Test 
      public void test1(){
-		 Assume.assumeFalse(shouldIgnore());
 		 
      	 MapViewOptions options = new MapViewOptions();
          options.importPlaces();
@@ -103,6 +94,7 @@ public class SearchTest{
          frame.setSize(700, 500);
          frame.setLocationRelativeTo(null);
          frame.setVisible(true);
+         frame.dispose();
 		 /*try {
 			Thread.sleep(300000);
 		} catch (InterruptedException e) {
