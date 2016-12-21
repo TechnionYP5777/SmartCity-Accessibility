@@ -75,6 +75,7 @@ public class SearchTest{
 	}
 	
 
+	 @Ignore
 	 @Test 
      public void test1(){
 		 
@@ -94,7 +95,7 @@ public class SearchTest{
          frame.setSize(700, 500);
          frame.setLocationRelativeTo(null);
          frame.setVisible(true);
-         frame.dispose();
+
 		 /*try {
 			Thread.sleep(300000);
 		} catch (InterruptedException e) {
