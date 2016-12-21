@@ -39,7 +39,6 @@ public class BrokenAdminTest {
 		
 	}
 
-	@Ignore
 	@Test
 	public void testPin() {
 		//Nothing is pinned yet
