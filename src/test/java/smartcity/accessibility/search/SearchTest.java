@@ -82,7 +82,7 @@ public class SearchTest{
 		}
 	}
 	
-	@Ignore
+
 	 @Test 
      public void test1(){
 		 Assume.assumeFalse(shouldIgnore());

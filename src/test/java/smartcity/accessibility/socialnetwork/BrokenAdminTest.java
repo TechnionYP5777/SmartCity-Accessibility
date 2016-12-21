@@ -16,7 +16,7 @@ public class BrokenAdminTest {
 	Review review;
 	User user = new AuthenticatedUser();
 
-	@Ignore
+
 	@Before
 	public void setUp() throws Exception {
 		admin = new Admin("admin", "", "");
@@ -39,7 +39,6 @@ public class BrokenAdminTest {
 		
 	}
 
-	@Ignore
 	@Test
 	public void testPin() {
 		//Nothing is pinned yet
