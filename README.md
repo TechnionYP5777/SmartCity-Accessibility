@@ -2,6 +2,7 @@
 ## Development Status
 
 ![](http://163.172.171.65:8080/buildStatus/icon?job=SmartCity-Accessibility)
+![](http://163.172.171.65:8082/jacoco/coverage?job=http://163.172.171.65:8080/job/SmartCity-Accessibility/)
 
 ## The Project
 
