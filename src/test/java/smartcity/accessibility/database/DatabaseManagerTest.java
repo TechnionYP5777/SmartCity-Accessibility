@@ -38,17 +38,17 @@ public class DatabaseManagerTest {
 
 	@BeforeClass
 	public static void init() throws ParseException {
-		try{
+		try {
 			ParseUser.currentUser = new ParseUser();
 			DatabaseManager.initialize();
 			Map<String, Object> m = new HashMap<String, Object>();
 			m.put("test2", "res1");
 			m.put("test1", 65);
 			DatabaseManager.putValue(testParseClass, m);
-			
+
 			final AtomicInteger res = new AtomicInteger();
 			DatabaseManager.queryByFields(testParseClass, m, new FindCallback<ParseObject>() {
-	
+
 				@Override
 				public void done(List<ParseObject> arg0, ParseException arg1) {
 					id_result = arg0.get(0).getObjectId();
@@ -57,16 +57,16 @@ public class DatabaseManagerTest {
 			});
 			for (int value = 0; value == 0;)
 				value = res.getAndSet(0);
-			
+
 			m.put("test1", 65834);
 			DatabaseManager.putValue(testParseClass, m);
-		} catch (ParseException e){
-			// failed to communicate with the server to create base for these tests
+		} catch (ParseException e) {
+			// failed to communicate with the server to create base for these
+			// tests
 			e.printStackTrace();
 			Assume.assumeFalse(true);
 		}
 	}
-
 
 	@Test
 	public void a() {
@@ -243,6 +243,53 @@ public class DatabaseManagerTest {
 
 		assertEquals(1, value);
 
+	}
+
+	@Test
+	public void h() {
+		final AtomicInteger res = new AtomicInteger();
+		Map<String, Object> m = new HashMap<String, Object>();
+		m.put("test1", 1673452);
+		m.put("test2", "unique-value1");
+		m.put("test3", 167);
+		DatabaseManager.putValue(testParseClass, m, new SaveCallback() {
+			@Override
+			public void done(ParseException arg0) {
+				if (arg0 != null)
+					res.compareAndSet(0, -1);
+				res.compareAndSet(0, 1);
+			}
+		});
+
+		int value = 0;
+		while (value == 0)
+			value = res.getAndSet(0);
+
+		assertEquals(1, value);
+
+		m.remove("test3");
+		DatabaseManager.getObjectByFields(testParseClass, m, new GetCallback<ParseObject>() {
+			@Override
+			public void done(ParseObject arg0, ParseException arg1) {
+				if (arg0 == null || arg1 != null) {
+					res.compareAndSet(0, -2);
+					return;
+				}
+				if (arg0.getObjectId() == null)
+					res.compareAndSet(0, -3);
+				if (!arg0.get("test3").equals(167))
+					res.compareAndSet(0, -4);
+				DatabaseManager.deleteById(testParseClass, arg0.getObjectId());
+				res.compareAndSet(0, 2);
+
+			}
+		});
+
+		value = 0;
+		while (value == 0)
+			value = res.getAndSet(0);
+
+		assertEquals(2, value);
 	}
 
 }

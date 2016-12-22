@@ -1,7 +1,6 @@
 
 package smartcity.accessibility.database;
 
-
 import java.util.List;
 import java.util.Map;
 
@@ -21,14 +20,15 @@ import com.teamdev.jxmaps.LatLng;
  * @author KaplanAlexander
  *
  */
-public abstract class DatabaseManager { 
+public abstract class DatabaseManager {
 	public static final String serverUrl = "https://smartcityaccessibility.herokuapp.com/parse";
 	public static final String restKey = "2139d-231cb2-738fe";
 	public static final String appId = "smartcityaccessibility";
 	private static boolean init;
 
 	public static void initialize() {
-		if(init) return;
+		if (init)
+			return;
 		Parse.initialize(appId, restKey, serverUrl);
 		init = true;
 	}
@@ -173,6 +173,7 @@ public abstract class DatabaseManager {
 
 	/**
 	 * returns objects in class where results fields match values mapping
+	 * 
 	 * @param objectClass
 	 * @param values
 	 * @param o
@@ -184,13 +185,15 @@ public abstract class DatabaseManager {
 			pq.whereEqualTo(key, values.get(key));
 		pq.findInBackground(o);
 	}
-	
+
 	/**
 	 * returns objects in class where results fields match values mapping
+	 * 
 	 * @param objectClass
 	 * @param values
 	 */
-	public static void getObjectByFields(final String objectClass, Map<String, Object> values, GetCallback<ParseObject> o){
+	public static void getObjectByFields(final String objectClass, Map<String, Object> values,
+			GetCallback<ParseObject> o) {
 		ParseQuery<ParseObject> pq = ParseQuery.getQuery(objectClass);
 		for (String key : values.keySet())
 			pq.whereEqualTo(key, values.get(key));
@@ -198,11 +201,11 @@ public abstract class DatabaseManager {
 		pq.findInBackground(new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
-				if(arg1==null || arg0.isEmpty())
+				if (arg1 != null || arg0.isEmpty())
 					o.done(null, arg1);
 				o.done(arg0.get(0), null);
 			}
-		});		
+		});
 	}
 
 }
