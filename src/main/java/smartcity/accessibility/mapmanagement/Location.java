@@ -22,11 +22,11 @@ import smartcity.accessibility.socialnetwork.Score;
 
 public abstract class Location extends MapView{
 
+	private static final long serialVersionUID = -9204783865281694652L;
 	
 	private ArrayList<Review> reviews;
 	private ArrayList<Review> pinnedReviews;	//ArthurSap
 	private LatLng coordinates;
-	private String address;
 
 	//ArthurSap
 	public ArrayList<Review> getReviews() {
@@ -41,14 +41,11 @@ public abstract class Location extends MapView{
 	public Location(){
 		initiateArrays();
 		this.coordinates = null;
-		this.address = null;
 	}
 	
 	public Location(LatLng c){
 		initiateArrays();
-		this.coordinates = c;
-		this.address = null;
-		
+		this.coordinates = c;		
 	}
 	
 	private void initiateArrays(){
