@@ -1,6 +1,5 @@
 package smartcity.accessibility.gui;
 
-import javafx.*;
 import smartcity.accessibility.database.DatabaseManager;
 
 import java.awt.BorderLayout;
