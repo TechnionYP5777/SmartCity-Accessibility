@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 
 import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 import smartcity.accessibility.navigation.mapquestcommunication.Route;
 import smartcity.accessibility.navigation.mapquestcommunication.RouteWraper;
@@ -28,7 +29,7 @@ public class Navigation {
 	}
 
 	
-	public Route showRoute(Location source, Location destination, Integer accessibilityThreshold) {
+	public Route showRoute(Location source, Location destination, Integer accessibilityThreshold) throws CommunicationFailed {
 		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessibilityThreshold);
 		Latlng from = new Latlng(source.getCoordinates().getLat(),source.getCoordinates().getLng());
 		Latlng to = new Latlng(destination.getCoordinates().getLat(),destination.getCoordinates().getLng());
@@ -39,31 +40,25 @@ public class Navigation {
 		return null;
 	}
 
-	/**
-	 * [[SuppressWarningsSpartan]]
-	 */
-	public Route getRouteFromMapQuest(Latlng from, Latlng to, List<MapSegment> segmentsToAvoid) {
+	public Route getRouteFromMapQuest(Latlng from, Latlng to, List<MapSegment> segmentsToAvoid) throws CommunicationFailed {
 		// TODO make this code more OOP style...
 
 		Client client = ClientBuilder.newClient();
 		String path = "http://www.mapquestapi.com/directions/v2/route?";
-		WebTarget target = client.target(path);
-		target = target.queryParam("key", mapquestKey)
-			  .queryParam("from", from.getLat() + "," + from.getLng())
-			  .queryParam("to", to.getLat() + "," + to.getLng())
-			  .queryParam("fullShape", true)
-			  .queryParam("shapeFormat", "raw");
+		WebTarget target = client.target(path).queryParam("key", mapquestKey).queryParam("from", from.getLat() + "," + from.getLng())
+				.queryParam("to", to.getLat() + "," + to.getLng()).queryParam("fullShape", true)
+				.queryParam("shapeFormat", "raw");
 		String mustAvoidLinkIds = "";
 		if(!segmentsToAvoid.isEmpty()){
-			for (MapSegment m : segmentsToAvoid) {
+			for (MapSegment m : segmentsToAvoid)
 				mustAvoidLinkIds += m.getLinkId();
-			}
 			mustAvoidLinkIds = String.join((CharSequence) ",", (CharSequence) mustAvoidLinkIds);
-			//path+="&mustAvoidLinkIds="+mustAvoidLinkIds;
 			 target = target.queryParam("mustAvoidLinkIds", mustAvoidLinkIds);
 		}
 		
 		Response response = target.request().get();
+		if(response.getStatus() != 200)
+			throw new CommunicationFailed();
 		RouteWraper routeWraper = response.readEntity(RouteWraper.class);
 		return routeWraper.getRoute();
 	}
