@@ -7,6 +7,7 @@ import org.parse4j.ParseException;
 import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
 import org.parse4j.callback.FindCallback;
+import org.parse4j.callback.GetCallback;
 
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
@@ -23,10 +24,7 @@ public class ReviewManager {
 		m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),r.getLocation().getCoordinates().getLng()));
 		m.put("rating",r.getRating().getScore());
 		m.put("comment",r.getComment());
-		ParseObject p = DatabaseManager.putValue("Review",m); // 
-		
-		//TODO: why putValue have a return value (check with alex)
-		//TODO: is there anything that can make a review unvalid
+		ParseObject p = DatabaseManager.putValue("Review",m); 
 	}
 	
 	public static Review getReviewByUserAndLocation(User u,Location l){
@@ -57,22 +55,22 @@ public class ReviewManager {
 	
 	public static void deleteReview(Review r){
 		Map<String, Object> m = new HashMap<String,Object>();
+		final StringBuilder objectID = new StringBuilder();
 		m.put("user", r.getUser());
 		m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),r.getLocation().getCoordinates().getLng()));
 		
-		/* TODO : assaf, I change getObjectId to work in the background \
-		 * 			it's now called getObjectByFields, the callback will get 
-		 * 			get the ParseObject relevant and you can get the id with 
-		 * 			o.getObjectId()
-		 * 			update this to work correctly 
-		 * 												-alex
-		 */
-		//String id = DatabaseManager.getObjectId("Review",m);
-		//DatabaseManager.deleteById("Review",id);
+		GetCallback<ParseObject> p = new GetCallback<ParseObject>() {
+			@Override
+			public void done(ParseObject arg0, ParseException arg1) {
+				if(arg1!=null){
+					objectID.append(arg0.getObjectId());
+				}
+				arg1.printStackTrace();
+			}
+		};
 		
-		
-		//TODO: handle Extreme case  - review not found
-		//TODO: maybe change the implementation to refer to the result value
+		DatabaseManager.getObjectByFields("Review",m,p);
+		DatabaseManager.deleteById("Review",objectID.toString());	
 	}
 
 }
