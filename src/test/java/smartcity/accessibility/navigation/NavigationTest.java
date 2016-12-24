@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 import smartcity.accessibility.navigation.mapquestcommunication.Route;
 import smartcity.accessibility.navigation.mapquestcommunication.Shape;
@@ -12,16 +13,15 @@ import smartcity.accessibility.navigation.mapquestcommunication.Shape;
 public class NavigationTest {
 
 	@Test
-	public void getSimpleRouteFromServers() {
+	public void getSimpleRouteFromServers() throws CommunicationFailed {
 		// TODO this test is temporal for it relay on things that will change!
 		Latlng from = new Latlng(39.750307, -104.999472);
 		Latlng to = new Latlng(40.750307, -105.999472);
 		Route r = (new Navigation()).getRouteFromMapQuest(from, to, new ArrayList<MapSegment>());
 		Shape shape = r.getShape();
 		Double[] shapePoints = shape.getShapePoints();
-		if (shapePoints.length % 2 != 0) {
+		if (shapePoints.length % 2 != 0)
 			System.out.println("something went wrong :(");
-		}
 		for (int i = 0; i < shapePoints.length - 1; i += 2) {
 			// System.out.println("[" + shapePoints[i] + "," + shapePoints[i +
 			// 1] + "]");
@@ -37,7 +37,7 @@ public class NavigationTest {
 	}
 
 	@Test
-	public void getRouteFromServersWithLinksToAvoid() {
+	public void getRouteFromServersWithLinksToAvoid() throws CommunicationFailed {
 		// TODO this test is temporal for it relay on things that will change!
 		Latlng from = new Latlng(31.766932, 34.631666);// sd tel hai 61 ashdod
 		Latlng to = new Latlng(31.770981, 34.620567);// HaYam HaTichon Blvd 1
@@ -79,13 +79,11 @@ public class NavigationTest {
 	}
 
 	@Test
-	public void displayMap() {
+	public void displayMap() throws CommunicationFailed {
 		// TODO this test is temporal for it relay on things that will change!
 		Latlng from = new Latlng(31.768762, 34.632052);// abba ahimeir
 		Latlng to = new Latlng(31.770981, 34.620567);// HaYam HaTichon Blvd 1
-
 		List<MapSegment> segmentsToAvoid = new ArrayList<MapSegment>();
-
 		segmentsToAvoid.add((new Navigation()).getMapSegmentOfLatLng(31.76935, 34.626793));// sd
 																							// tel
 																							// hai
