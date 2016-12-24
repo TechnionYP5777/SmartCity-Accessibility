@@ -56,14 +56,14 @@ public class Review {
 	/**
 	 * @author KaplanAlexander
 	 */
-	public void like(User u){
+	public void upvote(User u){
 		comment(u,ReviewComment.POSITIVE_RATING);
 	}
 	
 	/**
 	 * @author KaplanAlexander
 	 */
-	public void dislike(User u){
+	public void downvote(User u){
 		comment(u,ReviewComment.NEGATIVE_RATING);
 	}
 	

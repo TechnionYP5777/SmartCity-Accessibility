@@ -27,15 +27,15 @@ public class ReviewCommentTest {
 	@Test
 	public void a(){
 		r1 = new Review(null, 4, "?", u1);
-		r1.like(u2);
+		r1.upvote(u2);
 		assertEquals(ReviewComment.POSITIVE_RATING,r1.calculateOpinion());
 	}
 	
 	@Test
 	public void b(){
 		r1 = new Review(null, 4, "?", u1);
-		r1.like(u2);
-		r1.dislike(u3);
+		r1.upvote(u2);
+		r1.downvote(u3);
 		assertEquals(ReviewComment.POSITIVE_RATING+ReviewComment.NEGATIVE_RATING
 				,r1.calculateOpinion());
 	}
@@ -43,12 +43,12 @@ public class ReviewCommentTest {
 	@Test
 	public void c(){
 		r1 = new Review(null, 4, "?", u1);
-		r1.like(u2);
-		r1.dislike(u3);
-		r1.like(u2);
-		r1.like(u2);
-		r1.like(u2);
-		r1.dislike(u3);
+		r1.upvote(u2);
+		r1.downvote(u3);
+		r1.upvote(u2);
+		r1.upvote(u2);
+		r1.upvote(u2);
+		r1.downvote(u3);
 
 		assertEquals(ReviewComment.POSITIVE_RATING+ReviewComment.NEGATIVE_RATING
 				,r1.calculateOpinion());
@@ -57,8 +57,8 @@ public class ReviewCommentTest {
 	@Test 
 	public void d(){
 		r1 = new Review(null, 4, "?", u1);
-		r1.like(u2);
-		r1.dislike(u2);
+		r1.upvote(u2);
+		r1.downvote(u2);
 		assertEquals(ReviewComment.NEGATIVE_RATING
 				,r1.calculateOpinion());
 	}
