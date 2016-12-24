@@ -24,7 +24,7 @@ public class ReviewManager {
 		m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),r.getLocation().getCoordinates().getLng()));
 		m.put("rating",r.getRating().getScore());
 		m.put("comment",r.getComment());
-		ParseObject p = DatabaseManager.putValue("Review",m); // 
+		ParseObject p = DatabaseManager.putValue("Review",m); 
 	}
 	
 	public static Review getReviewByUserAndLocation(User u,Location l){
