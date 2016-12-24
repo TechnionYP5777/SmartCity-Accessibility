@@ -17,9 +17,9 @@ import smartcity.accessibility.navigation.mapquestcommunication.RouteWraper;
 import smartcity.accessibility.navigation.mapquestcommunication.Shape;
 
 /**
- * 
- * @author yael This class help finds routes in the city. The class contains
+ * This class help finds routes in the city. The class contains
  *         segments of the map that should be avoided in the routes it returns.
+ * @author yael 
  */
 public class Navigation {
 
@@ -60,6 +60,8 @@ public class Navigation {
 		if(response.getStatus() != 200)
 			throw new CommunicationFailed();
 		RouteWraper routeWraper = response.readEntity(RouteWraper.class);
+		if(routeWraper.getInfo().getStatuscode() != 0)
+			throw new CommunicationFailed();
 		return routeWraper.getRoute();
 	}
 

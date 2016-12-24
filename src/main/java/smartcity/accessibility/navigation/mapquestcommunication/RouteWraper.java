@@ -3,20 +3,28 @@ package smartcity.accessibility.navigation.mapquestcommunication;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * 
- * @author yael This class is wrapper of the class Route. This class is needed
+ * This class is wrapper of the class Route. This class is needed
  *         for communication with MapQuest servers.
+ * @author yael 
  */
 @XmlRootElement
 public class RouteWraper {
 	private Route route;
-
+	private Info info;
 	public RouteWraper() {
 
 	}
 
 	public Route getRoute() {
 		return route;
+	}
+
+	public Info getInfo() {
+		return info;
+	}
+
+	public void setInfo(Info info) {
+		this.info = info;
 	}
 
 	public void setRoute(Route r) {
