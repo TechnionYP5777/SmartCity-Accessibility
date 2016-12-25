@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.persistence.internal.sessions.remote.SequencingFunctionCall.GetNextValue;
 import org.parse4j.ParseException;
@@ -14,6 +15,7 @@ import org.parse4j.callback.FindCallback;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.socialnetwork.BestReviews;
 
 /**
  * @author assaflu
@@ -98,6 +100,24 @@ public class LocationManager {
 		Map<String, Object> m = new HashMap<String,Object>();
 		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
 		ParseObject p = DatabaseManager.putValue("Location",m); 
+	}
+	
+	/*
+	 * @Author Kolikant
+	 */
+	public static List<Location> FilterToAllBellow(List<Location> totalLocation, int ReviewsTakenToAccount, int accessibilityLevel){
+		return totalLocation.stream().
+				filter(p ->  new BestReviews(ReviewsTakenToAccount, p.getReviews()).getTotalRating() < accessibilityLevel).
+				collect(Collectors.toList());
+	}
+	
+	/*
+	 * @Author Kolikant
+	 */
+	public static List<Location> FilterToAllAbove(List<Location> totalLocation, int ReviewsTakenToAccount, int accessibilityLevel){
+		return totalLocation.stream().
+				filter(p ->  new BestReviews(ReviewsTakenToAccount, p.getReviews()).getTotalRating() >= accessibilityLevel).
+				collect(Collectors.toList());
 	}
 
 }
