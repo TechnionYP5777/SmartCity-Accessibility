@@ -48,6 +48,12 @@ public abstract class Location extends MapView{
 		this.coordinates = c;		
 	}
 	
+	public Location(ArrayList<Review> r, ArrayList<Review> pr, LatLng c) {
+		this.reviews = r;
+		this.pinnedReviews = pr;
+		this.coordinates = c;
+	}
+	
 	private void initiateArrays(){
 		this.reviews = new ArrayList<Review>();
 		this.pinnedReviews = new ArrayList<Review>();

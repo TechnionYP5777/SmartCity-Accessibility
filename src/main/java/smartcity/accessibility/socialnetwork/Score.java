@@ -20,7 +20,9 @@ public class Score {
 		return this.score;
 	}
 	
-	public void setScore(int s) {
+	public void setScore(int s) throws ScoreNotInRangeException {
+		if(!isValidScore(s))
+			throw new ScoreNotInRangeException();
 		this.score = s;
 	}
 	
@@ -34,4 +36,5 @@ public class Score {
 	private boolean isValidScore(int s) {
 		return !(s < MIN_SCORE || s > MAX_SCORE);
 	}
+
 }
