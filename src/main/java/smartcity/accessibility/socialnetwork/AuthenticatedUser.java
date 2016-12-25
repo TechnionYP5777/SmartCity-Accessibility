@@ -20,6 +20,9 @@ public class AuthenticatedUser implements User {
 	}
 	
 	public AuthenticatedUser() {
+		name = "Default User";
+		password = "";
+		favouriteSearchQueries = SearchQuery.String2QueriesList("");
 	}
 
 	
