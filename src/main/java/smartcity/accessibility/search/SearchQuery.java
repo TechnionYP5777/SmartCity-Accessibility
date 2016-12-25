@@ -17,7 +17,7 @@ import com.teamdev.jxmaps.swing.MapView;
 import com.teamdev.jxmaps.LatLng;
 
 
-public class SearchQuery extends MapView{
+public class SearchQuery{
 	
 	/**
 	 * 
@@ -26,18 +26,17 @@ public class SearchQuery extends MapView{
 
 
 	public static final String EmptyList = "[]";
-	
-	
+	public static MapView mapView;
 	String adress;
 	
 	public SearchQuery(String parsedQuery) {
 		this.adress = parsedQuery;
 	}
 	
-	public SearchQueryResult Search(Map map) {
-		GeocoderRequest request = new GeocoderRequest(map);
+	public SearchQueryResult Search() {
+		GeocoderRequest request = new GeocoderRequest(mapView.getMap());
         request.setAddress(adress);
-        return doSearch(request, map);
+        return doSearch(request, mapView.getMap());
        
 	}
 	
@@ -56,7 +55,7 @@ public class SearchQuery extends MapView{
 	private SearchQueryResult doSearch(GeocoderRequest request, Map map) {
 		 List<GeocoderResult> results = new ArrayList<GeocoderResult>();
 	        
-	        Geocoder g = getServices().getGeocoder();
+	        Geocoder g = mapView.getServices().getGeocoder();
 	        g.geocode(request, new GeocoderCallback(map) {
 	            @Override
 	            public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
