@@ -64,6 +64,7 @@ public class SearchQuery {
 			public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
 				if (status == GeocoderStatus.OK) {
 					results.add(result[0]);
+					
 				}
 			}
 		});
