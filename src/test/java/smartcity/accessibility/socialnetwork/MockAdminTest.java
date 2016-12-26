@@ -9,7 +9,7 @@ import org.mockito.internal.verification.VerificationModeFactory;
 
 import smartcity.accessibility.mapmanagement.Location;
 
-public class AdminTest {
+public class MockAdminTest {
 
 	Admin admin;
 	Location location;

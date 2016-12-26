@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import org.eclipse.persistence.internal.sessions.remote.SequencingFunctionCall.GetNextValue;
+//import org.eclipse.persistence.internal.sessions.remote.SequencingFunctionCall.GetNextValue;
 import org.parse4j.ParseException;
 import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
@@ -14,6 +15,7 @@ import org.parse4j.callback.FindCallback;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.socialnetwork.BestReviews;
 
 /**
  * @author assaflu
@@ -99,5 +101,7 @@ public class LocationManager {
 		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
 		ParseObject p = DatabaseManager.putValue("Location",m); 
 	}
+	
+	
 
 }
