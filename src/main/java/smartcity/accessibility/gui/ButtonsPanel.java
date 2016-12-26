@@ -1,24 +1,23 @@
 package smartcity.accessibility.gui;
 
-import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class ButtonsPanel extends JPanel implements MouseListener{
+public class ButtonsPanel extends JPanel implements MouseListener {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8394584034225983460L;
-	
+
 	public static GButton LOGIN_BUTTON;
 	public static GButton SIGNUP_BUTTON;
-	
-	public ButtonsPanel(){
-		//setSize(MapFrame.FRAME_X_SIZE, 100);
+
+	public ButtonsPanel() {
+		// setSize(MapFrame.FRAME_X_SIZE, 100);
 		LOGIN_BUTTON = new GButton("Login");
 		LOGIN_BUTTON.addMouseListener(this);
 		add(LOGIN_BUTTON);
@@ -28,15 +27,15 @@ public class ButtonsPanel extends JPanel implements MouseListener{
 		add(SIGNUP_BUTTON);
 		SIGNUP_BUTTON.setVisible(true);
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getSource() == ButtonsPanel.LOGIN_BUTTON){
+		if (e.getSource() == ButtonsPanel.LOGIN_BUTTON) {
 			JFrame fr = new JFrame("login");
 			fr.setSize(100, 100);
 			fr.setVisible(true);
 		}
-		if (e.getSource() == SIGNUP_BUTTON){
+		if (e.getSource() == SIGNUP_BUTTON) {
 			JFrame fr = new JFrame("signup");
 			fr.setSize(100, 100);
 			fr.setVisible(true);

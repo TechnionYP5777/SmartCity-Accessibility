@@ -1,6 +1,5 @@
 package smartcity.accessibility.gui;
 
-
 import com.teamdev.jxmaps.Geocoder;
 import com.teamdev.jxmaps.GeocoderCallback;
 import com.teamdev.jxmaps.GeocoderRequest;
@@ -13,9 +12,6 @@ import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.swing.*;
 
-
-       
-       
 public class GMap extends MapView {
 	/**
 	 * 
@@ -47,7 +43,7 @@ public class GMap extends MapView {
 						marker.setPosition(rs[0].getGeometry().getLocation());
 					}
 				});
-				
+
 			}
 		});
 	}

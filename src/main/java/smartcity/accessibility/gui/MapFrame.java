@@ -22,8 +22,6 @@ public class MapFrame extends JFrame {
 	public static MapFrame frame;
 	public static GMap mapView;
 
-
-
 	public static final int FRAME_X_SIZE = 1000;
 	public static final int FRAME_Y_SIZE = 700;
 
@@ -50,7 +48,6 @@ public class MapFrame extends JFrame {
 		panel.add(mapView, BorderLayout.CENTER);
 
 		JPanel panel2 = new ButtonsPanel();
-		
 
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -74,5 +71,4 @@ public class MapFrame extends JFrame {
 
 	}
 
-	
 }
