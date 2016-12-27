@@ -107,7 +107,7 @@ public class LocationManager {
 	 */
 	public static List<Location> FilterToAllBellow(List<Location> totalLocation, int ReviewsTakenToAccount, int accessibilityLevel){
 		return totalLocation.stream().
-				filter(p ->  new BestReviews(ReviewsTakenToAccount, p.getReviews()).getTotalRating() < accessibilityLevel).
+				filter(p ->  p.getRating(ReviewsTakenToAccount).getScore() < accessibilityLevel).
 				collect(Collectors.toList());
 	}
 	
@@ -116,7 +116,7 @@ public class LocationManager {
 	 */
 	public static List<Location> FilterToAllAbove(List<Location> totalLocation, int ReviewsTakenToAccount, int accessibilityLevel){
 		return totalLocation.stream().
-				filter(p ->  new BestReviews(ReviewsTakenToAccount, p.getReviews()).getTotalRating() >= accessibilityLevel).
+				filter(p ->  p.getRating(ReviewsTakenToAccount).getScore() >= accessibilityLevel).
 				collect(Collectors.toList());
 	}
 
