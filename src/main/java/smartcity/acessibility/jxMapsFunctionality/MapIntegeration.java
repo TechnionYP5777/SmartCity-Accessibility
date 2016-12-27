@@ -1,4 +1,4 @@
-package smartcity.acessibility.jxMapsExamples;
+package smartcity.acessibility.jxMapsFunctionality;
 
 /*
  * Copyright (c) 2000-2016 TeamDev Ltd. All rights reserved.
