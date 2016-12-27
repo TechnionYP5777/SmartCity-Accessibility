@@ -23,9 +23,9 @@ public abstract class JxMapsFunctionality {
 	
 	public static MapView mv;
 	
-	public static class helper2 extends MapView{
+	public static class waitableMap extends MapView{
 		final AtomicInteger mapReady = new AtomicInteger();
-		helper2(MapViewOptions __){
+		waitableMap(MapViewOptions __){
 			mapReady.set(0);
 			setOnMapReadyHandler(new MapReadyHandler() {
 				@Override
@@ -37,7 +37,7 @@ public abstract class JxMapsFunctionality {
 		
 	}
 	
-	public static void waitForMapReady(helper2 h2){
+	public static void waitForMapReady(waitableMap h2){
 		while(h2.mapReady.get()!=1)
 			;
 		return;
@@ -48,7 +48,7 @@ public abstract class JxMapsFunctionality {
 			return mv;
 		MapViewOptions options = new MapViewOptions();
 		options.importPlaces();
-		return mv = new helper2(options);
+		return mv = new waitableMap(options);
 	}
 	
 	public static void DestroyMapView(){
@@ -58,10 +58,10 @@ public abstract class JxMapsFunctionality {
 	
 	public static MapView getMapView(MapViewOptions o){
 	        o.importPlaces();
-	        return mv = new helper2(o);
+	        return mv = new waitableMap(o);
 	}
 	
-	public static void putMarker(helper2 mv, LatLng l, String name) {
+	public static void putMarker(waitableMap mv, LatLng l, String name) {
 		waitForMapReady(mv);
 		Map m =mv.getMap();
 		Marker m1 = new Marker(m);
