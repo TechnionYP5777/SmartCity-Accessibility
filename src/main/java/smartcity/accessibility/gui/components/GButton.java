@@ -1,24 +1,20 @@
 package smartcity.accessibility.gui.components;
 
-import java.awt.Button;
 
-public class GButton extends Button {
+import javax.swing.JButton;
+
+public class GButton extends JButton {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1936213381544975733L;
 
-	public GButton() {
-		// setSize(20, 30);
-		setEnabled(true);
-		setVisible(true);
-	}
 
 	public GButton(String s) {
-		this();
-		setLabel(s);
-
+		super(s);
+		setEnabled(true);
+		setVisible(true);
 	}
 
 }

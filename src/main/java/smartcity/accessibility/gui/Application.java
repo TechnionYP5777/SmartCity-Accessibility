@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import com.teamdev.jxmaps.MapComponentType;
 import com.teamdev.jxmaps.MapViewOptions;
@@ -15,21 +17,36 @@ import smartcity.accessibility.gui.components.MapFrame;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserImpl;
 
-
 public class Application {
-	
+
 	public static MapFrame frame;
 	public static GMap mapView;
 
 	public static final int FRAME_X_SIZE = 1000;
 	public static final int FRAME_Y_SIZE = 700;
-	
-	public static User appUser = new UserImpl("","",User.Privilege.DefaultUser);
+
+	public static User appUser = new UserImpl("", "", User.Privilege.DefaultUser);
 
 	public static void main(String[] args) {
 		frame = new MapFrame("JxMaps - Hello, World!");
 
 		DatabaseManager.initialize();
+		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		MapViewOptions options = new MapViewOptions(MapComponentType.HEAVYWEIGHT);
 		options.importPlaces();

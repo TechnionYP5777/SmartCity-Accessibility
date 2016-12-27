@@ -3,7 +3,7 @@ package smartcity.accessibility.gui.components;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JFrame;
+
 import javax.swing.JPanel;
 
 public class ButtonsPanel extends JPanel implements MouseListener {
@@ -30,16 +30,10 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getSource() == ButtonsPanel.LOGIN_BUTTON) {
-			JFrame fr = new JFrame("login");
-			fr.setSize(100, 100);
-			fr.setVisible(true);
-		}
-		if (e.getSource() == SIGNUP_BUTTON) {
-			JFrame fr = new JFrame("signup");
-			fr.setSize(100, 100);
-			fr.setVisible(true);
-		}
+		if (e.getSource() == ButtonsPanel.LOGIN_BUTTON)
+			new LoginFrame();
+		if (e.getSource() == SIGNUP_BUTTON) 
+			new SignUpFrame();
 		System.out.println("clicked " + e.getSource());
 
 	}
