@@ -1,5 +1,7 @@
 package smartcity.accessibility.socialnetwork;
 
+import java.util.List;
+
 import smartcity.accessibility.search.SearchQuery;
 
 /**
@@ -8,7 +10,15 @@ import smartcity.accessibility.search.SearchQuery;
  *
  */
 
-public interface User {
+public interface User {	
+	
+	public enum Privilege{
+		GodUser, //TODO might not need this, still put it here just in case
+		Admin,
+		RegularUser,
+		DefaultUser
+	}
+	
 	/**
 	 * make a search using an existing query and show the user the results
 	 * @param q is the query to be used for the search
@@ -18,4 +28,16 @@ public interface User {
 	}
 	
 	public String getName();
+	public void setName(String name);
+	
+	public String getPassword();
+	public void setPassword(String pass);
+	
+	public Privilege getPrivilege();
+	public void setPrivilege(Privilege p);
+	
+	public List<SearchQuery> getFavouriteSearchQueries();
+	public void setFavouriteSearchQueries(String favouriteQueries);
+	public void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries);
+	
 }
