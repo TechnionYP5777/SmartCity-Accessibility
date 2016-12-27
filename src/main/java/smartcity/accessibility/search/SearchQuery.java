@@ -36,10 +36,10 @@ public class SearchQuery {
 		this.adress = parsedQuery;
 	}
 
-	public SearchQueryResult Search(MapView mapView) {
+	public SearchQueryResult SearchByAddress(MapView mapView) {
 		GeocoderRequest request = new GeocoderRequest(mapView.getMap());
 		request.setAddress(adress);
-		return doSearch(request, mapView);
+		return Search(request, mapView);
 
 	}
 
@@ -49,13 +49,11 @@ public class SearchQuery {
 	public SearchQueryResult searchByCoordinates(MapView mapView, LatLng c) {
 		GeocoderRequest request = new GeocoderRequest(mapView.getMap());
 		request.setLocation(c);
-		return doSearch(request, mapView);
+		return Search(request, mapView);
 	}
 
-	/**
-	 * Koral Chapnik
-	 */
-	private SearchQueryResult doSearch(GeocoderRequest request, MapView mapView) {
+
+	private SearchQueryResult Search(GeocoderRequest request, MapView mapView) {
 		List<GeocoderResult> results = new ArrayList<GeocoderResult>();
 
 		Geocoder g = mapView.getServices().getGeocoder();
@@ -97,26 +95,6 @@ public class SearchQuery {
 		for (String s : split)
 			$.add(SearchQuery.toQuery(s));
 		return $;
-	}
-
-	/*
-	 * @Author Kolikant
-	 */
-	public static List<Location> FilterToAllBellow(List<Location> totalLocation, int ReviewsTakenToAccount,
-			int accessibilityLevel) {
-		return totalLocation.stream().filter(
-				p -> new BestReviews(ReviewsTakenToAccount, p.getReviews()).getTotalRating() < accessibilityLevel)
-				.collect(Collectors.toList());
-	}
-
-	/*
-	 * @Author Kolikant
-	 */
-	public static List<Location> FilterToAllAbove(List<Location> totalLocation, int ReviewsTakenToAccount,
-			int accessibilityLevel) {
-		return totalLocation.stream().filter(
-				p -> new BestReviews(ReviewsTakenToAccount, p.getReviews()).getTotalRating() >= accessibilityLevel)
-				.collect(Collectors.toList());
 	}
 
 }

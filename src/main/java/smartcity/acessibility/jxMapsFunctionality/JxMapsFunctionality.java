@@ -1,6 +1,7 @@
 package smartcity.acessibility.jxMapsFunctionality;
 
 import java.awt.BorderLayout;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -20,17 +21,26 @@ import com.teamdev.jxmaps.swing.MapView;
 
 public abstract class JxMapsFunctionality {
 	
-	public static MapView mv =null;
+	public static MapView mv;
 	
 	public static class helper2 extends MapView{
+		final AtomicInteger mapReady = new AtomicInteger();
 		helper2(MapViewOptions __){
+			mapReady.set(0);
 			setOnMapReadyHandler(new MapReadyHandler() {
 				@Override
 				public void onMapReady(MapStatus arg0) {
+					mapReady.set(1);
 				}
 			});
 		}
 		
+	}
+	
+	private static void waitForMapReady(helper2 h2){
+		while(h2.mapReady.get()!=1)
+			;
+		return;
 	}
 	
 	public static MapView getMapView(){
@@ -46,7 +56,9 @@ public abstract class JxMapsFunctionality {
 	        return mv = new helper2(o);
 	}
 	
-	public static void putMarker(Map m, LatLng l, String name) {
+	public static void putMarker(helper2 mv, LatLng l, String name) {
+		waitForMapReady(mv);
+		Map m =mv.getMap();
 		Marker m1 = new Marker(m);
 		m1.setPosition(l);
 		m.setCenter(l);
@@ -55,11 +67,11 @@ public abstract class JxMapsFunctionality {
 		window.open(m, m1);
 	}
 
-	public static void openFrame(MapView mapview, String string, double zoom) {
-		JFrame frame = new JFrame(string);
-		mapview.getMap().setZoom(zoom);
+	public static void openFrame(MapView v, String s, double zoom) {
+		JFrame frame = new JFrame(s);
+		v.getMap().setZoom(zoom);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.add(mapview, BorderLayout.CENTER);
+        frame.add(v, BorderLayout.CENTER);
         frame.setSize(700, 500);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

@@ -55,10 +55,7 @@ public class BestReviewsTest {
 	
 	@Test
 	public void getTotalRatingTest() {
-		BestReviews br = new BestReviews(3, r);
-		int expected = r1.getRating().getScore() + r2.getRating().getScore() + r3.getRating().getScore();
-		expected /= 3;
-		int totalRating = br.getTotalRating();
-		assertEquals(totalRating, expected);
+		assertEquals((new BestReviews(3, r)).getTotalRating(),
+				((r1.getRating().getScore() + r2.getRating().getScore() + r3.getRating().getScore()) / 3));
 	}
 }
