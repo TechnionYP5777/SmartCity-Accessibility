@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
-import com.teamdev.jxmaps.Map;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.ReviewManager;
@@ -75,14 +74,12 @@ public abstract class Location {
 		return null;
 	}
 
+	
 	public String getAddress(MapView mapView){
- 		SearchQuery sq = new SearchQuery("");
- 		SearchQueryResult result = sq.searchByCoordinates(mapView, coordinates);
- 		return result.getCoordinations().get(0).getFormattedAddress();
+		SearchQuery sq = new SearchQuery("");
+		SearchQueryResult result = sq.searchByCoordinates(mapView, coordinates);
+		return result.getCoordinations().get(0).getFormattedAddress();
 	}
-
-
-
 	
 	public LatLng getCoordinates() {
 		return this.coordinates;
@@ -93,7 +90,8 @@ public abstract class Location {
 	 * @throws ParseException 
 	 */
 	public void addReview(User u, int rating, String review) throws ParseException {
-		actuallyAddReview((new Review(this, rating, review, u)));
+		Review r = new Review(this, rating, review, u);
+		actuallyAddReview(r);
 	}
 	
 	/**
@@ -112,7 +110,6 @@ public abstract class Location {
 		reviews.add(r);
 		ReviewManager.uploadReview(r);
 	}
-	
 	
 	/**
 	 * Marks a review as important - whilst calculating the location's 

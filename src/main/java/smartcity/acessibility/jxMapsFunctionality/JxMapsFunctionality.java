@@ -9,13 +9,17 @@ import javax.swing.WindowConstants;
 import com.teamdev.jxmaps.InfoWindow;
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.Map;
+import com.teamdev.jxmaps.MapReadyHandler;
+import com.teamdev.jxmaps.MapStatus;
+import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.swing.MapView;
 
+/*
+ * Author Kolikant
+ */
+
 public abstract class JxMapsFunctionality {
-<<<<<<< HEAD
-	public static void putMarker(Map m, LatLng l, String name) {
-=======
 	
 	public static MapView mv;
 	
@@ -55,7 +59,6 @@ public abstract class JxMapsFunctionality {
 	public static void putMarker(helper2 mv, LatLng l, String name) {
 		waitForMapReady(mv);
 		Map m =mv.getMap();
->>>>>>> f9a6350635507e352650e92475ffcd43c0a2ed6f
 		Marker m1 = new Marker(m);
 		m1.setPosition(l);
 		m.setCenter(l);
@@ -64,15 +67,9 @@ public abstract class JxMapsFunctionality {
 		window.open(m, m1);
 	}
 
-<<<<<<< HEAD
-	public static void openFrame(MapView mapview, String string) {
-		JFrame frame = new JFrame(string);
-
-=======
 	public static void openFrame(MapView v, String s, double zoom) {
 		JFrame frame = new JFrame(s);
 		v.getMap().setZoom(zoom);
->>>>>>> f9a6350635507e352650e92475ffcd43c0a2ed6f
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.add(v, BorderLayout.CENTER);
         frame.setSize(700, 500);
