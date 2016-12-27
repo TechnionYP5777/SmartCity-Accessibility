@@ -73,9 +73,9 @@ public abstract class Location {
 	}
 
 	
-	public String getAddress(Map map){
+	public String getAddress(Map m){
 		SearchQuery sq = new SearchQuery("");
-		SearchQueryResult result = sq.searchByCoordinates(map, coordinates);
+		SearchQueryResult result = sq.searchByCoordinates(m, coordinates);
 		return result.getCoordinations().get(0).getFormattedAddress();
 	}
 	
@@ -88,8 +88,7 @@ public abstract class Location {
 	 * @throws ParseException 
 	 */
 	public void addReview(User u, int rating, String review) throws ParseException {
-		Review r = new Review(this, rating, review, u);
-		actuallyAddReview(r);
+		actuallyAddReview((new Review(this, rating, review, u)));
 	}
 	
 	/**
@@ -111,17 +110,13 @@ public abstract class Location {
 	
 	 @Override
 	    public boolean equals(Object o) {
-	        if (o == this) {
-	            return true;
-	        }
+	        if (o == this)
+				return true;
 
-	        if (!(o instanceof Location)) {
-	            return false;
-	        }
+	        if (!(o instanceof Location))
+				return false;
 	 
-	        Location l = (Location) o;
-	 
-	        return l.coordinates.equals(this.coordinates);
+	        return ((Location) o).coordinates.equals(this.coordinates);
 	    }
 
 	
