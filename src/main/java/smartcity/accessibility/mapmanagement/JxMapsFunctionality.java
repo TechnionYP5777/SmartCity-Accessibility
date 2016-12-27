@@ -26,7 +26,7 @@ public abstract class JxMapsFunctionality {
 	public static MapView mv;
 	
 	public static class waitableMap extends MapView{
-		waitableMap(MapViewOptions __){
+		protected waitableMap(MapViewOptions __){
 			setOnMapReadyHandler(new MapReadyHandler() {
 				@Override
 				public void onMapReady(MapStatus arg0) {
