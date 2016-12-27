@@ -17,48 +17,50 @@ import javax.swing.*;
 import java.awt.*;
 
 public class HelloWorld extends MapView {
-    public HelloWorld(MapViewOptions options) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public HelloWorld(MapViewOptions options) {
         super(options);
         setOnMapReadyHandler(new MapReadyHandler() {
-            @Override
-            public void onMapReady(MapStatus status) {
-                if (status == MapStatus.MAP_STATUS_OK) {
-                    final Map map = getMap();
-                    map.setZoom(17.0);
-                    GeocoderRequest request = new GeocoderRequest(map);
-                    request.setAddress("Tel-Aviv, Weizmann St, 30");
-
-                    Geocoder g = getServices().getGeocoder();
-                    g.geocode(request, new GeocoderCallback(map) {
-                        @Override
-                        public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
-                            if (status == GeocoderStatus.OK) {
-                                map.setCenter(result[0].getGeometry().getLocation());
-                                Marker marker = new Marker(map);
-                                marker.setPosition(result[0].getGeometry().getLocation());
-                            }
-                        }
-                    });
-                    
-                   GeocoderRequest request2 = new GeocoderRequest(map);
-                    request2.setAddress("Tel-Aviv, Weizmann St, 1");
-
-                    Geocoder g2 =getServices().getGeocoder();
-                    g2.geocode(request2, new GeocoderCallback(map) {
-                        @Override
-                        public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
-                            if (status == GeocoderStatus.OK) {
-                                map.setCenter(result[0].getGeometry().getLocation());
-                                Marker marker = new Marker(map);
-                                marker.setPosition(result[0].getGeometry().getLocation());
-
-                                final InfoWindow window = new InfoWindow(map);
-                                window.setContent("Hello, World!");
-                                window.open(map, marker);
-                            }
-                        }
-                    });
-                }
+            @SuppressWarnings("deprecation")
+			@Override
+            public void onMapReady(MapStatus s) {
+                if (s != MapStatus.MAP_STATUS_OK)
+					return;
+				final Map map = getMap();
+				map.setZoom(17.0);
+				GeocoderRequest request = new GeocoderRequest(map);
+				request.setAddress("Tel-Aviv, Weizmann St, 30");
+				Geocoder g = getServices().getGeocoder();
+				g.geocode(request, new GeocoderCallback(map) {
+					@Override
+					public void onComplete(GeocoderResult[] rs, GeocoderStatus s) {
+						if (s != GeocoderStatus.OK)
+							return;
+						map.setCenter(rs[0].getGeometry().getLocation());
+						Marker marker = new Marker(map);
+						marker.setPosition(rs[0].getGeometry().getLocation());
+					}
+				});
+				GeocoderRequest request2 = new GeocoderRequest(map);
+				request2.setAddress("Tel-Aviv, Weizmann St, 1");
+				Geocoder g2 = getServices().getGeocoder();
+				g2.geocode(request2, new GeocoderCallback(map) {
+					@Override
+					public void onComplete(GeocoderResult[] rs, GeocoderStatus s) {
+						if (s != GeocoderStatus.OK)
+							return;
+						map.setCenter(rs[0].getGeometry().getLocation());
+						Marker marker = new Marker(map);
+						marker.setPosition(rs[0].getGeometry().getLocation());
+						final InfoWindow window = new InfoWindow(map);
+						window.setContent("Hello, World!");
+						window.open(map, marker);
+					}
+				});
             }
         });
     }
