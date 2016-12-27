@@ -6,6 +6,7 @@ package smartcity.accessibility.search;
  */
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.teamdev.jxmaps.Geocoder;
 import com.teamdev.jxmaps.GeocoderCallback;
@@ -14,71 +15,74 @@ import com.teamdev.jxmaps.GeocoderResult;
 import com.teamdev.jxmaps.GeocoderStatus;
 import com.teamdev.jxmaps.Map;
 import com.teamdev.jxmaps.swing.MapView;
+
+import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.socialnetwork.BestReviews;
+
 import com.teamdev.jxmaps.LatLng;
 
+public class SearchQuery {
 
-public class SearchQuery{
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-
 	public static final String EmptyList = "[]";
 	public static MapView mapView;
 	String adress;
-	
+
 	public SearchQuery(String parsedQuery) {
 		this.adress = parsedQuery;
 	}
-	
+
 	public SearchQueryResult Search() {
 		GeocoderRequest request = new GeocoderRequest(mapView.getMap());
-        request.setAddress(adress);
-        return doSearch(request, mapView.getMap());
-       
+		request.setAddress(adress);
+		return doSearch(request, mapView.getMap());
+
 	}
-	
+
 	/**
 	 * Koral Chapnik
 	 */
 	public SearchQueryResult searchByCoordinates(Map map, LatLng c) {
 		GeocoderRequest request = new GeocoderRequest(map);
-        request.setLocation(c);
-        return doSearch(request, map);
+		request.setLocation(c);
+		return doSearch(request, map);
 	}
-	
+
 	/**
 	 * Koral Chapnik
 	 */
 	private SearchQueryResult doSearch(GeocoderRequest request, Map map) {
-		 List<GeocoderResult> results = new ArrayList<GeocoderResult>();
-	        
-	        Geocoder g = mapView.getServices().getGeocoder();
-	        g.geocode(request, new GeocoderCallback(map) {
-	            @Override
-	            public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
-	                if (status == GeocoderStatus.OK) {
-	                	results.add(result[0]);
-	                }
-	            }
-	        });
-	        return new SearchQueryResult(results, map);
+		List<GeocoderResult> results = new ArrayList<GeocoderResult>();
+
+		Geocoder g = mapView.getServices().getGeocoder();
+		g.geocode(request, new GeocoderCallback(map) {
+			@Override
+			public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
+				if (status == GeocoderStatus.OK) {
+					results.add(result[0]);
+					
+				}
+			}
+		});
+		return new SearchQueryResult(results, map);
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return adress;
 	}
-	
-	public static SearchQuery toQuery(String s){
+
+	public static SearchQuery toQuery(String s) {
 		return new SearchQuery(s);
 	}
-	
-	public static String QueriesList2String(List<SearchQuery> qs){
+
+	public static String QueriesList2String(List<SearchQuery> qs) {
 		List<String> sl = new ArrayList<String>();
-		for(SearchQuery q : qs)
+		for (SearchQuery q : qs)
 			sl.add((q + ""));
 		return sl + "";
 	}
@@ -94,5 +98,25 @@ public class SearchQuery{
 			$.add(SearchQuery.toQuery(s));
 		return $;
 	}
-	
+
+	/*
+	 * @Author Kolikant
+	 */
+	public static List<Location> FilterToAllBellow(List<Location> totalLocation, int ReviewsTakenToAccount,
+			int accessibilityLevel) {
+		return totalLocation.stream().filter(
+				p -> new BestReviews(ReviewsTakenToAccount, p.getReviews()).getTotalRating() < accessibilityLevel)
+				.collect(Collectors.toList());
+	}
+
+	/*
+	 * @Author Kolikant
+	 */
+	public static List<Location> FilterToAllAbove(List<Location> totalLocation, int ReviewsTakenToAccount,
+			int accessibilityLevel) {
+		return totalLocation.stream().filter(
+				p -> new BestReviews(ReviewsTakenToAccount, p.getReviews()).getTotalRating() >= accessibilityLevel)
+				.collect(Collectors.toList());
+	}
+
 }

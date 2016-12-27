@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.eclipse.persistence.internal.sessions.remote.SequencingFunctionCall.GetNextValue;
+//import org.eclipse.persistence.internal.sessions.remote.SequencingFunctionCall.GetNextValue;
 import org.parse4j.ParseException;
 import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;

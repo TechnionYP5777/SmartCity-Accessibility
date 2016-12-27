@@ -16,7 +16,7 @@ public class Review {
 	private Location location;
 	private String user;
 	private Score rating;
-	private String comment;
+	private String content;
 	private List<ReviewComment> comments = new ArrayList<ReviewComment>();
 	
 	public Review(Location l , int r, String c, User u) {
@@ -26,7 +26,7 @@ public class Review {
 		} catch (ScoreNotInRangeException e) {
 			// TODO: implement 
 		}
-		this.comment = c;
+		this.content = c;
 		this.user = u.getName();
 	}
 	
@@ -39,7 +39,7 @@ public class Review {
 	}
 	
 	public String getComment() {
-		return this.comment;
+		return this.content;
 	}
 	
 	public String getUser() {

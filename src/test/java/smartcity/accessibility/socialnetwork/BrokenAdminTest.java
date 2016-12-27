@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.mapmanagement.Location;
 
 public class BrokenAdminTest {
@@ -19,6 +20,7 @@ public class BrokenAdminTest {
 
 	@Before
 	public void setUp() throws Exception {
+		DatabaseManager.initialize();
 		admin = new Admin("admin", "", "");
 		location = new Location() {
 			private static final long serialVersionUID = 1822445041067791247L;
