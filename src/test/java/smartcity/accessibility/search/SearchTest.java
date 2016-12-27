@@ -68,14 +68,9 @@ public class SearchTest{
          JxMapsFunctionality.putMarker(map, position1, "result1");
          JxMapsFunctionality.putMarker(map, position2, "result2");
          
+         JxMapsFunctionality.openFrame(mapView, "JxMaps - Hello, World!");
         
-         JFrame frame = new JFrame("JxMaps - Hello, World!");
-
-         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-         frame.add(mapView, BorderLayout.CENTER);
-         frame.setSize(700, 500);
-         frame.setLocationRelativeTo(null);
-         frame.setVisible(true);
+         
 
 		 try {
 			Thread.sleep(300000);
