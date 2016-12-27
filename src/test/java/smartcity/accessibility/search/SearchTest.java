@@ -19,7 +19,7 @@ import smartcity.accessibility.mapmanagement.JxMapsFunctionality.waitableMap;;
 public class SearchTest{
 	
 
-	 @Ignore
+//	 @Ignore
 	 @Test 
      public void test1(){ 
      	 MapView mapView = JxMapsFunctionality.getMapView();

@@ -75,21 +75,27 @@ public abstract class JxMapsFunctionality {
 		mv.waitReady();
 	}
 
+	
+	
 	public static void openFrame(MapView v, String s, double zoom) {
+		openFrame(v,s,zoom, 700, 500);
+	}
+	
+	public static void openFrame(MapView v, String s, double zoom, int x, int y) {
 		JFrame frame = new JFrame(s);
 		v.getMap().setZoom(zoom);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.add(v, BorderLayout.CENTER);
-        frame.setSize(700, 500);
+        frame.setSize(x, y);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);	
 	}
 
-	public static void initMapLocation(MapView mapView) {
+	public static void initMapLocation(MapView mapView, String startAdress) {
 		Map map = mapView.getMap();
 		map.setZoom(17.0);
 		GeocoderRequest request = new GeocoderRequest();
-		request.setAddress("Eliezer 10, Haifa, Israel");
+		request.setAddress(startAdress);
 		Geocoder g = mapView.getServices().getGeocoder();
 		g.geocode(request, new GeocoderCallback(map) {
 			@Override

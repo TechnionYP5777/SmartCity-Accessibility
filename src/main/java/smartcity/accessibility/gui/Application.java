@@ -76,7 +76,7 @@ public class Application {
 		frame.pack();
 		frame.setVisible(true);
 
-		JxMapsFunctionality.initMapLocation(mapView);
+		JxMapsFunctionality.initMapLocation(mapView, "Eliezer 10, Haifa, Israel");
 	}
 
 }
