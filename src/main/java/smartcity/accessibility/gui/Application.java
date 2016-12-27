@@ -2,38 +2,29 @@ package smartcity.accessibility.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 
 import com.teamdev.jxmaps.MapComponentType;
 import com.teamdev.jxmaps.MapViewOptions;
 
 import smartcity.accessibility.database.DatabaseManager;
+import smartcity.accessibility.gui.components.ButtonsPanel;
+import smartcity.accessibility.gui.components.GMap;
+import smartcity.accessibility.gui.components.MapFrame;
+import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.UserImpl;
 
-public class MapFrame extends JFrame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6388654596262185662L;
 
+public class Application {
+	
 	public static MapFrame frame;
 	public static GMap mapView;
 
 	public static final int FRAME_X_SIZE = 1000;
 	public static final int FRAME_Y_SIZE = 700;
-
-	public MapFrame(String string) {
-		super(string);
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		// setSize(FRAME_X_SIZE, FRAME_Y_SIZE);
-		setLayout(new GridBagLayout());
-		setVisible(true);
-		setResizable(false);
-
-	}
+	
+	public static User appUser = new UserImpl("","",User.Privilege.DefaultUser);
 
 	public static void main(String[] args) {
 		frame = new MapFrame("JxMaps - Hello, World!");

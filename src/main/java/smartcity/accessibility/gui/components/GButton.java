@@ -1,4 +1,4 @@
-package smartcity.accessibility.gui;
+package smartcity.accessibility.gui.components;
 
 import java.awt.Button;
 

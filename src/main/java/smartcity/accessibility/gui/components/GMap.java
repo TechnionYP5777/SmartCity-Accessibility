@@ -1,4 +1,4 @@
-package smartcity.accessibility.gui;
+package smartcity.accessibility.gui.components;
 
 import com.teamdev.jxmaps.Geocoder;
 import com.teamdev.jxmaps.GeocoderCallback;
