@@ -20,7 +20,7 @@ import smartcity.accessibility.socialnetwork.Score;
  * @author Koral Chapnik
  */
 
-public abstract class Location extends MapView{
+public abstract class Location {
 
 	private static final long serialVersionUID = -9204783865281694652L;
 	
