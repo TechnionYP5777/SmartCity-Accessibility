@@ -8,6 +8,7 @@ import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.exceptions.ScoreNotInRangeException;
+import smartcity.accessibility.navigation.exception.UnauthorizedAccessException;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 import smartcity.accessibility.socialnetwork.User;
@@ -114,11 +115,11 @@ public abstract class Location {
 	 * Marks a review as important - whilst calculating the location's 
 	 * accessibility level always takes this review in the calculation.
 	 * Also, always show this review in the top reviews.
+	 * @throws UnauthorizedAccessException 
 	 **/
-	public void pinReview(User u, Review r){
+	public void pinReview(User u, Review r) throws UnauthorizedAccessException{
 		if(!isAccessAllowed(u)){
-			System.out.println("Action is not allowed! You are no authorized for it!");
-			return; 
+			throw(new UnauthorizedAccessException(Privilege.pinPrivilegeLevel()));
 		}
 		
 		if(!reviews.contains(r)){
@@ -137,11 +138,11 @@ public abstract class Location {
 	
 	/**
 	 * Reverts the effects of pinReview.
+	 * @throws UnauthorizedAccessException 
 	 */
-	public void unpinReview(User u, Review r){
+	public void unpinReview(User u, Review r) throws UnauthorizedAccessException{
 		if(!isAccessAllowed(u)){
-			System.out.println("Action is not allowed! You are no authorized for it!");
-			return; 
+			throw(new UnauthorizedAccessException(Privilege.pinPrivilegeLevel()));
 		}
 		
 		if(reviews.contains(r)){

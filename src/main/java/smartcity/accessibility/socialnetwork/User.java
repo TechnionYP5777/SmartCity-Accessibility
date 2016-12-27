@@ -23,6 +23,7 @@ public interface User {
 		 */
 		private static Privilege[] allValues = values();
 	    public static Privilege fromOrdinal(int n) {return allValues[n];}
+	    public static Privilege pinPrivilegeLevel() {return Admin;}
 	}
 	
 	/**
