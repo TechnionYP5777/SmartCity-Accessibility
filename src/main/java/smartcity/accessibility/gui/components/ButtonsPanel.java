@@ -3,7 +3,7 @@ package smartcity.accessibility.gui.components;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class ButtonsPanel extends JPanel implements MouseListener {
@@ -15,6 +15,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 
 	public static GButton LOGIN_BUTTON;
 	public static GButton SIGNUP_BUTTON;
+	public static JLabel USERNAME;
 
 	public ButtonsPanel() {
 		// setSize(MapFrame.FRAME_X_SIZE, 100);
@@ -26,6 +27,9 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 		SIGNUP_BUTTON.addMouseListener(this);
 		add(SIGNUP_BUTTON);
 		SIGNUP_BUTTON.setVisible(true);
+		USERNAME = new JLabel("");
+		add(USERNAME);
+		USERNAME.setVisible(true);
 	}
 
 	@Override

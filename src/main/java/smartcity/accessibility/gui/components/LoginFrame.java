@@ -3,16 +3,26 @@ package smartcity.accessibility.gui.components;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import smartcity.accessibility.database.UserManager;
+import smartcity.accessibility.gui.Application;
+import smartcity.accessibility.socialnetwork.User;
+
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.JPasswordField;
 
-public class LoginFrame {
+public class LoginFrame implements MouseListener {
 
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
+	private JButton btnLogin;
 
 
 	/**
@@ -47,18 +57,53 @@ public class LoginFrame {
 		frame.getContentPane().add(lblPassword);
 		
 		textField = new JTextField();
-		textField.setBounds(151, 59, 198, 19);
+		textField.setBounds(151, 59, 198, 25);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
-		JButton btnSignup = new JButton("Login");
-		btnSignup.setBounds(151, 303, 117, 25);
-		frame.getContentPane().add(btnSignup);
+		btnLogin = new JButton("Login");
+		btnLogin.setBounds(151, 303, 117, 25);
+		btnLogin.addMouseListener(this);
+		frame.getContentPane().add(btnLogin);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(151, 119, 198, 19);
+		passwordField.setBounds(151, 119, 198, 25);
 		frame.getContentPane().add(passwordField);
 		
 		frame.setVisible(true);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		if (arg0.getSource() != btnLogin)
+			return;
+		User u = UserManager.LoginUser(textField.getText(), String.copyValueOf(passwordField.getPassword()));
+		if (u == null)
+			JOptionPane.showMessageDialog(Application.frame, "Login Failed.", "Login error", JOptionPane.ERROR_MESSAGE);
+		else {
+			Application.appUser = u;
+			ButtonsPanel.USERNAME.setText(u.getName());
+		}
+		frame.dispose();
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+
 	}
 }
