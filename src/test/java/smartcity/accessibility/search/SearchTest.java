@@ -26,7 +26,7 @@ import smartcity.acessibility.jxMapsFunctionality.JxMapsFunctionality.helper2;
 public class SearchTest{
 	
 
-//	 @Ignore
+	 @Ignore
 	 @Test 
      public void test1(){ 
      	 MapView mapView = JxMapsFunctionality.getMapView();
