@@ -17,9 +17,9 @@ import com.teamdev.jxmaps.PlaceSearchRequest;
 import com.teamdev.jxmaps.PlacesServiceStatus;
 
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.waitableMap;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
 
-public class placeSearchAttempt extends waitableMap{
+public class placeSearchAttempt extends extendedMapView{
 	
 	/**
 	 * Kolikant
