@@ -9,18 +9,19 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import com.teamdev.jxmaps.MapComponentType;
 import com.teamdev.jxmaps.MapViewOptions;
+import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.gui.components.ButtonsPanel;
-import smartcity.accessibility.gui.components.GMap;
 import smartcity.accessibility.gui.components.MapFrame;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserImpl;
+import smartcity.acessibility.jxMapsFunctionality.JxMapsFunctionality;
 
 public class Application {
 
 	public static MapFrame frame;
-	public static GMap mapView;
+	public static MapView mapView;
 
 	public static final int FRAME_X_SIZE = 1000;
 	public static final int FRAME_Y_SIZE = 700;
@@ -46,7 +47,7 @@ public class Application {
 
 		MapViewOptions options = new MapViewOptions(MapComponentType.HEAVYWEIGHT);
 		options.importPlaces();
-		mapView = new GMap(options);
+		mapView = JxMapsFunctionality.getMapView();
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.add(mapView, BorderLayout.CENTER);
