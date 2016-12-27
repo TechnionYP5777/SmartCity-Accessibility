@@ -22,7 +22,7 @@ public class BrokenAdminTest {
 		DatabaseManager.initialize();
 		admin = new Admin("admin", "", "");
 		location = new Location() {
-			private static final long serialVersionUID = 1822445041067791247L;
+			static final long serialVersionUID = 1822445041067791247L;
 
 			@Override
 			public LatLng getCoordinates() {

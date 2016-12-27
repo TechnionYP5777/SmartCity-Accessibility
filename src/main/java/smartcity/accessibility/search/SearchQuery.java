@@ -7,24 +7,21 @@ package smartcity.accessibility.search;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import com.teamdev.jxmaps.Geocoder;
 import com.teamdev.jxmaps.GeocoderCallback;
 import com.teamdev.jxmaps.GeocoderRequest;
 import com.teamdev.jxmaps.GeocoderResult;
 import com.teamdev.jxmaps.GeocoderStatus;
-import com.teamdev.jxmaps.Map;
 import com.teamdev.jxmaps.swing.MapView;
 
-import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.socialnetwork.BestReviews;
-import smartcity.accessibility.socialnetwork.User.Privilege;
-import smartcity.acessibility.jxMapsFunctionality.JxMapsFunctionality;
-import smartcity.acessibility.jxMapsFunctionality.JxMapsFunctionality.helper2;
 
 import com.teamdev.jxmaps.LatLng;
 
+
+/**
+ * Author Kolikant
+ */
 public class SearchQuery {
 
 	public enum SearchStage{
@@ -35,13 +32,8 @@ public class SearchQuery {
 		 * Kolikant
 		 */
 		private static SearchStage[] allValues = values();
-	    public static SearchStage fromOrdinal(int n) {return allValues[n];}
+		public static SearchStage fromOrdinal(int i) {return allValues[i];}
 	}
-	
-	/**
-	 * Author Kolikant
-	 */
-	private static final long serialVersionUID = 1L;
 
 	public static final String EmptyList = "[]";
 	//public static MapView mapView;
@@ -55,46 +47,48 @@ public class SearchQuery {
 	}
 
 
-	private void SetSearchStatus(SearchStage ss) {
-		searchStatus.set(ss.ordinal());
+	private void SetSearchStatus(SearchStage s) {
+		searchStatus.set(s.ordinal());
 	}
-	
+
 	public void waitOnSearch() {
 		while (searchStatus.get() == SearchStage.Running.ordinal())
 			;
 	}
 
-	private SearchQueryResult Search(GeocoderRequest request, MapView mapView) {
+	private SearchQueryResult Search(GeocoderRequest r, MapView v) {
 		SetSearchStatus(SearchStage.Running);
 		List<GeocoderResult> results = new ArrayList<GeocoderResult>();
-		Geocoder g = mapView.getServices().getGeocoder();
-		g.geocode(request, new GeocoderCallback(mapView.getMap()) {
+		Geocoder g = v.getServices().getGeocoder();
+		g.geocode(r, new GeocoderCallback(v.getMap()) {
 			@Override
-			public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
-				if (status == GeocoderStatus.OK) {
-					results.add(result[0]);
-					SetSearchStatus(SearchStage.Done);
-				}
+			public void onComplete(GeocoderResult[] rs, GeocoderStatus s) {
+				if (s != GeocoderStatus.OK)
+					return;
+				results.add(rs[0]);
+				SetSearchStatus(SearchStage.Done);
 			}
 
 		});
-		return new SearchQueryResult(results, mapView.getMap());
+		return new SearchQueryResult(results, v.getMap());
 	}
-	
-	public SearchQueryResult SearchByAddress(MapView mapView) {
-		GeocoderRequest request = new GeocoderRequest(mapView.getMap());
+
+	@SuppressWarnings("deprecation")
+	public SearchQueryResult SearchByAddress(MapView v) {
+		GeocoderRequest request = new GeocoderRequest(v.getMap());
 		request.setAddress(adress);
-		return Search(request, mapView);
+		return Search(request, v);
 
 	}
 
 	/**
 	 * Koral Chapnik
 	 */
-	public SearchQueryResult searchByCoordinates(MapView mapView, LatLng c) {
-		GeocoderRequest request = new GeocoderRequest(mapView.getMap());
+	@SuppressWarnings("deprecation")
+	public SearchQueryResult searchByCoordinates(MapView v, LatLng c) {
+		GeocoderRequest request = new GeocoderRequest(v.getMap());
 		request.setLocation(c);
-		return Search(request, mapView);
+		return Search(request, v);
 	}
 
 

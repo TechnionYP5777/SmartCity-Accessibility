@@ -20,10 +20,10 @@ public class Score {
 		return this.score;
 	}
 	
-	public void setScore(int s) throws ScoreNotInRangeException {
-		if(!isValidScore(s))
+	public void setScore(int i) throws ScoreNotInRangeException {
+		if(!isValidScore(i))
 			throw new ScoreNotInRangeException();
-		this.score = s;
+		this.score = i;
 	}
 	
 	public static int getMinScore() {
@@ -33,23 +33,13 @@ public class Score {
 	public static int getMaxScore() {
 		return MAX_SCORE;
 	}
-	private boolean isValidScore(int s) {
-		return !(s < MIN_SCORE || s > MAX_SCORE);
+	private boolean isValidScore(int i) {
+		return i >= MIN_SCORE && i <= MAX_SCORE;
 	}
     @Override
     public boolean equals(Object o) {
-        if (o == this) {
-            return true;
-        }
-
-        if (!(o instanceof Score)) {
-            return false;
-        }
- 
-        Score s = (Score) o;
- 
-        return s.getScore() == this.score;
-    }
+		return o == this || (o instanceof Score && ((Score) o).getScore() == this.score);
+	}
 
 
 }
