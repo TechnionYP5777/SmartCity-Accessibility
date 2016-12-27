@@ -24,24 +24,11 @@ import smartcity.acessibility.jxMapsFunctionality.JxMapsFunctionality;
  */
 public class SearchTest{
 	
-	public static class helper2 extends MapView{
-		helper2(MapViewOptions __){
-			setOnMapReadyHandler(new MapReadyHandler() {
-				@Override
-				public void onMapReady(MapStatus arg0) {
-				}
-			});
-		}
-		
-	}
-	
 
 //	 @Ignore
 	 @Test 
      public void test1(){ 
-     	 MapViewOptions options = new MapViewOptions();
-         options.importPlaces();
-         final helper2 mapView = new helper2(options);
+     	 MapView mapView = JxMapsFunctionality.getMapView();
          try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e2) {
@@ -52,10 +39,8 @@ public class SearchTest{
          
          Map map = mapView.getMap();
          
-         map.setZoom(16.0);
-         SearchQuery.mapView = mapView;
-         SearchQueryResult sqr1= s1.Search();
-         SearchQueryResult sqr2= s2.Search();
+         SearchQueryResult sqr1= s1.Search(mapView);
+         SearchQueryResult sqr2= s2.Search(mapView);
          try {
  			Thread.sleep(5000);
  		} catch (InterruptedException e2) {
@@ -68,7 +53,7 @@ public class SearchTest{
          JxMapsFunctionality.putMarker(map, position1, "result1");
          JxMapsFunctionality.putMarker(map, position2, "result2");
          
-         JxMapsFunctionality.openFrame(mapView, "JxMaps - Hello, World!");
+         JxMapsFunctionality.openFrame(mapView, "JxMaps - Hello, World!", 16.0);
         
          
 

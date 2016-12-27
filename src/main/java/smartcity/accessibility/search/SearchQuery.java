@@ -29,37 +29,37 @@ public class SearchQuery {
 	private static final long serialVersionUID = 1L;
 
 	public static final String EmptyList = "[]";
-	public static MapView mapView;
+	//public static MapView mapView;
 	String adress;
 
 	public SearchQuery(String parsedQuery) {
 		this.adress = parsedQuery;
 	}
 
-	public SearchQueryResult Search() {
+	public SearchQueryResult Search(MapView mapView) {
 		GeocoderRequest request = new GeocoderRequest(mapView.getMap());
 		request.setAddress(adress);
-		return doSearch(request, mapView.getMap());
+		return doSearch(request, mapView);
 
 	}
 
 	/**
 	 * Koral Chapnik
 	 */
-	public SearchQueryResult searchByCoordinates(Map map, LatLng c) {
-		GeocoderRequest request = new GeocoderRequest(map);
+	public SearchQueryResult searchByCoordinates(MapView mapView, LatLng c) {
+		GeocoderRequest request = new GeocoderRequest(mapView.getMap());
 		request.setLocation(c);
-		return doSearch(request, map);
+		return doSearch(request, mapView);
 	}
 
 	/**
 	 * Koral Chapnik
 	 */
-	private SearchQueryResult doSearch(GeocoderRequest request, Map map) {
+	private SearchQueryResult doSearch(GeocoderRequest request, MapView mapView) {
 		List<GeocoderResult> results = new ArrayList<GeocoderResult>();
 
 		Geocoder g = mapView.getServices().getGeocoder();
-		g.geocode(request, new GeocoderCallback(map) {
+		g.geocode(request, new GeocoderCallback(mapView.getMap()) {
 			@Override
 			public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
 				if (status == GeocoderStatus.OK) {
@@ -68,7 +68,7 @@ public class SearchQuery {
 				}
 			}
 		});
-		return new SearchQueryResult(results, map);
+		return new SearchQueryResult(results, mapView.getMap());
 	}
 
 	@Override
