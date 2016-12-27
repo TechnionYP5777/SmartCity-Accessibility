@@ -9,8 +9,8 @@ import com.teamdev.jxmaps.GeocoderResult;
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.swing.MapView;
 
-import smartcity.acessibility.jxMapsFunctionality.JxMapsFunctionality;
-import smartcity.acessibility.jxMapsFunctionality.JxMapsFunctionality.waitableMap;;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.waitableMap;;
 
 /**
  * @author Kolikant
@@ -19,7 +19,7 @@ import smartcity.acessibility.jxMapsFunctionality.JxMapsFunctionality.waitableMa
 public class SearchTest{
 	
 
-//	 @Ignore
+	 @Ignore
 	 @Test 
      public void test1(){ 
      	 MapView mapView = JxMapsFunctionality.getMapView();

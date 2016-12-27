@@ -16,13 +16,13 @@ import com.teamdev.jxmaps.PlaceSearchPagination;
 import com.teamdev.jxmaps.PlaceSearchRequest;
 import com.teamdev.jxmaps.PlacesServiceStatus;
 
-
-import smartcity.acessibility.jxMapsFunctionality.JxMapsFunctionality.waitableMap;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.waitableMap;
 
 public class placeSearchAttempt extends waitableMap{
 	
 	/**
-	 * 
+	 * Kolikant
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -41,7 +41,7 @@ public class placeSearchAttempt extends waitableMap{
                  map.setZoom(17.0);
                  request.setLocation(map.getCenter());
                  // Setting radius for places search
-                 request.setRadius(500);
+                 request.setRadius(2);
                  
                  getServices().getPlacesService().nearbySearch(request, new PlaceNearbySearchCallback(map) {
 					@Override

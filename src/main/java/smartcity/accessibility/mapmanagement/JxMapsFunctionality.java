@@ -1,4 +1,4 @@
-package smartcity.acessibility.jxMapsFunctionality;
+package smartcity.accessibility.mapmanagement;
 
 import java.awt.BorderLayout;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,6 +15,8 @@ import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.swing.MapView;
 
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.waitableMap;
+
 /*
  * Author Kolikant
  */
@@ -24,24 +26,16 @@ public abstract class JxMapsFunctionality {
 	public static MapView mv;
 	
 	public static class waitableMap extends MapView{
-		final AtomicInteger mapReady = new AtomicInteger();
 		waitableMap(MapViewOptions __){
-			mapReady.set(0);
 			setOnMapReadyHandler(new MapReadyHandler() {
 				@Override
 				public void onMapReady(MapStatus arg0) {
-					mapReady.set(1);
 				}
 			});
 		}
 		
 	}
 	
-	public static void waitForMapReady(waitableMap h2){
-		while(h2.mapReady.get()!=1)
-			;
-		return;
-	}
 	
 	public static MapView getMapView(){
 		if (mv != null)
@@ -80,5 +74,9 @@ public abstract class JxMapsFunctionality {
         frame.setSize(700, 500);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);	
+	}
+
+	public static void waitForMapReady(waitableMap mapView) {
+		mapView.waitReady();
 	}
 }
