@@ -51,6 +51,11 @@ public abstract class JxMapsFunctionality {
 		return mv = new helper2(options);
 	}
 	
+	public static void DestroyMapView(){
+		mv.dispose();
+		mv = null;
+	}
+	
 	public static MapView getMapView(MapViewOptions o){
 	        o.importPlaces();
 	        return mv = new helper2(o);
@@ -74,7 +79,6 @@ public abstract class JxMapsFunctionality {
         frame.add(v, BorderLayout.CENTER);
         frame.setSize(700, 500);
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-		
+        frame.setVisible(true);	
 	}
 }

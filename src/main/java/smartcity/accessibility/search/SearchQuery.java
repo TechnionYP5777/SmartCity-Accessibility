@@ -28,9 +28,7 @@ public class SearchQuery {
 		NotRunning,
 		Running,
 		Done;
-		/*
-		 * Kolikant
-		 */
+		
 		private static SearchStage[] allValues = values();
 		public static SearchStage fromOrdinal(int i) {return allValues[i];}
 	}
@@ -80,6 +78,13 @@ public class SearchQuery {
 		return Search(request, v);
 
 	}
+	
+
+/*	public SearchQueryResult SearchByFreeText(MapView mapView) {
+		GeocoderRequest request = new GeocoderRequest(v.getMap());
+		request.(adress);
+		return Search(request, v);
+	}*/
 
 	/**
 	 * Koral Chapnik
@@ -120,6 +125,8 @@ public class SearchQuery {
 			$.add(SearchQuery.toQuery(s));
 		return $;
 	}
+
+
 
 
 }

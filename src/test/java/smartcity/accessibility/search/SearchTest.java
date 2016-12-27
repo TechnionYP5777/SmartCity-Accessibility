@@ -1,8 +1,11 @@
 package smartcity.accessibility.search;
 
+import java.util.List;
+
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.teamdev.jxmaps.GeocoderResult;
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.swing.MapView;
 
@@ -16,7 +19,7 @@ import smartcity.acessibility.jxMapsFunctionality.JxMapsFunctionality.helper2;
 public class SearchTest{
 	
 
-//	 @Ignore
+	 @Ignore
 	 @Test 
      public void test1(){ 
      	 MapView mapView = JxMapsFunctionality.getMapView();
@@ -49,5 +52,21 @@ public class SearchTest{
 			e.printStackTrace();
 		}
      }
+	 
+	 @Test
+	 public void test2(){
+		 MapView mapView = JxMapsFunctionality.getMapView();
+		 SearchQuery s1 = new SearchQuery("coffee shops");
+		 
+		 JxMapsFunctionality.waitForMapReady((helper2) mapView);
+         
+     //    SearchQueryResult sqr1= s1.SearchByFreeText(mapView);
+         
+         s1.waitOnSearch();
+         
+      //   List<GeocoderResult> positions = sqr1.getCoordinations();
+         //JxMapsFunctionality.putMarker((helper2) mapView, position1, "result1");
+         
+	 }
             
 }

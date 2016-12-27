@@ -24,14 +24,6 @@ public class SearchQueryResult extends MapView{
 	public List<GeocoderResult> getCoordinations(){
 		return coordinations;
 	}
-	
-	public void showResults(){
-		for(GeocoderResult gr: coordinations){
-                    map.setCenter(gr.getGeometry().getLocation());
-                    Marker marker = new Marker(map);
-                    marker.setPosition(gr.getGeometry().getLocation());
-		}
-    }
 }
 	
 
