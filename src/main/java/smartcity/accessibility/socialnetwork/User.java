@@ -12,7 +12,7 @@ import smartcity.accessibility.search.SearchQuery;
 
 public interface User {	
 	
-	public enum Privilege{
+	enum Privilege{
 		GodUser, //TODO might not need this, still put it here just in case
 		Admin,
 		RegularUser,
