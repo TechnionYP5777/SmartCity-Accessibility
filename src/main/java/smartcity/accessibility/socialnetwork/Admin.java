@@ -10,7 +10,7 @@ import smartcity.accessibility.database.ReviewManager;
  * @author ArthurSap
  *
  */
-
+@Deprecated 
 public class Admin extends AuthenticatedUser {
 
 	public Admin(String un, String pass, String FavouriteQueries){

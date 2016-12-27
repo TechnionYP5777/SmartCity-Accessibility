@@ -7,6 +7,7 @@ import smartcity.accessibility.search.SearchQuery;
  * @author Kolikant
  *
  */
+@Deprecated 
 public class AuthenticatedUser implements User {
 	private String name;
 	private String password;
