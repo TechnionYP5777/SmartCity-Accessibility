@@ -29,7 +29,7 @@ public class Application {
 	public static User appUser = new UserImpl("", "", User.Privilege.DefaultUser);
 
 	public static void main(String[] args) {
-		frame = new MapFrame("JxMaps - Hello, World!");
+		frame = new MapFrame("SmartCity - Accessibility");
 
 		DatabaseManager.initialize();
 		
@@ -48,6 +48,8 @@ public class Application {
 		MapViewOptions options = new MapViewOptions(MapComponentType.HEAVYWEIGHT);
 		options.importPlaces();
 		mapView = JxMapsFunctionality.getMapView();
+		mapView.waitReady();
+		mapView.setSize(FRAME_X_SIZE, FRAME_Y_SIZE-100);
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.add(mapView, BorderLayout.CENTER);
@@ -74,6 +76,7 @@ public class Application {
 		frame.pack();
 		frame.setVisible(true);
 
+		JxMapsFunctionality.initMapLocation(mapView);
 	}
 
 }
