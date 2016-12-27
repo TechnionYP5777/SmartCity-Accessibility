@@ -16,15 +16,11 @@ import smartcity.accessibility.mapmanagement.Location;
  */
 public class ReviewTest {
 	private static User u1;
-	private static User u2;
-	private static User u3;
 	private static Review r1;
 	
 	@BeforeClass
 	public static void init(){
 		u1 = new AuthenticatedUser("Koral","123","");
-		u2 = new AuthenticatedUser("Koral","123","");
-		u3 = new Admin("Simba", "355", "");
 		LatLng c = new LatLng(39.750307, -104.999472);
 		Location l = new Coordinates(c);
 		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1);

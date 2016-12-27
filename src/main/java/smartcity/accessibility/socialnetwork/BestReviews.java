@@ -28,11 +28,19 @@ public class BestReviews {
 	 */
 	public List<Review> getMostRated() {
 		reviews.sort((Review r1, Review r2) -> r2.getRating().getScore() - r1.getRating().getScore());
-		return reviews.subList(0, n-1);
+		return reviews.subList(0, n);
 	}
 	
 	public int getTotalRating() {
 		List<Review> mostRated = getMostRated();
 		return mostRated.stream().collect(Collectors.summingInt(a -> a.getRating().getScore())) / mostRated.size();
+	}
+	
+	public void setN(int n) {
+		this.n = n;
+	}
+	
+	public List<Review> getReviews() {
+		return this.reviews;
 	}
 }

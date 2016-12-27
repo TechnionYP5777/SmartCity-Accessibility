@@ -4,11 +4,9 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import org.junit.Assume;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.teamdev.jxmaps.GeocoderRequest;
 import com.teamdev.jxmaps.InfoWindow;
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.Map;

@@ -109,5 +109,20 @@ public abstract class Location {
 		ReviewManager.uploadReview(r);
 	}
 	
+	 @Override
+	    public boolean equals(Object o) {
+	        if (o == this) {
+	            return true;
+	        }
+
+	        if (!(o instanceof Location)) {
+	            return false;
+	        }
+	 
+	        Location l = (Location) o;
+	 
+	        return l.coordinates.equals(this.coordinates);
+	    }
+
 	
 }

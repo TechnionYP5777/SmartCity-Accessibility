@@ -76,5 +76,22 @@ public class Review {
 		comments.add(new ReviewComment(rating,u));
 	}
 	
-	
+	 @Override
+	    public boolean equals(Object o) {
+	        if (o == this) {
+	            return true;
+	        }
+
+	        if (!(o instanceof Review)) {
+	            return false;
+	        }
+	 
+	        Review r = (Review) o;
+	 
+	        return r.location.equals(this.location) &&
+	        		r.user.equals(this.user) &&
+	        		r.rating.equals(this.rating) &&
+	        		r.content.equals(this.content);
+	    }
+
 }
