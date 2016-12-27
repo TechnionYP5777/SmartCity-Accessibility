@@ -10,6 +10,9 @@ import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.Admin;
 import smartcity.accessibility.socialnetwork.AuthenticatedUser;
+import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.User.Privilege;
+import smartcity.accessibility.socialnetwork.UserImpl;
 
 /**
  * @author Kolikant
@@ -17,7 +20,7 @@ import smartcity.accessibility.socialnetwork.AuthenticatedUser;
  */
 public abstract class UserManager {
 	private static final String FavouriteQueriesField = "FavouritQueries";
-	private static final String isAdminField = "isAdmin";
+	private static final String PrivilidgeLevel = "PriviligeLevel";
 	
 	public static void logoutCurrUser(){
 		if(ParseUser.currentUser != null)
@@ -32,14 +35,14 @@ public abstract class UserManager {
 	/*
 	 * Users should be created only through here, as this shows if they can be added to the database
 	 */
-	public static AuthenticatedUser SignUpUser(String name, String password, boolean isAdmin){
+	public static User SignUpUser(String name, String password, User.Privilege p){
 		ParseUser user = new ParseUser();
 		user.setUsername(name);
 		user.setPassword(password);
 		
 		List<String> fqDummy = new ArrayList<String>();
 		
-		user.put(isAdminField, String.valueOf(isAdmin));
+		user.put(PrivilidgeLevel, Integer.toString(p.ordinal()));
 		String dummy = fqDummy + "";
 		user.put(FavouriteQueriesField, (dummy));
 		
@@ -56,22 +59,23 @@ public abstract class UserManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return (new AuthenticatedUser(name, password, SearchQuery.EmptyList));
+		return (new UserImpl(name, password, p, SearchQuery.EmptyList));
 	}
 	
 	
-	public static AuthenticatedUser LoginUser(String name, String password){
+	public static User LoginUser(String name, String password){
 		ParseUser pu=null;
-		AuthenticatedUser $=null;
+		UserImpl $=null;
 		try {
 			pu = ParseUser.login(name, password);
 		} catch (ParseException e) {
 			return null;
 		}
-		boolean isAdmin = java.lang.Boolean.parseBoolean(pu.getString(isAdminField));
+		int level = Integer.parseInt(pu.getString(PrivilidgeLevel));
+		Privilege pr = Privilege.fromOrdinal(level);
 		String favouriteQueries = pu.getString(FavouriteQueriesField);
 		
-		$ = isAdmin ? new Admin(name, password,favouriteQueries) : new AuthenticatedUser(name, password,favouriteQueries);
+		$ = new UserImpl(name, password, pr, favouriteQueries);  
 		try {
 			pu.logout();
 			logoutCurrUser();
@@ -82,12 +86,12 @@ public abstract class UserManager {
 		return $;
 	}
 	
-	public static void DeleteUser(AuthenticatedUser u){
+	public static void DeleteUser(User u){
 		if(u == null)
 			return;
 		ParseUser pu;
 		try {
-			pu = ParseUser.login(u.getUserName(), u.getPassword());
+			pu = ParseUser.login(u.getName(), u.getPassword());
 			pu.delete();
 			logoutCurrUser();
 			//TODO: check if logout is needed here
@@ -97,10 +101,10 @@ public abstract class UserManager {
 		}	
 	}
 	
-	public static void updateUserName(AuthenticatedUser u, String newName) throws UserNotFoundException{
+	public static void updateUserName(User a, String newName) throws UserNotFoundException{
 		ParseUser pu;
 		try {
-			pu = ParseUser.login(u.getUserName(), u.getPassword());
+			pu = ParseUser.login(a.getName(), a.getPassword());
 			pu.setUsername(newName);
 			pu.save();
 			pu.logout();
@@ -127,10 +131,10 @@ public abstract class UserManager {
 		}
 	}*/
 	
-	public static void updatefavouriteQueries(AuthenticatedUser u, List<SearchQuery> l) throws UserNotFoundException{
+	public static void updatefavouriteQueries(User b, List<SearchQuery> l) throws UserNotFoundException{
 		ParseUser pu;
 		try {
-			pu = ParseUser.login(u.getUserName(), u.getPassword());
+			pu = ParseUser.login(b.getName(), b.getPassword());
 			pu.put(FavouriteQueriesField, SearchQuery.QueriesList2String(l));
 			pu.save();
 			pu.logout();

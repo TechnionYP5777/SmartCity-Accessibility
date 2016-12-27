@@ -16,7 +16,11 @@ public interface User {
 		GodUser, //TODO might not need this, still put it here just in case
 		Admin,
 		RegularUser,
-		DefaultUser
+		DefaultUser;
+		
+		
+		private static Privilege[] allValues = values();
+	    public static Privilege fromOrdinal(int n) {return allValues[n];}
 	}
 	
 	/**

@@ -17,6 +17,7 @@ import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.Admin;
 import smartcity.accessibility.socialnetwork.AuthenticatedUser;
+import smartcity.accessibility.socialnetwork.User;
 
 /**
  * @author Kolikant
@@ -27,7 +28,7 @@ public class UserManagerTest {
 	public static void init(){
 		DatabaseManager.initialize();
 		String UserName = "uuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
-		AuthenticatedUser u = UserManager.LoginUser(UserName, "password");
+		User u = UserManager.LoginUser(UserName, "password");
 		UserManager.DeleteUser(u);
 		String UserName2 = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
 		u = UserManager.LoginUser(UserName2, "admin");
@@ -40,11 +41,12 @@ public class UserManagerTest {
 	@Test
 	public void test() {
 		String UserName = "uuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
-		UserManager.SignUpUser(UserName, "password", false);
-		AuthenticatedUser u = UserManager.LoginUser(UserName, "password");
-		assertEquals(UserName, u.getUserName());
+		UserManager.SignUpUser(UserName, "password", User.Privilege.RegularUser);
+		User u = UserManager.LoginUser(UserName, "password");
+		assertEquals(UserName, u.getName());
 		assertEquals("password", u.getPassword());
-		assertEquals(new ArrayList<SearchQuery>(), u.getfavouriteSearchQueries());	
+		assertEquals(new ArrayList<SearchQuery>(), u.getFavouriteSearchQueries());	
+		assertEquals(User.Privilege.RegularUser, u.getPrivilege());
 		UserManager.DeleteUser(u);
 	}
 	
@@ -52,11 +54,12 @@ public class UserManagerTest {
 	@Test 
 	public void test2(){
 		String UserName = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
-		UserManager.SignUpUser(UserName, "admin", true);
-		Admin a = (Admin) UserManager.LoginUser(UserName, "admin");
-		assertEquals(UserName, a.getUserName());
+		UserManager.SignUpUser(UserName, "admin", User.Privilege.Admin);
+		User a = UserManager.LoginUser(UserName, "admin");
+		assertNotNull(a);
+		assertEquals(UserName, a.getName());
 		assertEquals("admin", a.getPassword());
-		assertEquals(new ArrayList<SearchQuery>(), a.getfavouriteSearchQueries());
+		assertEquals(new ArrayList<SearchQuery>(), a.getFavouriteSearchQueries());
 		
 		try {
 			UserManager.updateUserName(a, "b"+UserName);
@@ -64,7 +67,7 @@ public class UserManagerTest {
 			fail();
 		}
 		
-		Admin b = (Admin) UserManager.LoginUser("b"+UserName, "admin");
+		User b = UserManager.LoginUser("b"+UserName, "admin");
 		assertNotNull(b);
 		
 		List<SearchQuery> l = new ArrayList<SearchQuery>();
@@ -75,8 +78,8 @@ public class UserManagerTest {
 			fail();
 		}
 		
-		Admin c = ((Admin) UserManager.LoginUser("b"+UserName, "admin"));
-		assertEquals(SearchQuery.QueriesList2String(l), SearchQuery.QueriesList2String(c.getfavouriteSearchQueries()));
+		User c = (UserManager.LoginUser("b"+UserName, "admin"));
+		assertEquals(SearchQuery.QueriesList2String(l), SearchQuery.QueriesList2String(c.getFavouriteSearchQueries()));
 		
 		
 		UserManager.DeleteUser(b);
