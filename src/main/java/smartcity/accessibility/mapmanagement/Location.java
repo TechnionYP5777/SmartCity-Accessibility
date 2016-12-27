@@ -116,14 +116,21 @@ public abstract class Location {
 	 * Also, always show this review in the top reviews.
 	 **/
 	public void pinReview(User u, Review r){
-		if(!isAccessAllowed(u))
-			return; //TODO exception?
+		if(!isAccessAllowed(u)){
+			System.out.println("Action is not allowed! You are no authorized for it!");
+			return; 
+		}
 		
-		if(!reviews.contains(r))
-			return; //TODO exception?
+		if(!reviews.contains(r)){
+			System.out.print("ERROR! This review doesn't exist in current location!");
+			System.out.println("\tCurrent Location: "+this.coordinates);
+			return;
+		}
 		
-		if(pinnedReviews.contains(r))
-			return; //TODO exception?
+		if(pinnedReviews.contains(r)){
+			System.out.println("Review is already pinned.");
+			return;
+		}
 		
 		pinUnpinElement(r, pinnedReviews, reviews);
 	}
@@ -133,20 +140,30 @@ public abstract class Location {
 	 */
 	public void unpinReview(User u, Review r){
 		if(!isAccessAllowed(u)){
-			return; //TODO exception?
+			System.out.println("Action is not allowed! You are no authorized for it!");
+			return; 
 		}
 		
-		if(reviews.contains(r))
-			return; //TODO exception?
+		if(reviews.contains(r)){
+			System.out.println("Review is already un-pinned.");
+			return;
+		}
 		
-		if(!pinnedReviews.contains(r))
-			return; //TODO exception?
+		if(!pinnedReviews.contains(r)){
+			if (reviews.contains(r))
+				System.out.println("Review is already un-pinned.");
+			else {
+				System.out.print("ERROR! This review doesn't exist in current location!");
+				System.out.println("\tCurrent Location: " + this.coordinates);
+			}
+			return;
+		}
 		
 		pinUnpinElement(r, reviews, pinnedReviews);
 	}
 
 	private boolean isAccessAllowed(User u) {
-		return u.getPrivilege().compareTo(Privilege.RegularUser) < 0;
+		return u.getPrivilege().compareTo(Privilege.RegularUser) >= 0;
 	}
 	
 	private void pinUnpinElement(Review r, ArrayList<Review> toAdd, ArrayList<Review> toRemove){
