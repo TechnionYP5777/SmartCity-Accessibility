@@ -36,10 +36,17 @@ public class SearchQuery {
 		this.adress = parsedQuery;
 	}
 
+<<<<<<< HEAD
 	public SearchQueryResult Search() {
 		GeocoderRequest request = new GeocoderRequest(mapView.getMap());
 		request.setAddress(adress);
 		return doSearch(request, mapView.getMap());
+=======
+	public SearchQueryResult SearchByAddress(MapView mapView) {
+		GeocoderRequest request = new GeocoderRequest(mapView.getMap());
+		request.setAddress(adress);
+		return Search(request, mapView);
+>>>>>>> f9a6350635507e352650e92475ffcd43c0a2ed6f
 
 	}
 
@@ -49,6 +56,7 @@ public class SearchQuery {
 	public SearchQueryResult searchByCoordinates(Map map, LatLng c) {
 		GeocoderRequest request = new GeocoderRequest(map);
 		request.setLocation(c);
+<<<<<<< HEAD
 		return doSearch(request, map);
 	}
 
@@ -56,6 +64,13 @@ public class SearchQuery {
 	 * Koral Chapnik
 	 */
 	private SearchQueryResult doSearch(GeocoderRequest request, Map map) {
+=======
+		return Search(request, mapView);
+	}
+
+
+	private SearchQueryResult Search(GeocoderRequest request, MapView mapView) {
+>>>>>>> f9a6350635507e352650e92475ffcd43c0a2ed6f
 		List<GeocoderResult> results = new ArrayList<GeocoderResult>();
 
 		Geocoder g = mapView.getServices().getGeocoder();
@@ -97,26 +112,6 @@ public class SearchQuery {
 		for (String s : split)
 			$.add(SearchQuery.toQuery(s));
 		return $;
-	}
-
-	/*
-	 * @Author Kolikant
-	 */
-	public static List<Location> FilterToAllBellow(List<Location> totalLocation, int ReviewsTakenToAccount,
-			int accessibilityLevel) {
-		return totalLocation.stream().filter(
-				p -> new BestReviews(ReviewsTakenToAccount, p.getReviews()).getTotalRating() < accessibilityLevel)
-				.collect(Collectors.toList());
-	}
-
-	/*
-	 * @Author Kolikant
-	 */
-	public static List<Location> FilterToAllAbove(List<Location> totalLocation, int ReviewsTakenToAccount,
-			int accessibilityLevel) {
-		return totalLocation.stream().filter(
-				p -> new BestReviews(ReviewsTakenToAccount, p.getReviews()).getTotalRating() >= accessibilityLevel)
-				.collect(Collectors.toList());
 	}
 
 }

@@ -43,8 +43,8 @@ public class UserImpl implements User {
 
 	@Override
 	public void setName(String name) {
-		if(privilegeLevel == Privilege.DefaultUser) return; //TODO exception?
-		userName = name;
+		if (privilegeLevel != Privilege.DefaultUser)
+			userName = name;
 	}
 
 	@Override
@@ -54,8 +54,8 @@ public class UserImpl implements User {
 
 	@Override
 	public void setPassword(String pass) {
-		if(privilegeLevel == Privilege.DefaultUser) return; //TODO exception?
-		password = pass;		
+		if (privilegeLevel != Privilege.DefaultUser)
+			password = pass;		
 	}
 
 	@Override
@@ -85,20 +85,9 @@ public class UserImpl implements User {
 	
 	@Override
     public boolean equals(Object o) {
-        if (o == this) {
-            return true;
-        }
-
-        if (!(o instanceof UserImpl)) {
-            return false;
-        }
- 
-        UserImpl u = (UserImpl) o;
- 
-        return this.userName.equals(u.userName) &&
-        		this.password.equals(u.password) &&
-        		this.privilegeLevel == u.privilegeLevel;
-    }
+		return o == this || (o instanceof UserImpl && this.userName.equals(((UserImpl) o).userName)
+				&& this.password.equals(((UserImpl) o).password) && this.privilegeLevel == ((UserImpl) o).privilegeLevel);
+	}
 
 
 

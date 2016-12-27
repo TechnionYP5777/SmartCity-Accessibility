@@ -33,15 +33,10 @@ public class ReviewManager {
 		FindCallback<ParseObject> p = new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
-				// TODO Auto-generated method stub
-                if (arg1 == null) {
-                	c.append(arg0.get(0).get("rating"));
-                	r.append(arg0.get(0).get("comment"));
-                	//There might be a better way but for now i think it is ok
-                	//I look more into it later when i have time
-                } else {
-                    //TODO: check if this part needed
-                }
+				if (arg1 != null)
+					return;
+				c.append(arg0.get(0).get("rating"));
+				r.append(arg0.get(0).get("comment"));
 				
 			}
 		};
@@ -49,8 +44,7 @@ public class ReviewManager {
 		m.put("user", u.getName());
 		m.put("location", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
 		DatabaseManager.queryByFields("Review",m,p);
-		Review rev = new Review(l, Integer.valueOf(r.toString()), c.toString(), u);
-		return rev;	
+		return new Review(l, Integer.valueOf((r + "")), c + "", u);	
 	}
 	
 	public static void deleteReview(Review r){
@@ -62,15 +56,14 @@ public class ReviewManager {
 		GetCallback<ParseObject> p = new GetCallback<ParseObject>() {
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
-				if(arg1!=null){
+				if(arg1!=null)
 					objectID.append(arg0.getObjectId());
-				}
 				arg1.printStackTrace();
 			}
 		};
 		
 		DatabaseManager.getObjectByFields("Review",m,p);
-		DatabaseManager.deleteById("Review",objectID.toString());	
+		DatabaseManager.deleteById("Review",(objectID + ""));	
 	}
 
 }

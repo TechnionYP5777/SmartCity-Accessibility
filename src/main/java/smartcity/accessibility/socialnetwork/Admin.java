@@ -44,7 +44,7 @@ public class Admin extends AuthenticatedUser {
 		toRemove.remove(r);
 	}
 	
-	public void deleteReview(Review r){
+	public void deleteReview(Review __){
 		//TODO implement once the DB has enough info
 		//issue #32
 	}
@@ -63,16 +63,12 @@ public class Admin extends AuthenticatedUser {
 
 	@Override
 	public String getUserName() {
-		String $ = super.getUserName();
-		//TODO special stuff on userName
-		return $;
+		return super.getUserName();
 	}
 
 	@Override
 	public String getPassword() {
-		String password = super.getPassword();
-		//TODO special stuff on password
-		return password;
+		return super.getPassword();
 	}
 
 }
