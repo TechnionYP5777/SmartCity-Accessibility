@@ -90,8 +90,7 @@ public abstract class Location {
 	 * @throws ParseException 
 	 */
 	public void addReview(User u, int rating, String review) throws ParseException {
-		Review r = new Review(this, rating, review, u);
-		actuallyAddReview(r);
+		actuallyAddReview((new Review(this, rating, review, u)));
 	}
 	
 	/**
