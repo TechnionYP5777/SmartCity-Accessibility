@@ -18,7 +18,9 @@ public interface User {
 		RegularUser,
 		DefaultUser;
 		
-		
+		/*
+		 * Kolikant
+		 */
 		private static Privilege[] allValues = values();
 	    public static Privilege fromOrdinal(int n) {return allValues[n];}
 	}

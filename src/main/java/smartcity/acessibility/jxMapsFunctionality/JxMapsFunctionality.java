@@ -37,7 +37,7 @@ public abstract class JxMapsFunctionality {
 		
 	}
 	
-	private static void waitForMapReady(helper2 h2){
+	public static void waitForMapReady(helper2 h2){
 		while(h2.mapReady.get()!=1)
 			;
 		return;
