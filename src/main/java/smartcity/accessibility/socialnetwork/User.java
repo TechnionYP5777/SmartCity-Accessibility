@@ -12,7 +12,7 @@ import smartcity.accessibility.search.SearchQuery;
 
 public interface User {	
 	
-	public enum Privilege{
+	enum Privilege{
 		GodUser, //TODO might not need this, still put it here just in case
 		Admin,
 		RegularUser,
@@ -22,28 +22,28 @@ public interface User {
 		 * Kolikant
 		 */
 		private static Privilege[] allValues = values();
-	    public static Privilege fromOrdinal(int n) {return allValues[n];}
+	    public static Privilege fromOrdinal(int i) {return allValues[i];}
 	}
 	
 	/**
 	 * make a search using an existing query and show the user the results
 	 * @param q is the query to be used for the search
 	 */
-	static void search(SearchQuery q){
+	static void search(SearchQuery __){
 		//q.Search();
 	}
 	
-	public String getName();
-	public void setName(String name);
+	String getName();
+	void setName(String name);
 	
-	public String getPassword();
-	public void setPassword(String pass);
+	String getPassword();
+	void setPassword(String pass);
 	
-	public Privilege getPrivilege();
-	public void setPrivilege(Privilege p);
+	Privilege getPrivilege();
+	void setPrivilege(Privilege p);
 	
-	public List<SearchQuery> getFavouriteSearchQueries();
-	public void setFavouriteSearchQueries(String favouriteQueries);
-	public void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries);
+	List<SearchQuery> getFavouriteSearchQueries();
+	void setFavouriteSearchQueries(String favouriteQueries);
+	void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries);
 	
 }

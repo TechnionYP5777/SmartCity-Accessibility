@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.teamdev.jxmaps.GeocoderResult;
 import com.teamdev.jxmaps.Map;
-import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.swing.MapView;
 
 /**
@@ -13,6 +12,10 @@ import com.teamdev.jxmaps.swing.MapView;
  */
 public class SearchQueryResult extends MapView{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Map map;
 	private List<GeocoderResult> coordinations;
 

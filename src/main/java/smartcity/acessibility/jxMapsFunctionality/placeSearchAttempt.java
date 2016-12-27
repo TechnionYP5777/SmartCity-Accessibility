@@ -15,18 +15,24 @@ import com.teamdev.jxmaps.PlaceResult;
 import com.teamdev.jxmaps.PlaceSearchPagination;
 import com.teamdev.jxmaps.PlaceSearchRequest;
 import com.teamdev.jxmaps.PlacesServiceStatus;
-import com.teamdev.jxmaps.swing.MapView;
+
 
 import smartcity.acessibility.jxMapsFunctionality.JxMapsFunctionality.waitableMap;
 
 public class placeSearchAttempt extends waitableMap{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public placeSearchAttempt(MapViewOptions options) {
 		super(options);
 		placeSearchAttempt thisis = this;
         setOnMapReadyHandler(new MapReadyHandler() {
-            @Override
-            public void onMapReady(MapStatus status) {
+            @SuppressWarnings("deprecation")
+			@Override
+            public void onMapReady(MapStatus __) {
             	 final Map map = getMap();
                  // Creating places search request
                  final PlaceSearchRequest request = new PlaceSearchRequest(map);
@@ -40,11 +46,9 @@ public class placeSearchAttempt extends waitableMap{
                  getServices().getPlacesService().nearbySearch(request, new PlaceNearbySearchCallback(map) {
 					@Override
 					public void onComplete(PlaceResult[] arg0, PlacesServiceStatus arg1, PlaceSearchPagination arg2) {
-						 if (arg1 == PlacesServiceStatus.OK) {
-							 for (PlaceResult p: arg0){
-								 JxMapsFunctionality.putMarker(thisis, p.getGeometry().getLocation(), "banana");
-							 }
-                         }
+						 if (arg1 == PlacesServiceStatus.OK)
+							for (PlaceResult p : arg0)
+								JxMapsFunctionality.putMarker(thisis, p.getGeometry().getLocation(), "banana");
 					}
                  });
             }
