@@ -22,7 +22,7 @@ public class MapFrame extends JFrame {
 		setLayout(new GridBagLayout());
 		setVisible(true);
 		setResizable(false);
-
+		setGlassPane(new MapGlassPanel());
 	}
 
 	

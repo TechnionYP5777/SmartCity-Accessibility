@@ -8,6 +8,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.teamdev.jxmaps.MapComponentType;
+import com.teamdev.jxmaps.MapEvent;
 import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.swing.MapView;
 
@@ -75,6 +76,16 @@ public class Application {
 
 		frame.pack();
 		frame.setVisible(true);
+		
+		mapView.getMap().addEventListener("click", new MapEvent(){
+
+			@Override
+			public void onEvent() {
+				System.out.println("output");
+			}
+			
+		});
+		
 
 		JxMapsFunctionality.initMapLocation(mapView, "Eliezer 10, Haifa, Israel");
 	}
