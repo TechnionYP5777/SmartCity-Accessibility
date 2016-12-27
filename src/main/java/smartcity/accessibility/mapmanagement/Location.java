@@ -10,6 +10,7 @@ import smartcity.accessibility.exceptions.ScoreNotInRangeException;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.User.Privilege;
 import smartcity.accessibility.socialnetwork.BestReviews;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
@@ -107,6 +108,57 @@ public abstract class Location {
 		reviews.add(r);
 		ReviewManager.uploadReview(r);
 	}
+	
+	
+	/**
+	 * Marks a review as important - whilst calculating the location's 
+	 * accessibility level always takes this review in the calculation.
+	 * Also, always show this review in the top reviews.
+	 **/
+	public void pinReview(User u, Review r){
+		if(!isAccessAllowed(u))
+			return; //TODO exception?
+		
+		if(!reviews.contains(r))
+			return; //TODO exception?
+		
+		if(pinnedReviews.contains(r))
+			return; //TODO exception?
+		
+		pinUnpinElement(r, pinnedReviews, reviews);
+	}
+	
+	/**
+	 * Reverts the effects of pinReview.
+	 */
+	public void unpinReview(User u, Review r){
+		if(!isAccessAllowed(u)){
+			return; //TODO exception?
+		}
+		
+		if(reviews.contains(r))
+			return; //TODO exception?
+		
+		if(!pinnedReviews.contains(r))
+			return; //TODO exception?
+		
+		pinUnpinElement(r, reviews, pinnedReviews);
+	}
+
+	private boolean isAccessAllowed(User u) {
+		return u.getPrivilege().compareTo(Privilege.RegularUser) < 0;
+	}
+	
+	private void pinUnpinElement(Review r, ArrayList<Review> toAdd, ArrayList<Review> toRemove){
+		if(toAdd.contains(r)){
+			toRemove.remove(r);
+			return;
+		}
+		toAdd.add(r);
+		toRemove.remove(r);
+	}
+	
+	
 	
 	 @Override
 	    public boolean equals(Object o) {
