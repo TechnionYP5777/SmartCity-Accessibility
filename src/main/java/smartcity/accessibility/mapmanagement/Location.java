@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
-import com.teamdev.jxmaps.Map;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.ReviewManager;
@@ -12,6 +11,7 @@ import smartcity.accessibility.exceptions.ScoreNotInRangeException;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.User.Privilege;
 import smartcity.accessibility.socialnetwork.BestReviews;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
@@ -90,8 +90,7 @@ public abstract class Location {
 	 * @throws ParseException 
 	 */
 	public void addReview(User u, int rating, String review) throws ParseException {
-		Review r = new Review(this, rating, review, u);
-		actuallyAddReview(r);
+		actuallyAddReview((new Review(this, rating, review, u)));
 	}
 	
 	/**
@@ -111,19 +110,82 @@ public abstract class Location {
 		ReviewManager.uploadReview(r);
 	}
 	
+	/**
+	 * Marks a review as important - whilst calculating the location's 
+	 * accessibility level always takes this review in the calculation.
+	 * Also, always show this review in the top reviews.
+	 **/
+	public void pinReview(User u, Review r){
+		if(!isAccessAllowed(u)){
+			System.out.println("Action is not allowed! You are no authorized for it!");
+			return; 
+		}
+		
+		if(!reviews.contains(r)){
+			System.out.print("ERROR! This review doesn't exist in current location!");
+			System.out.println("\tCurrent Location: "+this.coordinates);
+			return;
+		}
+		
+		if(pinnedReviews.contains(r)){
+			System.out.println("Review is already pinned.");
+			return;
+		}
+		
+		pinUnpinElement(r, pinnedReviews, reviews);
+	}
+	
+	/**
+	 * Reverts the effects of pinReview.
+	 */
+	public void unpinReview(User u, Review r){
+		if(!isAccessAllowed(u)){
+			System.out.println("Action is not allowed! You are no authorized for it!");
+			return; 
+		}
+		
+		if(reviews.contains(r)){
+			System.out.println("Review is already un-pinned.");
+			return;
+		}
+		
+		if(!pinnedReviews.contains(r)){
+			if (reviews.contains(r))
+				System.out.println("Review is already un-pinned.");
+			else {
+				System.out.print("ERROR! This review doesn't exist in current location!");
+				System.out.println("\tCurrent Location: " + this.coordinates);
+			}
+			return;
+		}
+		
+		pinUnpinElement(r, reviews, pinnedReviews);
+	}
+
+	private boolean isAccessAllowed(User u) {
+		return u.getPrivilege().compareTo(Privilege.RegularUser) >= 0;
+	}
+	
+	private void pinUnpinElement(Review r, ArrayList<Review> toAdd, ArrayList<Review> toRemove){
+		if(toAdd.contains(r)){
+			toRemove.remove(r);
+			return;
+		}
+		toAdd.add(r);
+		toRemove.remove(r);
+	}
+	
+	
+	
 	 @Override
 	    public boolean equals(Object o) {
-	        if (o == this) {
-	            return true;
-	        }
+	        if (o == this)
+				return true;
 
-	        if (!(o instanceof Location)) {
-	            return false;
-	        }
+	        if (!(o instanceof Location))
+				return false;
 	 
-	        Location l = (Location) o;
-	 
-	        return l.coordinates.equals(this.coordinates);
+	        return ((Location) o).coordinates.equals(this.coordinates);
 	    }
 
 	

@@ -1,19 +1,9 @@
 package smartcity.accessibility.search;
 
-import java.awt.BorderLayout;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.teamdev.jxmaps.InfoWindow;
 import com.teamdev.jxmaps.LatLng;
-import com.teamdev.jxmaps.Map;
-import com.teamdev.jxmaps.MapReadyHandler;
-import com.teamdev.jxmaps.MapStatus;
-import com.teamdev.jxmaps.MapViewOptions;
-import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.acessibility.jxMapsFunctionality.JxMapsFunctionality;
@@ -61,4 +51,3 @@ public class SearchTest{
      }
             
 }
-	
