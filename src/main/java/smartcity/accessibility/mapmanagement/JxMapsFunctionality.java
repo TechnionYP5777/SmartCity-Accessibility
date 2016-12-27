@@ -1,6 +1,8 @@
 package smartcity.accessibility.mapmanagement;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JFrame;
@@ -20,7 +22,6 @@ import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.swing.MapView;
 
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.waitableMap;
 
 /*
  * Author Kolikant
@@ -30,11 +31,19 @@ public abstract class JxMapsFunctionality {
 	
 	public static MapView mv;
 	
-	public static class waitableMap extends MapView{
-		protected waitableMap(MapViewOptions __){
+	public static class extendedMapView extends MapView{
+		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		List<Marker> MarkerList = new ArrayList<Marker>();
+		
+		protected extendedMapView(MapViewOptions __){
 			setOnMapReadyHandler(new MapReadyHandler() {
 				@Override
 				public void onMapReady(MapStatus arg0) {
+					
 				}
 			});
 		}
@@ -47,7 +56,7 @@ public abstract class JxMapsFunctionality {
 			return mv;
 		MapViewOptions options = new MapViewOptions();
 		options.importPlaces();
-		return mv = new waitableMap(options);
+		return mv = new extendedMapView(options);
 	}
 	
 	public static void DestroyMapView(){
@@ -55,23 +64,29 @@ public abstract class JxMapsFunctionality {
 		mv = null;
 	}
 	
-	public static MapView getMapView(MapViewOptions o){
-	        o.importPlaces();
-	        return mv = new waitableMap(o);
+	public static void ClearMarkers(extendedMapView mv){
+		for (Marker m: mv.MarkerList)
+			m.remove();
 	}
 	
-	public static void putMarker(waitableMap mv, LatLng l, String name) {
+	public static MapView getMapView(MapViewOptions o){
+	        o.importPlaces();
+	        return mv = new extendedMapView(o);
+	}
+	
+	public static void putMarker(extendedMapView mv, LatLng l, String name) {
 		waitForMapReady(mv);
 		Map m =mv.getMap();
 		Marker m1 = new Marker(m);
 		m1.setPosition(l);
 		m.setCenter(l);
 		final InfoWindow window = new InfoWindow(m);
+		mv.MarkerList.add(m1);
 		window.setContent(name);
 		window.open(m, m1);
 	}
 
-	public static void waitForMapReady(waitableMap mv) {
+	public static void waitForMapReady(extendedMapView mv) {
 		mv.waitReady();
 	}
 

@@ -10,7 +10,7 @@ import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.waitableMap;;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;;
 
 /**
  * @author Kolikant
@@ -19,7 +19,7 @@ import smartcity.accessibility.mapmanagement.JxMapsFunctionality.waitableMap;;
 public class SearchTest{
 	
 
-//	 @Ignore
+	 @Ignore
 	 @Test 
      public void test1(){ 
      	 MapView mapView = JxMapsFunctionality.getMapView();
@@ -27,7 +27,7 @@ public class SearchTest{
          SearchQuery s1 = new SearchQuery("Modi'in Yehalom St, 20");
          SearchQuery s2 = new SearchQuery("Modi'in Yehalom 30");
          
-         JxMapsFunctionality.waitForMapReady((waitableMap) mapView);
+         JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
          
          SearchQueryResult sqr1= s1.SearchByAddress(mapView);
          SearchQueryResult sqr2= s2.SearchByAddress(mapView);
@@ -38,12 +38,12 @@ public class SearchTest{
          LatLng position1 = sqr1.getCoordinations().get(0).getGeometry().getLocation();
          LatLng position2 = sqr2.getCoordinations().get(0).getGeometry().getLocation();
          
-         JxMapsFunctionality.putMarker((waitableMap) mapView, position1, "result1");
-         JxMapsFunctionality.putMarker((waitableMap) mapView, position2, "result2");
+         JxMapsFunctionality.putMarker((extendedMapView) mapView, position1, "result1");
+         JxMapsFunctionality.putMarker((extendedMapView) mapView, position2, "result2");
          
          JxMapsFunctionality.openFrame(mapView, "JxMaps - Hello, World!", 16.0);
         
-         
+        // JxMapsFunctionality.ClearMarkers((extendedMapView) mapView);
 
 		 try {
 			Thread.sleep(300000);
@@ -58,7 +58,7 @@ public class SearchTest{
 		 MapView mapView = JxMapsFunctionality.getMapView();
 		 SearchQuery s1 = new SearchQuery("coffee shops");
 		 
-		 JxMapsFunctionality.waitForMapReady((waitableMap) mapView);
+		 JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
          
      //    SearchQueryResult sqr1= s1.SearchByFreeText(mapView);
          
