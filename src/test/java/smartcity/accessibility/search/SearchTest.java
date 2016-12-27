@@ -16,6 +16,8 @@ import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.swing.MapView;
 
+import smartcity.acessibility.jxMapsFunctionality.JxMapsFunctionality;
+
 /**
  * @author Kolikant
  *
@@ -23,68 +25,18 @@ import com.teamdev.jxmaps.swing.MapView;
 public class SearchTest{
 	
 	public static class helper2 extends MapView{
-		helper2(MapViewOptions options){
+		helper2(MapViewOptions __){
 			setOnMapReadyHandler(new MapReadyHandler() {
 				@Override
 				public void onMapReady(MapStatus arg0) {
-					;
 				}
 			});
 		}
 		
 	}
 	
-	/*private class helper extends MapView{
-		helper(MapViewOptions options, SearchQuery sq, SearchQuery sq2) {
-			super(options);
-	        setOnMapReadyHandler(new MapReadyHandler() {
-	            @Override
-	            public void onMapReady(MapStatus status) {
-	                if (status == MapStatus.MAP_STATUS_OK) {
-	                    final Map map = getMap();
-	                    map.setZoom(16.0);
-	                    
-	                    SearchQueryResult sqr = sq.Search();
-	                    try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-	                    LatLng position = sqr.getCoordinations().get(0).getGeometry().getLocation();
-	                    Marker m1 = new Marker(map);
-	                    m1.setPosition(position);
-	                    map.setCenter(position);
-	                    final InfoWindow window = new InfoWindow(map);
-                        window.setContent("result1");
-                        window.open(map, m1);
-	                    
-	                   GeocoderRequest request2 = new GeocoderRequest(map);
-	                    request2.setAddress("Modi'in Yehalom 30");
 
-	                    /*  Geocoder g2 =getServices().getGeocoder();
-	                    g2.geocode(request2, new GeocoderCallback(map) {
-	                        @Override
-	                        public void onComplete(GeocoderResult[] result, GeocoderStatus status) {
-	                            if (status == GeocoderStatus.OK) {
-	                            	 map.setCenter(result[0].getGeometry().getLocation());
-	                                Marker marker = new Marker(map);
-	                                marker.setPosition(result[0].getGeometry().getLocation());
-
-	                                final InfoWindow window = new InfoWindow(map);
-	                                window.setContent("result 2");
-	                                window.open(map, marker);
-	                            }
-	                        }
-	                    });
-	                }
-	            }
-	        });
-		}
-	}*/
-	
-
-	 @Ignore
+//	 @Ignore
 	 @Test 
      public void test1(){ 
      	 MapViewOptions options = new MapViewOptions();
@@ -97,6 +49,7 @@ public class SearchTest{
 		}
          SearchQuery s1 = new SearchQuery("Modi'in Yehalom St, 20");
          SearchQuery s2 = new SearchQuery("Modi'in Yehalom 30");
+         
          Map map = mapView.getMap();
          
          map.setZoom(16.0);
@@ -112,26 +65,8 @@ public class SearchTest{
          LatLng position1 = sqr1.getCoordinations().get(0).getGeometry().getLocation();
          LatLng position2 = sqr2.getCoordinations().get(0).getGeometry().getLocation();
          
-         Marker m1 = new Marker(map);
-         m1.setPosition(position1);
-         map.setCenter(position1);
-         final InfoWindow window = new InfoWindow(map);
-         window.setContent("result1");
-         window.open(map, m1);
-         
-         try {
- 			Thread.sleep(1000);
- 		} catch (InterruptedException e1) {
- 			// TODO Auto-generated catch block
- 			e1.printStackTrace();
- 		}
-         
-         Marker m2 = new Marker(map);
-         m2.setPosition(position2);
-         map.setCenter(position2);
-         final InfoWindow window2 = new InfoWindow(map);
-         window2.setContent("result2");
-         window2.open(map, m2);
+         JxMapsFunctionality.putMarker(map, position1, "result1");
+         JxMapsFunctionality.putMarker(map, position2, "result2");
          
         
          JFrame frame = new JFrame("JxMaps - Hello, World!");

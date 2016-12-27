@@ -2,7 +2,7 @@
  * Copyright (c) 2000-2016 TeamDev Ltd. All rights reserved.
  * Use is subject to Apache 2.0 license terms.
  */
-package smartcity.acessibility.jxMapsExamples;
+package smartcity.acessibility.jxMapsFunctionality;
 
 import com.teamdev.jxmaps.swing.MapView;
 
