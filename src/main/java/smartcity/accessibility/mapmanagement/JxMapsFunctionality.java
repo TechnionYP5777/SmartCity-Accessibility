@@ -6,6 +6,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import com.teamdev.jxmaps.Geocoder;
+import com.teamdev.jxmaps.GeocoderCallback;
+import com.teamdev.jxmaps.GeocoderRequest;
+import com.teamdev.jxmaps.GeocoderResult;
+import com.teamdev.jxmaps.GeocoderStatus;
 import com.teamdev.jxmaps.InfoWindow;
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.Map;
@@ -66,6 +71,10 @@ public abstract class JxMapsFunctionality {
 		window.open(m, m1);
 	}
 
+	public static void waitForMapReady(waitableMap mv) {
+		mv.waitReady();
+	}
+
 	public static void openFrame(MapView v, String s, double zoom) {
 		JFrame frame = new JFrame(s);
 		v.getMap().setZoom(zoom);
@@ -76,7 +85,23 @@ public abstract class JxMapsFunctionality {
         frame.setVisible(true);	
 	}
 
-	public static void waitForMapReady(waitableMap mapView) {
-		mapView.waitReady();
+	public static void initMapLocation(MapView mapView) {
+		Map map = mapView.getMap();
+		map.setZoom(17.0);
+		GeocoderRequest request = new GeocoderRequest();
+		request.setAddress("Eliezer 10, Haifa, Israel");
+		Geocoder g = mapView.getServices().getGeocoder();
+		g.geocode(request, new GeocoderCallback(map) {
+			@Override
+			public void onComplete(GeocoderResult[] rs, GeocoderStatus s) {
+				System.out.println(s.name());
+				if (s != GeocoderStatus.OK)
+					return;
+				map.setCenter(rs[0].getGeometry().getLocation());
+				Marker marker = new Marker(map);
+				marker.setPosition(rs[0].getGeometry().getLocation());
+			}
+		});
+		
 	}
 }

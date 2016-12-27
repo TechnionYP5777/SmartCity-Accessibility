@@ -9,18 +9,19 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import com.teamdev.jxmaps.MapComponentType;
 import com.teamdev.jxmaps.MapViewOptions;
+import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.gui.components.ButtonsPanel;
-import smartcity.accessibility.gui.components.GMap;
 import smartcity.accessibility.gui.components.MapFrame;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserImpl;
 
 public class Application {
 
 	public static MapFrame frame;
-	public static GMap mapView;
+	public static MapView mapView;
 
 	public static final int FRAME_X_SIZE = 1000;
 	public static final int FRAME_Y_SIZE = 700;
@@ -28,29 +29,27 @@ public class Application {
 	public static User appUser = new UserImpl("", "", User.Privilege.DefaultUser);
 
 	public static void main(String[] args) {
-		frame = new MapFrame("JxMaps - Hello, World!");
+		frame = new MapFrame("SmartCity - Accessibility");
 
 		DatabaseManager.initialize();
 		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		MapViewOptions options = new MapViewOptions(MapComponentType.HEAVYWEIGHT);
 		options.importPlaces();
-		mapView = new GMap(options);
+		mapView = JxMapsFunctionality.getMapView();
+		mapView.waitReady();
+		mapView.setSize(FRAME_X_SIZE, FRAME_Y_SIZE-100);
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.add(mapView, BorderLayout.CENTER);
@@ -77,6 +76,7 @@ public class Application {
 		frame.pack();
 		frame.setVisible(true);
 
+		JxMapsFunctionality.initMapLocation(mapView);
 	}
 
 }
