@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.parse4j.ParseException;
+import org.parse4j.ParseObject;
+import org.parse4j.ParseQuery;
 import org.parse4j.ParseUser;
 
 import smartcity.accessibility.exceptions.UserNotFoundException;
+import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.User.Privilege;
@@ -30,10 +33,22 @@ public abstract class UserManager {
 			}
 	}
 	
+	private static boolean UserNameExists(String name) throws ParseException{
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+		query.whereEqualTo("username", name);
+		List<ParseObject> pol = query.find();
+		return pol != null && !pol.isEmpty();
+	}
+	
 	/*
 	 * Users should be created only through here, as this shows if they can be added to the database
 	 */
-	public static User SignUpUser(String name, String password, User.Privilege p){
+	public static User SignUpUser(String name, String password, User.Privilege p) throws UsernameAlreadyTakenException{
+		try {
+			if(UserNameExists(name))
+				throw new UsernameAlreadyTakenException();
+		} catch (ParseException e1) {
+		}
 		ParseUser user = new ParseUser();
 		user.setUsername(name);
 		user.setPassword(password);

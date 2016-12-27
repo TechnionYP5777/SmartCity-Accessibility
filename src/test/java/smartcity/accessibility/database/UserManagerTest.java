@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import smartcity.accessibility.exceptions.UserNotFoundException;
+import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.User;
 
@@ -33,7 +34,11 @@ public class UserManagerTest {
 	@Test
 	public void test() {
 		String UserName = "uuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
-		UserManager.SignUpUser(UserName, "password", User.Privilege.RegularUser);
+		try {
+			UserManager.SignUpUser(UserName, "password", User.Privilege.RegularUser);
+		} catch (UsernameAlreadyTakenException e) {
+			fail();
+		}
 		User u = UserManager.LoginUser(UserName, "password");
 		assertEquals(UserName, u.getName());
 		assertEquals("password", u.getPassword());
@@ -46,7 +51,11 @@ public class UserManagerTest {
 	@Test 
 	public void test2(){
 		String UserName = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
-		UserManager.SignUpUser(UserName, "admin", User.Privilege.Admin);
+		try {
+			UserManager.SignUpUser(UserName, "admin", User.Privilege.Admin);
+		} catch (UsernameAlreadyTakenException e1) {
+			fail();
+		}
 		User a = UserManager.LoginUser(UserName, "admin");
 		assertNotNull(a);
 		assertEquals(UserName, a.getName());
@@ -75,5 +84,24 @@ public class UserManagerTest {
 		
 		
 		UserManager.DeleteUser(b);
+	}
+	
+	@Test 
+	public void test3(){
+		String UserName = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
+		User b=null;
+		try {
+			 b = UserManager.SignUpUser(UserName, "pass", User.Privilege.RegularUser);
+		} catch (UsernameAlreadyTakenException e) {
+			fail();
+		}
+		try {
+			UserManager.SignUpUser(UserName, "password", User.Privilege.RegularUser);
+			UserManager.DeleteUser(b);
+			fail();
+		} catch (UsernameAlreadyTakenException e) {
+			UserManager.DeleteUser(b);
+		}
+		
 	}
 }

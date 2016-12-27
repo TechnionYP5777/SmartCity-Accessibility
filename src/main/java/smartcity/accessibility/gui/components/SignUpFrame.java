@@ -12,6 +12,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import smartcity.accessibility.database.UserManager;
+import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.socialnetwork.User;
 
@@ -74,13 +75,19 @@ public class SignUpFrame implements MouseListener {
 	public void mouseClicked(MouseEvent arg0) {
 		if (arg0.getSource() != btnSignup)
 			return;
-		User u = UserManager.SignUpUser(textField.getText(), String.copyValueOf(passwordField.getPassword()), User.Privilege.RegularUser);
-		if (u == null)
+		User u;
+		try {
+			u = UserManager.SignUpUser(textField.getText(), String.copyValueOf(passwordField.getPassword()), User.Privilege.RegularUser);
+			if (u == null)
+				JOptionPane.showMessageDialog(Application.frame, "Signup Failed.", "Signup error", JOptionPane.ERROR_MESSAGE);
+			else {
+				Application.appUser = u;
+				ButtonsPanel.USERNAME.setText(u.getName());
+			}
+		} catch (UsernameAlreadyTakenException e) {
 			JOptionPane.showMessageDialog(Application.frame, "Signup Failed.", "Signup error", JOptionPane.ERROR_MESSAGE);
-		else {
-			Application.appUser = u;
-			ButtonsPanel.USERNAME.setText(u.getName());
 		}
+		
 		frame.dispose();
 	}
 
