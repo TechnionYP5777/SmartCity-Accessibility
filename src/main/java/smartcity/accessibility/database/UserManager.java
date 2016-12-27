@@ -8,8 +8,6 @@ import org.parse4j.ParseUser;
 
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.search.SearchQuery;
-import smartcity.accessibility.socialnetwork.Admin;
-import smartcity.accessibility.socialnetwork.AuthenticatedUser;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.User.Privilege;
 import smartcity.accessibility.socialnetwork.UserImpl;

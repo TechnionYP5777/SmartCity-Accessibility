@@ -82,6 +82,24 @@ public class UserImpl implements User {
 	public void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries) {
 		favouriteSearchQueries = favouriteQueries;		
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof UserImpl)) {
+            return false;
+        }
+ 
+        UserImpl u = (UserImpl) o;
+ 
+        return this.userName.equals(u.userName) &&
+        		this.password.equals(u.password) &&
+        		this.privilegeLevel == u.privilegeLevel;
+    }
+
 
 
 }

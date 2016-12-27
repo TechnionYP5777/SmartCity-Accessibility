@@ -36,5 +36,20 @@ public class Score {
 	private boolean isValidScore(int s) {
 		return !(s < MIN_SCORE || s > MAX_SCORE);
 	}
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Score)) {
+            return false;
+        }
+ 
+        Score s = (Score) o;
+ 
+        return s.getScore() == this.score;
+    }
+
 
 }

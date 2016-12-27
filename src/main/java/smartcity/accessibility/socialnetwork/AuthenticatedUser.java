@@ -35,6 +35,7 @@ public class AuthenticatedUser implements User {
 		return favouriteSearchQueries;
 	}
 
+	@Override
 	public String getPassword() {
 		return password;
 	}

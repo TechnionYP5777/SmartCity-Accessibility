@@ -5,8 +5,6 @@ import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.Map;
-import com.teamdev.jxmaps.swing.MapView;
-
 import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.exceptions.ScoreNotInRangeException;
 import smartcity.accessibility.search.SearchQuery;

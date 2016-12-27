@@ -15,7 +15,6 @@ import org.parse4j.callback.FindCallback;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.socialnetwork.BestReviews;
 
 /**
  * @author assaflu
