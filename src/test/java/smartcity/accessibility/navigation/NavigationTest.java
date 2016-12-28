@@ -5,10 +5,17 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.teamdev.jxmaps.LatLng;
+import com.teamdev.jxmaps.swing.MapView;
+
+import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.Street;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 import smartcity.accessibility.navigation.mapquestcommunication.Route;
 import smartcity.accessibility.navigation.mapquestcommunication.Shape;
+
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 
 public class NavigationTest {
 
@@ -53,7 +60,7 @@ public class NavigationTest {
 			// System.out.println("[" + shapePoints[i] + "," + shapePoints[i +
 			// 1] + "]");
 		}
-		//this code is in comment because i don't want to make the CI wait
+		// this code is in comment because i don't want to make the CI wait
 		// try {
 		// Thread.sleep(1000000000);
 		// } catch (InterruptedException e) {
@@ -63,17 +70,29 @@ public class NavigationTest {
 	}
 
 	@Test
-	public void displayMap() throws CommunicationFailed {
+	@Ignore
+	public void avoidSegement() throws CommunicationFailed {
 		// TODO this test is temporal for it relay on things that will change!
 		Latlng from = new Latlng(31.768762, 34.632052);// abba ahimeir
 		Latlng to = new Latlng(31.770981, 34.620567);// HaYam HaTichon Blvd 1
 		List<MapSegment> segmentsToAvoid = new ArrayList<MapSegment>();
 		segmentsToAvoid.add((new Navigation()).getMapSegmentOfLatLng(31.76935, 34.626793));// sd
-																							// tel
-																							// hai
-																							// ashdod
-		Route r = ((new Navigation()).getRouteFromMapQuest(from, to, segmentsToAvoid));
-		Double[] shapePoints = r.getShape().getShapePoints();
+		Double[] shapePoints = (new Navigation()).getRouteFromMapQuest(from, to, segmentsToAvoid).getShape().getShapePoints();
+	}
 
+	@Test
+	@Ignore
+	public void displayMap() throws CommunicationFailed {
+		Location fromLocation = new Street(new LatLng(31.768762, 34.632052));
+		Location toLocation = new Street(new LatLng(31.770981, 34.620567));
+		LatLng[] shapePoints = (new Navigation()).showRoute(fromLocation, toLocation, 0);
+		MapView mapview = JxMapsFunctionality.getMapView();
+		JxMapsConvertor.displayRoute(mapview, shapePoints);
+		try {
+			Thread.sleep(10000000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
