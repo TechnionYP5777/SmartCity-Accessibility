@@ -8,7 +8,7 @@ import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.exceptions.ScoreNotInRangeException;
-import smartcity.accessibility.navigation.exception.UnauthorizedAccessException;
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 import smartcity.accessibility.socialnetwork.User;
