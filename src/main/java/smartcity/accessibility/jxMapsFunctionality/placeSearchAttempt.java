@@ -1,4 +1,4 @@
-package smartcity.acessibility.jxMapsFunctionality;
+package smartcity.accessibility.jxMapsFunctionality;
 
 import java.awt.BorderLayout;
 

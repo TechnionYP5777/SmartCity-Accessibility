@@ -1,4 +1,4 @@
-package smartcity.acessibility.jxMapsFunctionality;
+package smartcity.accessibility.jxMapsFunctionality;
 
 import com.teamdev.jxmaps.GeocoderRequest;
 import com.teamdev.jxmaps.Geocoder;
