@@ -48,13 +48,7 @@ public class JxMapsConvertor extends MapView {
 		});
 	}
 
-	public static void displayRoute(Double[] shapePointsArr) {
-		LatLng[] shapeLatlng = new LatLng[shapePointsArr.length / 2];
-		int k = 0;
-		for (int i = 0; i < shapePointsArr.length - 1; i += 2) {
-			shapeLatlng[k] = (new LatLng(shapePointsArr[i], shapePointsArr[i + 1]));
-			++k;
-		}
+	public static void displayRoute(LatLng[] shapeLatlng) {
 		final JxMapsConvertor convertor = new JxMapsConvertor(shapeLatlng);
 
 		JFrame frame = new JFrame("displayRoute");

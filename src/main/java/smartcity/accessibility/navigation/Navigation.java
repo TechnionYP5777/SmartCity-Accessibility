@@ -31,16 +31,25 @@ public class Navigation {
 	}
 
 	
-	public Route showRoute(Location source, Location destination, Integer accessibilityThreshold) throws CommunicationFailed {
+	public LatLng[] showRoute(Location source, Location destination, Integer accessibilityThreshold) throws CommunicationFailed {
 		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessibilityThreshold);
 		Latlng from = new Latlng(source.getCoordinates().getLat(),source.getCoordinates().getLng());
 		Latlng to = new Latlng(destination.getCoordinates().getLat(),destination.getCoordinates().getLng());
 		Route r = getRouteFromMapQuest(from,to,segmentsToAvoid);
 		Shape s = r.getShape();
-		JxMapsConvertor.displayRoute(s.getShapePoints());
-		//TODO deal with the return value
-		return null;
+		return arrayToLatLng(s.getShapePoints());
 	}
+
+	private LatLng[] arrayToLatLng(Double[] shapePointsArr) {
+		LatLng[] $ = new LatLng[shapePointsArr.length / 2];
+		int k = 0;
+		for (int i = 0; i < shapePointsArr.length - 1; i += 2) {
+			$[k] = (new LatLng(shapePointsArr[i], shapePointsArr[i + 1]));
+			++k;
+		}
+		return $;
+	}
+
 
 	public Route getRouteFromMapQuest(Latlng from, Latlng to, List<MapSegment> segmentsToAvoid) throws CommunicationFailed {
 		// TODO make this code more OOP style...
