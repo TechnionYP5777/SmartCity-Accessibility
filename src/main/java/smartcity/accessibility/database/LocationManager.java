@@ -43,7 +43,7 @@ public class LocationManager {
 		 */
 	}
 	
-	public static List<Location> getNonAccessibleLocationsInRadius(Location source, Location destination,
+	public static List<LatLng> getNonAccessibleLocationsInRadius(Location source, Location destination,
 			Integer accessibilityThreshold) {
 		// TODO Auto-generated method stub
 		// TODO this method will return List of Locations the are in the
@@ -83,7 +83,7 @@ public class LocationManager {
 		 * function not finished (unless you decide to change to ArrayList<LatLng>
 		 * because Location and Review class are incomplete see getLocation function for more
 		 */		
-		return new ArrayList<Location>();
+		return new ArrayList<LatLng>();
 	}
 	
 	public static Location getLocation(LatLng point){

@@ -8,6 +8,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
+import com.teamdev.jxmaps.LatLng;
+
 import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
@@ -66,11 +68,11 @@ public class Navigation {
 	}
 
 	private List<MapSegment> getSegmentsToAvoid(Location source, Location destination, Integer accessibilityThreshold) {
-		List<Location> locationsToAvoid = LocationManager.getNonAccessibleLocationsInRadius(source, destination,
+		List<LatLng> locationsToAvoid = LocationManager.getNonAccessibleLocationsInRadius(source, destination,
 				accessibilityThreshold);
 		List<MapSegment> $ = new ArrayList<MapSegment>();
-		for (Location l : locationsToAvoid)
-			$.add(getMapSegmentOfLatLng(l.getCoordinates().getLat(), l.getCoordinates().getLng()));
+		for (LatLng l : locationsToAvoid)
+			$.add(getMapSegmentOfLatLng(l.getLat(), l.getLng()));
 		return $;
 	}
 
