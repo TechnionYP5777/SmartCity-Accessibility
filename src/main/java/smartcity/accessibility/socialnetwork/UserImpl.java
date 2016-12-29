@@ -23,15 +23,15 @@ public class UserImpl implements User {
 	}
 	
 	public static UserImpl DefaultUser(String uName, String pass, String FavouriteQueries){
-		return new UserImpl("", "", Privilege.DefaultUser, "");
+		return new UserImpl("", "", Privilege.DefaultUser, FavouriteQueries);
 	}
 	
 	public static UserImpl RegularUser(String uName, String pass, String FavouriteQueries){
-		return new UserImpl(uName, pass, Privilege.RegularUser, "");
+		return new UserImpl(uName, pass, Privilege.RegularUser, FavouriteQueries);
 	}
 	
 	public static UserImpl Admin(String uName, String pass, String FavouriteQueries){
-		return new UserImpl(uName, pass, Privilege.Admin, "");
+		return new UserImpl(uName, pass, Privilege.Admin, FavouriteQueries);
 	}
 
 	@Override
