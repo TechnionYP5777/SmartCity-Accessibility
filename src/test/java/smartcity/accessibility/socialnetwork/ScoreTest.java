@@ -2,7 +2,6 @@ package smartcity.accessibility.socialnetwork;
 
 import org.junit.Assert;
 import org.junit.Test;
-import smartcity.accessibility.exceptions.ScoreNotInRangeException;
 
 /**
  * @author Koral Chapnik

@@ -1,6 +1,6 @@
 package smartcity.accessibility.socialnetwork;
 
-import smartcity.accessibility.exceptions.ScoreNotInRangeException;
+
 
 /**
  * @author Koral Chapnik
@@ -18,7 +18,7 @@ public class Score {
 		return this.score;
 	}
 	
-	public void setScore(int o) throws ScoreNotInRangeException {
+	public void setScore(int o) {
 		this.score = o;
 	}
 	

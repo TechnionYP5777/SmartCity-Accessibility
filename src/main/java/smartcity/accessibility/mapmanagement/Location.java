@@ -7,7 +7,6 @@ import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.ReviewManager;
-import smartcity.accessibility.exceptions.ScoreNotInRangeException;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
 import smartcity.accessibility.search.SearchQuery;
