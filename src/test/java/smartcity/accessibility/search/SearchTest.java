@@ -19,13 +19,13 @@ import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView
 public class SearchTest{
 	
 
-	 @Ignore
+//	 @Ignore
 	 @Test 
      public void test1(){ 
      	 MapView mapView = JxMapsFunctionality.getMapView();
 
-         SearchQuery s1 = new SearchQuery("Modi'in Yehalom St, 20");
-         SearchQuery s2 = new SearchQuery("Modi'in Yehalom 30");
+         SearchQuery s1 = SearchQuery.adressSearch("Modi'in Yehalom St, 20");
+         SearchQuery s2 = SearchQuery.adressSearch("Modi'in Yehalom 30");
          
          JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
          
@@ -56,7 +56,7 @@ public class SearchTest{
 	 @Test
 	 public void test2(){
 		 MapView mapView = JxMapsFunctionality.getMapView();
-		 SearchQuery s1 = new SearchQuery("coffee shops");
+		 SearchQuery s1 = SearchQuery.adressSearch("coffee shops");
 		 
 		 JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
          
@@ -67,6 +67,11 @@ public class SearchTest{
       //   List<GeocoderResult> positions = sqr1.getCoordinations();
          //JxMapsFunctionality.putMarker((helper2) mapView, position1, "result1");
          
+	 }
+	 
+	 @Test
+	 public void test3(){
+		 //SearchQuery.
 	 }
             
 }

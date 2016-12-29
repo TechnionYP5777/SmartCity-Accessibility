@@ -1,7 +1,7 @@
 /**
  * @author Koral Chapnik
  */
-package smartcity.accessibility.mapsearch;
+package smartcity.accessibility.search;
 
 public class NearbyPlaces {
 

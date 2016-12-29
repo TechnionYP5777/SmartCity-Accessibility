@@ -34,14 +34,22 @@ public class SearchQuery {
 	}
 
 	public static final String EmptyList = "[]";
-	//public static MapView mapView;
-	String adress;
+	public static final String isThisAdressSpliter ="<-This is Adress: ";
+	
+	String queryString;
+	boolean isAdress;
 	final AtomicInteger searchStatus;
 
 	public SearchQuery(String parsedQuery) {
-		this.adress = parsedQuery;
+		String[] a = parsedQuery.split(isThisAdressSpliter);
+		isAdress = Boolean.parseBoolean(a[0]);
+		this.queryString = a[1];
 		searchStatus = new AtomicInteger();
 		SetSearchStatus(SearchStage.NotRunning);
+	}
+	
+	public static SearchQuery adressSearch(String adress){
+		return new SearchQuery(Boolean.toString(true)+isThisAdressSpliter+adress);
 	}
 
 
@@ -74,7 +82,7 @@ public class SearchQuery {
 	@SuppressWarnings("deprecation")
 	public SearchQueryResult SearchByAddress(MapView v) {
 		GeocoderRequest request = new GeocoderRequest(v.getMap());
-		request.setAddress(adress);
+		request.setAddress(queryString);
 		return Search(request, v);
 
 	}
@@ -100,7 +108,7 @@ public class SearchQuery {
 
 	@Override
 	public String toString() {
-		return adress;
+		return queryString;
 	}
 
 	public static SearchQuery toQuery(String s) {
