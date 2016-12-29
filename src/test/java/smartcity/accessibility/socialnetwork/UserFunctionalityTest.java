@@ -21,11 +21,7 @@ public class UserFunctionalityTest {
 	
 	@Test
 	public void passwordFunctionality() throws UnauthorizedAccessException { 
-		User u = UserImpl.RegularUser("User", "123", "");
-		assertEquals("123", u.getPassword());
-		
-/*		u.setPassword("123456");
-		assertEquals("123456", u.getPassword());*/
+		assertEquals("123", UserImpl.RegularUser("User", "123", "").getPassword());
 	}
 	
 	@Test
@@ -43,15 +39,8 @@ public class UserFunctionalityTest {
 	
 	@Test
 	public void privilegeCorrectness() { 
-	
-		User u = UserImpl.DefaultUser("DefaultUser", "", "");
-		assertEquals(Privilege.DefaultUser, u.getPrivilege());
-		
-/*		u.setPrivilege(Privilege.RegularUser);
-		assertEquals(Privilege.RegularUser, u.getPrivilege());
-		
-		u.setPrivilege(Privilege.Admin);
-		assertEquals(Privilege.Admin, u.getPrivilege());*/
+		assertEquals(Privilege.DefaultUser,
+				UserImpl.DefaultUser("DefaultUser", "", "").getPrivilege());
 	}
 
 }

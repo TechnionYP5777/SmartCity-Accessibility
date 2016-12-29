@@ -38,10 +38,8 @@ public interface User {
 	void setName(String name) throws UnauthorizedAccessException, UserNotFoundException;
 	
 	String getPassword();
-//	void setPassword(String pass) throws UnauthorizedAccessException;
 	
 	Privilege getPrivilege();
-//	void setPrivilege(Privilege p);
 	
 	List<SearchQuery> getFavouriteSearchQueries();
 	void setFavouriteSearchQueries(String favouriteQueries) throws UserNotFoundException;
