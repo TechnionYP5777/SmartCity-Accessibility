@@ -19,6 +19,8 @@ import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserImpl;
 
+
+
 public class Application {
 
 	public static MapFrame frame;
