@@ -16,7 +16,7 @@ public class UserImpl implements User {
 	private List<SearchQuery> favouriteSearchQueries;
 
 	public UserImpl(String uName, String pass, Privilege p, String FavouriteQueries) {
-		userName = uName;
+		localName = userName = uName;
 		password = pass;
 		privilegeLevel = p;
 		favouriteSearchQueries = SearchQuery.String2QueriesList(FavouriteQueries);

@@ -158,6 +158,8 @@ public abstract class UserManager {
 	}
 	
 	public static void updateAllUserInformation(User u) throws UserNotFoundException{
+		if(u.getPrivilege() == User.Privilege.DefaultUser)
+			return;
 		if(!u.getName().equals(u.getLocalName()))
 			updateUserName(u, u.getLocalName());
 		

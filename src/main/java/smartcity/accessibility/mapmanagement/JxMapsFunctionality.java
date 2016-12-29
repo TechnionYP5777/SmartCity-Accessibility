@@ -48,6 +48,13 @@ public abstract class JxMapsFunctionality {
 			});
 		}
 		
+		
+		public void stop(){
+			
+		    System.out.println("Stage is closing");
+		    // Save file
+		}
+		
 	}
 	
 	

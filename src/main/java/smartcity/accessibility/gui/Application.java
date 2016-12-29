@@ -2,6 +2,8 @@ package smartcity.accessibility.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -14,6 +16,8 @@ import com.teamdev.jxmaps.MouseEvent;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.DatabaseManager;
+import smartcity.accessibility.database.UserManager;
+import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.gui.components.ButtonsPanel;
 import smartcity.accessibility.gui.components.MapFrame;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
@@ -77,7 +81,59 @@ public class Application {
 
 		frame.pack();
 		frame.setVisible(true);
-
+		
+		/*
+		 * Kolikant
+		 */
+		frame.addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				try {
+					UserManager.updateAllUserInformation(appUser);
+				} catch (UserNotFoundException e1) {
+					/*
+					 * user was not default and failed to save it's information. what do we want to do?
+					 */
+				}
+			}
+			
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
 		mapView.getMap().addEventListener("click", new MapMouseEvent() {
 
@@ -88,6 +144,7 @@ public class Application {
 			}
 		});
 		
+	
 
 		JxMapsFunctionality.initMapLocation(mapView, "Eliezer 10, Haifa, Israel");
 	}

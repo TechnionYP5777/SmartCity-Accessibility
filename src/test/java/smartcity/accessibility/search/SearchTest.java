@@ -19,7 +19,7 @@ import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView
 public class SearchTest{
 	
 
-//	 @Ignore
+	 @Ignore
 	 @Test 
      public void test1(){ 
      	 MapView mapView = JxMapsFunctionality.getMapView();
@@ -69,9 +69,5 @@ public class SearchTest{
          
 	 }
 	 
-	 @Test
-	 public void test3(){
-		 //SearchQuery.
-	 }
             
 }
