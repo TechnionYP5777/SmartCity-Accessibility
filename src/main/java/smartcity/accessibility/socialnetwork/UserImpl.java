@@ -56,8 +56,9 @@ public class UserImpl implements User {
 
 	@Override
 	public void setPassword(String pass) throws UnauthorizedAccessException{
-		if (privilegeLevel != Privilege.DefaultUser)
-			password = pass;		
+		if (privilegeLevel.compareTo(Privilege.DefaultUser) >= 0)
+			throw(new UnauthorizedAccessException(Privilege.RegularUser));
+		password = pass;		
 	}
 
 	@Override
