@@ -4,12 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.socialnetwork.User.Privilege;
 
 public class UserFunctionalityTest {
 
 	@Test
-	public void userNameFunctionality() { 
+	public void userNameFunctionality() throws UnauthorizedAccessException { 
 		User u = UserImpl.RegularUser("RegularUser", "", "");
 		assertEquals("RegularUser", u.getName());
 		
@@ -18,7 +19,7 @@ public class UserFunctionalityTest {
 	}
 	
 	@Test
-	public void passwordFunctionality() { 
+	public void passwordFunctionality() throws UnauthorizedAccessException { 
 		User u = UserImpl.RegularUser("User", "123", "");
 		assertEquals("123", u.getPassword());
 		
