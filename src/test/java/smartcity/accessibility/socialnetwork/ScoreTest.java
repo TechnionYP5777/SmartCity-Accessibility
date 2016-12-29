@@ -9,7 +9,7 @@ import smartcity.accessibility.exceptions.ScoreNotInRangeException;
  */
 public class ScoreTest {
 	private static final int TEST_MIN_SCORE = 0;
-	private static final int TEST_MAX_SCORE = 10;
+	private static final int TEST_MAX_SCORE = 5;
 	
 	@Test
 	public void testGetScore() {

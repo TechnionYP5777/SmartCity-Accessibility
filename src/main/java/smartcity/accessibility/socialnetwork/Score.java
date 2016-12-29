@@ -8,7 +8,7 @@ import smartcity.accessibility.exceptions.ScoreNotInRangeException;
 public class Score {
 	private int score;
 	private static int MIN_SCORE;
-	private static int MAX_SCORE = 10;
+	private static int MAX_SCORE = 5;
 	
 	public Score(int s) throws ScoreNotInRangeException{
 		if(!isValidScore(s))
@@ -20,10 +20,10 @@ public class Score {
 		return this.score;
 	}
 	
-	public void setScore(int i) throws ScoreNotInRangeException {
-		if(!isValidScore(i))
+	public void setScore(int o) throws ScoreNotInRangeException {
+		if(!isValidScore(o))
 			throw new ScoreNotInRangeException();
-		this.score = i;
+		this.score = o;
 	}
 	
 	public static int getMinScore() {
@@ -33,8 +33,8 @@ public class Score {
 	public static int getMaxScore() {
 		return MAX_SCORE;
 	}
-	private boolean isValidScore(int i) {
-		return i >= MIN_SCORE && i <= MAX_SCORE;
+	private boolean isValidScore(int s) {
+		return s >= MIN_SCORE && s <= MAX_SCORE;
 	}
     @Override
     public boolean equals(Object o) {
