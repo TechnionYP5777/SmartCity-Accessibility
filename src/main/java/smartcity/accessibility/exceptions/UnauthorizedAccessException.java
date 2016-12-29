@@ -19,8 +19,8 @@ public class UnauthorizedAccessException extends Exception {
 	private Privilege p;
 	private String msg;
 	
-	public UnauthorizedAccessException(Privilege p){
-		this.p = p;
+	public UnauthorizedAccessException(Privilege minPrivLevel){
+		this.p = minPrivLevel;
 		msg = "User is not allowed to preform this action! This action "
 				+ "requires privilege level of at least " + p;
 	}
