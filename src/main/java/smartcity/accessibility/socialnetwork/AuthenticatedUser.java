@@ -62,11 +62,11 @@ public class AuthenticatedUser implements User {
 		
 	}
 
-	@Override
+/*	@Override
 	public void setPassword(String pass) {
 		// TODO Auto-generated method stub
 		
-	}
+	}*/
 
 	@Override
 	public Privilege getPrivilege() {
@@ -74,11 +74,11 @@ public class AuthenticatedUser implements User {
 		return null;
 	}
 
-	@Override
+/*	@Override
 	public void setPrivilege(Privilege p) {
 		// TODO Auto-generated method stub
 		
-	}
+	}*/
 
 	@Override
 	public List<SearchQuery> getFavouriteSearchQueries() {

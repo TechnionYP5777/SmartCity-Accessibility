@@ -2,7 +2,9 @@ package smartcity.accessibility.socialnetwork;
 
 import java.util.List;
 
+import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
+import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.search.SearchQuery;
 
 public class UserImpl implements User {
@@ -43,9 +45,13 @@ public class UserImpl implements User {
 	
 
 	@Override
-	public void setName(String name) throws UnauthorizedAccessException {
+	public void setName(String name) throws UnauthorizedAccessException, UserNotFoundException {
 		if (privilegeLevel == Privilege.DefaultUser)
 			throw(new UnauthorizedAccessException(Privilege.RegularUser));
+		/*
+		 * all changes must pass through the userManager as to not conflict with the database
+		 */
+		UserManager.updateUserName(this, name);
 		userName = name;
 	}
 
@@ -54,22 +60,27 @@ public class UserImpl implements User {
 		return password;
 	}
 
+	/*set password is dissallowed in the server
+	 * 
 	@Override
 	public void setPassword(String pass) throws UnauthorizedAccessException{
 		if (privilegeLevel.compareTo(Privilege.DefaultUser) >= 0)
 			throw(new UnauthorizedAccessException(Privilege.RegularUser));
 		password = pass;		
-	}
+	}*/
 
 	@Override
 	public Privilege getPrivilege(){
 		return privilegeLevel;
 	}
 
+	/*
+	 * 
+	 * we wanted the class to present the temporary presentation of a user logging in (or the default user) privilege change is under usermangment jurisdiction  
 	@Override
 	public void setPrivilege(Privilege p) {
 		privilegeLevel = p;
-	}
+	}*/
 
 	@Override
 	public List<SearchQuery> getFavouriteSearchQueries() {
@@ -77,13 +88,22 @@ public class UserImpl implements User {
 	}
 
 	@Override
-	public void setFavouriteSearchQueries(String favouriteQueries) {
+	public void setFavouriteSearchQueries(String favouriteQueries) throws UserNotFoundException {
 		favouriteSearchQueries = SearchQuery.String2QueriesList(favouriteQueries);		
+		
+		/*
+		 * update the database
+		 */
+		UserManager.updatefavouriteQueries(this, favouriteSearchQueries);
 	}
 
 	@Override
-	public void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries) {
+	public void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries) throws UserNotFoundException {
 		favouriteSearchQueries = favouriteQueries;		
+		/*
+		 * update the database
+		 */
+		UserManager.updatefavouriteQueries(this, favouriteSearchQueries);
 	}
 	
 	@Override

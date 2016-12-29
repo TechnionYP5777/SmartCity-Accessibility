@@ -3,6 +3,7 @@ package smartcity.accessibility.socialnetwork;
 import java.util.List;
 
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
+import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.search.SearchQuery;
 
 /**
@@ -19,9 +20,6 @@ public interface User {
 		RegularUser,
 		DefaultUser;
 		
-		/*
-		 * Kolikant
-		 */
 		private static Privilege[] allValues = values();
 	    public static Privilege fromOrdinal(int i) {return allValues[i];}
 	    public static Privilege pinPrivilegeLevel() {return Admin;}
@@ -37,16 +35,16 @@ public interface User {
 	}
 	
 	String getName();
-	void setName(String name) throws UnauthorizedAccessException;
+	void setName(String name) throws UnauthorizedAccessException, UserNotFoundException;
 	
 	String getPassword();
-	void setPassword(String pass) throws UnauthorizedAccessException;
+//	void setPassword(String pass) throws UnauthorizedAccessException;
 	
 	Privilege getPrivilege();
-	void setPrivilege(Privilege p);
+//	void setPrivilege(Privilege p);
 	
 	List<SearchQuery> getFavouriteSearchQueries();
-	void setFavouriteSearchQueries(String favouriteQueries);
-	void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries);
+	void setFavouriteSearchQueries(String favouriteQueries) throws UserNotFoundException;
+	void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries) throws UserNotFoundException;
 	
 }
