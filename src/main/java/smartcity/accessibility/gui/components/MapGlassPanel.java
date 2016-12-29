@@ -13,7 +13,9 @@ public class MapGlassPanel extends JComponent implements MouseListener{
 	private static final long serialVersionUID = 803094754517375708L;
 	public MapGlassPanel(){
 		super();
+		addMouseListener(this);
 		setVisible(true);
+		
 	}
 
 	@Override

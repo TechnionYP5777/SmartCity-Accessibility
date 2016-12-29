@@ -8,8 +8,9 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.teamdev.jxmaps.MapComponentType;
-import com.teamdev.jxmaps.MapEvent;
+import com.teamdev.jxmaps.MapMouseEvent;
 import com.teamdev.jxmaps.MapViewOptions;
+import com.teamdev.jxmaps.MouseEvent;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.DatabaseManager;
@@ -18,8 +19,6 @@ import smartcity.accessibility.gui.components.MapFrame;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserImpl;
-
-
 
 public class Application {
 
@@ -35,7 +34,7 @@ public class Application {
 		frame = new MapFrame("SmartCity - Accessibility");
 
 		DatabaseManager.initialize();
-		
+
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e) {
@@ -52,7 +51,7 @@ public class Application {
 		options.importPlaces();
 		mapView = JxMapsFunctionality.getMapView();
 		mapView.waitReady();
-		mapView.setSize(FRAME_X_SIZE, FRAME_Y_SIZE-100);
+		mapView.setSize(FRAME_X_SIZE, FRAME_Y_SIZE - 100);
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.add(mapView, BorderLayout.CENTER);
@@ -78,14 +77,15 @@ public class Application {
 
 		frame.pack();
 		frame.setVisible(true);
-		
-		mapView.getMap().addEventListener("click", new MapEvent(){
+
+
+		mapView.getMap().addEventListener("click", new MapMouseEvent() {
 
 			@Override
-			public void onEvent() {
-				System.out.println("output");
+			public void onEvent(MouseEvent arg0) {
+				System.out.println(arg0.latLng());
+				
 			}
-			
 		});
 		
 
