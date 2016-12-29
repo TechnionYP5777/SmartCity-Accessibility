@@ -33,10 +33,7 @@ public class ReviewTest {
 	@Test
 	public void getRetingTest() {
 		Score s = null;
-		try {
-			s = new Score(Score.getMinScore());
-		} catch (ScoreNotInRangeException e) {
-		}
+		s = new Score(Score.getMinScore());
 		assertEquals(r1.getRating(), s);
 	}
 	

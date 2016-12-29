@@ -64,16 +64,11 @@ public abstract class Location {
 	// n is the number of reviews we want to calculate the Location's rating by
 	public Score getRating(int n){
 		int rating = -1;
-		try {
-			if( pinnedReviews.isEmpty() && reviews.isEmpty())
-				return new Score(Score.getMinScore());
-			BestReviews br = !pinnedReviews.isEmpty() ? new BestReviews(n, pinnedReviews) : new BestReviews(n, reviews);
-			rating = br.getTotalRating();
-			return new Score(rating);
-		} catch (ScoreNotInRangeException e) {
-			// TODO: implement 
-		}
-		return null;
+		if( pinnedReviews.isEmpty() && reviews.isEmpty())
+			return new Score(Score.getMinScore());
+		BestReviews br = !pinnedReviews.isEmpty() ? new BestReviews(n, pinnedReviews) : new BestReviews(n, reviews);
+		rating = br.getTotalRating();
+		return new Score(rating);
 	}
 
 	

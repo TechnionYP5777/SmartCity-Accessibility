@@ -21,11 +21,7 @@ public class Review {
 	
 	public Review(Location l , int r, String c, User u) {
 		this.location = l;
-		try {
-			this.rating = new Score(r);
-		} catch (ScoreNotInRangeException e) {
-			// TODO: implement 
-		}
+		this.rating = new Score(r);
 		this.content = c;
 		this.user = u.getName();
 	}

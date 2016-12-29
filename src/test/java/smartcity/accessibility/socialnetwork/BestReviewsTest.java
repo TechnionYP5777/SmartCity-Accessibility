@@ -36,7 +36,7 @@ public class BestReviewsTest {
 		LatLng c = new LatLng(39.750307, -104.999472);
 		Location l = new Coordinates(c);
 		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1);
-		r2 = new Review(l, 5, "middle accessibility level", u2);
+		r2 = new Review(l, 2, "middle accessibility level", u2);
 		r3 = new Review(l, Score.getMaxScore(), "high accessibility level", u3);
 		r = new ArrayList<>();
 		r.add(r1);
