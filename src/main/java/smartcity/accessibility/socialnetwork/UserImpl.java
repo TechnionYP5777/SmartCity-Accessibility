@@ -58,15 +58,6 @@ public class UserImpl implements User {
 		return password;
 	}
 
-	/*set password is dissallowed in the server
-	 * 
-	@Override
-	public void setPassword(String pass) throws UnauthorizedAccessException{
-		if (privilegeLevel.compareTo(Privilege.DefaultUser) >= 0)
-			throw(new UnauthorizedAccessException(Privilege.RegularUser));
-		password = pass;		
-	}*/
-
 	@Override
 	public Privilege getPrivilege(){
 		return privilegeLevel;
