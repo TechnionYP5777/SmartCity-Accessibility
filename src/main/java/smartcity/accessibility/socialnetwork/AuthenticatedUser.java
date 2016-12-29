@@ -2,6 +2,7 @@ package smartcity.accessibility.socialnetwork;
 
 import java.util.List;
 
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.search.SearchQuery;
 /**
  * @author Kolikant
@@ -56,11 +57,6 @@ public class AuthenticatedUser implements User {
 		return name;
 	}
 
-	@Override
-	public void setName(String name) {
-		// TODO Auto-generated method stub
-		
-	}
 
 /*	@Override
 	public void setPassword(String pass) {
@@ -96,6 +92,18 @@ public class AuthenticatedUser implements User {
 	public void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void setLocalName(String name) throws UnauthorizedAccessException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getLocalName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

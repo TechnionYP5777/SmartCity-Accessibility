@@ -15,8 +15,8 @@ public class UserFunctionalityTest {
 		User u = UserImpl.RegularUser("RegularUser", "", "");
 		assertEquals("RegularUser", u.getName());
 		
-		u.setName("Name has chnged");
-		assertEquals("Name has chnged", u.getName());
+		u.setLocalName("Name has chnged");
+		assertEquals("Name has chnged", u.getLocalName());
 	}
 	
 	@Test

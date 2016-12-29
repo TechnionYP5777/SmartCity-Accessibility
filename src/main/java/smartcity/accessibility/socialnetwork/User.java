@@ -35,14 +35,16 @@ public interface User {
 	}
 	
 	String getName();
-	void setName(String name) throws UnauthorizedAccessException, UserNotFoundException;
+	void setLocalName(String name) throws UnauthorizedAccessException;
 	
 	String getPassword();
 	
 	Privilege getPrivilege();
 	
 	List<SearchQuery> getFavouriteSearchQueries();
-	void setFavouriteSearchQueries(String favouriteQueries) throws UserNotFoundException;
-	void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries) throws UserNotFoundException;
+	void setFavouriteSearchQueries(String favouriteQueries);
+	void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries);
+
+	String getLocalName();
 	
 }
