@@ -23,7 +23,7 @@ public interface User {
 		 * Kolikant
 		 */
 		private static Privilege[] allValues = values();
-	    public static Privilege fromOrdinal(int n) {return allValues[n];}
+	    public static Privilege fromOrdinal(int i) {return allValues[i];}
 	    public static Privilege pinPrivilegeLevel() {return Admin;}
 	}
 	
@@ -31,21 +31,21 @@ public interface User {
 	 * make a search using an existing query and show the user the results
 	 * @param q is the query to be used for the search
 	 */
-	static void search(SearchQuery q){
+	static void search(SearchQuery __){
 		//q.Search();
 	}
 	
-	public String getName();
-	public void setName(String name) throws UnauthorizedAccessException;
+	String getName();
+	void setName(String name) throws UnauthorizedAccessException;
 	
-	public String getPassword();
-	public void setPassword(String pass) throws UnauthorizedAccessException;
+	String getPassword();
+	void setPassword(String pass) throws UnauthorizedAccessException;
 	
-	public Privilege getPrivilege();
-	public void setPrivilege(Privilege p);
+	Privilege getPrivilege();
+	void setPrivilege(Privilege p);
 	
-	public List<SearchQuery> getFavouriteSearchQueries();
-	public void setFavouriteSearchQueries(String favouriteQueries);
-	public void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries);
+	List<SearchQuery> getFavouriteSearchQueries();
+	void setFavouriteSearchQueries(String favouriteQueries);
+	void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries);
 	
 }
