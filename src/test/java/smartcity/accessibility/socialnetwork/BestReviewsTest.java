@@ -13,6 +13,8 @@ import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.UserImpl;
 
 /**
  * @author Koral Chapnik
@@ -28,9 +30,9 @@ public class BestReviewsTest {
 	
 	@BeforeClass
 	public static void init(){
-		u1 = new AuthenticatedUser("Koral","123","");
-		u2 = new AuthenticatedUser("Koral2","123","");
-		u3 = new Admin("Simba", "355", "");
+		u1 = UserImpl.RegularUser("Koral","123","");
+		u2 = UserImpl.RegularUser("Koral2","123","");
+		u3 = UserImpl.Admin("Simba", "355", "");
 		LatLng c = new LatLng(39.750307, -104.999472);
 		Location l = new Coordinates(c);
 		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1);

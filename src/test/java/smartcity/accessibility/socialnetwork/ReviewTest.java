@@ -20,7 +20,7 @@ public class ReviewTest {
 	
 	@BeforeClass
 	public static void init(){
-		u1 = new AuthenticatedUser("Koral","123","");
+		u1 = UserImpl.RegularUser("Koral","123","");
 		LatLng c = new LatLng(39.750307, -104.999472);
 		Location l = new Coordinates(c);
 		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1);

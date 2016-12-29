@@ -19,9 +19,9 @@ public class ReviewCommentTest {
 	
 	@BeforeClass
 	public static void init(){
-		u1 = new AuthenticatedUser("Alex","123","");
-		u2 = new AuthenticatedUser("Alex2","123","");
-		u3 = new Admin("Simba", "355", "");
+		u1 = UserImpl.RegularUser("Alex","123","");
+		u2 = UserImpl.RegularUser("Alex2","123","");
+		u3 = UserImpl.Admin("Simba", "355", "");
 	}
 	
 	@Test
