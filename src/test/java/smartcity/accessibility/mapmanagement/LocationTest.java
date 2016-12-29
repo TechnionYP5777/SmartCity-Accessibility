@@ -67,13 +67,10 @@ public class LocationTest {
 	
 	@Test
 	public void getAddressTest() {
-		MapViewOptions options = new MapViewOptions();
-        options.importPlaces();
-        MapView mapView = JxMapsFunctionality.getMapView();
-        JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
-		String result = l.getAddress(mapView);
-		System.out.println(result);
-		return;
+		new MapViewOptions().importPlaces();
+		MapView mapView = JxMapsFunctionality.getMapView();
+		JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
+		System.out.println(l.getAddress(mapView));
 	}
 	
 }
