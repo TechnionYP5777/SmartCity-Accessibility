@@ -22,7 +22,7 @@ public class UserImpl implements User {
 		this(uName, pass, p, "");
 	}
 	
-	public UserImpl DefaultUser(String uName, String pass, String FavouriteQueries){
+	public static UserImpl DefaultUser(String uName, String pass, String FavouriteQueries){
 		return new UserImpl("", "", Privilege.DefaultUser, "");
 	}
 	
