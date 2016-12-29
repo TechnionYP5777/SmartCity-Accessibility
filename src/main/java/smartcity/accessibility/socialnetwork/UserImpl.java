@@ -2,6 +2,7 @@ package smartcity.accessibility.socialnetwork;
 
 import java.util.List;
 
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.search.SearchQuery;
 
 public class UserImpl implements User {
@@ -23,7 +24,7 @@ public class UserImpl implements User {
 	}
 	
 	public static UserImpl DefaultUser(String uName, String pass, String FavouriteQueries){
-		return new UserImpl("", "", Privilege.DefaultUser, FavouriteQueries);
+		return new UserImpl(uName, pass, Privilege.DefaultUser, FavouriteQueries);
 	}
 	
 	public static UserImpl RegularUser(String uName, String pass, String FavouriteQueries){
@@ -42,9 +43,10 @@ public class UserImpl implements User {
 	
 
 	@Override
-	public void setName(String name) {
-		if (privilegeLevel != Privilege.DefaultUser)
-			userName = name;
+	public void setName(String name) throws UnauthorizedAccessException {
+		if (privilegeLevel == Privilege.DefaultUser)
+			throw(new UnauthorizedAccessException(Privilege.RegularUser));
+		userName = name;
 	}
 
 	@Override
@@ -53,7 +55,7 @@ public class UserImpl implements User {
 	}
 
 	@Override
-	public void setPassword(String pass) {
+	public void setPassword(String pass) throws UnauthorizedAccessException{
 		if (privilegeLevel != Privilege.DefaultUser)
 			password = pass;		
 	}

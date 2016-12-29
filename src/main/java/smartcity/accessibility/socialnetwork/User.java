@@ -2,6 +2,7 @@ package smartcity.accessibility.socialnetwork;
 
 import java.util.List;
 
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.search.SearchQuery;
 
 /**
@@ -35,10 +36,10 @@ public interface User {
 	}
 	
 	public String getName();
-	public void setName(String name);
+	public void setName(String name) throws UnauthorizedAccessException;
 	
 	public String getPassword();
-	public void setPassword(String pass);
+	public void setPassword(String pass) throws UnauthorizedAccessException;
 	
 	public Privilege getPrivilege();
 	public void setPrivilege(Privilege p);
