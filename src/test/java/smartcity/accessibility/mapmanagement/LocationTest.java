@@ -26,6 +26,7 @@ import smartcity.accessibility.socialnetwork.AuthenticatedUser;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.UserImpl;
 
 /**
  * @author Koral Chapnik
@@ -40,9 +41,9 @@ public class LocationTest {
 	@BeforeClass
 	public static void init() throws ParseException{
 		DatabaseManager.initialize();
-		User u1 = new AuthenticatedUser("Koral","123","");
-		User u2 = new AuthenticatedUser("Koral2","123","");
-		User u3 = new Admin("Simba", "355", "");
+		User u1 = UserImpl.RegularUser("Koral","123","");
+		User u2 = UserImpl.RegularUser("Koral2","123","");
+		User u3 = UserImpl.RegularUser("Koral3","123","");
 		LatLng c = new LatLng(31.90588, 34.997571); //Modi'in Yehalom St, 20
 		l = new Coordinates(c);
 		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1);
