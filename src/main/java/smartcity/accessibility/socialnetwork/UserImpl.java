@@ -48,9 +48,7 @@ public class UserImpl implements User {
 	public void setName(String name) throws UnauthorizedAccessException, UserNotFoundException {
 		if (privilegeLevel == Privilege.DefaultUser)
 			throw(new UnauthorizedAccessException(Privilege.RegularUser));
-		/*
-		 * all changes must pass through the userManager as to not conflict with the database
-		 */
+		
 		UserManager.updateUserName(this, name);
 		userName = name;
 	}
@@ -74,13 +72,6 @@ public class UserImpl implements User {
 		return privilegeLevel;
 	}
 
-	/*
-	 * 
-	 * we wanted the class to present the temporary presentation of a user logging in (or the default user) privilege change is under usermangment jurisdiction  
-	@Override
-	public void setPrivilege(Privilege p) {
-		privilegeLevel = p;
-	}*/
 
 	@Override
 	public List<SearchQuery> getFavouriteSearchQueries() {
@@ -90,19 +81,14 @@ public class UserImpl implements User {
 	@Override
 	public void setFavouriteSearchQueries(String favouriteQueries) throws UserNotFoundException {
 		favouriteSearchQueries = SearchQuery.String2QueriesList(favouriteQueries);		
-		
-		/*
-		 * update the database
-		 */
+
 		UserManager.updatefavouriteQueries(this, favouriteSearchQueries);
 	}
 
 	@Override
 	public void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries) throws UserNotFoundException {
 		favouriteSearchQueries = favouriteQueries;		
-		/*
-		 * update the database
-		 */
+
 		UserManager.updatefavouriteQueries(this, favouriteSearchQueries);
 	}
 	
