@@ -26,11 +26,11 @@ public class UserImpl implements User {
 		return new UserImpl("", "", Privilege.DefaultUser, "");
 	}
 	
-	public UserImpl RegularUser(String uName, String pass, String FavouriteQueries){
+	public static UserImpl RegularUser(String uName, String pass, String FavouriteQueries){
 		return new UserImpl(uName, pass, Privilege.RegularUser, "");
 	}
 	
-	public UserImpl Admin(String uName, String pass, String FavouriteQueries){
+	public static UserImpl Admin(String uName, String pass, String FavouriteQueries){
 		return new UserImpl(uName, pass, Privilege.Admin, "");
 	}
 
