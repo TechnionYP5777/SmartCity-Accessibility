@@ -23,15 +23,12 @@ import smartcity.accessibility.navigation.mapquestcommunication.Shape;
  *         segments of the map that should be avoided in the routes it returns.
  * @author yael 
  */
-public class Navigation {
+public abstract class Navigation {
 
-	final String mapquestKey = "oa35ASKtNrnBGwF1cW0xV6fXujJ81j2Y";
-
-	public Navigation() {
-	}
+	private static final String mapquestKey = "oa35ASKtNrnBGwF1cW0xV6fXujJ81j2Y";
 
 	
-	public LatLng[] showRoute(Location source, Location destination, Integer accessibilityThreshold) throws CommunicationFailed {
+	public static LatLng[] showRoute(Location source, Location destination, Integer accessibilityThreshold) throws CommunicationFailed {
 		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessibilityThreshold);
 		Latlng from = new Latlng(source.getCoordinates().getLat(),source.getCoordinates().getLng());
 		Latlng to = new Latlng(destination.getCoordinates().getLat(),destination.getCoordinates().getLng());
@@ -40,7 +37,7 @@ public class Navigation {
 		return arrayToLatLng(s.getShapePoints());
 	}
 
-	private LatLng[] arrayToLatLng(Double[] shapePointsArr) {
+	private static LatLng[] arrayToLatLng(Double[] shapePointsArr) {
 		LatLng[] $ = new LatLng[shapePointsArr.length / 2];
 		int k = 0;
 		for (int i = 0; i < shapePointsArr.length - 1; i += 2) {
@@ -51,7 +48,7 @@ public class Navigation {
 	}
 
 
-	public Route getRouteFromMapQuest(Latlng from, Latlng to, List<MapSegment> segmentsToAvoid) throws CommunicationFailed {
+	public static Route getRouteFromMapQuest(Latlng from, Latlng to, List<MapSegment> segmentsToAvoid) throws CommunicationFailed {
 		// TODO make this code more OOP style...
 
 		Client client = ClientBuilder.newClient();
@@ -76,7 +73,7 @@ public class Navigation {
 		return routeWraper.getRoute();
 	}
 
-	private List<MapSegment> getSegmentsToAvoid(Location source, Location destination, Integer accessibilityThreshold) {
+	private static List<MapSegment> getSegmentsToAvoid(Location source, Location destination, Integer accessibilityThreshold) {
 		List<LatLng> locationsToAvoid = LocationManager.getNonAccessibleLocationsInRadius(source, destination,
 				accessibilityThreshold);
 		List<MapSegment> $ = new ArrayList<MapSegment>();
@@ -86,7 +83,7 @@ public class Navigation {
 	}
 
 	
-	public MapSegment getMapSegmentOfLatLng(double lat, double lng) {
+	public static MapSegment getMapSegmentOfLatLng(double lat, double lng) {
 		return ClientBuilder.newClient().target(("http://www.mapquestapi.com/directions/v2/findlinkid?" + "key="
 				+ mapquestKey + "&" + "lat=" + lat + "&" + "lng=" + lng)).request().get(MapSegment.class);
 	}

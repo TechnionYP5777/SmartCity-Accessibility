@@ -24,7 +24,7 @@ public class NavigationTest {
 		// TODO this test is temporal for it relay on things that will change!
 		Latlng from = new Latlng(39.750307, -104.999472);
 		Latlng to = new Latlng(40.750307, -105.999472);
-		Route r = (new Navigation()).getRouteFromMapQuest(from, to, new ArrayList<MapSegment>());
+		Route r = Navigation.getRouteFromMapQuest(from, to, new ArrayList<MapSegment>());
 		Shape shape = r.getShape();
 		Double[] shapePoints = shape.getShapePoints();
 		if (shapePoints.length % 2 != 0)
@@ -38,7 +38,7 @@ public class NavigationTest {
 	@Test
 	public void getMapSegmentFromLatLng() {
 		// TODO this test is temporal for it relay on things that will change!
-		MapSegment m = (new Navigation()).getMapSegmentOfLatLng(31.766932, 34.631666);
+		MapSegment m = Navigation.getMapSegmentOfLatLng(31.766932, 34.631666);
 		System.out.println(m.getLinkId());
 		System.out.println(m.getStreet());
 	}
@@ -49,9 +49,9 @@ public class NavigationTest {
 		Latlng from = new Latlng(31.766932, 34.631666);// sd tel hai 61 ashdod
 		Latlng to = new Latlng(31.770981, 34.620567);// HaYam HaTichon Blvd 1
 		List<MapSegment> segmentsToAvoid = new ArrayList<MapSegment>();
-		segmentsToAvoid.add((new Navigation()).getMapSegmentOfLatLng(31.769955, 34.623123));// bareket
+		segmentsToAvoid.add(Navigation.getMapSegmentOfLatLng(31.769955, 34.623123));// bareket
 																							// st
-		Route r = ((new Navigation()).getRouteFromMapQuest(from, to, segmentsToAvoid));
+		Route r = Navigation.getRouteFromMapQuest(from, to, segmentsToAvoid);
 		Shape shape = r.getShape();
 		Double[] shapePoints = shape.getShapePoints();
 		if (shapePoints.length % 2 != 0)
@@ -76,8 +76,9 @@ public class NavigationTest {
 		Latlng from = new Latlng(31.768762, 34.632052);// abba ahimeir
 		Latlng to = new Latlng(31.770981, 34.620567);// HaYam HaTichon Blvd 1
 		List<MapSegment> segmentsToAvoid = new ArrayList<MapSegment>();
-		segmentsToAvoid.add((new Navigation()).getMapSegmentOfLatLng(31.76935, 34.626793));// sd
-		Double[] shapePoints = (new Navigation()).getRouteFromMapQuest(from, to, segmentsToAvoid).getShape().getShapePoints();
+		segmentsToAvoid.add(Navigation.getMapSegmentOfLatLng(31.76935, 34.626793));// sd
+		Double[] shapePoints = Navigation.getRouteFromMapQuest(from, to, segmentsToAvoid).getShape().getShapePoints();
+
 	}
 
 	@Test
@@ -85,7 +86,7 @@ public class NavigationTest {
 	public void displayMap() throws CommunicationFailed {
 		Location fromLocation = new Street(new LatLng(31.768762, 34.632052));
 		Location toLocation = new Street(new LatLng(31.770981, 34.620567));
-		LatLng[] shapePoints = (new Navigation()).showRoute(fromLocation, toLocation, 0);
+		LatLng[] shapePoints = Navigation.showRoute(fromLocation, toLocation, 0);
 		MapView mapview = JxMapsFunctionality.getMapView();
 		JxMapsConvertor.displayRoute(mapview, shapePoints);
 		try {
