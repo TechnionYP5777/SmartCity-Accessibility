@@ -3,8 +3,6 @@ package smartcity.accessibility.mapmanagement;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 

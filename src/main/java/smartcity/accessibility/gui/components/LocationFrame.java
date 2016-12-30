@@ -14,6 +14,7 @@ public class LocationFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					LocationFrame window = new LocationFrame();

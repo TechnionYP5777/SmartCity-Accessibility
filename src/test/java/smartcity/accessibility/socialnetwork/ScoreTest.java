@@ -1,6 +1,5 @@
 package smartcity.accessibility.socialnetwork;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 /**

@@ -1,17 +1,12 @@
 package smartcity.accessibility.mapmanagement;
 
-import java.util.List;
-
 import static org.junit.Assert.*;
-
-import java.util.ArrayList;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
-import com.teamdev.jxmaps.Map;
 import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.swing.MapView;
 
@@ -19,10 +14,6 @@ import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
-import smartcity.accessibility.search.SearchQuery;
-import smartcity.accessibility.search.SearchTest;
-import smartcity.accessibility.socialnetwork.Admin;
-import smartcity.accessibility.socialnetwork.AuthenticatedUser;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;

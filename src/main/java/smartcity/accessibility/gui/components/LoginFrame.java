@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.gui.Application;
@@ -38,7 +39,7 @@ public class LoginFrame implements MouseListener {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 400, 400);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblSignupForm = new JLabel("Login Form");
