@@ -1,9 +1,17 @@
 package smartcity.accessibility.gui.components.location;
 
+import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 import com.teamdev.jxmaps.LatLng;
 
@@ -15,16 +23,7 @@ import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserImpl;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-
-public class LocationFrame {
+public class LocationFrame implements MouseListener {
 
 	private JFrame frame;
 	private Location loc;
@@ -80,12 +79,36 @@ public class LocationFrame {
 		frame.getContentPane().add(scrollPane);
 
 		btnAddReview = new JButton("Add Review");
-		btnAddReview.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		btnAddReview.addMouseListener(this);
 		btnAddReview.setBounds(156, 427, 112, 23);
 		frame.getContentPane().add(btnAddReview);
 		frame.setVisible(true);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(e.getSource()==btnAddReview)
+			new CreateReviewFrame(loc);
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent __) {
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent __) {
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent __) {
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent __) {
+		
 	}
 }

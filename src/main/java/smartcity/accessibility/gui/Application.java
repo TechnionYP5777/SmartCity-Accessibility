@@ -37,6 +37,7 @@ public class Application {
 
 	public static void main(String[] args) {
 		frame = new MapFrame("SmartCity - Accessibility");
+		
 
 		DatabaseManager.initialize();
 
@@ -75,6 +76,7 @@ public class Application {
 		frame.getContentPane().add(panel2, gbc);
 
 		frame.pack();
+		frame.setLocation(100, 100);
 		frame.setVisible(true);
 
 		/*
@@ -84,25 +86,21 @@ public class Application {
 
 			@Override
 			public void windowOpened(WindowEvent __) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void windowIconified(WindowEvent __) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void windowDeiconified(WindowEvent __) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void windowDeactivated(WindowEvent __) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -120,13 +118,11 @@ public class Application {
 
 			@Override
 			public void windowClosed(WindowEvent __) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void windowActivated(WindowEvent __) {
-				// TODO Auto-generated method stub
 
 			}
 		});
