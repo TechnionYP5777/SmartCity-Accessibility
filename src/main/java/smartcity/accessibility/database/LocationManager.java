@@ -11,10 +11,12 @@ import org.parse4j.ParseException;
 import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
 import org.parse4j.callback.FindCallback;
+import org.parse4j.callback.GetCallback;
 
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.socialnetwork.Review;
 
 /**
  * @author assaflu
@@ -36,24 +38,15 @@ public class LocationManager {
 	    return 6366000 * c;
 	}
 	
-	private static Location getLocation (ParseObject loc){
-		return null;
-		/*
-		 * TODO: convert location parseObject to location
-		 */
-	}
-	
+	/*
+	 * the method returns all the latlng of the locations that are bellow the threshold
+	 */
 	public static List<LatLng> getNonAccessibleLocationsInRadius(Location source, Location destination,
 			Integer accessibilityThreshold) {
-		// TODO Auto-generated method stub
-		// TODO this method will return List of Locations the are in the
-		// radius of the source and destination
-		// and the are below the threshold
 		
 		double radius = distanceBtween(source.getCoordinates(),destination.getCoordinates());
 		LatLng center = new LatLng((source.getCoordinates().getLat()+destination.getCoordinates().getLat())/2,
 				(source.getCoordinates().getLng()+destination.getCoordinates().getLng())/2);
-		//temporary implementation (read at the end of the function for more, but highly recommand to change to ArrayList<LatLng>
 		ArrayList<LatLng> points = new ArrayList<LatLng>();
 		
 		FindCallback<ParseObject> callBack = new FindCallback<ParseObject>() {
@@ -71,34 +64,50 @@ public class LocationManager {
 			}
 		};
 		DatabaseManager.queryByLocation("Location",center,radius/1000,callBack);
-		/*
-		 * consider changing the return value of this method to ArrayList<LatLng>
-		 * I dont see any need for the upcoming part, of geting the location which is just
-		 * 		reviews for a current location
-		 * ***I don't see and field of threshold in the location class so right now it 
-		 * returns all the location that answer on the radius query
-		 */
+		List<Location> loc =  new ArrayList<Location>();
+		for(LatLng l:points){
+			loc.add(getLocation(l));
+		}
 		
-		/*
-		 * function not finished (unless you decide to change to ArrayList<LatLng>
-		 * because Location and Review class are incomplete see getLocation function for more
-		 */		
-		return new ArrayList<LatLng>();
+		loc = FilterToAllAbove(loc, 1, accessibilityThreshold); // '1' will be changed in the future
+		
+		for(Location l:loc){
+			points.remove(l.getCoordinates());
+		}
+		
+		return points;
 	}
 	
 	public static Location getLocation(LatLng point){
-		return null;
-		//TODO: return location according to LatLng point
-		/*
-		 * can't be complited until Review and Location class are complited - need to add pinned field to review
-		 * need to add location create 
-		 */
+		ArrayList<Review> pinned = new ArrayList<Review>();
+		ArrayList<Review> notPinned = new ArrayList<Review>();
+		Map<String, Object> values = new HashMap<String,Object>();
+		values.put("location", new ParseGeoPoint(point.getLat(),point.getLng()));
+		FindCallback<ParseObject> callBack = new FindCallback<ParseObject>() {
+			@Override
+			public void done(List<ParseObject> arg0, ParseException arg1) {
+                if (arg1 == null) {
+                	for (ParseObject obj :arg0){
+                		if((int)obj.get("pined")==0){
+                			//TODO: pinned.add(new Review(l, r, c, u));
+                		}else{
+                			//TODO: notPinned.add(new Review(l, r, c, u));
+                		}
+                	}
+                }				
+			}
+		};
+		
+		DatabaseManager.queryByFields("Review", values, callBack);
+		Location l = new Location(notPinned,pinned,point) {};
+		return l;
 	}
 	
 	public static void saveLocation (Location l) throws ParseException{
 		Map<String, Object> m = new HashMap<String,Object>();
 		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
-		ParseObject p = DatabaseManager.putValue("Location",m); 
+		ParseObject p = DatabaseManager.putValue("Location",m);
+		//TODO: pin the pinned comment
 	}
 	
 	/*

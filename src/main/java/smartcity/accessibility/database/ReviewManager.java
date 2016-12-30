@@ -24,6 +24,7 @@ public class ReviewManager {
 		m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),r.getLocation().getCoordinates().getLng()));
 		m.put("rating",r.getRating().getScore());
 		m.put("comment",r.getComment());
+		m.put("pined",0); // need for location and need to be change according to the user saving the review
 		ParseObject p = DatabaseManager.putValue("Review",m); 
 	}
 	
