@@ -70,6 +70,7 @@ public class NavigationTest {
 	}
 
 	@Test
+	@Ignore
 	public void avoidOneSegement() throws CommunicationFailed {
 		// TODO this test is temporal for it relay on things that will change!
 		Latlng from = new Latlng(31.768762, 34.632052);// abba ahimeir
@@ -87,6 +88,26 @@ public class NavigationTest {
 		}
 	}
 
+	@Test
+	@Ignore
+	public void avoidTwoSegement() throws CommunicationFailed {
+		// TODO this test is temporal for it relay on things that will change!
+		Latlng from = new Latlng(31.768762, 34.632052);// abba ahimeir
+		Latlng to = new Latlng(31.770981, 34.620567);// HaYam HaTichon Blvd 1
+		List<MapSegment> segmentsToAvoid = new ArrayList<MapSegment>();
+		segmentsToAvoid.add(Navigation.getMapSegmentOfLatLng(31.76935, 34.626793));// sd tel hai
+		segmentsToAvoid.add(Navigation.getMapSegmentOfLatLng(31.772010, 34.629531));// sd rotshild
+		Double[] shapePoints = Navigation.getRouteFromMapQuest(from, to, segmentsToAvoid).getShape().getShapePoints();
+		MapView mapview = JxMapsFunctionality.getMapView();
+		JxMapsConvertor.displayRoute(mapview, Navigation.arrayToLatLng(shapePoints));
+		try {
+			Thread.sleep(10000000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Test
 	@Ignore
 	public void displayMap() throws CommunicationFailed {

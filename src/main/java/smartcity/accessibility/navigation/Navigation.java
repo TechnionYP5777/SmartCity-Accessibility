@@ -56,12 +56,11 @@ public abstract class Navigation {
 		WebTarget target = client.target(path).queryParam("key", mapquestKey).queryParam("from", from.getLat() + "," + from.getLng())
 				.queryParam("to", to.getLat() + "," + to.getLng()).queryParam("fullShape", true)
 				.queryParam("shapeFormat", "raw");
-		String mustAvoidLinkIds = "";
+		List<String> mustAvoidLinkIds = new ArrayList<>();
 		if(!segmentsToAvoid.isEmpty()){
 			for (MapSegment m : segmentsToAvoid)
-				mustAvoidLinkIds += m.getLinkId();
-			mustAvoidLinkIds = String.join((CharSequence) ",", (CharSequence) mustAvoidLinkIds);
-			 target = target.queryParam("mustAvoidLinkIds", mustAvoidLinkIds);
+				mustAvoidLinkIds.add((m.getLinkId() + ""));
+			target = target.queryParam("mustAvoidLinkIds", String.join(",", mustAvoidLinkIds));
 		}
 		
 		Response response = target.request().get();
