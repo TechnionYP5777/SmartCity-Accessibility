@@ -37,7 +37,7 @@ public abstract class Navigation {
 		return arrayToLatLng(s.getShapePoints());
 	}
 
-	private static LatLng[] arrayToLatLng(Double[] shapePointsArr) {
+	public static LatLng[] arrayToLatLng(Double[] shapePointsArr) {
 		LatLng[] $ = new LatLng[shapePointsArr.length / 2];
 		int k = 0;
 		for (int i = 0; i < shapePointsArr.length - 1; i += 2) {
