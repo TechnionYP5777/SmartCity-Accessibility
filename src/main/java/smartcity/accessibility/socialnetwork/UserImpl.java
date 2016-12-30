@@ -2,9 +2,7 @@ package smartcity.accessibility.socialnetwork;
 
 import java.util.List;
 
-import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
-import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.search.SearchQuery;
 
 public class UserImpl implements User {

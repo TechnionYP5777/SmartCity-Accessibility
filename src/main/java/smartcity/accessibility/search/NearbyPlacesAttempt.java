@@ -15,6 +15,9 @@ import com.teamdev.jxmaps.swing.MapView;
 import smartcity.accessibility.mapmanagement.Facility;
 import smartcity.accessibility.mapmanagement.Location;
 
+/**
+ * @author Koral Chapnik
+ */
 public class NearbyPlacesAttempt {
 	
 	public static ArrayList<Location> findNearbyPlaces(MapView mapView, Location initLocation, double radius, List<String> kindsOfLocations) {
