@@ -1,11 +1,8 @@
 package smartcity.accessibility.search;
 
-import java.util.List;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.teamdev.jxmaps.GeocoderResult;
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.swing.MapView;
 

@@ -8,7 +8,6 @@ import org.junit.Test;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.mapmanagement.Coordinates;
-import smartcity.accessibility.mapmanagement.Location;
 
 /**
  * @author Koral Chapnik
