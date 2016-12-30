@@ -1,4 +1,4 @@
-package smartcity.accessibility.gui.components;
+package smartcity.accessibility.gui.components.location;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;

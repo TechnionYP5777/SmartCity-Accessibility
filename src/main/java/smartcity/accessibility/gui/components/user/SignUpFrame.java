@@ -1,35 +1,34 @@
-package smartcity.accessibility.gui.components;
+package smartcity.accessibility.gui.components.user;
 
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.WindowConstants;
-
-import smartcity.accessibility.database.UserManager;
-import smartcity.accessibility.gui.Application;
-import smartcity.accessibility.socialnetwork.User;
-
-import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
-public class LoginFrame implements MouseListener {
+import smartcity.accessibility.database.UserManager;
+import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
+import smartcity.accessibility.gui.Application;
+import smartcity.accessibility.gui.components.ButtonsPanel;
+import smartcity.accessibility.socialnetwork.User;
+
+public class SignUpFrame implements MouseListener {
 
 	private JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
-	private JButton btnLogin;
-
+	private JButton btnSignup;
 
 	/**
 	 * Create the application.
 	 */
-	public LoginFrame() {
+	public SignUpFrame() {
 		initialize();
 	}
 
@@ -42,7 +41,7 @@ public class LoginFrame implements MouseListener {
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblSignupForm = new JLabel("Login Form");
+		JLabel lblSignupForm = new JLabel("Signup Form");
 		lblSignupForm.setFont(new Font("Dialog", Font.BOLD, 15));
 		lblSignupForm.setBounds(151, 25, 166, 15);
 		frame.getContentPane().add(lblSignupForm);
@@ -62,10 +61,10 @@ public class LoginFrame implements MouseListener {
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
-		btnLogin = new JButton("Login");
-		btnLogin.setBounds(151, 303, 117, 25);
-		btnLogin.addMouseListener(this);
-		frame.getContentPane().add(btnLogin);
+		btnSignup = new JButton("Signup");
+		btnSignup.setBounds(151, 303, 117, 25);
+		btnSignup.addMouseListener(this);
+		frame.getContentPane().add(btnSignup);
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(151, 119, 198, 25);
@@ -76,15 +75,21 @@ public class LoginFrame implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		if (arg0.getSource() != btnLogin)
+		if (arg0.getSource() != btnSignup)
 			return;
-		User u = UserManager.LoginUser(textField.getText(), String.copyValueOf(passwordField.getPassword()));
-		if (u == null)
-			JOptionPane.showMessageDialog(Application.frame, "Login Failed.", "Login error", JOptionPane.ERROR_MESSAGE);
-		else {
-			Application.appUser = u;
-			ButtonsPanel.USERNAME.setText(u.getName());
+		User u;
+		try {
+			u = UserManager.SignUpUser(textField.getText(), String.copyValueOf(passwordField.getPassword()), User.Privilege.RegularUser);
+			if (u == null)
+				JOptionPane.showMessageDialog(Application.frame, "Signup Failed.", "Signup error", JOptionPane.ERROR_MESSAGE);
+			else {
+				Application.appUser = u;
+				ButtonsPanel.USERNAME.setText(u.getName());
+			}
+		} catch (UsernameAlreadyTakenException e) {
+			JOptionPane.showMessageDialog(Application.frame, "Signup Failed.", "Signup error", JOptionPane.ERROR_MESSAGE);
 		}
+		
 		frame.dispose();
 	}
 
@@ -107,4 +112,5 @@ public class LoginFrame implements MouseListener {
 	public void mouseReleased(MouseEvent arg0) {
 
 	}
+
 }

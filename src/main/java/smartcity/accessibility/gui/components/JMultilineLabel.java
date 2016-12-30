@@ -6,9 +6,8 @@ import javax.swing.UIManager;
 public class JMultilineLabel extends JTextArea {
 	private static final long serialVersionUID = 1L;
 
-	public JMultilineLabel(String text, int rows, int cols) {
+	public JMultilineLabel(String text) {
 		super(text);
-		// setColumns(10);
 		setEditable(false);
 		setCursor(null);
 		setOpaque(false);
@@ -16,6 +15,5 @@ public class JMultilineLabel extends JTextArea {
 		setFont(UIManager.getFont("Label.font"));
 		setWrapStyleWord(false);
 		setLineWrap(true);
-		System.out.println(getRowHeight());
 	}
 }

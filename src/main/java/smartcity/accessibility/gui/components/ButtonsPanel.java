@@ -6,6 +6,9 @@ import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import smartcity.accessibility.gui.components.user.LoginFrame;
+import smartcity.accessibility.gui.components.user.SignUpFrame;
+
 public class ButtonsPanel extends JPanel implements MouseListener {
 
 	/**

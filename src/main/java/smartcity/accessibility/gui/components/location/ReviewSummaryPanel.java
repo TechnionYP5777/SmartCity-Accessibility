@@ -1,7 +1,8 @@
-package smartcity.accessibility.gui.components;
+package smartcity.accessibility.gui.components.location;
 
 import javax.swing.JPanel;
 
+import smartcity.accessibility.gui.components.JMultilineLabel;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 
@@ -31,7 +32,7 @@ public class ReviewSummaryPanel extends JPanel {
 		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
-		JMultilineLabel lblTest = new JMultilineLabel(getSummary(r.getContent()), 3, 3);
+		JMultilineLabel lblTest = new JMultilineLabel(getSummary(r.getContent()));
 		GridBagConstraints gbc_lblTest = new GridBagConstraints();
 		gbc_lblTest.fill = GridBagConstraints.BOTH;
 		gbc_lblTest.insets = new Insets(0, 0, 0, 5);
