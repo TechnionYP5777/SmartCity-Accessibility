@@ -42,18 +42,12 @@ public class Application {
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
+		} catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException
+				| ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 
-		MapViewOptions options = new MapViewOptions(MapComponentType.HEAVYWEIGHT);
-		options.importPlaces();
+		new MapViewOptions(MapComponentType.HEAVYWEIGHT).importPlaces();
 		mapView = JxMapsFunctionality.getMapView();
 		mapView.waitReady();
 		mapView.setSize(FRAME_X_SIZE, FRAME_Y_SIZE - 100);
@@ -82,57 +76,58 @@ public class Application {
 
 		frame.pack();
 		frame.setVisible(true);
-		
+
 		/*
 		 * Kolikant
 		 */
 		frame.addWindowListener(new WindowListener() {
-			
+
 			@Override
-			public void windowOpened(WindowEvent e) {
+			public void windowOpened(WindowEvent __) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
-			public void windowIconified(WindowEvent e) {
+			public void windowIconified(WindowEvent __) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
-			public void windowDeiconified(WindowEvent e) {
+			public void windowDeiconified(WindowEvent __) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
-			public void windowDeactivated(WindowEvent e) {
+			public void windowDeactivated(WindowEvent __) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
-			public void windowClosing(WindowEvent e) {
+			public void windowClosing(WindowEvent __) {
 				try {
 					UserManager.updateAllUserInformation(appUser);
 				} catch (UserNotFoundException e1) {
 					/*
-					 * user was not default and failed to save it's information. what do we want to do?
+					 * user was not default and failed to save it's information.
+					 * what do we want to do?
 					 */
 				}
 			}
-			
+
 			@Override
-			public void windowClosed(WindowEvent e) {
+			public void windowClosed(WindowEvent __) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
-			public void windowActivated(WindowEvent e) {
+			public void windowActivated(WindowEvent __) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 
@@ -141,11 +136,9 @@ public class Application {
 			@Override
 			public void onEvent(MouseEvent arg0) {
 				new LocationFrame(arg0.latLng());
-				
+
 			}
 		});
-		
-	
 
 		JxMapsFunctionality.initMapLocation(mapView, "Eliezer 10, Haifa, Israel");
 	}
