@@ -55,7 +55,7 @@ public abstract class Navigation {
 		String path = "http://www.mapquestapi.com/directions/v2/route?";
 		WebTarget target = client.target(path).queryParam("key", mapquestKey).queryParam("from", from.getLat() + "," + from.getLng())
 				.queryParam("to", to.getLat() + "," + to.getLng()).queryParam("fullShape", true)
-				.queryParam("shapeFormat", "raw");
+				.queryParam("shapeFormat", "raw").queryParam("routeType", "pedestrian");
 		List<String> mustAvoidLinkIds = new ArrayList<>();
 		if(!segmentsToAvoid.isEmpty()){
 			for (MapSegment m : segmentsToAvoid)

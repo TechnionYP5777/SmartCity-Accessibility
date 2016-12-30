@@ -28,7 +28,7 @@ public class JxMapsConvertor{
 		mapOptions.setMapTypeControlOptions(controlOptions);
 		map.setOptions(mapOptions);
 		map.setCenter(shapeLatlng[0]);
-		map.setZoom(13.0);
+		map.setZoom(11.0);
 		Polyline polyline = new Polyline(map);
 		polyline.setPath(shapeLatlng);
 		PolylineOptions options = new PolylineOptions();
