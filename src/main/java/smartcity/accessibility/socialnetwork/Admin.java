@@ -55,7 +55,7 @@ public class Admin extends AuthenticatedUser {
 	 * @throws ParseException 
 	 */
 	public void uploadReview(Review r) throws ParseException{
-		r.getLocation().addReview(this, r.getRating().getScore(), r.getComment());
+		r.getLocation().addReview(this, r.getRating().getScore(), r.getContent());
 		ReviewManager.uploadReview(r);
 		pinReview(r);
 	}

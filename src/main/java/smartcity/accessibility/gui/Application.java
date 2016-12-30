@@ -19,6 +19,7 @@ import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.gui.components.ButtonsPanel;
+import smartcity.accessibility.gui.components.LocationFrame;
 import smartcity.accessibility.gui.components.MapFrame;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.socialnetwork.User;
@@ -139,7 +140,7 @@ public class Application {
 
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				System.out.println(arg0.latLng());
+				new LocationFrame(arg0.latLng());
 				
 			}
 		});

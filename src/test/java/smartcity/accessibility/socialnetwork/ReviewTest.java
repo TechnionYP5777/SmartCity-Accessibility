@@ -37,7 +37,7 @@ public class ReviewTest {
 	
 	@Test
 	public void getCommentTest() {
-		assertEquals(r1.getComment(), "very unaccessible place!");
+		assertEquals(r1.getContent(), "very unaccessible place!");
 	}
 	
 	@Test

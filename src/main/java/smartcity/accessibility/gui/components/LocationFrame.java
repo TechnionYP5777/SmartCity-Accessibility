@@ -1,9 +1,7 @@
 package smartcity.accessibility.gui.components;
 
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,19 +9,27 @@ import javax.swing.JLabel;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.database.LocationManager;
+import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.Location;
-import javax.swing.JList;
+import smartcity.accessibility.socialnetwork.Review;
+import smartcity.accessibility.socialnetwork.Score;
+import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.UserImpl;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class LocationFrame {
 
 	private JFrame frame;
 	private Location loc;
+	private JButton btnAddReview;
 	
 	public static void main(String[] args) throws InterruptedException{
-		LocationFrame f =new LocationFrame(new LatLng());
-		//f.wait();
+		new LocationFrame(new LatLng());
+		
 	}
 
 	/**
@@ -31,6 +37,7 @@ public class LocationFrame {
 	 */
 	public LocationFrame(LatLng loc) {
 		this.loc = LocationManager.getLocation(loc);
+		System.out.println(this.loc );
 		//this.loc.getReviews().get(0).
 		initialize();
 	}
@@ -40,29 +47,41 @@ public class LocationFrame {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.setBounds(100, 100, 450, 500);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblLocation = new JLabel("Location");
-		lblLocation.setBounds(182, 28, 70, 15);
+		lblLocation.setBounds(182, 24, 70, 15);
 		frame.getContentPane().add(lblLocation);
 		
 		JPanel jp = new JPanel();
-		jp.setLayout(new GridLayout(0,1));
+		//jp.setSize(400,350);
+		jp.setLayout(new BoxLayout(jp, BoxLayout.Y_AXIS));
 		for(int i=0;i<100;i++){
-			JButton temp = new JButton("a");
-			temp.setVisible(true);
-			
-			jp.add(temp);
+			ReviewSummaryPanel rsp = new ReviewSummaryPanel(
+					new Review(new Coordinates(new LatLng()),
+							Score.getMaxScore()-1,
+							"this is a veryasdasdasdasdaaszdfasdfasdfasdfasdfasdfasdfasdf \n very long \n content \n omg \n this is it\na\nb\nc",
+							new UserImpl("a","b",User.Privilege.Admin)));
+			rsp.setVisible(true);
+			jp.add(rsp);
 		}
 		
 		JScrollPane scrollPane = new JScrollPane(jp);
 		
-		scrollPane.setBounds(12, 50, 411, 167);
+		scrollPane.setBounds(25, 50, 400, 350);
 		scrollPane.setVisible(true);
 		frame.getContentPane().add(scrollPane);
 		
+		btnAddReview = new JButton("Add Review");
+		btnAddReview.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnAddReview.setBounds(156, 427, 112, 23);
+		frame.getContentPane().add(btnAddReview);
 		frame.setVisible(true);
 	}
 }

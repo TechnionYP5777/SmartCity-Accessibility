@@ -34,7 +34,7 @@ public class Review {
 		return this.location;
 	}
 	
-	public String getComment() {
+	public String getContent() {
 		return this.content;
 	}
 	
