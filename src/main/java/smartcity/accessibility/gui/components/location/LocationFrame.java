@@ -17,8 +17,12 @@ import smartcity.accessibility.socialnetwork.UserImpl;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class LocationFrame {
 
@@ -51,8 +55,9 @@ public class LocationFrame {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JLabel lblLocation = new JLabel("Location");
-		lblLocation.setBounds(182, 24, 70, 15);
+		JLabel lblLocation = new JLabel("Location", SwingConstants.CENTER);
+		lblLocation.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblLocation.setBounds(156, 11, 112, 28);
 		frame.getContentPane().add(lblLocation);
 
 		JPanel jp = new JPanel();
@@ -61,10 +66,11 @@ public class LocationFrame {
 		for (int i = 0; i < 100; ++i) {
 			ReviewSummaryPanel rsp = new ReviewSummaryPanel(
 					new Review(new Coordinates(new LatLng()), Score.getMaxScore() - 1,
-							"this is a veryasdasdasdasdaaszdfasdfasdfasdfasdfasdfasdfasdf \n very long \n content \n omg \n this is it\na\nb\nc",
+							"this is a veryasdasdasdasdaaszdfasdfasdfasdfasdfasdfasdfasdf \n very long \n content \n omg \n this is it\na\nb\nc\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na",
 							new UserImpl("a", "b", User.Privilege.Admin)));
 			rsp.setVisible(true);
 			jp.add(rsp);
+			jp.add(new JSeparator(SwingConstants.HORIZONTAL));
 		}
 
 		JScrollPane scrollPane = new JScrollPane(jp);

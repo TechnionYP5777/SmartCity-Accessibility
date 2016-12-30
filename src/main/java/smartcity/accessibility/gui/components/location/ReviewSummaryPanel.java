@@ -12,10 +12,14 @@ import javax.swing.JProgressBar;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class ReviewSummaryPanel extends JPanel {
+public class ReviewSummaryPanel extends JPanel implements MouseListener {
 
 	private static int MAX_CHARS = 100;
+	private JButton btnSeeFullReview;
+	private Review review;
 
 	/**
 	 * 
@@ -26,6 +30,7 @@ public class ReviewSummaryPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public ReviewSummaryPanel(Review r) {
+		review = r;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 233, 139, 0 };
 		gridBagLayout.rowHeights = new int[] { 32, 23, 0 };
@@ -53,7 +58,8 @@ public class ReviewSummaryPanel extends JPanel {
 		add(progressBar, gbc_progressBar);
 		progressBar.setVisible(true);
 
-		JButton btnSeeFullReview = new JButton("See Full Review");
+		btnSeeFullReview = new JButton("See Full Review");
+		btnSeeFullReview.addMouseListener(this);
 		GridBagConstraints gbc_btnSeeFullReview = new GridBagConstraints();
 		gbc_btnSeeFullReview.anchor = GridBagConstraints.NORTH;
 		gbc_btnSeeFullReview.fill = GridBagConstraints.HORIZONTAL;
@@ -68,5 +74,37 @@ public class ReviewSummaryPanel extends JPanel {
 		if (text.length() > MAX_CHARS)
 			text = text.substring(0, MAX_CHARS) + "...";
 		return text;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		System.out.println("1");
+		if(arg0.getSource()==btnSeeFullReview)
+			new ReviewFrame(review);
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
