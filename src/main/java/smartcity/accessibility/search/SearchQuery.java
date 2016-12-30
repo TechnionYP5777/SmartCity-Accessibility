@@ -40,7 +40,7 @@ public class SearchQuery {
 	boolean isAdress;
 	final AtomicInteger searchStatus;
 
-	public SearchQuery(String parsedQuery) {
+	private SearchQuery(String parsedQuery) {
 		String[] a = parsedQuery.split(isThisAdressSpliter);
 		isAdress = Boolean.parseBoolean(a[0]);
 		this.queryString = a[1];
@@ -52,6 +52,9 @@ public class SearchQuery {
 		return new SearchQuery(Boolean.toString(true)+isThisAdressSpliter+adress);
 	}
 
+	public static SearchQuery freeTextSearch(String freeText){
+		return new SearchQuery(Boolean.toString(false)+isThisAdressSpliter+freeText);
+	}
 
 	private void SetSearchStatus(SearchStage s) {
 		searchStatus.set(s.ordinal());
@@ -108,7 +111,7 @@ public class SearchQuery {
 
 	@Override
 	public String toString() {
-		return queryString;
+		return Boolean.toString(isAdress)+isThisAdressSpliter+queryString;
 	}
 
 	public static SearchQuery toQuery(String s) {

@@ -72,7 +72,7 @@ public abstract class Location {
 
 	
 	public String getAddress(MapView mapView){
-		SearchQuery sq = new SearchQuery("");
+		SearchQuery sq = SearchQuery.adressSearch("");
 		JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
 		SearchQueryResult result = sq.searchByCoordinates(mapView, coordinates);
 		sq.waitOnSearch();
