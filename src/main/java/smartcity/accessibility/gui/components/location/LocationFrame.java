@@ -13,32 +13,23 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
-import com.teamdev.jxmaps.LatLng;
-
-import smartcity.accessibility.database.LocationManager;
-import smartcity.accessibility.mapmanagement.Coordinates;
+import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
-import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
-import smartcity.accessibility.socialnetwork.UserImpl;
 
 public class LocationFrame implements MouseListener {
 
 	private JFrame frame;
 	private Location loc;
 	private JButton btnAddReview;
-
-	public static void main(String[] args) throws InterruptedException {
-		new LocationFrame(new LatLng());
-
-	}
+	private JButton btnNavigate;
 
 	/**
 	 * Create the application.
 	 */
-	public LocationFrame(LatLng loc) {
-		this.loc = LocationManager.getLocation(loc);
+	public LocationFrame(Location loc) {
+		this.loc = loc;
 		System.out.println(this.loc);
 		// this.loc.getReviews().get(0).
 		initialize();
@@ -62,14 +53,27 @@ public class LocationFrame implements MouseListener {
 		JPanel jp = new JPanel();
 		// jp.setSize(400,350);
 		jp.setLayout(new BoxLayout(jp, BoxLayout.Y_AXIS));
+		for(Review r: loc.getPinnedReviews()){
+			ReviewSummaryPanel rsp = new ReviewSummaryPanel(r);
+			rsp.setVisible(true);
+			jp.add(rsp);
+			jp.add(new JSeparator(SwingConstants.HORIZONTAL));
+		}
+		for(Review r: loc.getReviews()){
+			ReviewSummaryPanel rsp = new ReviewSummaryPanel(r);
+			rsp.setVisible(true);
+			jp.add(rsp);
+			jp.add(new JSeparator(SwingConstants.HORIZONTAL));
+		}
+		
 		for (int i = 0; i < 100; ++i) {
-			ReviewSummaryPanel rsp = new ReviewSummaryPanel(
+			/*ReviewSummaryPanel rsp = new ReviewSummaryPanel(
 					new Review(new Coordinates(new LatLng()), Score.getMaxScore() - 1,
 							"this is a veryasdasdasdasdaaszdfasdfasdfasdfasdfasdfasdfasdf \n very long \n content \n omg \n this is it\na\nb\nc\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na",
 							new UserImpl("a", "b", User.Privilege.Admin)));
 			rsp.setVisible(true);
 			jp.add(rsp);
-			jp.add(new JSeparator(SwingConstants.HORIZONTAL));
+			jp.add(new JSeparator(SwingConstants.HORIZONTAL));*/
 		}
 
 		JScrollPane scrollPane = new JScrollPane(jp);
@@ -78,17 +82,28 @@ public class LocationFrame implements MouseListener {
 		scrollPane.setVisible(true);
 		frame.getContentPane().add(scrollPane);
 
-		btnAddReview = new JButton("Add Review");
-		btnAddReview.addMouseListener(this);
-		btnAddReview.setBounds(156, 427, 112, 23);
-		frame.getContentPane().add(btnAddReview);
+		if(Application.appUser.getPrivilege()==User.Privilege.RegularUser){
+			btnAddReview = new JButton("Add Review");
+			btnAddReview.addMouseListener(this);
+			btnAddReview.setBounds(25, 437, 112, 23);
+			frame.getContentPane().add(btnAddReview);
+			
+			
+		}
+	
+		btnNavigate = new JButton("Navigate");
+		btnNavigate.setBounds(336, 437, 89, 23);
+		frame.getContentPane().add(btnNavigate);
 		frame.setVisible(true);
+		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getSource()==btnAddReview)
 			new CreateReviewFrame(loc);
+		if(e.getSource()==btnNavigate)
+			System.out.println("Navigate");
 		
 	}
 

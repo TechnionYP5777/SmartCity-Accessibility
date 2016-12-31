@@ -43,7 +43,7 @@ public class CreateReviewFrame implements MouseListener {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 500);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		JLabel lblSignupForm = new JLabel("Review Form");
