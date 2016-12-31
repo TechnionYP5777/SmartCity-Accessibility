@@ -28,7 +28,7 @@ public abstract class Location {
 	private ArrayList<Review> reviews;
 	private ArrayList<Review> pinnedReviews;	//ArthurSap
 	private LatLng coordinates;
-
+	private String name = "";
 	//ArthurSap
 	public ArrayList<Review> getReviews() {
 		return reviews;
@@ -47,6 +47,14 @@ public abstract class Location {
 	public Location(LatLng c){
 		initiateArrays();
 		this.coordinates = c;		
+	}
+	
+	public void setName(String n) {
+		this.name = n;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 	
 	public Location(ArrayList<Review> r, ArrayList<Review> pr, LatLng c) {

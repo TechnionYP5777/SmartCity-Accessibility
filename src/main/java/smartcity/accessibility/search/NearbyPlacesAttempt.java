@@ -16,6 +16,7 @@ import com.teamdev.jxmaps.PlacesServiceStatus;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.mapmanagement.Facility;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
 
@@ -32,48 +33,43 @@ public class NearbyPlacesAttempt extends MapView {
 		onComplete = false;
 	}
 
-	public ArrayList<Location> findNearbyPlaces(MapView mapView, Location initLocation, double radius, List<String> kindsOfLocations) {
+	public ArrayList<Location> findNearbyPlaces(Location initLocation, double radius, List<String> kindsOfLocations) {
 		
         ArrayList<Location> res = new ArrayList<Location>();
-        // Setting of a ready handler to MapView object. onMapReady will be called when map initialization is done and
-        // the map object is ready to use. Current implementation of onMapReady customizes the map object.
         setOnMapReadyHandler(new MapReadyHandler() {
             @Override
             public void onMapReady(MapStatus status) {
                 // Check if the map is loaded correctly
                 if (status == MapStatus.MAP_STATUS_OK) {
-                	System.out.println("map is ready");
                     mapIsReady = true;
                 }
             }
         });
         while(!mapIsReady){
-        	System.out.println("mappppp");
+        	 System.out.println("waiting to map");
         }
 		Map map = getMap();
 		assert(map != null);
-		System.out.println("got a map");
 		LatLng l = initLocation.getCoordinates();
 		map.setCenter(l);
 		map.setZoom(17.0);
-		PlaceSearchRequest request = new PlaceSearchRequest(mapView.getMap());
+		PlaceSearchRequest request = new PlaceSearchRequest(getMap());
 		request.setLocation(map.getCenter());
 		request.setRadius(radius);
 		String[] types = new String[kindsOfLocations.size()];
-		types = kindsOfLocations.toArray(types); // check if it works
-		System.out.println("kinds are " + types[0]);
+		types = kindsOfLocations.toArray(types);
 		request.setTypes(types);
 		getServices().getPlacesService().nearbySearch(request, new PlaceNearbySearchCallback(map) {
             @Override
             public void onComplete(PlaceResult[] results, PlacesServiceStatus status, PlaceSearchPagination pagination) {
-                // Checking operation status
-            	System.out.println("got to onComplete");
                 if (status == PlacesServiceStatus.OK) {
                     for (int i=0; i< results.length; ++i) {
-                    	System.out.println("adding to result");
                         PlaceResult result = results[i];
+                        String name = result.getName();
                         LatLng l = result.getGeometry() != null ? result.getGeometry().getLocation() : null;
-                        res.add(new Facility(l));
+                        Facility f = new Facility(l);
+                        f.setName(result.getName());
+                        res.add(f);
                     }
                 }
                 onComplete = true;
@@ -82,8 +78,7 @@ public class NearbyPlacesAttempt extends MapView {
 		});
 	
 		while(!onComplete){
-         
-			System.out.println("waiting to OnComplete");
+          System.out.println("waiting");
 		}
 		
 		this.mapIsReady = false;

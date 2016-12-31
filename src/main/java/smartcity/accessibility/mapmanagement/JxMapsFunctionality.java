@@ -37,7 +37,7 @@ public abstract class JxMapsFunctionality {
 		private static final long serialVersionUID = 1L;
 		List<Marker> MarkerList = new ArrayList<Marker>();
 		
-		protected extendedMapView(MapViewOptions __){
+		public extendedMapView(MapViewOptions __){
 			setOnMapReadyHandler(new MapReadyHandler() {
 				@Override
 				public void onMapReady(MapStatus arg0) {

@@ -10,9 +10,9 @@ import com.teamdev.jxmaps.LatLng;
 public class Facility extends Location{
 
 	private static final long serialVersionUID = -6523278702704086341L;
-	
 	public Facility(LatLng c) {
 		super(c);
 	}
+	
 
 }

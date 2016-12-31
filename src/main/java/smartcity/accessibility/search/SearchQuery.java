@@ -72,6 +72,7 @@ public class SearchQuery {
 		g.geocode(r, new GeocoderCallback(v.getMap()) {
 			@Override
 			public void onComplete(GeocoderResult[] rs, GeocoderStatus s) {
+				System.out.println("arrived to search on complete");
 				if (s != GeocoderStatus.OK)
 					return;
 				results.add(rs[0]);
