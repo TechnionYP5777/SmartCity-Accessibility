@@ -36,7 +36,7 @@ public class NearbyPlacesTest {
 		MapView mapView = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
 		ArrayList<String> kindsOfLocations = new ArrayList<String>();
-		kindsOfLocations.add("restaurant");
+		kindsOfLocations.add("hotels");
 		Location initLocation = new Facility(c);
 		MapViewOptions options = new MapViewOptions();
         options.importPlaces();
@@ -46,6 +46,7 @@ public class NearbyPlacesTest {
 		for (Location l : places) {
 			LatLng a = l.getCoordinates();
 			System.out.println("lat is : " + a.getLat() + " lng is : " + a.getLng());
+			System.out.println("the name of the restaurant is : " + l.getAddress(mapView));
 		}
 		
 		
