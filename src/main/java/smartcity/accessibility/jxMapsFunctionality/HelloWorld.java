@@ -57,7 +57,8 @@ public class HelloWorld extends MapView {
 						Marker marker = new Marker(map);
 						marker.setPosition(rs[0].getGeometry().getLocation());
 						final InfoWindow window = new InfoWindow(map);
-						window.setContent("Hello, World!");
+						String a="Hello, World!";
+						window.setContent(a);
 						window.open(map, marker);
 					}
 				});

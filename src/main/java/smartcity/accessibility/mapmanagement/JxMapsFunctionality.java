@@ -79,16 +79,18 @@ public abstract class JxMapsFunctionality {
 	        return mv = new extendedMapView(o);
 	}
 	
+	
+	
 	public static void putMarker(extendedMapView mv, LatLng l, String name) {
 		waitForMapReady(mv);
-		Map m =mv.getMap();
-		Marker m1 = new Marker(m);
-		m1.setPosition(l);
-		m.setCenter(l);
-		final InfoWindow window = new InfoWindow(m);
-		mv.MarkerList.add(m1);
+		Map map =mv.getMap();
+		Marker marker = new Marker(map);
+		marker.setPosition(l);
+		map.setCenter(l);
+		final InfoWindow window = new InfoWindow(map);
+		mv.MarkerList.add(marker);
 		window.setContent(name);
-		window.open(m, m1);
+		window.open(map, marker);
 	}
 
 	public static void waitForMapReady(extendedMapView mv) {

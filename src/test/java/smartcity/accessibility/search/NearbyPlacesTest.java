@@ -40,9 +40,9 @@ public class NearbyPlacesTest {
 	@Test
 	public void nearByPlacesTest() {
 		LatLng c = new LatLng(31.90588, 34.997571); //Modi'in Yehalom St, 20
-		double radius = 1000;
+		double radius = 1000000;
 		ArrayList<String> kindsOfLocations = new ArrayList<String>();
-		kindsOfLocations.add("hotels");
+		kindsOfLocations.add("cafe");
 		Location initLocation = new Facility(c);
 		MapViewOptions options = new MapViewOptions();
         options.importPlaces();
