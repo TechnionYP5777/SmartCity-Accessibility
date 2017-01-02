@@ -27,7 +27,8 @@ public class SearchQuery {
 	public enum SearchStage{
 		NotRunning,
 		Running,
-		Done;
+		Done,
+		Failed;
 		
 		private static SearchStage[] allValues = values();
 		public static SearchStage fromOrdinal(int i) {return allValues[i];}
@@ -62,6 +63,7 @@ public class SearchQuery {
 
 	public void waitOnSearch() {
 		while (searchStatus.get() == SearchStage.Running.ordinal())
+			//System.out.println("waiting...");
 			;
 	}
 
@@ -73,8 +75,10 @@ public class SearchQuery {
 			@Override
 			public void onComplete(GeocoderResult[] rs, GeocoderStatus s) {
 				System.out.println("arrived to search on complete");
-				if (s != GeocoderStatus.OK)
-					return;
+				if (s != GeocoderStatus.OK){
+					SetSearchStatus(SearchStage.Failed);
+					return;	
+				}
 				results.add(rs[0]);
 				SetSearchStatus(SearchStage.Done);
 			}
