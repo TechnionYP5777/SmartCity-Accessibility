@@ -2,6 +2,8 @@ package smartcity.accessibility.gui.components.location;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,18 +12,23 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
+import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.components.JMultilineLabel;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 
-public class ReviewFrame {
+public class ReviewFrame implements MouseListener {
 
 	private JFrame frame;
+	private JButton btnDownvote;
+	private JButton btnUpvote;
+	private Review review;
 
 	/**
 	 * Create the application.
 	 */
 	public ReviewFrame(Review r) {
+		review = r;
 		initialize(r);
 	}
 
@@ -72,16 +79,44 @@ public class ReviewFrame {
 		lblDownvoteCount.setBounds(335, 364, 89, 14);
 		frame.getContentPane().add(lblDownvoteCount);
 
-		JButton btnUpvote = new JButton("Upvote");
+		btnUpvote = new JButton("Upvote");
 		btnUpvote.setBackground(Color.GREEN);
 		btnUpvote.setBounds(10, 411, 89, 23);
 		frame.getContentPane().add(btnUpvote);
 
-		JButton btnDownvote = new JButton("Downvote");
+		btnDownvote = new JButton("Downvote");
 		btnDownvote.setBackground(Color.RED);
 		btnDownvote.setBounds(335, 411, 89, 23);
 		frame.getContentPane().add(btnDownvote);
 		
 		frame.setVisible(true);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		if(arg0.getSource() == btnUpvote)
+			review.upvote(Application.appUser);
+		if(arg0.getSource() == btnDownvote)
+			review.downvote(Application.appUser);
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		
 	}
 }

@@ -53,7 +53,7 @@ public class Application {
 
 		new MapViewOptions(MapComponentType.HEAVYWEIGHT).importPlaces();
 		mapView = JxMapsFunctionality.getMapView();
-		mapView.waitReady();
+		
 		mapView.setSize(FRAME_X_SIZE, FRAME_Y_SIZE - 100);
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
@@ -70,6 +70,7 @@ public class Application {
 		gbc.ipadx = FRAME_X_SIZE;
 		frame.getContentPane().add(panel, gbc);
 		frame.setLocationRelativeTo(null);
+		
 
 		gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -81,6 +82,8 @@ public class Application {
 		frame.pack();
 		frame.setLocation(100, 100);
 		frame.setVisible(true);
+		
+		mapView.waitReady();
 
 		/*
 		 * Kolikant

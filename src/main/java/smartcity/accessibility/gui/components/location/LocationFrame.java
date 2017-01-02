@@ -13,10 +13,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+import com.teamdev.jxmaps.LatLng;
+
 import smartcity.accessibility.gui.Application;
+import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
+import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.UserImpl;
 
 public class LocationFrame implements MouseListener {
 
@@ -24,6 +29,7 @@ public class LocationFrame implements MouseListener {
 	private Location loc;
 	private JButton btnAddReview;
 	private JButton btnNavigate;
+	private JButton btnRefresh;
 
 	/**
 	 * Create the application.
@@ -66,14 +72,14 @@ public class LocationFrame implements MouseListener {
 			jp.add(new JSeparator(SwingConstants.HORIZONTAL));
 		}
 		
-		for (int i = 0; i < 100; ++i) {
-			/*ReviewSummaryPanel rsp = new ReviewSummaryPanel(
+		for (int i = 0; i < 10; ++i) {
+			ReviewSummaryPanel rsp = new ReviewSummaryPanel(
 					new Review(new Coordinates(new LatLng()), Score.getMaxScore() - 1,
 							"this is a veryasdasdasdasdaaszdfasdfasdfasdfasdfasdfasdfasdf \n very long \n content \n omg \n this is it\na\nb\nc\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na",
 							new UserImpl("a", "b", User.Privilege.Admin)));
 			rsp.setVisible(true);
 			jp.add(rsp);
-			jp.add(new JSeparator(SwingConstants.HORIZONTAL));*/
+			jp.add(new JSeparator(SwingConstants.HORIZONTAL));
 		}
 
 		JScrollPane scrollPane = new JScrollPane(jp);
@@ -93,7 +99,13 @@ public class LocationFrame implements MouseListener {
 	
 		btnNavigate = new JButton("Navigate");
 		btnNavigate.setBounds(336, 437, 89, 23);
+		btnNavigate.addMouseListener(this);
 		frame.getContentPane().add(btnNavigate);
+		
+		btnRefresh = new JButton("Refresh");
+		btnRefresh.setBounds(179, 437, 89, 23);
+		btnRefresh.addMouseListener(this);
+		frame.getContentPane().add(btnRefresh);
 		frame.setVisible(true);
 		
 	}
@@ -104,7 +116,11 @@ public class LocationFrame implements MouseListener {
 			new CreateReviewFrame(loc);
 		if(e.getSource()==btnNavigate)
 			System.out.println("Navigate");
-		
+		if(e.getSource()==btnRefresh){
+			frame.dispose();
+			new LocationFrame(loc);
+		}
+			
 	}
 
 	@Override
