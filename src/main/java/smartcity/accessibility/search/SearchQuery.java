@@ -61,10 +61,14 @@ public class SearchQuery {
 		searchStatus.set(s.ordinal());
 	}
 
-	public void waitOnSearch() {
-		while (searchStatus.get() == SearchStage.Running.ordinal())
-			//System.out.println("waiting...");
-			;
+	public synchronized  void waitOnSearch() throws InterruptedException {
+		while(searchStatus.get() == SearchStage.Running.ordinal()){
+			wait();
+		}
+	}
+	
+	private synchronized void wakeTheWaiters(){
+		notifyAll();
 	}
 
 	private SearchQueryResult Search(GeocoderRequest r, MapView v) {
@@ -77,10 +81,12 @@ public class SearchQuery {
 				System.out.println("arrived to search on complete");
 				if (s != GeocoderStatus.OK){
 					SetSearchStatus(SearchStage.Failed);
+					wakeTheWaiters();
 					return;	
 				}
 				results.add(rs[0]);
 				SetSearchStatus(SearchStage.Done);
+				wakeTheWaiters();
 			}
 
 		});

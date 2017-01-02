@@ -83,7 +83,12 @@ public abstract class Location {
 		SearchQuery sq = SearchQuery.adressSearch("_");
 		JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
 		SearchQueryResult result = sq.searchByCoordinates(mapView, coordinates);
-		sq.waitOnSearch();
+		try {
+			sq.waitOnSearch();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return result.getCoordinations().get(0).getFormattedAddress();
 	}
 	
