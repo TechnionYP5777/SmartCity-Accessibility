@@ -129,7 +129,7 @@ public abstract class Location {
 	 **/
 	public void pinReview(User u, Review r) throws UnauthorizedAccessException{
 		if(!isAccessAllowed(u))
-			throw (new UnauthorizedAccessException(Privilege.pinPrivilegeLevel()));
+			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
 		
 		if(!reviews.contains(r)){
 			System.out.print("ERROR! This review doesn't exist in current location!");
@@ -151,7 +151,7 @@ public abstract class Location {
 	 */
 	public void unpinReview(User u, Review r) throws UnauthorizedAccessException{
 		if(!isAccessAllowed(u))
-			throw (new UnauthorizedAccessException(Privilege.pinPrivilegeLevel()));
+			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
 		
 		if(reviews.contains(r)){
 			System.out.println("Review is already un-pinned.");
@@ -172,7 +172,7 @@ public abstract class Location {
 	}
 
 	private boolean isAccessAllowed(User u) {
-		return u.getPrivilege().compareTo(Privilege.pinPrivilegeLevel()) <= 0;
+		return Privilege.pinPrivilegeLevel(u);
 	}
 	
 	private void pinUnpinElement(Review r, ArrayList<Review> toAdd, ArrayList<Review> toRemove){

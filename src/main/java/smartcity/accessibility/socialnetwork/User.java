@@ -21,9 +21,19 @@ public interface User {
 		
 		private static Privilege[] allValues = values();
 	    public static Privilege fromOrdinal(int i) {return allValues[i];}
-	    public static Privilege pinPrivilegeLevel() {return Admin;}
-	    public static Privilege addReviewPrivilegeLevel() {return RegularUser;}
-	    public static Privilege commentReviewPrivilegeLevel() {return RegularUser;}
+	    
+	    public static boolean pinPrivilegeLevel(User u) {
+	    	return u.getPrivilege().compareTo(Admin) <= 0;}
+	    
+	    public static boolean addReviewPrivilegeLevel(User u) {
+	    	return u.getPrivilege().compareTo(RegularUser) <= 0;}
+	    
+	    public static boolean commentReviewPrivilegeLevel(User u) {
+	    	return u.getPrivilege().compareTo(RegularUser) <= 0;}
+	    
+	    public static Privilege minCommentLevel(){return RegularUser;}
+	    public static Privilege minPinLevel(){return Admin;}
+
 	}
 	
 	/**

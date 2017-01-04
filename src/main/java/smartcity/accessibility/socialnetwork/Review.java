@@ -72,8 +72,8 @@ public class Review {
 	 * @throws UnauthorizedAccessException 
 	 */
 	protected void comment(User u, int rating) throws UnauthorizedAccessException {
-		if(u.getPrivilege().compareTo(Privilege.commentReviewPrivilegeLevel()) > 0)
-			throw (new UnauthorizedAccessException(Privilege.commentReviewPrivilegeLevel()));
+		if(!Privilege.commentReviewPrivilegeLevel(u))
+			throw (new UnauthorizedAccessException(Privilege.minCommentLevel()));
 		if (comments.contains(new ReviewComment(u)))
 			comments.remove(new ReviewComment(u));
 		comments.add(new ReviewComment(rating, u));
