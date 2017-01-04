@@ -172,7 +172,7 @@ public abstract class Location {
 	}
 
 	private boolean isAccessAllowed(User u) {
-		return u.getPrivilege().compareTo(Privilege.RegularUser) >= 0;
+		return u.getPrivilege().compareTo(Privilege.pinPrivilegeLevel()) <= 0;
 	}
 	
 	private void pinUnpinElement(Review r, ArrayList<Review> toAdd, ArrayList<Review> toRemove){
