@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.socialnetwork.User.Privilege;
 
 /**
  * 
@@ -51,22 +53,27 @@ public class Review {
 
 	/**
 	 * @author KaplanAlexander
+	 * @throws UnauthorizedAccessException 
 	 */
-	public void upvote(User u) {
+	public void upvote(User u) throws UnauthorizedAccessException {
 		comment(u, ReviewComment.POSITIVE_RATING);
 	}
 
 	/**
 	 * @author KaplanAlexander
+	 * @throws UnauthorizedAccessException 
 	 */
-	public void downvote(User u) {
+	public void downvote(User u) throws UnauthorizedAccessException {
 		comment(u, ReviewComment.NEGATIVE_RATING);
 	}
 
 	/**
 	 * @author KaplanAlexander
+	 * @throws UnauthorizedAccessException 
 	 */
-	protected void comment(User u, int rating) {
+	protected void comment(User u, int rating) throws UnauthorizedAccessException {
+		if(u.getPrivilege().compareTo(Privilege.commentReviewPrivilegeLevel()) > 0)
+			throw (new UnauthorizedAccessException(Privilege.commentReviewPrivilegeLevel()));
 		if (comments.contains(new ReviewComment(u)))
 			comments.remove(new ReviewComment(u));
 		comments.add(new ReviewComment(rating, u));

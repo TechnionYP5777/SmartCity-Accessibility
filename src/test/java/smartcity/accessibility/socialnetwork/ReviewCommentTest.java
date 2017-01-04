@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
+
 /**
  * 
  * @author KaplanAlexander
@@ -25,14 +27,14 @@ public class ReviewCommentTest {
 	}
 	
 	@Test
-	public void a(){
+	public void a() throws UnauthorizedAccessException{
 		r1 = new Review(null, 4, "?", u1);
 		r1.upvote(u2);
 		assertEquals(ReviewComment.POSITIVE_RATING,r1.calculateOpinion());
 	}
 	
 	@Test
-	public void b(){
+	public void b() throws UnauthorizedAccessException{
 		r1 = new Review(null, 4, "?", u1);
 		r1.upvote(u2);
 		r1.downvote(u3);
@@ -41,7 +43,7 @@ public class ReviewCommentTest {
 	}
 	
 	@Test
-	public void c(){
+	public void c() throws UnauthorizedAccessException{
 		r1 = new Review(null, 4, "?", u1);
 		r1.upvote(u2);
 		r1.downvote(u3);
@@ -55,7 +57,7 @@ public class ReviewCommentTest {
 	}
 	
 	@Test 
-	public void d(){
+	public void d() throws UnauthorizedAccessException{
 		r1 = new Review(null, 4, "?", u1);
 		r1.upvote(u2);
 		r1.downvote(u2);
@@ -64,7 +66,7 @@ public class ReviewCommentTest {
 	}
 	
 	@Test
-	public void e(){
+	public void e() throws UnauthorizedAccessException{
 		r1 = new Review(null, 4, "?", u1);
 		r1.comment(u1, 123);
 		r1.comment(u2, 3);

@@ -23,7 +23,7 @@ public interface User {
 	    public static Privilege fromOrdinal(int i) {return allValues[i];}
 	    public static Privilege pinPrivilegeLevel() {return Admin;}
 	    public static Privilege addReviewPrivilegeLevel() {return RegularUser;}
-	    public static Privilege upvoteReviewPrivilegeLevel() {return RegularUser;}
+	    public static Privilege commentReviewPrivilegeLevel() {return RegularUser;}
 	}
 	
 	/**
