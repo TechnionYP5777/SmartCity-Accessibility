@@ -12,6 +12,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.components.JMultilineLabel;
 import smartcity.accessibility.socialnetwork.Review;
@@ -95,9 +96,19 @@ public class ReviewFrame implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		if(arg0.getSource() == btnUpvote)
-			review.upvote(Application.appUser);
+			try {
+				review.upvote(Application.appUser);
+			} catch (UnauthorizedAccessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		if(arg0.getSource() == btnDownvote)
-			review.downvote(Application.appUser);
+			try {
+				review.downvote(Application.appUser);
+			} catch (UnauthorizedAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	@Override
