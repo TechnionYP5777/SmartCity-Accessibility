@@ -14,11 +14,17 @@ import com.teamdev.jxmaps.GeocoderStatus;
 import com.teamdev.jxmaps.InfoWindow;
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.Map;
+import com.teamdev.jxmaps.MapOptions;
 import com.teamdev.jxmaps.MapReadyHandler;
 import com.teamdev.jxmaps.MapStatus;
 import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.Marker;
+import com.teamdev.jxmaps.MarkerLabel;
+import com.teamdev.jxmaps.MarkerLabel.Property;
 import com.teamdev.jxmaps.swing.MapView;
+
+import smartcity.accessibility.gui.ExtendedMarker;
+import smartcity.accessibility.gui.ExtendedMarker.MarkerType;
 
 
 /*
@@ -38,10 +44,15 @@ public abstract class JxMapsFunctionality {
 		List<Marker> MarkerList = new ArrayList<Marker>();
 		
 		public extendedMapView(MapViewOptions __){
+			super(__);
 			setOnMapReadyHandler(new MapReadyHandler() {
 				@Override
 				public void onMapReady(MapStatus arg0) {
-					
+					MapOptions mapOptions = new MapOptions();
+					mapOptions.setDisableDoubleClickZoom(true);
+					mapOptions.setMapTypeControl(false);
+					mapOptions.setStreetViewControl(false);
+					getMap().setOptions(mapOptions);
 				}
 			});
 		}
@@ -126,7 +137,7 @@ public abstract class JxMapsFunctionality {
 				if (s != GeocoderStatus.OK)
 					return;
 				map.setCenter(rs[0].getGeometry().getLocation());
-				Marker marker = new Marker(map);
+				ExtendedMarker marker = new ExtendedMarker(map, MarkerType.Default);
 				marker.setPosition(rs[0].getGeometry().getLocation());
 			}
 		});
