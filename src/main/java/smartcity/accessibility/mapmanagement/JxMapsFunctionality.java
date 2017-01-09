@@ -207,6 +207,17 @@ public abstract class JxMapsFunctionality {
 		window.open(map, marker);
 	}
 	
+	public static void putMarkerNoJump(extendedMapView mv, LatLng l, String name) {
+		waitForMapReady(mv);
+		Map map = mv.getMap();
+		Marker marker = new Marker(map);
+		marker.setPosition(l);
+		final InfoWindow window = new InfoWindow(map);
+		mv.MarkerList.add(marker);
+		window.setContent(name);
+		window.open(map, marker);
+	}
+	
 	public static ExtendedMarker putExtendedMarker(extendedMapView mv, Location l, String name){
 		waitForMapReady(mv);
 		Map map = mv.getMap();

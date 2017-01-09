@@ -27,7 +27,7 @@ public class NearbyPlacesAttempt extends MapView {
 	Map map; 
 	boolean mapIsReady;
 	boolean onComplete;
-	protected NearbyPlacesAttempt(MapViewOptions mapOptions) {
+	public NearbyPlacesAttempt(MapViewOptions mapOptions) {
 		super(mapOptions);
 		mapIsReady = false;
 		onComplete = false;
