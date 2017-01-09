@@ -52,7 +52,7 @@ public class SearchTest{
 		}
      }
 	 
-	 @Ignore
+//	 @Ignore
 	 @Test
 	 public void test2() throws InterruptedException{
 		 MapView mapView = JxMapsFunctionality.getMapView();

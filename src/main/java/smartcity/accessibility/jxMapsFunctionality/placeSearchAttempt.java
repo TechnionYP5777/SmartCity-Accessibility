@@ -26,8 +26,7 @@ public class placeSearchAttempt extends extendedMapView{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public placeSearchAttempt(MapViewOptions options) {
-		super(options);
+	public placeSearchAttempt(MapViewOptions __) {
 		placeSearchAttempt thisis = this;
         setOnMapReadyHandler(new MapReadyHandler() {
             @SuppressWarnings("deprecation")

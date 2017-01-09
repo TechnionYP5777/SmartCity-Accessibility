@@ -20,7 +20,7 @@ import java.awt.event.WindowEvent;
  * @author Sergei Piletsky
  */
 
-abstract class OptionsWindow {
+public abstract class OptionsWindow {
     protected JFrame parentFrame;
     protected JWindow contentWindow;
     private Dimension size;
