@@ -115,8 +115,7 @@ public abstract class JxMapsFunctionality {
 
 				Font robotoPlain13 = new Font("Roboto", 0, 13);
 				final JTextField searchField = new JTextField();
-				searchField.setText("Eliezer 10, Haifa, Israel");
-				searchField.setToolTipText("Enter address or coordinates...");
+				searchField.setToolTipText("Enter address");
 				searchField.setBorder(BorderFactory.createEmptyBorder());
 				searchField.setFont(robotoPlain13);
 				searchField.setForeground(new Color(0x21, 0x21, 0x21));
