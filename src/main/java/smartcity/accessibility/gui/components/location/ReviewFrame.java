@@ -18,8 +18,10 @@ import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.components.JMultilineLabel;
+import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
+import smartcity.accessibility.socialnetwork.User.Privilege;
 
 public class ReviewFrame implements MouseListener {
 
@@ -27,14 +29,17 @@ public class ReviewFrame implements MouseListener {
 	private JButton btnDownvote;
 	private JButton btnUpvote;
 	private Review review;
+	private Location location;
 	private JLabel lblUpvoteCount;
 	private JLabel lblDownvoteCount;
+	private JButton btnDelete;
 
 	/**
 	 * Create the application.
 	 */
-	public ReviewFrame(Review r) {
+	public ReviewFrame(Review r, Location loc) {
 		review = r;
+		location = loc;
 		initialize();
 	}
 
@@ -123,17 +128,28 @@ public class ReviewFrame implements MouseListener {
 		lblDownvoteCount.setBounds(335, 364, 89, 14);
 		frame.getContentPane().add(lblDownvoteCount);
 
-		btnUpvote = new JButton("Upvote");
-		btnUpvote.setBackground(Color.GREEN);
-		btnUpvote.setBounds(10, 411, 89, 23);
-		btnUpvote.addMouseListener(this);
-		frame.getContentPane().add(btnUpvote);
+		if(Privilege.commentReviewPrivilegeLevel(Application.appUser)){
+			btnUpvote = new JButton("Upvote");
+			btnUpvote.setBackground(Color.GREEN);
+			btnUpvote.setBounds(10, 411, 89, 23);
+			btnUpvote.addMouseListener(this);
+			frame.getContentPane().add(btnUpvote);
 
-		btnDownvote = new JButton("Downvote");
-		btnDownvote.setBackground(Color.RED);
-		btnDownvote.setBounds(335, 411, 89, 23);
-		btnDownvote.addMouseListener(this);
-		frame.getContentPane().add(btnDownvote);
+			btnDownvote = new JButton("Downvote");
+			btnDownvote.setBackground(Color.RED);
+			btnDownvote.setBounds(335, 411, 89, 23);
+			btnDownvote.addMouseListener(this);
+			frame.getContentPane().add(btnDownvote);
+			
+			
+		}
+	
+		if(Application.appUser.getName().equals(review.getUser()) || Privilege.deletePrivilegeLevel(Application.appUser)){
+			btnDelete = new JButton("Delete");
+			btnDelete.setBounds(335, 17, 89, 23);
+			frame.getContentPane().add(btnDelete);
+		}
+		
 
 		frame.setVisible(true);
 	}
@@ -154,6 +170,10 @@ public class ReviewFrame implements MouseListener {
 			}
 		lblDownvoteCount.setText(Integer.toString(review.getDownvotes()));
 		lblUpvoteCount.setText(Integer.toString(review.getUpvotes()));
+		if (arg0.getSource() == btnDelete){
+			location.getReviews().remove(review);
+			frame.dispose();
+		}
 		frame.repaint();
 	}
 

@@ -96,13 +96,13 @@ public class LocationFrame implements MouseListener {
 		// jp.setSize(400,350);
 		jp.setLayout(new BoxLayout(jp, BoxLayout.Y_AXIS));
 		for (Review r : loc.getPinnedReviews()) {
-			ReviewSummaryPanel rsp = new ReviewSummaryPanel(r);
+			ReviewSummaryPanel rsp = new ReviewSummaryPanel(r, loc);
 			rsp.setVisible(true);
 			jp.add(rsp);
 			jp.add(new JSeparator(SwingConstants.HORIZONTAL));
 		}
 		for (Review r : loc.getReviews()) {
-			ReviewSummaryPanel rsp = new ReviewSummaryPanel(r);
+			ReviewSummaryPanel rsp = new ReviewSummaryPanel(r, loc);
 			rsp.setVisible(true);
 			jp.add(rsp);
 			jp.add(new JSeparator(SwingConstants.HORIZONTAL));
