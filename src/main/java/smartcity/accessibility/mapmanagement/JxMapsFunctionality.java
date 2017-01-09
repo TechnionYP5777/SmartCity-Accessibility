@@ -142,7 +142,8 @@ public abstract class JxMapsFunctionality {
 						LatLng position1 = sqr1.getCoordinations().get(0).getGeometry().getLocation();
 						Location dummy = new Location(position1, LocationType.Coordinate);
 						//TODO: look up for existing locations
-						new ExtendedMarker(mv.getMap(), dummy);
+						JxMapsFunctionality.putExtendedMarker((extendedMapView)mv, dummy, searchField.getText());
+						//new ExtendedMarker(mv.getMap(), dummy);
 						//JxMapsFunctionality.putMarker((extendedMapView) mv, position1, searchField.getText());
 					}
 				};
@@ -206,6 +207,19 @@ public abstract class JxMapsFunctionality {
 		window.setContent(name);
 		window.open(map, marker);
 	}
+	
+	public static ExtendedMarker putExtendedMarker(extendedMapView mv, Location l, String name){
+		waitForMapReady(mv);
+		Map map = mv.getMap();
+		ExtendedMarker marker = new ExtendedMarker(map, l);
+		marker.setPosition(l.getCoordinates());
+		map.setCenter(l.getCoordinates());
+		final InfoWindow window = new InfoWindow(map);
+		mv.MarkerList.add(marker);
+		window.setContent(name);
+		window.open(map, marker);
+		return marker;
+	}
 
 	public static void waitForMapReady(extendedMapView mv) {
 		mv.waitReady();
@@ -258,7 +272,10 @@ public abstract class JxMapsFunctionality {
 					m.remove();
 				Application.markers.clear();
 				for (Location loc : ls)
-					Application.markers.add(new ExtendedMarker(map, loc));
+					/*do not add markers outside of jxmapsfunctionality api please
+					 *Application.markers.add(new ExtendedMarker(map, loc)); 
+					 */
+					 Application.markers.add(JxMapsFunctionality.putExtendedMarker((extendedMapView)v, loc, "result"));//new ExtendedMarker(map, loc)); 			
 			}
 		});
 	}

@@ -29,7 +29,11 @@ public class ExtendedMarker extends Marker {
 			}
 
 		});
-		super.setPosition(loc.getCoordinates());
+		/*
+		 * not under extended markers jurisdiction
+		 * 
+		 * super.setPosition(loc.getCoordinates());
+		 */
 		location = loc;
 	}
 
