@@ -85,61 +85,72 @@ public abstract class JxMapsFunctionality {
 			System.out.println("Stage is closing");
 			// Save file
 		}
+		
+		public void setOptionsWindow(OptionsWindow ow){
+			optionsWindow = ow;
+		}
 
 		@Override
 		public void addNotify() {
 			super.addNotify();
-			optionsWindow = new OptionsWindow(this, new Dimension(350, 40)) {
-				@Override
-				public void initContent(JWindow contentWindow) {
-					JPanel content = new JPanel(new GridBagLayout());
-					content.setBackground(Color.white);
+		}
 
-					Font robotoPlain13 = new Font("Roboto", 0, 13);
-					final JTextField searchField = new JTextField();
-					searchField.setText("Eliezer 10, Haifa, Israel");
-					searchField.setToolTipText("Enter address or coordinates...");
-					searchField.setBorder(BorderFactory.createEmptyBorder());
-					searchField.setFont(robotoPlain13);
-					searchField.setForeground(new Color(0x21, 0x21, 0x21));
-					searchField.setUI(new SearchFieldUI(searchField));
+	}
 
-					final JButton searchButton = new JButton();
-					searchButton.setBorder(BorderFactory.createEmptyBorder());
-					searchButton.setUI(new BasicButtonUI());
-					searchButton.setOpaque(false);
-					ActionListener searchActionListener = new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent __) {
-							System.out.println("omg!");
-						}
-					};
-					searchButton.addActionListener(searchActionListener);
-					searchField.addActionListener(searchActionListener);
+	public static void addOptionsMenu(OptionsWindow ow){
+		extendedMapView mva = (extendedMapView)mv;
+		mva.setOptionsWindow(ow);
+	}
+	
+	public static OptionsWindow createSearchBar(){
+		return new OptionsWindow(mv, new Dimension(350, 40)) {
+			@Override
+			public void initContent(JWindow contentWindow) {
+				JPanel content = new JPanel(new GridBagLayout());
+				content.setBackground(Color.white);
 
-					content.add(searchField, new GridBagConstraints(0, 0, 1, 1, 1.0, 0.0, GridBagConstraints.NORTHWEST,
-							GridBagConstraints.HORIZONTAL, new Insets(11, 11, 11, 0), 0, 0));
-					content.add(searchButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-							GridBagConstraints.NONE, new Insets(11, 0, 11, 11), 0, 0));
+				Font robotoPlain13 = new Font("Roboto", 0, 13);
+				final JTextField searchField = new JTextField();
+				searchField.setText("Eliezer 10, Haifa, Israel");
+				searchField.setToolTipText("Enter address or coordinates...");
+				searchField.setBorder(BorderFactory.createEmptyBorder());
+				searchField.setFont(robotoPlain13);
+				searchField.setForeground(new Color(0x21, 0x21, 0x21));
+				searchField.setUI(new SearchFieldUI(searchField));
 
-					contentWindow.getContentPane().add(content);
-				}
+				final JButton searchButton = new JButton();
+				searchButton.setBorder(BorderFactory.createEmptyBorder());
+				searchButton.setUI(new BasicButtonUI());
+				searchButton.setOpaque(false);
+				ActionListener searchActionListener = new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						System.out.println("omg!");
+					}
+				};
+				searchButton.addActionListener(searchActionListener);
+				searchField.addActionListener(searchActionListener);
 
-				@Override
-				protected void updatePosition() {
-					if (!parentFrame.isVisible())
-						return;
+				content.add(searchField, new GridBagConstraints(0, 0, 1, 1, 1.0, 0.0, GridBagConstraints.NORTHWEST,
+						GridBagConstraints.HORIZONTAL, new Insets(11, 11, 11, 0), 0, 0));
+				content.add(searchButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+						GridBagConstraints.NONE, new Insets(11, 0, 11, 11), 0, 0));
+
+				contentWindow.getContentPane().add(content);
+			}
+
+			@Override
+			protected void updatePosition() {
+				if (parentFrame.isVisible()) {
 					Point newLocation = parentFrame.getContentPane().getLocationOnScreen();
 					newLocation.translate(56, 11);
 					contentWindow.setLocation(newLocation);
 					contentWindow.setSize(340, 40);
 				}
-			};
-		}
-
+			}
+		};
 	}
-
-
+	
 	public static MapView getMapView() {
 		return mv != null ? mv : (mv = new extendedMapView());
 	}
@@ -149,8 +160,8 @@ public abstract class JxMapsFunctionality {
 		mv = null;
 	}
 
-	public static void ClearMarkers(extendedMapView v) {
-		for (Marker m : v.MarkerList)
+	public static void ClearMarkers(extendedMapView mv) {
+		for (Marker m : mv.MarkerList)
 			m.remove();
 	}
 
@@ -159,20 +170,20 @@ public abstract class JxMapsFunctionality {
 		return mv = new extendedMapView();
 	}
 
-	public static void putMarker(extendedMapView v, LatLng l, String name) {
-		waitForMapReady(v);
-		Map map = v.getMap();
+	public static void putMarker(extendedMapView mv, LatLng l, String name) {
+		waitForMapReady(mv);
+		Map map = mv.getMap();
 		Marker marker = new Marker(map);
 		marker.setPosition(l);
 		map.setCenter(l);
 		final InfoWindow window = new InfoWindow(map);
-		v.MarkerList.add(marker);
+		mv.MarkerList.add(marker);
 		window.setContent(name);
 		window.open(map, marker);
 	}
 
-	public static void waitForMapReady(extendedMapView v) {
-		v.waitReady();
+	public static void waitForMapReady(extendedMapView mv) {
+		mv.waitReady();
 	}
 
 	public static void openFrame(MapView v, String s, double zoom) {
@@ -189,19 +200,20 @@ public abstract class JxMapsFunctionality {
 		frame.setVisible(true);
 	}
 
-	public static void initMapLocation(MapView v, String startAdress) {
-		Map map = v.getMap();
+	public static void initMapLocation(MapView mapView, String startAdress) {
+		Map map = mapView.getMap();
 		map.setZoom(17.0);
 		GeocoderRequest request = new GeocoderRequest();
 		request.setAddress(startAdress);
-		v.getServices().getGeocoder().geocode(request, new GeocoderCallback(map) {
+		Geocoder g = mapView.getServices().getGeocoder();
+		g.geocode(request, new GeocoderCallback(map) {
 			@Override
 			public void onComplete(GeocoderResult[] rs, GeocoderStatus s) {
 				System.out.println(s.name());
 				if (s != GeocoderStatus.OK)
 					return;
 				map.setCenter(rs[0].getGeometry().getLocation());
-				onRightClick(v, rs[0].getGeometry().getLocation());
+				onRightClick(mapView, rs[0].getGeometry().getLocation());
 			}
 		});
 
