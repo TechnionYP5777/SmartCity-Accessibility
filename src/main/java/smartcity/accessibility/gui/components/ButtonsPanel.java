@@ -8,6 +8,9 @@ import javax.swing.JPanel;
 
 import smartcity.accessibility.gui.components.user.LoginFrame;
 import smartcity.accessibility.gui.components.user.SignUpFrame;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
+import smartcity.accessibility.mapmanagement.jxMapsFunctionalityTest;
 
 public class ButtonsPanel extends JPanel implements MouseListener {
 
@@ -19,6 +22,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 	public static GButton LOGIN_BUTTON;
 	public static GButton SIGNUP_BUTTON;
 	public static JLabel USERNAME;
+	public static GButton CLEAR_MARKERS_BUTTON;
 
 	public ButtonsPanel() {
 		// setSize(MapFrame.FRAME_X_SIZE, 100);
@@ -33,6 +37,11 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 		USERNAME = new JLabel("");
 		add(USERNAME);
 		USERNAME.setVisible(true);
+		
+		CLEAR_MARKERS_BUTTON = new GButton("clear markers");
+		CLEAR_MARKERS_BUTTON.addMouseListener(this);
+		add(CLEAR_MARKERS_BUTTON);
+		CLEAR_MARKERS_BUTTON.setVisible(true);
 	}
 
 	@Override
@@ -41,6 +50,8 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 			new LoginFrame();
 		if (e.getSource() == SIGNUP_BUTTON)
 			new SignUpFrame();
+		if(e.getSource() == CLEAR_MARKERS_BUTTON)
+			JxMapsFunctionality.ClearMarkers((extendedMapView) JxMapsFunctionality.getMapView());
 		System.out.println("clicked " + e.getSource());
 
 	}
