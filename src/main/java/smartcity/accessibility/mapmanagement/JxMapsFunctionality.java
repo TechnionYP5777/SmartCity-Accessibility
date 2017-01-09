@@ -250,9 +250,11 @@ public abstract class JxMapsFunctionality {
 
 			@Override
 			public void done(List<Location> ls) {
+				for (Marker m : Application.markers)
+					m.remove();
+				Application.markers.clear();
 				for (Location loc : ls)
-					new ExtendedMarker(map, loc);
-				// TODO save markers created and delete previous markers -- alex
+					Application.markers.add(new ExtendedMarker(map, loc));
 			}
 		});
 	}
