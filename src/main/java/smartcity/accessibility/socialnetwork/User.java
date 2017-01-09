@@ -25,6 +25,9 @@ public interface User {
 	    public static boolean pinPrivilegeLevel(User u) {
 	    	return u.getPrivilege().compareTo(Admin) <= 0;}
 	    
+	    public static boolean deletePrivilegeLevel(User u) {
+	    	return u.getPrivilege().compareTo(Admin) <= 0;}
+	    
 	    public static boolean addReviewPrivilegeLevel(User u) {
 	    	return u.getPrivilege().compareTo(RegularUser) <= 0;}
 	    

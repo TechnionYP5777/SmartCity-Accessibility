@@ -3,6 +3,7 @@ package smartcity.accessibility.gui.components.location;
 import javax.swing.JPanel;
 
 import smartcity.accessibility.gui.components.JMultilineLabel;
+import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 
@@ -20,6 +21,7 @@ public class ReviewSummaryPanel extends JPanel implements MouseListener {
 	private static int MAX_CHARS = 100;
 	private JButton btnSeeFullReview;
 	private Review review;
+	private Location location;
 
 	/**
 	 * 
@@ -29,8 +31,9 @@ public class ReviewSummaryPanel extends JPanel implements MouseListener {
 	/**
 	 * Create the panel.
 	 */
-	public ReviewSummaryPanel(Review r) {
+	public ReviewSummaryPanel(Review r, Location loc) {
 		review = r;
+		location = loc;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 233, 139, 0 };
 		gridBagLayout.rowHeights = new int[] { 32, 23, 0 };
@@ -80,31 +83,27 @@ public class ReviewSummaryPanel extends JPanel implements MouseListener {
 	public void mouseClicked(MouseEvent arg0) {
 		System.out.println("1");
 		if (arg0.getSource() == btnSeeFullReview)
-			new ReviewFrame(review);
+			new ReviewFrame(review, location);
 
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 }
