@@ -66,5 +66,9 @@ public class ReviewManager {
 		DatabaseManager.getObjectByFields("Review",m,p);
 		DatabaseManager.deleteById("Review",(objectID + ""));	
 	}
+	
+	public static void updateReview(Review r){
+		// needs to be done in background
+	}
 
 }

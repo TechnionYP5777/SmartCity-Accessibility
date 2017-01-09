@@ -15,16 +15,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
-import com.teamdev.jxmaps.LatLng;
-
 import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.gui.Application;
-import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
-import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
-import smartcity.accessibility.socialnetwork.UserImpl;
 
 public class LocationFrame implements MouseListener {
 
@@ -108,16 +103,6 @@ public class LocationFrame implements MouseListener {
 		}
 		for (Review r : loc.getReviews()) {
 			ReviewSummaryPanel rsp = new ReviewSummaryPanel(r);
-			rsp.setVisible(true);
-			jp.add(rsp);
-			jp.add(new JSeparator(SwingConstants.HORIZONTAL));
-		}
-
-		for (int i = 0; i < 10; ++i) {
-			ReviewSummaryPanel rsp = new ReviewSummaryPanel(
-					new Review(new Coordinates(new LatLng()), Score.getMaxScore() - 1,
-							"this is a veryasdasdasdasdaaszdfasdfasdfasdfasdfasdfasdfasdf \n very long \n content \n omg \n this is it\na\nb\nc\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na",
-							new UserImpl("a", "b", User.Privilege.Admin)));
 			rsp.setVisible(true);
 			jp.add(rsp);
 			jp.add(new JSeparator(SwingConstants.HORIZONTAL));
