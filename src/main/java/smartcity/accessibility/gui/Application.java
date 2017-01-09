@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -42,6 +44,7 @@ public class Application {
 
 	public static User appUser = new UserImpl("", "", User.Privilege.DefaultUser);
 	public static Marker currLocation;
+	public static List<Marker> markers = new ArrayList<Marker>();
 
 	public static void main(String[] args) {
 		frame = new MapFrame("SmartCity - Accessibility");
