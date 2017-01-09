@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.MapComponentType;
 import com.teamdev.jxmaps.MapMouseEvent;
 import com.teamdev.jxmaps.MapViewOptions;
@@ -43,7 +42,6 @@ public class Application {
 
 	public static void main(String[] args) {
 		frame = new MapFrame("SmartCity - Accessibility");
-		
 
 		DatabaseManager.initialize();
 
@@ -56,7 +54,7 @@ public class Application {
 
 		new MapViewOptions(MapComponentType.HEAVYWEIGHT).importPlaces();
 		mapView = JxMapsFunctionality.getMapView();
-		
+
 		mapView.setSize(FRAME_X_SIZE, FRAME_Y_SIZE - 100);
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
@@ -73,7 +71,6 @@ public class Application {
 		gbc.ipadx = FRAME_X_SIZE;
 		frame.getContentPane().add(panel, gbc);
 		frame.setLocationRelativeTo(null);
-		
 
 		gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -85,7 +82,7 @@ public class Application {
 		frame.pack();
 		frame.setLocation(100, 100);
 		frame.setVisible(true);
-		
+
 		mapView.waitReady();
 
 		/*
@@ -141,22 +138,23 @@ public class Application {
 			@Override
 			public void onEvent(MouseEvent arg0) {
 				Location l = LocationManager.getLocation(arg0.latLng());
-				if(l == null)
+				if (l == null)
 					l = new Coordinates(arg0.latLng());
-				//TODO :Change this to background operation when LocationManager allows --alex
+				// TODO :Change this to background operation when
+				// LocationManager allows --alex
 				new LocationFrame(l);
 			}
 		});
-		
-		mapView.getMap().addEventListener("rightclick", new MapMouseEvent(){
+
+		mapView.getMap().addEventListener("rightclick", new MapMouseEvent() {
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				if(Application.currLocation!=null)
+				if (Application.currLocation != null)
 					Application.currLocation.remove();
 				Application.currLocation = new Marker(mapView.getMap());
 				Application.currLocation.setPosition(arg0.latLng());
 			}
-			
+
 		});
 
 		JxMapsFunctionality.initMapLocation(mapView, "Eliezer 10, Haifa, Israel");

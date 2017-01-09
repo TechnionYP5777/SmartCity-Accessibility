@@ -89,20 +89,20 @@ public class ReviewFrame implements MouseListener {
 		btnDownvote.setBackground(Color.RED);
 		btnDownvote.setBounds(335, 411, 89, 23);
 		frame.getContentPane().add(btnDownvote);
-		
+
 		frame.setVisible(true);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		if(arg0.getSource() == btnUpvote)
+		if (arg0.getSource() == btnUpvote)
 			try {
 				review.upvote(Application.appUser);
 			} catch (UnauthorizedAccessException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		if(arg0.getSource() == btnDownvote)
+		if (arg0.getSource() == btnDownvote)
 			try {
 				review.downvote(Application.appUser);
 			} catch (UnauthorizedAccessException e) {
@@ -112,22 +112,22 @@ public class ReviewFrame implements MouseListener {
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		
+	public void mouseEntered(MouseEvent __) {
+
 	}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		
+	public void mouseExited(MouseEvent __) {
+
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		
+	public void mousePressed(MouseEvent __) {
+
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		
+	public void mouseReleased(MouseEvent __) {
+
 	}
 }

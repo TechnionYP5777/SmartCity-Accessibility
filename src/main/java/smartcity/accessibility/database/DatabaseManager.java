@@ -41,9 +41,9 @@ public abstract class DatabaseManager {
 	 * @return ParseObject result of query or null if failed
 	 * @throws ParseException
 	 */
-	public static ParseObject getValue(final String objectClass, final String id) {
+	public static ParseObject getValue(final String $, final String id) {
 		try {
-			return ParseQuery.getQuery(objectClass).get(id);
+			return ParseQuery.getQuery($).get(id);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

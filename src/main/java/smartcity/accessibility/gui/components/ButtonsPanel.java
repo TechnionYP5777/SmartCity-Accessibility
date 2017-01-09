@@ -39,7 +39,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == ButtonsPanel.LOGIN_BUTTON)
 			new LoginFrame();
-		if (e.getSource() == SIGNUP_BUTTON) 
+		if (e.getSource() == SIGNUP_BUTTON)
 			new SignUpFrame();
 		System.out.println("clicked " + e.getSource());
 

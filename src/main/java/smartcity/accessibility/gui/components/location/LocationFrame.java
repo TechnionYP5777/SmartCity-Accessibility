@@ -59,19 +59,19 @@ public class LocationFrame implements MouseListener {
 		JPanel jp = new JPanel();
 		// jp.setSize(400,350);
 		jp.setLayout(new BoxLayout(jp, BoxLayout.Y_AXIS));
-		for(Review r: loc.getPinnedReviews()){
+		for (Review r : loc.getPinnedReviews()) {
 			ReviewSummaryPanel rsp = new ReviewSummaryPanel(r);
 			rsp.setVisible(true);
 			jp.add(rsp);
 			jp.add(new JSeparator(SwingConstants.HORIZONTAL));
 		}
-		for(Review r: loc.getReviews()){
+		for (Review r : loc.getReviews()) {
 			ReviewSummaryPanel rsp = new ReviewSummaryPanel(r);
 			rsp.setVisible(true);
 			jp.add(rsp);
 			jp.add(new JSeparator(SwingConstants.HORIZONTAL));
 		}
-		
+
 		for (int i = 0; i < 10; ++i) {
 			ReviewSummaryPanel rsp = new ReviewSummaryPanel(
 					new Review(new Coordinates(new LatLng()), Score.getMaxScore() - 1,
@@ -88,58 +88,57 @@ public class LocationFrame implements MouseListener {
 		scrollPane.setVisible(true);
 		frame.getContentPane().add(scrollPane);
 
-		if(Application.appUser.getPrivilege()==User.Privilege.RegularUser){
+		if (Application.appUser.getPrivilege() == User.Privilege.RegularUser) {
 			btnAddReview = new JButton("Add Review");
 			btnAddReview.addMouseListener(this);
 			btnAddReview.setBounds(25, 437, 112, 23);
 			frame.getContentPane().add(btnAddReview);
-			
-			
+
 		}
-	
+
 		btnNavigate = new JButton("Navigate");
 		btnNavigate.setBounds(336, 437, 89, 23);
 		btnNavigate.addMouseListener(this);
 		frame.getContentPane().add(btnNavigate);
-		
+
 		btnRefresh = new JButton("Refresh");
 		btnRefresh.setBounds(179, 437, 89, 23);
 		btnRefresh.addMouseListener(this);
 		frame.getContentPane().add(btnRefresh);
 		frame.setVisible(true);
-		
+
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getSource()==btnAddReview)
+		if (e.getSource() == btnAddReview)
 			new CreateReviewFrame(loc);
-		if(e.getSource()==btnNavigate)
+		if (e.getSource() == btnNavigate)
 			System.out.println("Navigate");
-		if(e.getSource()==btnRefresh){
-			frame.dispose();
-			new LocationFrame(loc);
-		}
-			
+		if (e.getSource() != btnRefresh)
+			return;
+		frame.dispose();
+		new LocationFrame(loc);
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent __) {
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent __) {
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent __) {
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent __) {
-		
+
 	}
 }
