@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.plaf.basic.BasicButtonUI;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.teamdev.jxmaps.LatLng;
@@ -35,10 +36,9 @@ import java.awt.event.ActionListener;
 public class jxMapsFunctionalityTest {
 	
 	
-	
+	@Ignore
 	@Test
 	public void createOptionMenu() {
-		
-		
+		assert(true);
 	}
 }
