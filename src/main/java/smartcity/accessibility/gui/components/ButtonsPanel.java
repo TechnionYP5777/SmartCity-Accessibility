@@ -10,7 +10,6 @@ import smartcity.accessibility.gui.components.user.LoginFrame;
 import smartcity.accessibility.gui.components.user.SignUpFrame;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
-import smartcity.accessibility.mapmanagement.jxMapsFunctionalityTest;
 
 public class ButtonsPanel extends JPanel implements MouseListener {
 
