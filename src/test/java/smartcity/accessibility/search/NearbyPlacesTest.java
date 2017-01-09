@@ -37,6 +37,7 @@ import smartcity.accessibility.socialnetwork.UserImpl;
  */
 public class NearbyPlacesTest {
 	
+	@Ignore
 	@Test
 	public void nearByPlacesTest() {
 		LatLng c = new LatLng(31.90588, 34.997571); //Modi'in Yehalom St, 20
