@@ -205,7 +205,6 @@ public class DatabaseManagerTest {
 
 	@Test
 	public void g() {
-		// TODO @KaplanAlexander :finish this
 		final AtomicInteger res = new AtomicInteger();
 		try {
 			Map<String, Object> m = new HashMap<String, Object>();

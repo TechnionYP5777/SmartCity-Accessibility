@@ -149,10 +149,7 @@ public class Application {
 		mapView.getMap().addEventListener("rightclick", new MapMouseEvent() {
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				if (Application.currLocation != null)
-					Application.currLocation.remove();
-				Application.currLocation = new Marker(mapView.getMap());
-				Application.currLocation.setPosition(arg0.latLng());
+				JxMapsFunctionality.onRightClick(mapView, arg0.latLng());
 			}
 
 		});

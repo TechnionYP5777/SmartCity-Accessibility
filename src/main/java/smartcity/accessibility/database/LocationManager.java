@@ -127,5 +127,9 @@ public class LocationManager {
 				filter(p ->  p.getRating(ReviewsTakenToAccount).getScore() >= accessibilityLevel).
 				collect(Collectors.toList());
 	}
+	
+	public static void getLocationsNearPoint(LatLng __, LocationListCallback c){
+		// call c.done with the result --alex
+	}
 
 }

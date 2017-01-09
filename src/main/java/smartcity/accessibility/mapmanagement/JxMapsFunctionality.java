@@ -23,6 +23,8 @@ import com.teamdev.jxmaps.MarkerLabel;
 import com.teamdev.jxmaps.MarkerLabel.Property;
 import com.teamdev.jxmaps.swing.MapView;
 
+import smartcity.accessibility.database.LocationListCallback;
+import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.ExtendedMarker;
 import smartcity.accessibility.gui.ExtendedMarker.MarkerType;
@@ -138,11 +140,25 @@ public abstract class JxMapsFunctionality {
 				if (s != GeocoderStatus.OK)
 					return;
 				map.setCenter(rs[0].getGeometry().getLocation());
-				Marker marker = new Marker(map);
-				marker.setPosition(rs[0].getGeometry().getLocation());
-				Application.currLocation = marker;
+				onRightClick(mapView, rs[0].getGeometry().getLocation());
 			}
 		});
 		
+	}
+	
+	public static void onRightClick(MapView v, LatLng l){
+		Map map = v.getMap();
+		if (Application.currLocation != null)
+			Application.currLocation.remove();
+		Application.currLocation = new Marker(v.getMap());
+		Application.currLocation.setPosition(l);
+		LocationManager.getLocationsNearPoint(l, new LocationListCallback() {
+			
+			@Override
+			public void done(List<Location> ls) {
+				for (Location loc : ls)
+					new ExtendedMarker(map, MarkerType.Default).setPosition(loc.getCoordinates());
+			}
+		});
 	}
 }
