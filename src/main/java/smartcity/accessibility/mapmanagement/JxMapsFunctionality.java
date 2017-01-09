@@ -46,6 +46,7 @@ import smartcity.accessibility.gui.ExtendedMarker;
 import smartcity.accessibility.gui.compoments.search.SearchFieldUI;
 import smartcity.accessibility.jxMapsFunctionality.OptionsWindow;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
+import smartcity.accessibility.mapmanagement.Location.LocationType;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 
@@ -139,7 +140,10 @@ public abstract class JxMapsFunctionality {
 							e.printStackTrace();
 						}
 						LatLng position1 = sqr1.getCoordinations().get(0).getGeometry().getLocation();
-						 JxMapsFunctionality.putMarker((extendedMapView) mv, position1, searchField.getText());
+						Location dummy = new Location(position1, LocationType.Coordinate);
+						//TODO: look up for existing locations
+						new ExtendedMarker(mv.getMap(), dummy);
+						//JxMapsFunctionality.putMarker((extendedMapView) mv, position1, searchField.getText());
 					}
 				};
 				

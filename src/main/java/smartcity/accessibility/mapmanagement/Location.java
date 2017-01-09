@@ -21,10 +21,10 @@ import smartcity.accessibility.socialnetwork.Score;
  * @author Koral Chapnik
  */
 
-public abstract class Location {
+public class Location {
 	
 	public enum LocationType {
-		Hotel, Restaurant, Bar, Default
+		Coordinate, Hotel, Restaurant, Bar, Default
 	}
 
 	private static final long serialVersionUID = -9204783865281694652L;
@@ -33,6 +33,7 @@ public abstract class Location {
 	private ArrayList<Review> pinnedReviews;	//ArthurSap
 	private LatLng coordinates;
 	private String name = "";
+	private LocationType locationType;
 	//ArthurSap
 	public ArrayList<Review> getReviews() {
 		return reviews;
@@ -51,6 +52,12 @@ public abstract class Location {
 	public Location(LatLng c){
 		initiateArrays();
 		this.coordinates = c;		
+	}
+	
+	public Location(LatLng c, LocationType lt){
+		initiateArrays();
+		this.coordinates = c;		
+		this.locationType = lt;
 	}
 	
 	public void setName(String n) {
