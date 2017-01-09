@@ -151,7 +151,7 @@ public class Application {
 			}
 
 		});
-		JxMapsFunctionality.addOptionsMenu(JxMapsFunctionality.createSearchBar());
+		JxMapsFunctionality.addOptionsMenu(JxMapsFunctionality.createOptionsBar());
 
 		JxMapsFunctionality.initMapLocation(mapView, "Eliezer 10, Haifa, Israel");
 	}

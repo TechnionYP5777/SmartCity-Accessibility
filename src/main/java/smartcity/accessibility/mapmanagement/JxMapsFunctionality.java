@@ -45,6 +45,9 @@ import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.ExtendedMarker;
 import smartcity.accessibility.gui.compoments.search.SearchFieldUI;
 import smartcity.accessibility.jxMapsFunctionality.OptionsWindow;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
+import smartcity.accessibility.search.SearchQuery;
+import smartcity.accessibility.search.SearchQueryResult;
 
 /*
  * Author Kolikant
@@ -102,7 +105,7 @@ public abstract class JxMapsFunctionality {
 		mva.setOptionsWindow(ow);
 	}
 	
-	public static OptionsWindow createSearchBar(){
+	public static OptionsWindow createOptionsBar(){
 		return new OptionsWindow(mv, new Dimension(350, 40)) {
 			@Override
 			public void initContent(JWindow contentWindow) {
@@ -122,10 +125,28 @@ public abstract class JxMapsFunctionality {
 				searchButton.setBorder(BorderFactory.createEmptyBorder());
 				searchButton.setUI(new BasicButtonUI());
 				searchButton.setOpaque(false);
+				
+				Runnable r = new Runnable() {
+					@Override
+					public void run() {
+						System.out.println(searchField.getText()); 
+						SearchQuery sq = SearchQuery.adressSearch(searchField.getText());
+						SearchQueryResult sqr1= sq.SearchByAddress(mv);
+						try {
+							sq.waitOnSearch();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						LatLng position1 = sqr1.getCoordinations().get(0).getGeometry().getLocation();
+						 JxMapsFunctionality.putMarker((extendedMapView) mv, position1, searchField.getText());
+					}
+				};
+				
 				ActionListener searchActionListener = new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						System.out.println("omg!");
+						r.run();
 					}
 				};
 				searchButton.addActionListener(searchActionListener);
