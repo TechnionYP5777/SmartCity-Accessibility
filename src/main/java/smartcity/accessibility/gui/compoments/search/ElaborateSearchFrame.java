@@ -147,21 +147,7 @@ public class ElaborateSearchFrame implements MouseListener {
 		 * will just use nearby searches
 		 */
 
-		// = new LatLng(31.90588, 34.997571); //Modi'in Yehalom St, 20
-		ArrayList<String> kindsOfLocations = new ArrayList<String>();
-		kindsOfLocations.add(locationTypeField.getText());
-		Location initLocation = new Facility(c);
-		MapViewOptions options = new MapViewOptions();
-		options.importPlaces();
-		NearbyPlacesAttempt n = new NearbyPlacesAttempt(options);
-		ArrayList<Location> places = n.findNearbyPlaces(initLocation, radius, kindsOfLocations);
-		MapView mapView = JxMapsFunctionality.getMapView();
-		JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
-
-		for (Location l : places) {
-			LatLng a = l.getCoordinates();
-			JxMapsFunctionality.putMarkerNoJump((extendedMapView) mapView, a, l.getName());
-		}
+		NearbyPlacesAttempt.yieldResults(locationTypeField.getText(), radius, c);
 
 		return SearchQuery.freeTextSearch(locationTypeField.getText());
 	}

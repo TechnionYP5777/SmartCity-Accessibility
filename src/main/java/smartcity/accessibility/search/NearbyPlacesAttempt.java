@@ -86,4 +86,22 @@ public class NearbyPlacesAttempt extends MapView {
 		
 		return res;
 	}
+	
+	/*
+	 * Kolikant
+	 */
+	public static void yieldResults(String type, int radius, LatLng c){
+		ArrayList<String> kindsOfLocations = new ArrayList<String>();
+		kindsOfLocations.add(type);
+		Location initLocation = new Facility(c);
+		MapViewOptions options = new MapViewOptions();
+		options.importPlaces();
+		NearbyPlacesAttempt n = new NearbyPlacesAttempt(options);
+		ArrayList<Location> places = n.findNearbyPlaces(initLocation, radius, kindsOfLocations);
+		MapView mapView = JxMapsFunctionality.getMapView();
+		JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
+
+		for (Location l : places)
+			JxMapsFunctionality.putMarkerNoJump((extendedMapView) mapView, l.getCoordinates(), l.getName());
+	}
 }
