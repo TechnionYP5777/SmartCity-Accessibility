@@ -3,6 +3,8 @@ package smartcity.accessibility.gui.components.location;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,6 +17,7 @@ import javax.swing.SwingConstants;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.Location;
@@ -50,6 +53,44 @@ public class LocationFrame implements MouseListener {
 		frame.setBounds(100, 100, 450, 500);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowActivated(WindowEvent arg0) {
+				
+			}
+
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				LocationManager.updateLocation(loc);
+			}
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent arg0) {
+				
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent arg0) {
+				
+			}
+
+			@Override
+			public void windowIconified(WindowEvent arg0) {
+				
+			}
+
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				
+			}
+			
+		});
 
 		JLabel lblLocation = new JLabel("Location", SwingConstants.CENTER);
 		lblLocation.setFont(new Font("Tahoma", Font.BOLD, 14));
