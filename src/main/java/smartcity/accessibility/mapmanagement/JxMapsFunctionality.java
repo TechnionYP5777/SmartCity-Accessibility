@@ -23,6 +23,7 @@ import com.teamdev.jxmaps.MarkerLabel;
 import com.teamdev.jxmaps.MarkerLabel.Property;
 import com.teamdev.jxmaps.swing.MapView;
 
+import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.ExtendedMarker;
 import smartcity.accessibility.gui.ExtendedMarker.MarkerType;
 
@@ -137,8 +138,9 @@ public abstract class JxMapsFunctionality {
 				if (s != GeocoderStatus.OK)
 					return;
 				map.setCenter(rs[0].getGeometry().getLocation());
-				ExtendedMarker marker = new ExtendedMarker(map, MarkerType.Default);
+				Marker marker = new Marker(map);
 				marker.setPosition(rs[0].getGeometry().getLocation());
+				Application.currLocation = marker;
 			}
 		});
 		

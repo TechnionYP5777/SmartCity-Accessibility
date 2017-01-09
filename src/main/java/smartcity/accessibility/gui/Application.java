@@ -9,9 +9,11 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.MapComponentType;
 import com.teamdev.jxmaps.MapMouseEvent;
 import com.teamdev.jxmaps.MapViewOptions;
+import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.MouseEvent;
 import com.teamdev.jxmaps.swing.MapView;
 
@@ -37,6 +39,7 @@ public class Application {
 	public static final int FRAME_Y_SIZE = 700;
 
 	public static User appUser = new UserImpl("", "", User.Privilege.DefaultUser);
+	public static Marker currLocation;
 
 	public static void main(String[] args) {
 		frame = new MapFrame("SmartCity - Accessibility");
@@ -143,6 +146,17 @@ public class Application {
 				//TODO :Change this to background operation when LocationManager allows --alex
 				new LocationFrame(l);
 			}
+		});
+		
+		mapView.getMap().addEventListener("rightclick", new MapMouseEvent(){
+			@Override
+			public void onEvent(MouseEvent arg0) {
+				if(Application.currLocation!=null)
+					Application.currLocation.remove();
+				Application.currLocation = new Marker(mapView.getMap());
+				Application.currLocation.setPosition(arg0.latLng());
+			}
+			
 		});
 
 		JxMapsFunctionality.initMapLocation(mapView, "Eliezer 10, Haifa, Israel");
