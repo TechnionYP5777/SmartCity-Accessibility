@@ -22,6 +22,10 @@ import smartcity.accessibility.socialnetwork.Score;
  */
 
 public abstract class Location {
+	
+	public enum LocationType {
+		Hotel, Restaurant, Bar, Default
+	}
 
 	private static final long serialVersionUID = -9204783865281694652L;
 	

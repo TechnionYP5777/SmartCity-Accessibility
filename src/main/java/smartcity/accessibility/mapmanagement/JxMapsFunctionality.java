@@ -27,7 +27,7 @@ import smartcity.accessibility.database.LocationListCallback;
 import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.ExtendedMarker;
-import smartcity.accessibility.gui.ExtendedMarker.MarkerType;
+import smartcity.accessibility.mapmanagement.Location.LocationType;
 
 
 /*
@@ -157,7 +157,8 @@ public abstract class JxMapsFunctionality {
 			@Override
 			public void done(List<Location> ls) {
 				for (Location loc : ls)
-					new ExtendedMarker(map, MarkerType.Default).setPosition(loc.getCoordinates());
+					new ExtendedMarker(map, loc);
+					// TODO save markers created and delete previous markers -- alex
 			}
 		});
 	}

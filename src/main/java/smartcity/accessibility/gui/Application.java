@@ -17,7 +17,6 @@ import com.teamdev.jxmaps.MouseEvent;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.DatabaseManager;
-import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.gui.components.ButtonsPanel;
@@ -25,7 +24,6 @@ import smartcity.accessibility.gui.components.MapFrame;
 import smartcity.accessibility.gui.components.location.LocationFrame;
 import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserImpl;
 
@@ -137,12 +135,7 @@ public class Application {
 
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				Location l = LocationManager.getLocation(arg0.latLng());
-				if (l == null)
-					l = new Coordinates(arg0.latLng());
-				// TODO :Change this to background operation when
-				// LocationManager allows --alex
-				new LocationFrame(l);
+				new LocationFrame(new Coordinates(arg0.latLng()));
 			}
 		});
 

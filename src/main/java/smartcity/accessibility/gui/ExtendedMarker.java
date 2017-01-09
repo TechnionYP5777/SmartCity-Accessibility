@@ -3,28 +3,23 @@ package smartcity.accessibility.gui;
 import java.util.HashMap;
 
 import com.teamdev.jxmaps.Icon;
-import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.Map;
 import com.teamdev.jxmaps.MapMouseEvent;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.MouseEvent;
 
 import smartcity.accessibility.gui.components.location.LocationFrame;
-import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.Location.LocationType;
 
 public class ExtendedMarker extends Marker {
 
-	public enum MarkerType {
-		Restaurant, Hotel, Bar, Default;
-	}
-
-	private static HashMap<MarkerType, Icon> iconMap = new HashMap<MarkerType, Icon>();
+	private static HashMap<LocationType, Icon> iconMap = new HashMap<LocationType, Icon>();
 	private Location location;
 
-	public ExtendedMarker(Map map, MarkerType type) {
+	public ExtendedMarker(Map map, Location loc) {
 		super(map);
-		setIcon(iconMap.get(type));
+		setIcon(iconMap.get(LocationType.Default));
 		addEventListener("click", new MapMouseEvent() {
 
 			@Override
@@ -34,30 +29,26 @@ public class ExtendedMarker extends Marker {
 			}
 
 		});
-	}
-
-	@Override
-	public void setPosition(LatLng l) {
-		super.setPosition(l);
-		location = new Coordinates(l);
+		super.setPosition(loc.getCoordinates());
+		location = loc;
 	}
 
 	static {
 		Icon icon = new Icon();
 		icon.loadFromFile("res/map-marker.png");
-		iconMap.put(MarkerType.Default, icon);
+		iconMap.put(LocationType.Default, icon);
 
 		icon = new Icon();
 		icon.loadFromFile("res/restaurants_for_map.png");
-		iconMap.put(MarkerType.Restaurant, icon);
+		iconMap.put(LocationType.Restaurant, icon);
 
 		icon = new Icon();
 		icon.loadFromFile("res/hotels_for_map.png");
-		iconMap.put(MarkerType.Hotel, icon);
+		iconMap.put(LocationType.Hotel, icon);
 
 		icon = new Icon();
 		icon.loadFromFile("res/bars_and_pubs_for_map.png");
-		iconMap.put(MarkerType.Bar, icon);
+		iconMap.put(LocationType.Bar, icon);
 
 	}
 

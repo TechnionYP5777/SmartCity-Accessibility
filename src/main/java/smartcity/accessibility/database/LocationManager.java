@@ -110,6 +110,10 @@ public class LocationManager {
 		//TODO: pin the pinned comment
 	}
 	
+	public static void updateLocation(Location l) {
+		// Note this should be a background operation -- alex
+	}
+	
 	/*
 	 * @Author Kolikant
 	 */
