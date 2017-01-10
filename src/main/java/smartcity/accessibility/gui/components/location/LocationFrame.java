@@ -140,7 +140,7 @@ public class LocationFrame implements MouseListener {
 		if (e.getSource() == btnAddReview)
 			new CreateReviewFrame(loc);
 		if (e.getSource() == btnNavigate)
-			System.out.println("Navigate");
+			activateNavigation();
 		if (e.getSource() != btnRefresh)
 			return;
 		frame.dispose();
@@ -166,5 +166,12 @@ public class LocationFrame implements MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent __) {
 
+	}
+	
+	/**
+	 * @author yael
+	 */
+	public void activateNavigation(){
+		
 	}
 }

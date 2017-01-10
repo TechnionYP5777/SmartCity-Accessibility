@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import smartcity.accessibility.gui.compoments.search.ElaborateSearchFrame;
 import smartcity.accessibility.gui.components.user.LoginFrame;
 import smartcity.accessibility.gui.components.user.SignUpFrame;
+import smartcity.accessibility.gui.components.user.UserProfileFrame;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 
 public class ButtonsPanel extends JPanel implements MouseListener {
@@ -20,15 +21,17 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 
 	public static GButton LOGIN_BUTTON;
 	public static GButton SIGNUP_BUTTON;
-	public static JLabel USERNAME;
+	public static GButton USER_PROFILE_BUTTON;
 	public static GButton CLEAR_MARKERS_BUTTON;
 	public static GButton SEARCH_BY_TYPE;
 
 	public ButtonsPanel() {
 		// setSize(MapFrame.FRAME_X_SIZE, 100);
-		USERNAME = new JLabel("");
-		add(USERNAME);
-		USERNAME.setVisible(true);
+		
+		USER_PROFILE_BUTTON = new GButton("");
+		add(USER_PROFILE_BUTTON);
+		USER_PROFILE_BUTTON.setVisible(false);
+		USER_PROFILE_BUTTON.addMouseListener(this);
 		
 		LOGIN_BUTTON = new GButton("Login");
 		LOGIN_BUTTON.addMouseListener(this);
@@ -61,6 +64,8 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 			JxMapsFunctionality.ClearMarkers(JxMapsFunctionality.getMapView());
 		if(e.getSource() == SEARCH_BY_TYPE)
 			new ElaborateSearchFrame();
+		if(e.getSource() == ButtonsPanel.USER_PROFILE_BUTTON)
+			new UserProfileFrame();
 		System.out.println("clicked " + e.getSource());
 
 	}

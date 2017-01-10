@@ -84,7 +84,8 @@ public class LoginFrame implements MouseListener {
 			JOptionPane.showMessageDialog(Application.frame, "Login Failed.", "Login error", JOptionPane.ERROR_MESSAGE);
 		else {
 			Application.appUser = u;
-			ButtonsPanel.USERNAME.setText(u.getName());
+			ButtonsPanel.USER_PROFILE_BUTTON.setText("view profile");
+			ButtonsPanel.USER_PROFILE_BUTTON.setVisible(true);
 		}
 		frame.dispose();
 	}
