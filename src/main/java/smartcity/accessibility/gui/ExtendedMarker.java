@@ -10,16 +10,20 @@ import com.teamdev.jxmaps.MouseEvent;
 
 import smartcity.accessibility.gui.components.location.LocationFrame;
 import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.mapmanagement.Location.LocationType;
+import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 
 public class ExtendedMarker extends Marker {
 
-	private static HashMap<LocationType, Icon> iconMap = new HashMap<LocationType, Icon>();
+	private static HashMap<LocationSubTypes, Icon> iconMap = new HashMap<LocationSubTypes, Icon>();
 	private Location location;
 
 	public ExtendedMarker(Map map, Location loc) {
 		super(map);
-		setIcon(iconMap.get(LocationType.Default));
+		if(iconMap.containsKey(loc.getLocationSubType()))
+			setIcon(iconMap.get(loc.getLocationSubType()));
+		else
+			setIcon(iconMap.get(LocationSubTypes.Default));
+		
 		addEventListener("click", new MapMouseEvent() {
 
 			@Override
@@ -40,19 +44,19 @@ public class ExtendedMarker extends Marker {
 	static {
 		Icon icon = new Icon();
 		icon.loadFromFile("res/map-marker.png");
-		iconMap.put(LocationType.Default, icon);
+		iconMap.put(LocationSubTypes.Default, icon);
 
 		icon = new Icon();
 		icon.loadFromFile("res/restaurants_for_map.png");
-		iconMap.put(LocationType.Restaurant, icon);
+		iconMap.put(LocationSubTypes.Restaurant, icon);
 
 		icon = new Icon();
 		icon.loadFromFile("res/hotels_for_map.png");
-		iconMap.put(LocationType.Hotel, icon);
+		iconMap.put(LocationSubTypes.Hotel, icon);
 
 		icon = new Icon();
 		icon.loadFromFile("res/bars_and_pubs_for_map.png");
-		iconMap.put(LocationType.Bar, icon);
+		iconMap.put(LocationSubTypes.Bar, icon);
 
 	}
 
