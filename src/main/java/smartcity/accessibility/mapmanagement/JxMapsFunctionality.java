@@ -285,8 +285,11 @@ public abstract class JxMapsFunctionality {
 			@Override
 			public void done(List<Location> ls) {
 				ClearMarkers(mv);
-				for (Location loc : ls)
-					 JxMapsFunctionality.putExtendedMarker(mv, loc); 			
+				for (Location loc : ls){
+					if(loc.getLocationType().equals(LocationTypes.Street))
+						continue;
+					JxMapsFunctionality.putExtendedMarker(mv, loc);
+				}
 			}
 		});
 	}
