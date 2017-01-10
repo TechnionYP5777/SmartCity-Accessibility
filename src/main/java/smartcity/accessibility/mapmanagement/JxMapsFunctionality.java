@@ -260,8 +260,7 @@ public abstract class JxMapsFunctionality {
 		map.setZoom(17.0);
 		GeocoderRequest request = new GeocoderRequest();
 		request.setAddress(startAdress);
-		Geocoder g = mv.getServices().getGeocoder();
-		g.geocode(request, new GeocoderCallback(map) {
+		mv.getServices().getGeocoder().geocode(request, new GeocoderCallback(map) {
 			@Override
 			public void onComplete(GeocoderResult[] rs, GeocoderStatus s) {
 				System.out.println(s.name());

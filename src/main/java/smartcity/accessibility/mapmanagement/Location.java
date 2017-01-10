@@ -36,10 +36,9 @@ public class Location {
 
 		private List<LocationSubTypes> subTypes = new ArrayList<LocationSubTypes>();
 
-		private LocationTypes(LocationSubTypes... s) {
-			for (LocationSubTypes st : s) {
+		LocationTypes(LocationSubTypes... s) {
+			for (LocationSubTypes st : s)
 				subTypes.add(st);
-			}
 		}
 
 		public List<LocationSubTypes> getSubTypes() {

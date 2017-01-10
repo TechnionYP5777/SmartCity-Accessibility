@@ -19,10 +19,7 @@ public class ExtendedMarker extends Marker {
 
 	public ExtendedMarker(Map map, Location loc) {
 		super(map);
-		if(iconMap.containsKey(loc.getLocationSubType()))
-			setIcon(iconMap.get(loc.getLocationSubType()));
-		else
-			setIcon(iconMap.get(LocationSubTypes.Default));
+		setIcon(iconMap.get(iconMap.containsKey(loc.getLocationSubType()) ? loc.getLocationSubType() : LocationSubTypes.Default));
 		
 		addEventListener("click", new MapMouseEvent() {
 
