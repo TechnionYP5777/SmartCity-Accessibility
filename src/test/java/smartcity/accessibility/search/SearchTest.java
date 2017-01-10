@@ -9,7 +9,7 @@ import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;;
 
 /**
  * @author Kolikant
@@ -26,7 +26,7 @@ public class SearchTest{
          SearchQuery s1 = SearchQuery.adressSearch("Modi'in Yehalom St, 20");
          SearchQuery s2 = SearchQuery.adressSearch("Modi'in Yehalom 30");
          
-         JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
+         JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
          
          SearchQueryResult sqr1= s1.SearchByAddress(mapView);
          SearchQueryResult sqr2= s2.SearchByAddress(mapView);
@@ -37,8 +37,8 @@ public class SearchTest{
          LatLng position1 = sqr1.getCoordinations().get(0).getGeometry().getLocation();
          LatLng position2 = sqr2.getCoordinations().get(0).getGeometry().getLocation();
          
-         JxMapsFunctionality.putMarker((extendedMapView) mapView, position1, "result1");
-         JxMapsFunctionality.putMarker((extendedMapView) mapView, position2, "result2");
+         JxMapsFunctionality.putMarker((ExtendedMapView) mapView, position1, "result1");
+         JxMapsFunctionality.putMarker((ExtendedMapView) mapView, position2, "result2");
          
          JxMapsFunctionality.openFrame(mapView, "JxMaps - Hello, World!", 16.0);
         
@@ -58,7 +58,7 @@ public class SearchTest{
 		 MapView mapView = JxMapsFunctionality.getMapView();
 		 SearchQuery s1 = SearchQuery.adressSearch("coffee shops");
 		 
-		 JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
+		 JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
          
      //    SearchQueryResult sqr1= s1.SearchByFreeText(mapView);
          
@@ -76,7 +76,7 @@ public class SearchTest{
 
 	        SearchQuery s1 = SearchQuery.adressSearch("Rothschild 22, Rothschild Boulevard, Tel Aviv");
 	        
-	        JxMapsFunctionality.waitForMapReady((extendedMapView) mapView1);
+	        JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView1);
 	        
 	        SearchQueryResult sqr1= s1.SearchByAddress(mapView1);
 	        

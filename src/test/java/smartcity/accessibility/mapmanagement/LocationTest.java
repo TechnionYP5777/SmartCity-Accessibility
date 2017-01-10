@@ -13,7 +13,7 @@ import com.teamdev.jxmaps.swing.MapView;
 import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
@@ -60,7 +60,7 @@ public class LocationTest {
 	public void getAddressTest() {
 		new MapViewOptions().importPlaces();
 		MapView mapView = JxMapsFunctionality.getMapView();
-		JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
+		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
 		System.out.println(l.getAddress(mapView));
 	}
 	

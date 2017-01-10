@@ -1,43 +1,36 @@
 package smartcity.accessibility.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.teamdev.jxmaps.MapComponentType;
 import com.teamdev.jxmaps.MapMouseEvent;
-import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.MouseEvent;
-import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.exceptions.UserNotFoundException;
-import smartcity.accessibility.gui.compoments.search.SearchFieldUI;
 import smartcity.accessibility.gui.components.ButtonsPanel;
 import smartcity.accessibility.gui.components.MapFrame;
 import smartcity.accessibility.gui.components.location.LocationFrame;
 import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserImpl;
 
 public class Application {
 
 	public static MapFrame frame;
-	public static MapView mapView;
+	public static ExtendedMapView mapView;
 
 	public static final int FRAME_X_SIZE = 1000;
 	public static final int FRAME_Y_SIZE = 700;
@@ -58,7 +51,7 @@ public class Application {
 			e.printStackTrace();
 		}
 
-		new MapViewOptions(MapComponentType.HEAVYWEIGHT).importPlaces();
+		//new MapViewOptions(MapComponentType.HEAVYWEIGHT).importPlaces();
 		mapView = JxMapsFunctionality.getMapView();
 
 		mapView.setSize(FRAME_X_SIZE, FRAME_Y_SIZE - 100);

@@ -27,7 +27,7 @@ import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.Facility;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
@@ -53,12 +53,12 @@ public class NearbyPlacesTest {
 		System.out.println("the length is : " + places.size());
 
 		MapView mapView = JxMapsFunctionality.getMapView();
-		JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
+		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
  
         
 			for (Location l : places) {
 				LatLng a = l.getCoordinates();
-				JxMapsFunctionality.putMarker((extendedMapView) mapView, a, l.getName());
+				JxMapsFunctionality.putMarker((ExtendedMapView) mapView, a, l.getName());
 				System.out.println("lat is : " + a.getLat() + " lng is : " + a.getLng());
 		//		System.out.println("the name of the restaurant is : " + l.getAddress(mapView));
 			}

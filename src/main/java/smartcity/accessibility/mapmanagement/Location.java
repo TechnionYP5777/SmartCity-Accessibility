@@ -8,7 +8,7 @@ import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 import smartcity.accessibility.socialnetwork.User;
@@ -92,7 +92,7 @@ public class Location {
 	
 	public String getAddress(MapView mapView){
 		SearchQuery sq = SearchQuery.adressSearch("_");
-		JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
+		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
 		SearchQueryResult result = sq.searchByCoordinates(mapView, coordinates);
 		try {
 			sq.waitOnSearch();

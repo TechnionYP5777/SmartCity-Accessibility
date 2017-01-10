@@ -17,7 +17,7 @@ import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.mapmanagement.Facility;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
 
 /**
@@ -99,9 +99,9 @@ public class NearbyPlacesAttempt extends MapView {
 		NearbyPlacesAttempt n = new NearbyPlacesAttempt(options);
 		ArrayList<Location> places = n.findNearbyPlaces(initLocation, radius, kindsOfLocations);
 		MapView mapView = JxMapsFunctionality.getMapView();
-		JxMapsFunctionality.waitForMapReady((extendedMapView) mapView);
+		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
 
 		for (Location l : places)
-			JxMapsFunctionality.putMarkerNoJump((extendedMapView) mapView, l.getCoordinates(), l.getName());
+			JxMapsFunctionality.putMarkerNoJump((ExtendedMapView) mapView, l.getCoordinates(), l.getName());
 	}
 }

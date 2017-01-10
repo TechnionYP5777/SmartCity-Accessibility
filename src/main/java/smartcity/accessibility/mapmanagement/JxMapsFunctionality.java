@@ -45,7 +45,7 @@ import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.ExtendedMarker;
 import smartcity.accessibility.gui.compoments.search.SearchFieldUI;
 import smartcity.accessibility.jxMapsFunctionality.OptionsWindow;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location.LocationType;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
@@ -56,9 +56,9 @@ import smartcity.accessibility.search.SearchQueryResult;
 
 public abstract class JxMapsFunctionality {
 
-	public static MapView mv;
+	public static ExtendedMapView mv;
 
-	public static class extendedMapView extends MapView {
+	public static class ExtendedMapView extends MapView {
 
 		/**
 		 * 
@@ -67,7 +67,7 @@ public abstract class JxMapsFunctionality {
 		List<Marker> MarkerList = new ArrayList<Marker>();
 		private OptionsWindow optionsWindow;
 
-		public extendedMapView() {
+		public ExtendedMapView() {
 			setOnMapReadyHandler(new MapReadyHandler() {
 				@Override
 				public void onMapReady(MapStatus arg0) {
@@ -102,7 +102,7 @@ public abstract class JxMapsFunctionality {
 	}
 
 	public static void addOptionsMenu(OptionsWindow ow){
-		extendedMapView mva = (extendedMapView)mv;
+		ExtendedMapView mva = (ExtendedMapView)mv;
 		mva.setOptionsWindow(ow);
 	}
 	
@@ -141,7 +141,7 @@ public abstract class JxMapsFunctionality {
 						LatLng position1 = sqr1.getCoordinations().get(0).getGeometry().getLocation();
 						Location dummy = new Location(position1, LocationType.Coordinate);
 						//TODO: look up for existing locations
-						JxMapsFunctionality.putExtendedMarker((extendedMapView)mv, dummy, searchField.getText());
+						JxMapsFunctionality.putExtendedMarker((ExtendedMapView)mv, dummy, searchField.getText());
 						//new ExtendedMarker(mv.getMap(), dummy);
 						//JxMapsFunctionality.putMarker((extendedMapView) mv, position1, searchField.getText());
 					}
@@ -176,8 +176,8 @@ public abstract class JxMapsFunctionality {
 		};
 	}
 	
-	public static MapView getMapView() {
-		return mv != null ? mv : (mv = new extendedMapView());
+	public static ExtendedMapView getMapView() {
+		return mv != null ? mv : (mv = new ExtendedMapView());
 	}
 
 	public static void DestroyMapView() {
@@ -185,17 +185,17 @@ public abstract class JxMapsFunctionality {
 		mv = null;
 	}
 
-	public static void ClearMarkers(extendedMapView mv) {
+	public static void ClearMarkers(ExtendedMapView mv) {
 		for (Marker m : mv.MarkerList)
 			m.remove();
 	}
 
 	public static MapView getMapView(MapViewOptions o) {
 		o.importPlaces();
-		return mv = new extendedMapView();
+		return mv = new ExtendedMapView();
 	}
 
-	public static void putMarker(extendedMapView mv, LatLng l, String name) {
+	public static void putMarker(ExtendedMapView mv, LatLng l, String name) {
 		waitForMapReady(mv);
 		Map map = mv.getMap();
 		Marker marker = new Marker(map);
@@ -207,7 +207,7 @@ public abstract class JxMapsFunctionality {
 		window.open(map, marker);
 	}
 	
-	public static void putMarkerNoJump(extendedMapView mv, LatLng l, String name) {
+	public static void putMarkerNoJump(ExtendedMapView mv, LatLng l, String name) {
 		waitForMapReady(mv);
 		Map map = mv.getMap();
 		Marker marker = new Marker(map);
@@ -218,7 +218,7 @@ public abstract class JxMapsFunctionality {
 		window.open(map, marker);
 	}
 	
-	public static ExtendedMarker putExtendedMarker(extendedMapView mv, Location l, String name){
+	public static ExtendedMarker putExtendedMarker(ExtendedMapView mv, Location l, String name){
 		waitForMapReady(mv);
 		Map map = mv.getMap();
 		ExtendedMarker marker = new ExtendedMarker(map, l);
@@ -231,7 +231,7 @@ public abstract class JxMapsFunctionality {
 		return marker;
 	}
 
-	public static void waitForMapReady(extendedMapView mv) {
+	public static void waitForMapReady(ExtendedMapView mv) {
 		mv.waitReady();
 	}
 
@@ -249,7 +249,7 @@ public abstract class JxMapsFunctionality {
 		frame.setVisible(true);
 	}
 
-	public static void initMapLocation(MapView mapView, String startAdress) {
+	public static void initMapLocation(ExtendedMapView mapView, String startAdress) {
 		Map map = mapView.getMap();
 		map.setZoom(17.0);
 		GeocoderRequest request = new GeocoderRequest();
@@ -268,7 +268,7 @@ public abstract class JxMapsFunctionality {
 
 	}
 
-	public static void onRightClick(MapView v, LatLng l) {
+	public static void onRightClick(ExtendedMapView v, LatLng l) {
 		Map map = v.getMap();
 		if (Application.currLocation != null)
 			Application.currLocation.remove();
@@ -285,7 +285,7 @@ public abstract class JxMapsFunctionality {
 					/*do not add markers outside of jxmapsfunctionality api please
 					 *Application.markers.add(new ExtendedMarker(map, loc)); 
 					 */
-					 Application.markers.add(JxMapsFunctionality.putExtendedMarker((extendedMapView)v, loc, "result"));//new ExtendedMarker(map, loc)); 			
+					 Application.markers.add(JxMapsFunctionality.putExtendedMarker((ExtendedMapView)v, loc, "result"));//new ExtendedMarker(map, loc)); 			
 			}
 		});
 	}

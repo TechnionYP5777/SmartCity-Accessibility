@@ -10,7 +10,6 @@ import smartcity.accessibility.gui.compoments.search.ElaborateSearchFrame;
 import smartcity.accessibility.gui.components.user.LoginFrame;
 import smartcity.accessibility.gui.components.user.SignUpFrame;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
 
 public class ButtonsPanel extends JPanel implements MouseListener {
 
@@ -59,7 +58,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 		if (e.getSource() == SIGNUP_BUTTON)
 			new SignUpFrame();
 		if(e.getSource() == CLEAR_MARKERS_BUTTON)
-			JxMapsFunctionality.ClearMarkers((extendedMapView) JxMapsFunctionality.getMapView());
+			JxMapsFunctionality.ClearMarkers(JxMapsFunctionality.getMapView());
 		if(e.getSource() == SEARCH_BY_TYPE)
 			new ElaborateSearchFrame();
 		System.out.println("clicked " + e.getSource());

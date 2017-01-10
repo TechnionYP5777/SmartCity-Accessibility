@@ -16,7 +16,7 @@ import smartcity.accessibility.gui.components.ButtonsPanel;
 import smartcity.accessibility.mapmanagement.Facility;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.extendedMapView;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.search.NearbyPlacesAttempt;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.User;
@@ -115,7 +115,7 @@ public class ElaborateSearchFrame implements MouseListener {
 	public void mouseClicked(MouseEvent arg0) {
 		if (arg0.getSource() != btnSearch)
 			return;
-		JxMapsFunctionality.ClearMarkers((extendedMapView) JxMapsFunctionality.getMapView());
+		JxMapsFunctionality.ClearMarkers(JxMapsFunctionality.getMapView());
 		createSearchQuery();	
 
 		frame.dispose();
