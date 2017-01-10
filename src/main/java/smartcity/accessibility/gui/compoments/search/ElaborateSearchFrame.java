@@ -116,8 +116,7 @@ public class ElaborateSearchFrame implements MouseListener {
 		if (arg0.getSource() != btnSearch)
 			return;
 		JxMapsFunctionality.ClearMarkers((extendedMapView) JxMapsFunctionality.getMapView());
-		while (createSearchQuery() == null)
-			;
+		createSearchQuery();	
 
 		frame.dispose();
 	}
