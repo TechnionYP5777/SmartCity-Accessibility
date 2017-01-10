@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -37,7 +35,6 @@ public class Application {
 
 	public static User appUser = new UserImpl("", "", User.Privilege.DefaultUser);
 	public static Marker currLocation;
-	public static List<Marker> markers = new ArrayList<Marker>();
 
 	public static void main(String[] args) {
 		frame = new MapFrame("SmartCity - Accessibility");
@@ -143,13 +140,13 @@ public class Application {
 		mapView.getMap().addEventListener("rightclick", new MapMouseEvent() {
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				JxMapsFunctionality.onRightClick(mapView, arg0.latLng());
+				JxMapsFunctionality.onRightClick( arg0.latLng());
 			}
 
 		});
 		JxMapsFunctionality.addOptionsMenu(JxMapsFunctionality.createOptionsBar());
 
-		JxMapsFunctionality.initMapLocation(mapView, "Eliezer 10, Haifa, Israel");
+		JxMapsFunctionality.initMapLocation("Eliezer 10, Haifa, Israel");
 	}
 
 }

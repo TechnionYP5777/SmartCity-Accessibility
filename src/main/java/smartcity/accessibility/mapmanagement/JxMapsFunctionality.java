@@ -219,15 +219,21 @@ public abstract class JxMapsFunctionality {
 	}
 	
 	public static ExtendedMarker putExtendedMarker(ExtendedMapView mv, Location l, String name){
+		ExtendedMarker marker = putExtendedMarker(mv, l);
+		Map map = mv.getMap();
+		final InfoWindow window = new InfoWindow(map);
+		window.setContent(name);
+		window.open(map, marker);
+		return marker;
+	}
+	
+	public static ExtendedMarker putExtendedMarker(ExtendedMapView mv, Location l){
 		waitForMapReady(mv);
 		Map map = mv.getMap();
 		ExtendedMarker marker = new ExtendedMarker(map, l);
 		marker.setPosition(l.getCoordinates());
 		map.setCenter(l.getCoordinates());
-		final InfoWindow window = new InfoWindow(map);
 		mv.MarkerList.add(marker);
-		window.setContent(name);
-		window.open(map, marker);
 		return marker;
 	}
 
@@ -249,12 +255,12 @@ public abstract class JxMapsFunctionality {
 		frame.setVisible(true);
 	}
 
-	public static void initMapLocation(ExtendedMapView mapView, String startAdress) {
-		Map map = mapView.getMap();
+	public static void initMapLocation(String startAdress) {
+		Map map = mv.getMap();
 		map.setZoom(17.0);
 		GeocoderRequest request = new GeocoderRequest();
 		request.setAddress(startAdress);
-		Geocoder g = mapView.getServices().getGeocoder();
+		Geocoder g = mv.getServices().getGeocoder();
 		g.geocode(request, new GeocoderCallback(map) {
 			@Override
 			public void onComplete(GeocoderResult[] rs, GeocoderStatus s) {
@@ -262,30 +268,25 @@ public abstract class JxMapsFunctionality {
 				if (s != GeocoderStatus.OK)
 					return;
 				map.setCenter(rs[0].getGeometry().getLocation());
-				onRightClick(mapView, rs[0].getGeometry().getLocation());
+				onRightClick(rs[0].getGeometry().getLocation());
 			}
 		});
 
 	}
 
-	public static void onRightClick(ExtendedMapView v, LatLng l) {
-		Map map = v.getMap();
+	public static void onRightClick(LatLng l) {
+		Map map = mv.getMap();
 		if (Application.currLocation != null)
 			Application.currLocation.remove();
-		Application.currLocation = new Marker(v.getMap());
+		Application.currLocation = new Marker(map);
 		Application.currLocation.setPosition(l);
 		LocationManager.getLocationsNearPoint(l, new LocationListCallback() {
 
 			@Override
 			public void done(List<Location> ls) {
-				for (Marker m : Application.markers)
-					m.remove();
-				Application.markers.clear();
+				ClearMarkers(mv);
 				for (Location loc : ls)
-					/*do not add markers outside of jxmapsfunctionality api please
-					 *Application.markers.add(new ExtendedMarker(map, loc)); 
-					 */
-					 Application.markers.add(JxMapsFunctionality.putExtendedMarker((ExtendedMapView)v, loc, "result"));//new ExtendedMarker(map, loc)); 			
+					 JxMapsFunctionality.putExtendedMarker(mv, loc); 			
 			}
 		});
 	}
