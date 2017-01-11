@@ -37,12 +37,12 @@ public class JxMapsConvertor{
 		options.setStrokeWeight(2.0);
 		polyline.setOptions(options);
 		
-		JFrame frame = new JFrame("displayRoute");
-		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		frame.add(mapView, BorderLayout.CENTER);
-		frame.setSize(700, 500);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+//		JFrame frame = new JFrame("displayRoute");
+//		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//		frame.add(mapView, BorderLayout.CENTER);
+//		frame.setSize(700, 500);
+//		frame.setLocationRelativeTo(null);
+//		frame.setVisible(true);
 	}
 
 }

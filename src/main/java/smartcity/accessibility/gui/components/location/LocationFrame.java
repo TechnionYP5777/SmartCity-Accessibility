@@ -15,9 +15,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+import com.teamdev.jxmaps.LatLng;
+
 import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.navigation.JxMapsConvertor;
+import smartcity.accessibility.navigation.Navigation;
+import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.User;
 
@@ -172,6 +177,14 @@ public class LocationFrame implements MouseListener {
 	 * @author yael
 	 */
 	public void activateNavigation(){
-		
+		Location src = new Location(Application.currLocation.getPosition());
+		Location dst = loc;
+		Integer accessibilityThreshold = 5; //TODO change to value from user
+		try {
+			LatLng[] shapePoints = Navigation.showRoute(src, dst, accessibilityThreshold);
+			JxMapsConvertor.displayRoute(Application.mapView, shapePoints);
+		} catch (CommunicationFailed e) {
+			//TODO handle problems with navigation
+		}
 	}
 }

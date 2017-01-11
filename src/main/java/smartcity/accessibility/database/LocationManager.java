@@ -52,7 +52,7 @@ public class LocationManager {
 		FindCallback<ParseObject> callBack = new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
-                if (arg1 == null) {
+                if (arg1 == null && arg0 != null) {
                 	for (ParseObject obj :arg0){
                 		ParseGeoPoint point = (ParseGeoPoint) obj.get("coordinates");
                 		points.add(new LatLng (point.getLatitude(),point.getLongitude()));
