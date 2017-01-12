@@ -146,7 +146,7 @@ public class ElaborateSearchFrame implements MouseListener {
 		 * will just use nearby searches
 		 */
 
-		NearbyPlacesAttempt.yieldResults(locationTypeField.getText(), radius, c);
+		NearbyPlacesAttempt.displayResults(locationTypeField.getText(), radius, c, JxMapsFunctionality.getMapView());
 
 		return SearchQuery.freeTextSearch(locationTypeField.getText());
 	}

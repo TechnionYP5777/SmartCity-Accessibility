@@ -15,6 +15,7 @@ import com.teamdev.jxmaps.GeocoderResult;
 import com.teamdev.jxmaps.GeocoderStatus;
 import com.teamdev.jxmaps.swing.MapView;
 
+import smartcity.accessibility.mapmanagement.Location;
 
 import com.teamdev.jxmaps.LatLng;
 
@@ -73,7 +74,7 @@ public class SearchQuery {
 
 	protected SearchQueryResult Search(GeocoderRequest r, MapView v) {
 		SetSearchStatus(SearchStage.Running);
-		List<GeocoderResult> results = new ArrayList<GeocoderResult>();
+		List<Location> results = new ArrayList<Location>();
 		Geocoder g = v.getServices().getGeocoder();
 		g.geocode(r, new GeocoderCallback(v.getMap()) {
 			@Override
@@ -84,13 +85,16 @@ public class SearchQuery {
 					wakeTheWaiters();
 					return;	
 				}
-				results.add(rs[0]);
+				LatLng l = rs[0].getGeometry().getLocation();
+				Location f = new Location(l);
+				f.setName(rs[0].getFormattedAddress());
+				results.add(f);
 				SetSearchStatus(SearchStage.Done);
 				wakeTheWaiters();
 			}
 
 		});
-		return new SearchQueryResult(results, v.getMap());
+		return new SearchQueryResult(results);
 	}
 
 	@SuppressWarnings("deprecation")

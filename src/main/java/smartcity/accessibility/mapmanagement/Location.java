@@ -115,7 +115,10 @@ public class Location {
 		return new Score(rating);
 	}
 
-	public String getAddress(MapView mapView) {
+/*
+ * due to changes of searc results, implementation for this should change
+ * 
+ * 	public String getAddress(MapView mapView) {
 		SearchQuery sq = SearchQuery.adressSearch("_");
 		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
 		SearchQueryResult result = sq.searchByCoordinates(mapView, coordinates);
@@ -126,7 +129,7 @@ public class Location {
 			e.printStackTrace();
 		}
 		return result.getCoordinations().get(0).getFormattedAddress();
-	}
+	}*/
 
 	public LatLng getCoordinates() {
 		return this.coordinates;

@@ -69,6 +69,7 @@ public abstract class JxMapsFunctionality {
 		private OptionsWindow optionsWindow;
 
 		public ExtendedMapView() {
+			MapViewOptions options = new MapViewOptions();
 			setOnMapReadyHandler(new MapReadyHandler() {
 				@Override
 				public void onMapReady(MapStatus arg0) {
@@ -143,8 +144,7 @@ public abstract class JxMapsFunctionality {
 							JOptionPane.showMessageDialog(Application.frame, "no results were found",
 									"search found nothing :(", JOptionPane.INFORMATION_MESSAGE);
 						else {
-							LatLng position1 = sqr1.get(0).getGeometry().getLocation();
-							Location dummy = new Location(position1, LocationTypes.Coordinate);
+							Location dummy = sqr1.get(0);
 							JxMapsFunctionality.putExtendedMarker((ExtendedMapView) mv, dummy, searchField.getText());
 						}
 					}

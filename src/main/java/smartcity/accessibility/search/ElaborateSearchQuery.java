@@ -8,8 +8,12 @@ import com.teamdev.jxmaps.GeocoderCallback;
 import com.teamdev.jxmaps.GeocoderRequest;
 import com.teamdev.jxmaps.GeocoderResult;
 import com.teamdev.jxmaps.GeocoderStatus;
+import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.swing.MapView;
 
+import smartcity.accessibility.mapmanagement.Facility;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
+import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery.SearchStage;
 
 public class ElaborateSearchQuery extends SearchQuery{
@@ -20,24 +24,24 @@ public class ElaborateSearchQuery extends SearchQuery{
 
 	@Override
 	protected SearchQueryResult Search(GeocoderRequest r, MapView v) {
+		return null;
+	}
+	protected SearchQueryResult Search(Location initLocation, double radius, List<String> kindsOfLocations) {
 		SetSearchStatus(SearchStage.Running);
-		List<GeocoderResult> results = new ArrayList<GeocoderResult>();
-		Geocoder g = v.getServices().getGeocoder();
-		g.geocode(r, new GeocoderCallback(v.getMap()) {
-			@Override
-			public void onComplete(GeocoderResult[] rs, GeocoderStatus s) {
-				System.out.println("arrived to search on complete");
-				if (s != GeocoderStatus.OK){
-					SetSearchStatus(SearchStage.Failed);
-					wakeTheWaiters();
-					return;	
-				}
-				results.add(rs[0]);
-				SetSearchStatus(SearchStage.Done);
-				wakeTheWaiters();
-			}
+		kindsOfLocations.add(queryString);
+		MapViewOptions options = new MapViewOptions();
+		options.importPlaces();
+		NearbyPlacesAttempt n = new NearbyPlacesAttempt(options);
+		ArrayList<Location> places = n.findNearbyPlaces(initLocation, radius, kindsOfLocations);
+		if(!places.isEmpty()){
+			SetSearchStatus(SearchStage.Failed);
+			wakeTheWaiters();
+		}else{
+			SetSearchStatus(SearchStage.Done);
+			wakeTheWaiters();
+		}
 
-		});
-		return new SearchQueryResult(results, v.getMap());		
+		//return new SearchQueryResult(places);
+		return null;
 	}
 }

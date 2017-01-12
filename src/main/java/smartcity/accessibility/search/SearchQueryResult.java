@@ -4,36 +4,36 @@ import java.util.List;
 
 import com.teamdev.jxmaps.GeocoderResult;
 import com.teamdev.jxmaps.Map;
-import com.teamdev.jxmaps.swing.MapView;
+
+import smartcity.accessibility.mapmanagement.Location;
 
 /**
  * @author Kolikant
  *
  */
-public class SearchQueryResult extends MapView{
+public class SearchQueryResult{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	Map map;
-	private List<GeocoderResult> coordinations;
+	private List<Location> locations;
 
-	SearchQueryResult(List<GeocoderResult> c, Map m){
-		this.coordinations = c;
-		this.map = m;
+	SearchQueryResult(List<Location> c){
+		this.locations = c;
 	}
 	
-	public List<GeocoderResult> getCoordinations(){
-		return coordinations;
+	public List<Location> getLocations(){
+		return locations;
 	}
 	
 	public boolean gotResults(){
-		return !coordinations.isEmpty();
+		return !locations.isEmpty();
 	}
 	
-	public GeocoderResult get(int i){
-		return coordinations.size() < i + 1 ? null : coordinations.get(i);
+	public Location get(int i){
+		return locations.size() < i + 1 ? null : locations.get(i);
 	}
 }
 	

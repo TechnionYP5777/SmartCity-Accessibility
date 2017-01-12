@@ -9,7 +9,8 @@ import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
+import smartcity.accessibility.mapmanagement.Location;;
 
 /**
  * @author Kolikant
@@ -34,11 +35,11 @@ public class SearchTest{
          s1.waitOnSearch();
          s2.waitOnSearch();
          
-         LatLng position1 = sqr1.getCoordinations().get(0).getGeometry().getLocation();
-         LatLng position2 = sqr2.getCoordinations().get(0).getGeometry().getLocation();
+         Location location1 = sqr1.getLocations().get(0);//.getGeometry().getLocation();
+         Location location2 = sqr2.getLocations().get(0);//.getGeometry().getLocation();
          
-         JxMapsFunctionality.putMarker((ExtendedMapView) mapView, position1, "result1");
-         JxMapsFunctionality.putMarker((ExtendedMapView) mapView, position2, "result2");
+         JxMapsFunctionality.putMarker((ExtendedMapView) mapView, location1.getCoordinates(), "result1");
+         JxMapsFunctionality.putMarker((ExtendedMapView) mapView, location2.getCoordinates(), "result2");
          
          JxMapsFunctionality.openFrame(mapView, "JxMaps - Hello, World!", 16.0);
         
@@ -83,8 +84,8 @@ public class SearchTest{
 	        
 	        s1.waitOnSearch();
 	        
-	        if(!sqr1.getCoordinations().isEmpty()){
-		        LatLng position1 = sqr1.getCoordinations().get(0).getGeometry().getLocation();  
+	        if(!sqr1.getLocations().isEmpty()){
+		        LatLng position1 = sqr1.getLocations().get(0).getCoordinates();//.getGeometry().getLocation();  
 		        fail();
 	        }else{
 		        ;

@@ -63,7 +63,7 @@ public class NearbyPlacesAttempt extends MapView {
 						PlaceResult result = rs[i];
 						String name = result.getName();
 						LatLng l = result.getGeometry() == null ? null : result.getGeometry().getLocation();
-						Facility f = new Facility(l);
+						Location f = new Location(l);
 						f.setName(result.getName());
 						$.add(f);
 					}
@@ -83,7 +83,7 @@ public class NearbyPlacesAttempt extends MapView {
 	/*
 	 * Kolikant
 	 */
-	public static void yieldResults(String type, int radius, LatLng c){
+	public static void displayResults(String type, int radius, LatLng c, MapView mapView){
 		ArrayList<String> kindsOfLocations = new ArrayList<String>();
 		kindsOfLocations.add(type);
 		Location initLocation = new Facility(c);
@@ -91,10 +91,10 @@ public class NearbyPlacesAttempt extends MapView {
 		options.importPlaces();
 		NearbyPlacesAttempt n = new NearbyPlacesAttempt(options);
 		ArrayList<Location> places = n.findNearbyPlaces(initLocation, radius, kindsOfLocations);
-		MapView mapView = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
 
 		for (Location l : places)
-			JxMapsFunctionality.putMarkerNoJump((ExtendedMapView) mapView, l.getCoordinates(), l.getName());
+			JxMapsFunctionality.putExtendedMarker((ExtendedMapView) mapView, l, l.getName());
 	}
+	
 }
