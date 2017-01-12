@@ -35,13 +35,13 @@ public class SearchQuery {
 	}
 
 	public static final String EmptyList = "[]";
-	public static final String isThisAdressSpliter ="<-This is Adress: ";
+	protected static final String isThisAdressSpliter ="<-This is Adress: ";
 	
 	String queryString;
 	boolean isAdress;
 	final AtomicInteger searchStatus;
 
-	private SearchQuery(String parsedQuery) {
+	protected SearchQuery(String parsedQuery) {
 		String[] a = parsedQuery.split(isThisAdressSpliter);
 		isAdress = Boolean.parseBoolean(a[0]);
 		this.queryString = a[1];
@@ -57,7 +57,7 @@ public class SearchQuery {
 		return new SearchQuery(Boolean.toString(false)+isThisAdressSpliter+freeText);
 	}
 
-	private void SetSearchStatus(SearchStage s) {
+	protected void SetSearchStatus(SearchStage s) {
 		searchStatus.set(s.ordinal());
 	}
 
@@ -67,11 +67,11 @@ public class SearchQuery {
 		}
 	}
 	
-	private synchronized void wakeTheWaiters(){
+	protected synchronized void wakeTheWaiters(){
 		notifyAll();
 	}
 
-	private SearchQueryResult Search(GeocoderRequest r, MapView v) {
+	protected SearchQueryResult Search(GeocoderRequest r, MapView v) {
 		SetSearchStatus(SearchStage.Running);
 		List<GeocoderResult> results = new ArrayList<GeocoderResult>();
 		Geocoder g = v.getServices().getGeocoder();

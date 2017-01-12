@@ -29,25 +29,22 @@ public class NearbyPlacesAttempt extends MapView {
 	boolean onComplete;
 	public NearbyPlacesAttempt(MapViewOptions mapOptions) {
 		super(mapOptions);
-		mapIsReady = false;
-		onComplete = false;
+		onComplete = mapIsReady = false;
 	}
 
 	public ArrayList<Location> findNearbyPlaces(Location initLocation, double radius, List<String> kindsOfLocations) {
 		
-        ArrayList<Location> res = new ArrayList<Location>();
+        ArrayList<Location> $ = new ArrayList<Location>();
         setOnMapReadyHandler(new MapReadyHandler() {
             @Override
-            public void onMapReady(MapStatus status) {
+            public void onMapReady(MapStatus s) {
                 // Check if the map is loaded correctly
-                if (status == MapStatus.MAP_STATUS_OK) {
-                    mapIsReady = true;
-                }
+                if (s == MapStatus.MAP_STATUS_OK)
+					mapIsReady = true;
             }
         });
-        while(!mapIsReady){
-        	 System.out.println("waiting to map");
-        }
+        while(!mapIsReady)
+			System.out.println("waiting to map");
 		Map map = getMap();
 		assert(map != null);
 		LatLng l = initLocation.getCoordinates();
@@ -56,35 +53,31 @@ public class NearbyPlacesAttempt extends MapView {
 		PlaceSearchRequest request = new PlaceSearchRequest(getMap());
 		request.setLocation(map.getCenter());
 		request.setRadius(radius);
-		String[] types = new String[kindsOfLocations.size()];
-		types = kindsOfLocations.toArray(types);
+		String[] types = kindsOfLocations.toArray((new String[kindsOfLocations.size()]));
 		request.setTypes(types);
 		getServices().getPlacesService().nearbySearch(request, new PlaceNearbySearchCallback(map) {
             @Override
-            public void onComplete(PlaceResult[] results, PlacesServiceStatus status, PlaceSearchPagination pagination) {
-                if (status == PlacesServiceStatus.OK) {
-                    for (int i=0; i< results.length; ++i) {
-                        PlaceResult result = results[i];
-                        String name = result.getName();
-                        LatLng l = result.getGeometry() != null ? result.getGeometry().getLocation() : null;
-                        Facility f = new Facility(l);
-                        f.setName(result.getName());
-                        res.add(f);
-                    }
-                }
+            public void onComplete(PlaceResult[] rs, PlacesServiceStatus s, PlaceSearchPagination __) {
+                if (s == PlacesServiceStatus.OK)
+					for (int i = 0; i < rs.length; ++i) {
+						PlaceResult result = rs[i];
+						String name = result.getName();
+						LatLng l = result.getGeometry() == null ? null : result.getGeometry().getLocation();
+						Facility f = new Facility(l);
+						f.setName(result.getName());
+						$.add(f);
+					}
                 onComplete = true;
                 return;
             }
 		});
 	
-		while(!onComplete){
-          System.out.println("waiting");
-		}
+		while(!onComplete)
+			System.out.println("waiting");
 		
-		this.mapIsReady = false;
-		this.onComplete = false;
+		this.onComplete = this.mapIsReady = false;
 		
-		return res;
+		return $;
 	}
 	
 	/*
