@@ -180,11 +180,15 @@ public class LocationFrame implements MouseListener {
 		Location src = new Location(Application.currLocation.getPosition());
 		Location dst = loc;
 		Integer accessibilityThreshold = 5; //TODO change to value from user
-		try {
-			LatLng[] shapePoints = Navigation.showRoute(src, dst, accessibilityThreshold);
-			JxMapsConvertor.displayRoute(Application.mapView, shapePoints);
-		} catch (CommunicationFailed e) {
-			//TODO handle problems with navigation
-		}
+		(new Thread() {
+			@Override
+			public void run() {
+				try {
+					LatLng[] shapePoints = Navigation.showRoute(src, dst, accessibilityThreshold);
+					JxMapsConvertor.displayRoute(Application.mapView, shapePoints);
+				} catch (CommunicationFailed e) {
+				}
+			}
+		}).start();
 	}
 }
