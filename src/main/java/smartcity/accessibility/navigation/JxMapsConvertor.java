@@ -19,8 +19,9 @@ import java.awt.*;
  *
  */
 public class JxMapsConvertor{
-
+	private static Polyline prev;
 	public static void displayRoute(MapView mapView, LatLng[] shapeLatlng) {
+		removePrevPolyline();
 		final Map map = mapView.getMap();
 		MapOptions mapOptions = new MapOptions();
 		MapTypeControlOptions controlOptions = new MapTypeControlOptions();
@@ -36,13 +37,12 @@ public class JxMapsConvertor{
 		options.setStrokeColor("#FF0000");
 		options.setStrokeWeight(2.0);
 		polyline.setOptions(options);
-		
-//		JFrame frame = new JFrame("displayRoute");
-//		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//		frame.add(mapView, BorderLayout.CENTER);
-//		frame.setSize(700, 500);
-//		frame.setLocationRelativeTo(null);
-//		frame.setVisible(true);
+		prev = polyline;
+	}
+	
+	public static void removePrevPolyline(){
+		if(prev != null)
+			prev.setVisible(false);
 	}
 
 }
