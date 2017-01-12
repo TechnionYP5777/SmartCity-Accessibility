@@ -16,8 +16,10 @@ import com.teamdev.jxmaps.GeocoderStatus;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.search.SearchQuery.SearchStage;
 
 import com.teamdev.jxmaps.LatLng;
+import com.teamdev.jxmaps.MapViewOptions;
 
 
 /**
@@ -54,8 +56,8 @@ public class SearchQuery {
 		return new SearchQuery(Boolean.toString(true)+isThisAdressSpliter+adress);
 	}
 
-	public static SearchQuery freeTextSearch(String freeText){
-		return new SearchQuery(Boolean.toString(false)+isThisAdressSpliter+freeText);
+	public static SearchQuery TypeSearch(String Type){
+		return new SearchQuery(Boolean.toString(false)+isThisAdressSpliter+Type);
 	}
 
 	protected void SetSearchStatus(SearchStage s) {
@@ -63,9 +65,8 @@ public class SearchQuery {
 	}
 
 	public synchronized  void waitOnSearch() throws InterruptedException {
-		while(searchStatus.get() == SearchStage.Running.ordinal()){
+		while(searchStatus.get() == SearchStage.Running.ordinal())
 			wait();
-		}
 	}
 	
 	protected synchronized void wakeTheWaiters(){
@@ -73,6 +74,27 @@ public class SearchQuery {
 	}
 
 	protected SearchQueryResult Search(GeocoderRequest r, MapView v) {
+		return isAdress ? adressSearch(r, v) : null;
+	}
+	
+	protected SearchQueryResult Search(Location initLocation, double radius) {
+		return !isAdress ? typeSearch(initLocation, radius) : null;
+	}
+
+	private SearchQueryResult typeSearch(Location initLocation, double radius) {
+		SetSearchStatus(SearchStage.Running);
+		List<String> kindsOfLocations = new ArrayList<String>();
+		kindsOfLocations.add(queryString);
+		MapViewOptions options = new MapViewOptions();
+		options.importPlaces();
+		NearbyPlacesAttempt n = new NearbyPlacesAttempt(options);
+		ArrayList<Location> places = n.findNearbyPlaces(initLocation, radius, kindsOfLocations);
+		SetSearchStatus(places.isEmpty() ? SearchStage.Done : SearchStage.Failed);
+		wakeTheWaiters();
+		return new SearchQueryResult(places);
+	}
+
+	private SearchQueryResult adressSearch(GeocoderRequest r, MapView v) {
 		SetSearchStatus(SearchStage.Running);
 		List<Location> results = new ArrayList<Location>();
 		Geocoder g = v.getServices().getGeocoder();
@@ -120,6 +142,11 @@ public class SearchQuery {
 		GeocoderRequest request = new GeocoderRequest(v.getMap());
 		request.setLocation(c);
 		return Search(request, v);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public SearchQueryResult searchByType(Location initLocation, double radius) {
+		return Search(initLocation, radius);
 	}
 
 

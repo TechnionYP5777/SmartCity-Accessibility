@@ -72,7 +72,7 @@ public class UserManagerTest {
 		assertNotNull(b);
 		
 		List<SearchQuery> l = new ArrayList<SearchQuery>();
-		l.add(SearchQuery.freeTextSearch("cafe"));
+		l.add(SearchQuery.TypeSearch("cafe"));
 		try {
 			UserManager.updatefavouriteQueries(b, l);
 		} catch (UserNotFoundException e) {

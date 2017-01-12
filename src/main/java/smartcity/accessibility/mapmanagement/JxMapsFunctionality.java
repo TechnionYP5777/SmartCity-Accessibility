@@ -91,9 +91,9 @@ public abstract class JxMapsFunctionality {
 			System.out.println("Stage is closing");
 			// Save file
 		}
-		
-		public void setOptionsWindow(OptionsWindow ow){
-			optionsWindow = ow;
+
+		public void setOptionsWindow(OptionsWindow w) {
+			optionsWindow = w;
 		}
 
 		@Override
@@ -103,12 +103,11 @@ public abstract class JxMapsFunctionality {
 
 	}
 
-	public static void addOptionsMenu(OptionsWindow ow){
-		ExtendedMapView mva = (ExtendedMapView)mv;
-		mva.setOptionsWindow(ow);
+	public static void addOptionsMenu(OptionsWindow w) {
+		((ExtendedMapView) mv).setOptionsWindow(w);
 	}
-	
-	public static OptionsWindow createOptionsBar(){
+
+	public static OptionsWindow createOptionsBar() {
 		return new OptionsWindow(mv, new Dimension(350, 40)) {
 			@Override
 			public void initContent(JWindow contentWindow) {
@@ -127,13 +126,13 @@ public abstract class JxMapsFunctionality {
 				searchButton.setBorder(BorderFactory.createEmptyBorder());
 				searchButton.setUI(new BasicButtonUI());
 				searchButton.setOpaque(false);
-				
+
 				Runnable r = new Runnable() {
 					@Override
 					public void run() {
-						System.out.println(searchField.getText()); 
+						System.out.println(searchField.getText());
 						SearchQuery sq = SearchQuery.adressSearch(searchField.getText());
-						SearchQueryResult sqr1= sq.SearchByAddress(mv);
+						SearchQueryResult sqr1 = sq.SearchByAddress(mv);
 						try {
 							sq.waitOnSearch();
 						} catch (InterruptedException e) {
@@ -149,10 +148,10 @@ public abstract class JxMapsFunctionality {
 						}
 					}
 				};
-				
+
 				ActionListener searchActionListener = new ActionListener() {
 					@Override
-					public void actionPerformed(ActionEvent e) {
+					public void actionPerformed(ActionEvent __) {
 						r.run();
 					}
 				};
@@ -169,16 +168,16 @@ public abstract class JxMapsFunctionality {
 
 			@Override
 			protected void updatePosition() {
-				if (parentFrame.isVisible()) {
-					Point newLocation = parentFrame.getContentPane().getLocationOnScreen();
-					newLocation.translate(56, 11);
-					contentWindow.setLocation(newLocation);
-					contentWindow.setSize(340, 40);
-				}
+				if (!parentFrame.isVisible())
+					return;
+				Point newLocation = parentFrame.getContentPane().getLocationOnScreen();
+				newLocation.translate(56, 11);
+				contentWindow.setLocation(newLocation);
+				contentWindow.setSize(340, 40);
 			}
 		};
 	}
-	
+
 	public static ExtendedMapView getMapView() {
 		return mv != null ? mv : (mv = new ExtendedMapView());
 	}
@@ -209,7 +208,7 @@ public abstract class JxMapsFunctionality {
 		window.setContent(name);
 		window.open(map, marker);
 	}
-	
+
 	public static void putMarkerNoJump(ExtendedMapView mv, LatLng l, String name) {
 		waitForMapReady(mv);
 		Map map = mv.getMap();
@@ -220,24 +219,34 @@ public abstract class JxMapsFunctionality {
 		window.setContent(name);
 		window.open(map, marker);
 	}
-	
-	public static ExtendedMarker putExtendedMarker(ExtendedMapView mv, Location l, String name){
-		ExtendedMarker marker = putExtendedMarker(mv, l);
+
+	public static ExtendedMarker putExtendedMarker(ExtendedMapView mv, Location l, String name) {
+		ExtendedMarker $ = putExtendedMarker(mv, l);
 		Map map = mv.getMap();
 		final InfoWindow window = new InfoWindow(map);
 		window.setContent(name);
-		window.open(map, marker);
-		return marker;
+		window.open(map, $);
+		return $;
 	}
-	
-	public static ExtendedMarker putExtendedMarker(ExtendedMapView mv, Location l){
+
+	public static void putAllExtendedMarker(ExtendedMapView mv, List<Location> ls) {
+		for (Location loc : ls) {
+			ExtendedMarker marker = putExtendedMarker(mv, loc);
+			Map map = mv.getMap();
+			final InfoWindow window = new InfoWindow(map);
+			window.setContent(loc.getName());
+			window.open(map, marker);
+		}
+	}
+
+	public static ExtendedMarker putExtendedMarker(ExtendedMapView mv, Location l) {
 		waitForMapReady(mv);
 		Map map = mv.getMap();
-		ExtendedMarker marker = new ExtendedMarker(map, l);
-		marker.setPosition(l.getCoordinates());
+		ExtendedMarker $ = new ExtendedMarker(map, l);
+		$.setPosition(l.getCoordinates());
 		map.setCenter(l.getCoordinates());
-		mv.MarkerList.add(marker);
-		return marker;
+		mv.MarkerList.add($);
+		return $;
 	}
 
 	public static void waitForMapReady(ExtendedMapView mv) {
@@ -287,8 +296,8 @@ public abstract class JxMapsFunctionality {
 			@Override
 			public void done(List<Location> ls) {
 				ClearMarkers(mv);
-				for (Location loc : ls){
-					if(loc.getLocationType().equals(LocationTypes.Street))
+				for (Location loc : ls) {
+					if (loc.getLocationType().equals(LocationTypes.Street))
 						continue;
 					JxMapsFunctionality.putExtendedMarker(mv, loc);
 				}

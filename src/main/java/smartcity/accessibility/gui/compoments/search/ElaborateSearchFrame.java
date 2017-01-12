@@ -19,6 +19,7 @@ import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.search.NearbyPlacesAttempt;
 import smartcity.accessibility.search.SearchQuery;
+import smartcity.accessibility.search.SearchQueryResult;
 import smartcity.accessibility.socialnetwork.User;
 
 import javax.swing.JButton;
@@ -106,7 +107,7 @@ public class ElaborateSearchFrame implements MouseListener {
 		CurrentPositionField = new JTextField();
 		CurrentPositionField.setBounds(151, startingLoc + 3 * jumps, 198, 25);
 		frame.getContentPane().add(CurrentPositionField);
-		CurrentPositionField.setText(Application.currLocation.getPosition().toString());
+		CurrentPositionField.setText((Application.currLocation.getPosition() + ""));
 
 		frame.setVisible(true);
 	}
@@ -116,12 +117,12 @@ public class ElaborateSearchFrame implements MouseListener {
 		if (arg0.getSource() != btnSearch)
 			return;
 		JxMapsFunctionality.ClearMarkers(JxMapsFunctionality.getMapView());
-		createSearchQuery();	
+		createAndSearchQuery();	
 
 		frame.dispose();
 	}
 
-	private SearchQuery createSearchQuery() {
+	private SearchQuery createAndSearchQuery() {
 		int Threshold, radius;
 		try {
 			Threshold = Integer.parseInt(thresholdField.getText());
@@ -146,9 +147,13 @@ public class ElaborateSearchFrame implements MouseListener {
 		 * will just use nearby searches
 		 */
 
-		NearbyPlacesAttempt.displayResults(locationTypeField.getText(), radius, c, JxMapsFunctionality.getMapView());
+		SearchQuery $ = SearchQuery.TypeSearch(locationTypeField.getText());
+		SearchQueryResult esr = $.searchByType(new Location(c), radius);
+		JxMapsFunctionality.putAllExtendedMarker(JxMapsFunctionality.getMapView(), esr.getLocations());
+		return $;
+		//NearbyPlacesAttempt.displayResults(locationTypeField.getText(), radius, c, JxMapsFunctionality.getMapView());
 
-		return SearchQuery.freeTextSearch(locationTypeField.getText());
+		//return SearchQuery.freeTextSearch(locationTypeField.getText());
 	}
 
 	@Override
