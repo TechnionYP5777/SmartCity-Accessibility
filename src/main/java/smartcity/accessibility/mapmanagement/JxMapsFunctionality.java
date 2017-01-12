@@ -16,6 +16,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
@@ -138,12 +139,14 @@ public abstract class JxMapsFunctionality {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						LatLng position1 = sqr1.getCoordinations().get(0).getGeometry().getLocation();
-						Location dummy = new Location(position1, LocationTypes.Coordinate);
-						//TODO: look up for existing locations
-						JxMapsFunctionality.putExtendedMarker((ExtendedMapView)mv, dummy, searchField.getText());
-						//new ExtendedMarker(mv.getMap(), dummy);
-						//JxMapsFunctionality.putMarker((extendedMapView) mv, position1, searchField.getText());
+						if (!sqr1.gotResults())
+							JOptionPane.showMessageDialog(Application.frame, "no results were found",
+									"search found nothing :(", JOptionPane.INFORMATION_MESSAGE);
+						else {
+							LatLng position1 = sqr1.get(0).getGeometry().getLocation();
+							Location dummy = new Location(position1, LocationTypes.Coordinate);
+							JxMapsFunctionality.putExtendedMarker((ExtendedMapView) mv, dummy, searchField.getText());
+						}
 					}
 				};
 				

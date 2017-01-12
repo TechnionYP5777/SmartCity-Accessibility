@@ -27,6 +27,14 @@ public class SearchQueryResult extends MapView{
 	public List<GeocoderResult> getCoordinations(){
 		return coordinations;
 	}
+	
+	public boolean gotResults(){
+		return !coordinations.isEmpty();
+	}
+	
+	public GeocoderResult get(int i){
+		return coordinations.size() < i + 1 ? null : coordinations.get(i);
+	}
 }
 	
 
