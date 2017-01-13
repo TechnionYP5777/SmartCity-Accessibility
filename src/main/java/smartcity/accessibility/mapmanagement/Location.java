@@ -62,7 +62,10 @@ public class Location {
 
 	// ArthurSap
 	public List<Review> getPinnedReviews() {
-		return reviews.stream().filter(r -> r.isPinned()).collect(Collectors.toList());
+		System.out.println("reviews are" + reviews); //debug
+		List<Review> res = reviews.stream().filter(r -> r.isPinned()).collect(Collectors.toList());
+		System.out.println("res is" + res); //debug
+		return res;
 	}
 	
 	public List<Review> getNotPinnedReviews() {

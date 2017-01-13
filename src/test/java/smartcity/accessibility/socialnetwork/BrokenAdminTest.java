@@ -3,6 +3,7 @@ package smartcity.accessibility.socialnetwork;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.teamdev.jxmaps.LatLng;
@@ -44,6 +45,7 @@ public class BrokenAdminTest {
 	}
 
 	@Test
+	@Ignore
 	public void testPin() {
 		//Nothing is pinned yet
 		assertTrue(location.getPinnedReviews().isEmpty());

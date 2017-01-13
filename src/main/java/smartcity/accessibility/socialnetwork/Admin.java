@@ -6,6 +6,7 @@ import java.util.List;
 import org.parse4j.ParseException;
 
 import smartcity.accessibility.database.ReviewManager;
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 
 /**
  * @author ArthurSap
@@ -26,7 +27,14 @@ public class Admin extends AuthenticatedUser {
 	 * Also, always show this review in the top reviews.
 	 **/
 	public void pinReview(Review r){
-		pinUnpinElement(r, r.getLocation().getPinnedReviews(), r.getLocation().getReviews());
+		//pinUnpinElement(r, r , r.getLocation().getReviews());
+		try {
+			r.getLocation().pinReview(this, r);
+		} catch (UnauthorizedAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
