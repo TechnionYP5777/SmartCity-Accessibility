@@ -12,6 +12,7 @@ import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
 import org.parse4j.callback.FindCallback;
 import org.parse4j.callback.GetCallback;
+import org.parse4j.callback.SaveCallback;
 
 import com.teamdev.jxmaps.LatLng;
 
@@ -110,14 +111,21 @@ public class LocationManager {
 		return l;
 	}
 	
-	public static void saveLocation (Location l) throws ParseException{
+	public static void saveLocation (Location l){
 		Map<String, Object> m = new HashMap<String,Object>();
 		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
-		ParseObject p = DatabaseManager.putValue("Location",m);
+		DatabaseManager.putValue("Location",m, new SaveCallback() {
+			
+			@Override
+			public void done(ParseException arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		//TODO: pin the pinned comment
 	}
 	
-	public static void updateLocation(Location l) throws ParseException {
+	public static void updateLocation(Location l) {
 		// Note this should be a background operation -- alex
 		Map<String, Object> m = new HashMap<String,Object>();
 		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));

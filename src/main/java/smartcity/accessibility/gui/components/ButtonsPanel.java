@@ -5,9 +5,6 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
-import org.parse4j.ParseException;
-import org.parse4j.ParseUser;
-
 import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.compoments.search.ElaborateSearchFrame;
@@ -83,6 +80,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 			LOGOUT_BUTTON.setVisible(false);
 			LOGIN_BUTTON.setVisible(true);
 			USER_PROFILE_BUTTON.setVisible(false);
+			SIGNUP_BUTTON.setVisible(false);
 		}
 		System.out.println("clicked " + e.getSource());
 

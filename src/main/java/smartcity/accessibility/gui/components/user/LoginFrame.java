@@ -88,6 +88,7 @@ public class LoginFrame implements MouseListener {
 			ButtonsPanel.USER_PROFILE_BUTTON.setVisible(true);
 			ButtonsPanel.LOGOUT_BUTTON.setVisible(true);
 			ButtonsPanel.LOGIN_BUTTON.setVisible(false);
+			ButtonsPanel.SIGNUP_BUTTON.setVisible(false);
 		}
 		frame.dispose();
 	}

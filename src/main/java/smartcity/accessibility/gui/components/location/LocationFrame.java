@@ -17,8 +17,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
-import org.parse4j.ParseException;
-
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.database.LocationManager;
@@ -68,12 +66,8 @@ public class LocationFrame implements MouseListener {
 			@Override
 			public void windowClosed(WindowEvent arg0) {
 				//alex according to git if the location isn't in the db i should save it so there is throwned exception --Assaf
-				try {
-					LocationManager.updateLocation(loc);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				LocationManager.updateLocation(loc);
+
 			}
 
 			@Override
