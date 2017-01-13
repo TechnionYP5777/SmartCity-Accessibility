@@ -14,6 +14,7 @@ import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.MouseEvent;
 
 import smartcity.accessibility.database.DatabaseManager;
+import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.gui.components.ButtonsPanel;
@@ -133,7 +134,7 @@ public class Application {
 
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				new LocationFrame(new Location(arg0.latLng()));
+				new LocationFrame(LocationManager.getLocation(arg0.latLng()));
 			}
 		});
 

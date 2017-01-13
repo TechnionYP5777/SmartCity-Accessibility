@@ -8,6 +8,7 @@ import com.teamdev.jxmaps.MapMouseEvent;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.MouseEvent;
 
+import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.gui.components.location.LocationFrame;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
@@ -25,7 +26,7 @@ public class ExtendedMarker extends Marker {
 
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				new LocationFrame(location);
+				new LocationFrame(LocationManager.getLocation(location.getCoordinates()));
 
 			}
 
