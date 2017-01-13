@@ -5,11 +5,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.stream.IntStream;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -24,6 +26,7 @@ import smartcity.accessibility.navigation.JxMapsConvertor;
 import smartcity.accessibility.navigation.Navigation;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.socialnetwork.Review;
+import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
 
 public class LocationFrame implements MouseListener {
@@ -179,7 +182,11 @@ public class LocationFrame implements MouseListener {
 	public void activateNavigation(){
 		Location src = new Location(Application.currLocation.getPosition());
 		Location dst = loc;
-		Integer accessibilityThreshold = 5; //TODO change to value from user
+		Object[] range = IntStream.rangeClosed(Score.getMinScore(), Score.getMaxScore()).mapToObj(n -> Integer.valueOf(n)).toArray();
+		Integer accessibilityThreshold = (Integer)JOptionPane.showInputDialog(frame,
+                "Insert the accessibility threshold for the navigation:\n",
+                "choose accessibilityThreshold",
+                JOptionPane.PLAIN_MESSAGE, null, range, 5);
 		(new Thread() {
 			@Override
 			public void run() {
