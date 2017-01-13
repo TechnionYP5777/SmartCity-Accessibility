@@ -24,8 +24,8 @@ public class UserImpl implements User {
 		this(uName, pass, p, "");
 	}
 
-	public static UserImpl DefaultUser(String uName, String pass, String FavouriteQueries) {
-		return new UserImpl(uName, pass, Privilege.DefaultUser, FavouriteQueries);
+	public static UserImpl DefaultUser() {
+		return new UserImpl("", "", Privilege.DefaultUser);
 	}
 
 	public static UserImpl RegularUser(String uName, String pass, String FavouriteQueries) {

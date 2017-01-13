@@ -34,7 +34,7 @@ public class Application {
 	public static final int FRAME_X_SIZE = 1000;
 	public static final int FRAME_Y_SIZE = 700;
 
-	public static User appUser = new UserImpl("", "", User.Privilege.DefaultUser);
+	public static User appUser = UserImpl.DefaultUser();
 	public static Marker currLocation;
 
 	public static void main(String[] args) {

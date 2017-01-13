@@ -28,7 +28,7 @@ public class UserFunctionalityTest {
 	public void staticConstructorsCorrectness() {  
 		
 		assertEquals(Privilege.DefaultUser,
-				UserImpl.DefaultUser("DefaultUser", "", "").getPrivilege());
+				UserImpl.DefaultUser().getPrivilege());
 		
 		assertEquals(Privilege.RegularUser,
 				UserImpl.RegularUser("RegularUser", "", "").getPrivilege());
@@ -40,7 +40,7 @@ public class UserFunctionalityTest {
 	@Test
 	public void privilegeCorrectness() { 
 		assertEquals(Privilege.DefaultUser,
-				UserImpl.DefaultUser("DefaultUser", "", "").getPrivilege());
+				UserImpl.DefaultUser().getPrivilege());
 	}
 
 }
