@@ -3,32 +3,29 @@ package smartcity.accessibility.gui.compoments.search;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import com.teamdev.jxmaps.LatLng;
-import com.teamdev.jxmaps.MapViewOptions;
-import com.teamdev.jxmaps.swing.MapView;
+import org.apache.commons.lang3.Range;
 
-import smartcity.accessibility.database.UserManager;
+import com.teamdev.jxmaps.LatLng;
 import smartcity.accessibility.gui.Application;
-import smartcity.accessibility.gui.components.ButtonsPanel;
-import smartcity.accessibility.mapmanagement.Facility;
+import smartcity.accessibility.gui.components.JMultilineLabel;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
-import smartcity.accessibility.search.NearbyPlacesAttempt;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
-import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.Score;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-
-import javax.swing.JPasswordField;
+import java.util.stream.IntStream;
 
 /*
  * Author Kolikant
@@ -40,11 +37,12 @@ public class ElaborateSearchFrame implements MouseListener {
 
 	private JFrame frame;
 	private JTextField locationTypeField;
-	private JTextField thresholdField;
+	//private JTextField thresholdField;
 	private JTextField RadiusField;
 	private JTextField CurrentPositionField;
 	private JButton btnSearch;
-
+	private JComboBox<Integer> thresholdsBox;
+	
 	/**
 	 * Create the application.
 	 */
@@ -96,9 +94,20 @@ public class ElaborateSearchFrame implements MouseListener {
 		btnSearch.addMouseListener(this);
 		frame.getContentPane().add(btnSearch);
 
-		thresholdField = new JTextField();
+		Object[] scores = IntStream.rangeClosed(Score.getMinScore(), Score.getMaxScore()).mapToObj(n -> Integer.valueOf(n)).toArray();
+		Integer[] acscores = new Integer[scores.length];
+		for(int i = 0 ; i < scores.length; i++){
+			acscores[i] = (Integer)scores[i];
+		}
+		this.thresholdsBox = new JComboBox<>(acscores);
+		thresholdsBox.setBounds(151, startingLoc + jumps, 198, 25);
+		frame.getContentPane().add(thresholdsBox);
+		thresholdsBox.setVisible(true);
+		frame.setVisible(true);
+		
+		/*thresholdField = new JTextField();
 		thresholdField.setBounds(151, startingLoc + jumps, 198, 25);
-		frame.getContentPane().add(thresholdField);
+		frame.getContentPane().add(thresholdField);*/
 
 		RadiusField = new JTextField();
 		RadiusField.setBounds(151, startingLoc + 2 * jumps, 198, 25);
@@ -108,8 +117,8 @@ public class ElaborateSearchFrame implements MouseListener {
 		CurrentPositionField.setBounds(151, startingLoc + 3 * jumps, 198, 25);
 		frame.getContentPane().add(CurrentPositionField);
 		CurrentPositionField.setText((Application.currLocation.getPosition() + ""));
-
-		frame.setVisible(true);
+		
+		
 	}
 
 	@Override
@@ -125,7 +134,8 @@ public class ElaborateSearchFrame implements MouseListener {
 	private SearchQuery createAndSearchQuery() {
 		int Threshold, radius;
 		try {
-			Threshold = Integer.parseInt(thresholdField.getText());
+			
+			Threshold = thresholdsBox.getSelectedIndex();//Integer.parseInt(thresholdField.getText());
 			radius = Integer.parseInt(RadiusField.getText());
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(Application.frame, "Radius and Thresold must be numbers", "Bad Input",
