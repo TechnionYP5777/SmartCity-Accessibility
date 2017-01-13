@@ -171,6 +171,14 @@ public class Location {
 		ReviewManager.uploadReview(r);
 	}
 
+	
+	private Review getReview(Review r) {
+		for (Review rev : reviews)
+			if (rev.equals(r))
+				return rev;
+		return null;
+	}
+	
 	/**
 	 * Marks a review as important - whilst calculating the location's
 	 * accessibility level always takes this review in the calculation. Also,
@@ -179,10 +187,8 @@ public class Location {
 	 * @throws UnauthorizedAccessException
 	 **/
 	public void pinReview(User u, Review r) throws UnauthorizedAccessException {
-		if (!isAccessAllowed(u))
-			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
-
-		if (!reviews.contains(r)) {
+		Review review = getReview(r);
+		if (review == null) {
 			System.out.print("ERROR! This review doesn't exist in current location!");
 			System.out.println("\tCurrent Location: " + this.coordinates);
 			return;
@@ -193,10 +199,7 @@ public class Location {
 			return;
 		}
 
-		reviews.forEach(rev -> {
-			if (rev.equals(r))
-				rev.pin();
-		});
+		review.pin(u);
 	}
 
 	/**
@@ -204,44 +207,22 @@ public class Location {
 	 * 
 	 * @throws UnauthorizedAccessException
 	 */
-	public void unpinReview(User u, Review r) throws UnauthorizedAccessException {
-		if (!isAccessAllowed(u))
-			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
-
-		if (getNotPinnedReviews().contains(r)) {
+	public void unpinReview(User u, Review r) throws UnauthorizedAccessException {	
+		Review review = getReview(r);
+		if (review == null) {
+			System.out.print("ERROR! This review doesn't exist in current location!");
+			System.out.println("\tCurrent Location: " + this.coordinates);
+			return;
+		}
+		
+		if (!review.isPinned()) {
 			System.out.println("Review is already un-pinned.");
 			return;
 		}
-
-		if (!getPinnedReviews().contains(r)) {
-			if (reviews.contains(r))
-				System.out.println("Review is already un-pinned.");
-			else {
-				System.out.print("ERROR! This review doesn't exist in current location!");
-				System.out.println("\tCurrent Location: " + this.coordinates);
-			}
-			return;
-		}
-
-		reviews.forEach(rev -> {
-			if (rev.equals(r))
-				rev.unPin();
-		});
+		review.unPin(u);
 	}
 
-	private boolean isAccessAllowed(User u) {
-		return Privilege.pinPrivilegeLevel(u);
-	}
-
-	private void pinUnpinElement(Review r, ArrayList<Review> toAdd, ArrayList<Review> toRemove) {
-		if (toAdd.contains(r)) {
-			toRemove.remove(r);
-			return;
-		}
-		toAdd.add(r);
-		toRemove.remove(r);
-	}
-
+	
 	@Override
 	public boolean equals(Object o) {
 		if (o == this)

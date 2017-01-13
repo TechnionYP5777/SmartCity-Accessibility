@@ -42,11 +42,21 @@ public class Review {
 		return this.content;
 	}
 	
-	public void pin() {
+	public void pin(User u) throws UnauthorizedAccessException {
+		if (!Privilege.pinPrivilegeLevel(u))
+			if (!isAccessAllowed(u))
+				throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
 		this.isPinned = true;
 	}
 	
-	public void unPin() {
+	private boolean isAccessAllowed(User u) {
+		return Privilege.pinPrivilegeLevel(u);
+	}
+	
+	public void unPin(User u) throws UnauthorizedAccessException {
+		if (!isAccessAllowed(u))
+			if (!isAccessAllowed(u))
+				throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
 		this.isPinned = false;
 	}
 
