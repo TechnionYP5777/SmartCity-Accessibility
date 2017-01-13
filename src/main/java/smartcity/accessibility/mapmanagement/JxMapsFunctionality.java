@@ -48,6 +48,7 @@ import smartcity.accessibility.gui.compoments.search.SearchFieldUI;
 import smartcity.accessibility.jxMapsFunctionality.OptionsWindow;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
+import smartcity.accessibility.navigation.JxMapsConvertor;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 
@@ -190,6 +191,7 @@ public abstract class JxMapsFunctionality {
 	public static void ClearMarkers(ExtendedMapView mv) {
 		for (Marker m : mv.MarkerList)
 			m.remove();
+		JxMapsConvertor.removePrevPolyline();
 	}
 
 	public static MapView getMapView(MapViewOptions o) {
