@@ -194,6 +194,8 @@ public class LocationFrame implements MouseListener {
 					LatLng[] shapePoints = Navigation.showRoute(src, dst, accessibilityThreshold);
 					JxMapsConvertor.displayRoute(Application.mapView, shapePoints);
 				} catch (CommunicationFailed e) {
+					JOptionPane.showMessageDialog(frame,  "Navigation failed to conncet to servers. \n please check your internet connection and try again.",
+						    "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}).start();
