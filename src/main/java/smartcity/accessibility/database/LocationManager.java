@@ -24,6 +24,13 @@ import smartcity.accessibility.socialnetwork.Review;
  */
 public class LocationManager {
 
+	//return the id of an object if it is in the db null otherwise
+	private static String checkLocationInDB(Location l){
+		//TODO: need to implement
+		return null;
+	}
+	
+	
 	private static double distanceBtween(LatLng source,LatLng destination){ //return distance in meter
 		double lat1 = source.getLat();
 	    double lat2 = destination.getLat();
@@ -110,8 +117,17 @@ public class LocationManager {
 		//TODO: pin the pinned comment
 	}
 	
-	public static void updateLocation(Location l) {
+	public static void updateLocation(Location l) throws ParseException {
 		// Note this should be a background operation -- alex
+		Map<String, Object> m = new HashMap<String,Object>();
+		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
+		String locationId = checkLocationInDB(l);
+		if(locationId!=null){
+			DatabaseManager.updateObj(locationId,m);
+		}
+		else{ //the location is not in the DB
+			saveLocation(l);
+		}
 	}
 	
 	/*

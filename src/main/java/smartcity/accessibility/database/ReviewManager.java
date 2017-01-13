@@ -18,6 +18,11 @@ import smartcity.accessibility.socialnetwork.User;
  */
 public class ReviewManager {
 	
+	//return the id of the review if it is in the database
+	public static String checkReviewInDB(Review r){
+		return null;
+	}
+	
 	public static void uploadReview(Review r) throws ParseException{
 		Map<String, Object> m = new HashMap<String,Object>();
 		m.put("user", r.getUser());
@@ -68,6 +73,16 @@ public class ReviewManager {
 	}
 	
 	public static void updateReview(Review r){
+		String reviewId = checkReviewInDB(r);
+		if(reviewId !=null){
+			Map<String, Object> m = new HashMap<String,Object>();
+			m.put("user", r.getUser());
+			m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),r.getLocation().getCoordinates().getLng()));
+			m.put("rating",r.getRating().getScore());
+			m.put("comment",r.getContent());
+			m.put("pined",0);
+			DatabaseManager.updateObj(reviewId, m);
+		}
 		// needs to be done in background
 	}
 
