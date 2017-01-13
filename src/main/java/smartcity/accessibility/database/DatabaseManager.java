@@ -207,5 +207,12 @@ public abstract class DatabaseManager {
 			}
 		});
 	}
+	
+	/**
+	 * update the object belong to the id with the fields in the map
+	 */
+	public static void updateObj (final String ojbID,Map<String, Object> values){
+		
+	}
 
 }
