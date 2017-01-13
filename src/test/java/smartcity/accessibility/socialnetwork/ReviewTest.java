@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Coordinates;
 
 /**
@@ -14,11 +15,13 @@ import smartcity.accessibility.mapmanagement.Coordinates;
  */
 public class ReviewTest {
 	private static User u1;
+	private static User u2;
 	private static Review r1;
 	
 	@BeforeClass
 	public static void init(){
 		u1 = UserImpl.RegularUser("Koral","123","");
+		u2 = UserImpl.Admin("KoralAdmin","123","");
 		r1 = new Review(new Coordinates(new LatLng(39.750307, -104.999472)), Score.getMinScore(),
 				"very unaccessible place!", u1);
 	}
@@ -46,8 +49,14 @@ public class ReviewTest {
 	}
 	
 	@Test
-	public void getPinnedTest() {
-		
+	public void isPinnedTest() {
+		assertFalse(r1.isPinned());
+		try {
+			r1.pin(u2);
+		} catch (UnauthorizedAccessException e) {
+			fail("shouldn't throw an exception");
+		}
+		assertTrue(r1.isPinned());
 	}
 
 }
