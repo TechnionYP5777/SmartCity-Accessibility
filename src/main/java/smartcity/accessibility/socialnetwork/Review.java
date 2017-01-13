@@ -19,6 +19,7 @@ public class Review {
 	private String user;
 	private Score rating;
 	private String content;
+	private boolean isPinned;
 	private List<ReviewComment> comments = new ArrayList<ReviewComment>();
 
 	public Review(Location l, int r, String c, User u) {
@@ -26,6 +27,7 @@ public class Review {
 		this.rating = new Score(r);
 		this.content = c;
 		this.user = u.getName();
+		this.isPinned = false;
 	}
 
 	public Score getRating() {
@@ -39,7 +41,18 @@ public class Review {
 	public String getContent() {
 		return this.content;
 	}
+	
+	public void pin() {
+		this.isPinned = true;
+	}
+	
+	public void unPin() {
+		this.isPinned = false;
+	}
 
+	public boolean isPinned() {
+		return this.isPinned;
+	}
 	public String getUser() {
 		return this.user;
 	}
