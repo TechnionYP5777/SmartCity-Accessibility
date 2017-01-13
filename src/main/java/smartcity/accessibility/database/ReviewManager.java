@@ -19,8 +19,27 @@ import smartcity.accessibility.socialnetwork.User;
 public class ReviewManager {
 	
 	//return the id of the review if it is in the database
-	public static String checkReviewInDB(Review r){
-		return null;
+	public static void checkReviewInDB(Review r,GetCallback<ParseObject> o){
+		Map<String, Object> m = new HashMap<String,Object>();
+		m.put("user", r.getUser());
+		m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),r.getLocation().getCoordinates().getLng()));
+		
+		GetCallback<ParseObject> p = new GetCallback<ParseObject>() {
+			@Override
+			public void done(ParseObject arg0, ParseException arg1) {
+				if(arg1!=null){
+					o.done(arg0, null);
+				}
+				else{
+					o.done(null, arg1);
+				}
+					
+				//arg1.printStackTrace();
+				
+			}
+		};
+		
+		DatabaseManager.getObjectByFields("Review",m,p);
 	}
 	
 	public static void uploadReview(Review r) throws ParseException{
@@ -73,16 +92,26 @@ public class ReviewManager {
 	}
 	
 	public static void updateReview(Review r){
-		String reviewId = checkReviewInDB(r);
-		if(reviewId !=null){
-			Map<String, Object> m = new HashMap<String,Object>();
-			m.put("user", r.getUser());
-			m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),r.getLocation().getCoordinates().getLng()));
-			m.put("rating",r.getRating().getScore());
-			m.put("comment",r.getContent());
-			m.put("pined",0);
-			DatabaseManager.update("Review",reviewId, m);
-		}
+	GetCallback<ParseObject> p = new GetCallback<ParseObject>() {
+		@Override
+			public void done(ParseObject arg0, ParseException arg1) {
+				if(arg1!=null){
+					Map<String, Object> m = new HashMap<String,Object>();
+					m.put("user", r.getUser());
+					m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),r.getLocation().getCoordinates().getLng()));
+					m.put("rating",r.getRating().getScore());
+					m.put("comment",r.getContent());
+					m.put("pined",0);
+					DatabaseManager.update("Review",arg0.getObjectId(), m);
+				}
+				else{
+					//discard the changes
+				}
+				//arg1.printStackTrace();
+			}
+		};
+		
+		checkReviewInDB(r,p);
 		// needs to be done in background
 	}
 
