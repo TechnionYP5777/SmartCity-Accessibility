@@ -44,6 +44,11 @@ public class ReviewTest {
 	public void getUserTest() {
 		assertEquals(r1.getUser(), "Koral");
 	}
+	
+	@Test
+	public void getPinnedTest() {
+		
+	}
 
 }
 
