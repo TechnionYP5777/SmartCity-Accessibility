@@ -193,6 +193,10 @@ public class LocationFrame implements MouseListener {
 				try {
 					LatLng[] shapePoints = Navigation.showRoute(src, dst, accessibilityThreshold);
 					JxMapsConvertor.displayRoute(Application.mapView, shapePoints);
+					if(!src.getCoordinates().equals(shapePoints[0]))
+						JxMapsConvertor.addStartLine(Application.mapView, src.getCoordinates(), shapePoints[0]);
+					if(!dst.getCoordinates().equals(shapePoints[shapePoints.length-1]))
+						JxMapsConvertor.addEndLine(Application.mapView, dst.getCoordinates(), shapePoints[shapePoints.length-1]);
 				} catch (CommunicationFailed e) {
 					JOptionPane.showMessageDialog(frame,  "Navigation failed to conncet to servers. \n please check your internet connection and try again.",
 						    "Error", JOptionPane.ERROR_MESSAGE);
