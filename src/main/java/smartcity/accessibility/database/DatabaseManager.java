@@ -211,8 +211,17 @@ public abstract class DatabaseManager {
 	/**
 	 * update the object belong to the id with the fields in the map
 	 */
-	public static void updateObj (final String ojbID,Map<String, Object> values){
-		
+	public static void updateObj (final String objectClass ,final String id, Map<String, Object> values){
+		ParseQuery.getQuery(objectClass).getInBackground(id, new GetCallback<ParseObject>() {
+			@Override
+			public void done(ParseObject arg0, ParseException arg1) {
+				if (arg0 == null || arg1 != null)
+					return;
+				for (String key : values.keySet())
+					arg0.put(key, values.get(key));
+				arg0.saveInBackground();
+			}
+		});
 	}
 
 }

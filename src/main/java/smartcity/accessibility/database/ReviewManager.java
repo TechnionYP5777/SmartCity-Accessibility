@@ -81,7 +81,7 @@ public class ReviewManager {
 			m.put("rating",r.getRating().getScore());
 			m.put("comment",r.getContent());
 			m.put("pined",0);
-			DatabaseManager.updateObj(reviewId, m);
+			DatabaseManager.updateObj("Review",reviewId, m);
 		}
 		// needs to be done in background
 	}

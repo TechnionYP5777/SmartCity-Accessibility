@@ -123,7 +123,7 @@ public class LocationManager {
 		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
 		String locationId = checkLocationInDB(l);
 		if(locationId!=null){
-			DatabaseManager.updateObj(locationId,m);
+			DatabaseManager.updateObj("Location",locationId,m);
 		}
 		else{ //the location is not in the DB
 			saveLocation(l);
