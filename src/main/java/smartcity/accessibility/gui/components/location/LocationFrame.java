@@ -122,7 +122,7 @@ public class LocationFrame implements MouseListener {
 		scrollPane.setVisible(true);
 		frame.getContentPane().add(scrollPane);
 
-		if (Application.appUser.getPrivilege() == User.Privilege.RegularUser) {
+		if (User.Privilege.addReviewPrivilegeLevel(Application.appUser)) {
 			btnAddReview = new JButton("Add Review");
 			btnAddReview.addMouseListener(this);
 			btnAddReview.setBounds(25, 437, 112, 23);
