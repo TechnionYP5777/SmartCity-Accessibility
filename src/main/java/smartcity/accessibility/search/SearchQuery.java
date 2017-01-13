@@ -74,11 +74,11 @@ public class SearchQuery {
 	}
 
 	protected SearchQueryResult Search(GeocoderRequest r, MapView v) {
-		return isAdress ? adressSearch(r, v) : null;
+		return !isAdress ? null : adressSearch(r, v);
 	}
 	
 	protected SearchQueryResult Search(Location initLocation, double radius) {
-		return !isAdress ? typeSearch(initLocation, radius) : null;
+		return isAdress ? null : typeSearch(initLocation, radius);
 	}
 
 	private SearchQueryResult typeSearch(Location initLocation, double radius) {

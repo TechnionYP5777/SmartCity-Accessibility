@@ -19,17 +19,12 @@ import java.awt.*;
  *
  */
 public class JxMapsConvertor{
-	private static Polyline prev;
+	private static Polyline prevRoute;
+	private static Polyline prevStartLine; //line for the start and the end of the route
+	private static Polyline prevEndLine;
 	public static void displayRoute(MapView mapView, LatLng[] shapeLatlng) {
 		removePrevPolyline();
 		final Map map = mapView.getMap();
-		MapOptions mapOptions = new MapOptions();
-		MapTypeControlOptions controlOptions = new MapTypeControlOptions();
-		controlOptions.setPosition(ControlPosition.TOP_RIGHT);
-		mapOptions.setMapTypeControlOptions(controlOptions);
-		map.setOptions(mapOptions);
-		map.setCenter(shapeLatlng[0]);
-		map.setZoom(11.0);
 		Polyline polyline = new Polyline(map);
 		polyline.setPath(shapeLatlng);
 		PolylineOptions options = new PolylineOptions();
@@ -37,12 +32,36 @@ public class JxMapsConvertor{
 		options.setStrokeColor("#FF0000");
 		options.setStrokeWeight(2.0);
 		polyline.setOptions(options);
-		prev = polyline;
+		prevRoute = polyline;
 	}
 	
 	public static void removePrevPolyline(){
-		if(prev != null)
-			prev.setVisible(false);
+		if(prevRoute != null)
+			prevRoute.setVisible(false);
+		if(prevStartLine != null)
+			prevStartLine.setVisible(false);
+		if(prevEndLine != null)
+			prevEndLine.setVisible(false);
+	}
+	
+	private static Polyline addLine(MapView mapView,LatLng src,LatLng dst){
+		final Map map = mapView.getMap();
+		Polyline $ = new Polyline(map);
+		LatLng[] latLngArr = {src , dst};
+		$.setPath(latLngArr);
+		PolylineOptions options = new PolylineOptions();
+		options.setGeodesic(true);
+		options.setStrokeColor("#0066ff");
+		options.setStrokeWeight(2.0);
+		$.setOptions(options);
+		return $;
+	}
+	
+	public static void addStartLine(MapView mapView,LatLng src,LatLng dst){
+		prevStartLine = addLine(mapView,src,dst);
 	}
 
+	public static void addEndLine(MapView mapView,LatLng src,LatLng dst){
+		prevEndLine = addLine(mapView,src,dst);
+	}
 }

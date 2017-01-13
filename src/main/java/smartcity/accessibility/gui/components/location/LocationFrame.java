@@ -5,11 +5,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.stream.IntStream;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -26,6 +28,7 @@ import smartcity.accessibility.navigation.JxMapsConvertor;
 import smartcity.accessibility.navigation.Navigation;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.socialnetwork.Review;
+import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
 
 public class LocationFrame implements MouseListener {
@@ -127,7 +130,7 @@ public class LocationFrame implements MouseListener {
 		scrollPane.setVisible(true);
 		frame.getContentPane().add(scrollPane);
 
-		if (Application.appUser.getPrivilege() == User.Privilege.RegularUser) {
+		if (User.Privilege.addReviewPrivilegeLevel(Application.appUser)) {
 			btnAddReview = new JButton("Add Review");
 			btnAddReview.addMouseListener(this);
 			btnAddReview.setBounds(25, 437, 112, 23);
@@ -187,14 +190,24 @@ public class LocationFrame implements MouseListener {
 	public void activateNavigation(){
 		Location src = new Location(Application.currLocation.getPosition());
 		Location dst = loc;
-		Integer accessibilityThreshold = 5; //TODO change to value from user
+		Object[] range = IntStream.rangeClosed(Score.getMinScore(), Score.getMaxScore()).mapToObj(n -> Integer.valueOf(n)).toArray();
+		Integer accessibilityThreshold = (Integer)JOptionPane.showInputDialog(frame,
+                "Insert the accessibility threshold for the navigation:\n",
+                "choose accessibilityThreshold",
+                JOptionPane.PLAIN_MESSAGE, null, range, 5);
 		(new Thread() {
 			@Override
 			public void run() {
 				try {
 					LatLng[] shapePoints = Navigation.showRoute(src, dst, accessibilityThreshold);
 					JxMapsConvertor.displayRoute(Application.mapView, shapePoints);
+					if(!src.getCoordinates().equals(shapePoints[0]))
+						JxMapsConvertor.addStartLine(Application.mapView, src.getCoordinates(), shapePoints[0]);
+					if(!dst.getCoordinates().equals(shapePoints[shapePoints.length-1]))
+						JxMapsConvertor.addEndLine(Application.mapView, dst.getCoordinates(), shapePoints[shapePoints.length-1]);
 				} catch (CommunicationFailed e) {
+					JOptionPane.showMessageDialog(frame,  "Navigation failed to conncet to servers. \n please check your internet connection and try again.",
+						    "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}).start();
