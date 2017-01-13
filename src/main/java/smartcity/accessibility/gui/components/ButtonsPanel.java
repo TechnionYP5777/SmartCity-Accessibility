@@ -3,9 +3,13 @@ package smartcity.accessibility.gui.components;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.parse4j.ParseException;
+import org.parse4j.ParseUser;
+
+import smartcity.accessibility.database.UserManager;
+import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.compoments.search.ElaborateSearchFrame;
 import smartcity.accessibility.gui.components.user.LoginFrame;
 import smartcity.accessibility.gui.components.user.SignUpFrame;
@@ -20,6 +24,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 	private static final long serialVersionUID = -8394584034225983460L;
 
 	public static GButton LOGIN_BUTTON;
+	public static GButton LOGOUT_BUTTON;
 	public static GButton SIGNUP_BUTTON;
 	public static GButton USER_PROFILE_BUTTON;
 	public static GButton CLEAR_MARKERS_BUTTON;
@@ -37,6 +42,12 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 		LOGIN_BUTTON.addMouseListener(this);
 		add(LOGIN_BUTTON);
 		LOGIN_BUTTON.setVisible(true);
+		
+		LOGOUT_BUTTON = new GButton("Logout");
+		LOGOUT_BUTTON.addMouseListener(this);
+		add(LOGOUT_BUTTON);
+		LOGOUT_BUTTON.setVisible(false);
+		
 		SIGNUP_BUTTON = new GButton("Signup");
 		SIGNUP_BUTTON.addMouseListener(this);
 		add(SIGNUP_BUTTON);
@@ -66,6 +77,13 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 			new ElaborateSearchFrame();
 		if(e.getSource() == ButtonsPanel.USER_PROFILE_BUTTON)
 			new UserProfileFrame();
+		if(e.getSource() == ButtonsPanel.LOGOUT_BUTTON){
+			UserManager.logoutCurrUser();
+			Application.appUser = null;
+			LOGOUT_BUTTON.setVisible(false);
+			LOGIN_BUTTON.setVisible(true);
+			USER_PROFILE_BUTTON.setVisible(false);
+		}
 		System.out.println("clicked " + e.getSource());
 
 	}

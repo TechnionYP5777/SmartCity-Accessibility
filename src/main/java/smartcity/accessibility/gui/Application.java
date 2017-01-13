@@ -19,9 +19,9 @@ import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.gui.components.ButtonsPanel;
 import smartcity.accessibility.gui.components.MapFrame;
 import smartcity.accessibility.gui.components.location.LocationFrame;
-import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
+import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserImpl;
 
@@ -133,14 +133,14 @@ public class Application {
 
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				new LocationFrame(new Coordinates(arg0.latLng()));
+				new LocationFrame(new Location(arg0.latLng()));
 			}
 		});
 
 		mapView.getMap().addEventListener("rightclick", new MapMouseEvent() {
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				JxMapsFunctionality.onRightClick( arg0.latLng());
+				JxMapsFunctionality.onRightClick(arg0.latLng());
 			}
 
 		});
