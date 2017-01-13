@@ -1,6 +1,7 @@
 package smartcity.accessibility.socialnetwork;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.parse4j.ParseException;
 
@@ -35,7 +36,7 @@ public class Admin extends AuthenticatedUser {
 		pinUnpinElement(r, r.getLocation().getReviews(), r.getLocation().getPinnedReviews());
 	}
 	
-	private void pinUnpinElement(Review r, ArrayList<Review> toAdd, ArrayList<Review> toRemove){
+	private void pinUnpinElement(Review r, List<Review> toAdd, List<Review> toRemove){
 		if(toAdd.contains(r)){
 			toRemove.remove(r);
 			return;

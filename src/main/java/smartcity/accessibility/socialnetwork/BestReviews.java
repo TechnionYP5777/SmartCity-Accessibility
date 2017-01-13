@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
  */
 public class BestReviews {
 	private int n;
-	private ArrayList<Review> reviews;
+	private List<Review> reviews;
 	
 	/**
 	 * @param n - the number of best reviews to return from this class methods
 	 * @param r - the list of reviews from which we need to choose the best reviews
 	 */
-	public BestReviews(int n, ArrayList<Review> r) {
+	public BestReviews(int n, List<Review> r) {
 		this.n = n;
 		this.reviews = r;
 	}
