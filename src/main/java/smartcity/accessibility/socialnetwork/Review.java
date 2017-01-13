@@ -43,8 +43,7 @@ public class Review {
 	}
 	
 	public void pin(User u) throws UnauthorizedAccessException {
-		if (!Privilege.pinPrivilegeLevel(u))
-			if (!isAccessAllowed(u))
+		if (!isAccessAllowed(u))
 				throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
 		this.isPinned = true;
 	}
@@ -55,7 +54,6 @@ public class Review {
 	
 	public void unPin(User u) throws UnauthorizedAccessException {
 		if (!isAccessAllowed(u))
-			if (!isAccessAllowed(u))
 				throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
 		this.isPinned = false;
 	}
@@ -63,6 +61,10 @@ public class Review {
 	public boolean isPinned() {
 		return this.isPinned;
 	}
+	
+	/**
+	 * @return the user name
+	 */
 	public String getUser() {
 		return this.user;
 	}
