@@ -16,8 +16,11 @@ import org.parse4j.callback.SaveCallback;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
+import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.UserImpl;
 
 /**
  * @author assaflu
@@ -31,8 +34,13 @@ public class LocationManager {
 		return null;
 	}
 	
-	
-	private static double distanceBtween(LatLng source,LatLng destination){ //return distance in meter
+	/**
+	 * calculate the distance btween the source point and destination point in meters
+	 * @param source
+	 * @param destination
+	 * @return
+	 */
+	private static double distanceBtween(LatLng source,LatLng destination){
 		double lat1 = source.getLat();
 	    double lat2 = destination.getLat();
 	    double lon1 = source.getLng();
@@ -46,8 +54,13 @@ public class LocationManager {
 	    return 6366000 * c;
 	}
 	
-	/*
-	 * the method returns all the latlng of the locations that are bellow the threshold
+	/**
+	 * return list of LatLng that qualify the radius and threshold
+	 * (not yet know if to implement in background or not - opened issue on it)
+	 * @param source
+	 * @param destination
+	 * @param accessibilityThreshold
+	 * @return
 	 */
 	public static List<LatLng> getNonAccessibleLocationsInRadius(Location source, Location destination,
 			Integer accessibilityThreshold) {
@@ -86,6 +99,11 @@ public class LocationManager {
 		return points;
 	}
 	
+	/**
+	 * 
+	 * @param point
+	 * @return
+	 */
 	public static Location getLocation(LatLng point){
 		ArrayList<Review> pinned = new ArrayList<Review>();
 		ArrayList<Review> notPinned = new ArrayList<Review>();
@@ -111,18 +129,26 @@ public class LocationManager {
 		return l;
 	}
 	
+	/**
+	 * Save the location in the DB happen in the background
+	 * @param l
+	 */
 	public static void saveLocation (Location l){
 		Map<String, Object> m = new HashMap<String,Object>();
+		m.put("subtype", l.getLocationSubType()); //check if it is possible to save such data
+		//check about the location type
 		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
 		DatabaseManager.putValue("Location",m, new SaveCallback() {
 			
 			@Override
 			public void done(ParseException arg0) {
-				// TODO Auto-generated method stub
+				// does nothing
 				
 			}
 		});
-		//TODO: pin the pinned comment
+		for(Review r :l.getReviews()){
+			ReviewManager.updateReview(r);
+		}
 	}
 	
 	public static void updateLocation(Location l) {
