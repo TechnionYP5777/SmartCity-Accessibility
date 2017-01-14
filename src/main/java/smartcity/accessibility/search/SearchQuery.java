@@ -15,7 +15,9 @@ import com.teamdev.jxmaps.GeocoderResult;
 import com.teamdev.jxmaps.GeocoderStatus;
 import com.teamdev.jxmaps.swing.MapView;
 
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.search.SearchQuery.SearchStage;
 
 import com.teamdev.jxmaps.LatLng;
@@ -87,8 +89,11 @@ public class SearchQuery {
 		kindsOfLocations.add(queryString);
 		MapViewOptions options = new MapViewOptions();
 		options.importPlaces();
+//		NearbyPlacesAttempt n = new NearbyPlacesAttempt(options);
+		MapView mapView = JxMapsFunctionality.getMapView();
+		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
 		NearbyPlacesAttempt n = new NearbyPlacesAttempt(options);
-		ArrayList<Location> places = n.findNearbyPlaces(initLocation, radius, kindsOfLocations);
+		ArrayList<Location> places = n.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations);
 		SetSearchStatus(places.isEmpty() ? SearchStage.Done : SearchStage.Failed);
 		wakeTheWaiters();
 		return new SearchQueryResult(places);

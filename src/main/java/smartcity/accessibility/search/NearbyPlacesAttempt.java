@@ -6,12 +6,14 @@ import java.util.List;
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.Map;
 import com.teamdev.jxmaps.MapReadyHandler;
+import com.teamdev.jxmaps.MapServices;
 import com.teamdev.jxmaps.MapStatus;
 import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.PlaceNearbySearchCallback;
 import com.teamdev.jxmaps.PlaceResult;
 import com.teamdev.jxmaps.PlaceSearchPagination;
 import com.teamdev.jxmaps.PlaceSearchRequest;
+import com.teamdev.jxmaps.PlacesService;
 import com.teamdev.jxmaps.PlacesServiceStatus;
 import com.teamdev.jxmaps.swing.MapView;
 
@@ -23,39 +25,42 @@ import smartcity.accessibility.mapmanagement.Location;
 /**
  * @author Koral Chapnik
  */
-public class NearbyPlacesAttempt extends MapView {
+public class NearbyPlacesAttempt {
 	Map map; 
 	boolean mapIsReady;
 	boolean onComplete;
 	public NearbyPlacesAttempt(MapViewOptions mapOptions) {
-		super(mapOptions);
 		onComplete = mapIsReady = false;
 	}
 
-	public ArrayList<Location> findNearbyPlaces(Location initLocation, double radius, List<String> kindsOfLocations) {
+	public ArrayList<Location> findNearbyPlaces(MapView mapView, Location initLocation, double radius, List<String> kindsOfLocations) {
 		
         ArrayList<Location> $ = new ArrayList<Location>();
-        setOnMapReadyHandler(new MapReadyHandler() {
-            @Override
-            public void onMapReady(MapStatus s) {
-                // Check if the map is loaded correctly
-                if (s == MapStatus.MAP_STATUS_OK)
-					mapIsReady = true;
-            }
-        });
-        while(!mapIsReady)
-			System.out.println("waiting to map");
-		Map map = getMap();
+//        mapView.setOnMapReadyHandler(new MapReadyHandler() {
+//            @Override
+//            public void onMapReady(MapStatus s) {
+//                // Check if the map is loaded correctly
+//                if (s == MapStatus.MAP_STATUS_OK)
+//					mapIsReady = true;
+//            }
+//        });
+//        while(!mapIsReady)
+//			System.out.println("waiting to map");
+        MapViewOptions options = new MapViewOptions();
+        options.importPlaces();
+		Map map = mapView.getMap();
 		assert(map != null);
 		LatLng l = initLocation.getCoordinates();
 		map.setCenter(l);
 		map.setZoom(17.0);
-		PlaceSearchRequest request = new PlaceSearchRequest(getMap());
+		PlaceSearchRequest request = new PlaceSearchRequest(map);
 		request.setLocation(map.getCenter());
 		request.setRadius(radius);
 		String[] types = kindsOfLocations.toArray((new String[kindsOfLocations.size()]));
 		request.setTypes(types);
-		getServices().getPlacesService().nearbySearch(request, new PlaceNearbySearchCallback(map) {
+		MapServices ms = mapView.getServices();
+		PlacesService ps = ms.getPlacesService();
+		ps.nearbySearch(request, new PlaceNearbySearchCallback(map) {
             @Override
             public void onComplete(PlaceResult[] rs, PlacesServiceStatus s, PlaceSearchPagination __) {
                 if (s == PlacesServiceStatus.OK)
@@ -90,7 +95,7 @@ public class NearbyPlacesAttempt extends MapView {
 		MapViewOptions options = new MapViewOptions();
 		options.importPlaces();
 		NearbyPlacesAttempt n = new NearbyPlacesAttempt(options);
-		ArrayList<Location> places = n.findNearbyPlaces(initLocation, radius, kindsOfLocations);
+		ArrayList<Location> places = n.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations);
 		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
 
 		for (Location l : places)

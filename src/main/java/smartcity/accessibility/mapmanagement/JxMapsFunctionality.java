@@ -69,8 +69,8 @@ public abstract class JxMapsFunctionality {
 		List<Marker> MarkerList = new ArrayList<Marker>();
 		private OptionsWindow optionsWindow;
 
-		public ExtendedMapView() {
-			MapViewOptions options = new MapViewOptions();
+		public ExtendedMapView(MapViewOptions options) {
+			super(options);
 			setOnMapReadyHandler(new MapReadyHandler() {
 				@Override
 				public void onMapReady(MapStatus arg0) {
@@ -180,7 +180,9 @@ public abstract class JxMapsFunctionality {
 	}
 
 	public static ExtendedMapView getMapView() {
-		return mv != null ? mv : (mv = new ExtendedMapView());
+		MapViewOptions options = new MapViewOptions();
+		options.importPlaces();
+		return mv != null ? mv : (mv = new ExtendedMapView(options));
 	}
 
 	public static void DestroyMapView() {
@@ -196,7 +198,7 @@ public abstract class JxMapsFunctionality {
 
 	public static MapView getMapView(MapViewOptions o) {
 		o.importPlaces();
-		return mv = new ExtendedMapView();
+		return mv = new ExtendedMapView(o);
 	}
 
 	public static void putMarker(ExtendedMapView mv, LatLng l, String name) {

@@ -21,6 +21,7 @@ import com.teamdev.jxmaps.MapStatus;
 import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.swing.MapView;
+import com.teamdev.jxmaps.PlacesService;
 
 import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.mapmanagement.Coordinates;
@@ -38,22 +39,22 @@ import smartcity.accessibility.socialnetwork.UserImpl;
  */
 public class NearbyPlacesTest {
 	
-	@Ignore
 	@Test
 	public void nearByPlacesTest() {
 		LatLng c = new LatLng(31.90588, 34.997571); //Modi'in Yehalom St, 20
 		double radius = 1000000;
 		ArrayList<String> kindsOfLocations = new ArrayList<String>();
-		kindsOfLocations.add("cafe");
+		kindsOfLocations.add("restaurant");
 		Location initLocation = new Facility(c);
 		MapViewOptions options = new MapViewOptions();
         options.importPlaces();
+        MapView mapView = JxMapsFunctionality.getMapView();
+		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
 		NearbyPlacesAttempt n = new NearbyPlacesAttempt(options);
-		ArrayList<Location> places = n.findNearbyPlaces(initLocation, radius, kindsOfLocations);
+		ArrayList<Location> places = n.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations);
 		System.out.println("the length is : " + places.size());
 
-		MapView mapView = JxMapsFunctionality.getMapView();
-		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
+		
  
         
 			for (Location l : places) {
