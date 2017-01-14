@@ -130,7 +130,7 @@ public class LocationManager {
 	}
 	
 	/**
-	 * Save the locaion in the DB happen in the background
+	 * Save the location in the DB happen in the background
 	 * @param l
 	 */
 	public static void saveLocation (Location l){
@@ -146,10 +146,9 @@ public class LocationManager {
 				
 			}
 		});
-		for(Review r :l.getPinnedReviews()){
+		for(Review r :l.getReviews()){
 			ReviewManager.updateReview(r);
 		}
-		
 	}
 	
 	public static void updateLocation(Location l) {
