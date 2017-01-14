@@ -28,13 +28,33 @@ import smartcity.accessibility.socialnetwork.UserImpl;
  */
 public class LocationManager {
 
-	//return the id of an object if it is in the db null otherwise
+	/**
+	 * If the location saved it to the callback function
+	 * If it's not saved notify the callback function
+	 * @param l
+	 * @param o
+	 */
 	private static void checkLocationInDB(Location l,GetCallback<ParseObject> o){
-		//TODO: need to implement
+		Map<String, Object> m = new HashMap<String,Object>();
+		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
+		m.put("subtype", l.getLocationSubType());
+		//check about the location type issue #57
+		GetCallback<ParseObject> hiddenCallBack = new GetCallback<ParseObject>() {
+			@Override
+			public void done(ParseObject arg0, ParseException arg1) {
+				if(arg1==null){
+					o.done(arg0, null);
+				}
+				else{
+					o.done(null, null);
+				}				
+			}
+		};
+		DatabaseManager.getObjectByFields("Location",m,hiddenCallBack);
 	}
 	
 	/**
-	 * calculate the distance btween the source point and destination point in meters
+	 * calculate the distance between the source point and destination point in meters
 	 * @param source
 	 * @param destination
 	 * @return
@@ -135,7 +155,7 @@ public class LocationManager {
 	public static void saveLocation (Location l){
 		Map<String, Object> m = new HashMap<String,Object>();
 		m.put("subtype", l.getLocationSubType()); //check if it is possible to save such data
-		//check about the location type
+		//check about the location type issue#57
 		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
 		DatabaseManager.putValue("Location",m, new SaveCallback() {
 			
@@ -162,7 +182,7 @@ public class LocationManager {
 				public void done(ParseObject arg0, ParseException arg1) {
 					Map<String, Object> m = new HashMap<String,Object>();
 					m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
-					if(arg1!=null){
+					if(arg0!=null){
 						DatabaseManager.update("Location",arg0.getObjectId(),m);
 						for(Review r :l.getReviews()){
 							ReviewManager.updateReview(r);

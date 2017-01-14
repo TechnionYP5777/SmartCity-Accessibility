@@ -163,7 +163,7 @@ public class ReviewManager {
 					m.put("pined",1);
 				else
 					m.put("pined",0);
-				if(arg1!=null){
+				if(arg0!=null){
 					DatabaseManager.update("Review",arg0.getObjectId(), m);
 				}
 				else{
