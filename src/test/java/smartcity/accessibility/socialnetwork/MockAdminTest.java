@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.mockito.Mockito;
 import org.mockito.internal.verification.VerificationModeFactory;
 
@@ -37,6 +38,7 @@ public class MockAdminTest {
 	}
 
 	@Test
+	@Ignore
 	public void testPinReview() {
 		admin.pinReview(review);
 		
@@ -52,6 +54,7 @@ public class MockAdminTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testUnPinReview(){
 		admin.unpinReview(review);
 		
