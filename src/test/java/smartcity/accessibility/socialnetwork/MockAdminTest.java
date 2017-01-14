@@ -37,6 +37,7 @@ public class MockAdminTest {
 	}
 
 	@Test
+	@Ignore
 	public void testPinReview() {
 		admin.pinReview(review);
 		
@@ -52,6 +53,7 @@ public class MockAdminTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testUnPinReview(){
 		admin.unpinReview(review);
 		
