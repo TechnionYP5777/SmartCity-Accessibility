@@ -8,6 +8,7 @@ import java.awt.event.WindowListener;
 import java.util.stream.IntStream;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,6 +29,8 @@ import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
+
+import smartcity.accessibility.gui.components.SpinningWheel;
 
 public class LocationFrame implements MouseListener {
 
@@ -189,6 +192,10 @@ public class LocationFrame implements MouseListener {
                 "Insert the accessibility threshold for the navigation:\n",
                 "choose accessibilityThreshold",
                 JOptionPane.PLAIN_MESSAGE, null, range, 5);
+		if(accessibilityThreshold == null)
+			return;
+		SpinningWheel wheel = new SpinningWheel();
+	    frame.dispose();
 		(new Thread() {
 			@Override
 			public void run() {
@@ -199,9 +206,11 @@ public class LocationFrame implements MouseListener {
 						JxMapsConvertor.addStartLine(Application.mapView, src.getCoordinates(), shapePoints[0]);
 					if(!dst.getCoordinates().equals(shapePoints[shapePoints.length-1]))
 						JxMapsConvertor.addEndLine(Application.mapView, dst.getCoordinates(), shapePoints[shapePoints.length-1]);
+					wheel.dispose();
 				} catch (CommunicationFailed e) {
 					JOptionPane.showMessageDialog(frame,  "Navigation failed to conncet to servers. \n please check your internet connection and try again.",
 						    "Error", JOptionPane.ERROR_MESSAGE);
+					wheel.dispose();
 				}
 			}
 		}).start();
