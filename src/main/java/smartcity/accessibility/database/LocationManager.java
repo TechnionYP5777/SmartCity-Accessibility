@@ -29,9 +29,8 @@ import smartcity.accessibility.socialnetwork.UserImpl;
 public class LocationManager {
 
 	//return the id of an object if it is in the db null otherwise
-	private static String checkLocationInDB(Location l){
+	private static void checkLocationInDB(Location l,GetCallback<ParseObject> o){
 		//TODO: need to implement
-		return null;
 	}
 	
 	/**
@@ -151,17 +150,32 @@ public class LocationManager {
 		}
 	}
 	
+	/**
+	 * If the location is not in the DB save it
+	 * else update it (include updating the reviews belong to this location)
+	 * @param l
+	 */
 	public static void updateLocation(Location l) {
 		// Note this should be a background operation -- alex
-		Map<String, Object> m = new HashMap<String,Object>();
-		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
-		String locationId = checkLocationInDB(l);
-		if(locationId!=null){
-			DatabaseManager.update("Location",locationId,m);
-		}
-		else{ //the location is not in the DB
-			saveLocation(l);
-		}
+		GetCallback<ParseObject> p = new GetCallback<ParseObject>() {
+			@Override
+				public void done(ParseObject arg0, ParseException arg1) {
+					Map<String, Object> m = new HashMap<String,Object>();
+					m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
+					if(arg1!=null){
+						DatabaseManager.update("Location",arg0.getObjectId(),m);
+						for(Review r :l.getReviews()){
+							ReviewManager.updateReview(r);
+						}
+					}
+					else{
+						saveLocation(l);
+					}
+					//arg1.printStackTrace();
+				}
+			};
+		checkLocationInDB(l,p);
+		
 	}
 	
 	/*
