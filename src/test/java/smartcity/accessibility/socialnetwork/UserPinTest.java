@@ -12,15 +12,15 @@ import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 
 public class UserPinTest {
-	User admin;
+	User admin, user, defaultuser;
 	Location location;
 	Review review;
-	User user;
 
 
 	@Before
 	public void setUp() throws Exception {
 		DatabaseManager.initialize();
+		defaultuser = UserImpl.DefaultUser();
 		user = UserImpl.RegularUser("RegularUser", "", "");
 		admin = UserImpl.Admin("Admin", "", "");
 		location = new Location(new LatLng(100, 100));
@@ -61,10 +61,24 @@ public class UserPinTest {
 		try{
 			location.pinReview(user, review);
 		}catch(Exception e) {
-			assertTrue(location.getNotPinnedReviews().contains(review));
-			assertTrue(location.getPinnedReviews().isEmpty());
+			nothingHasChangedCheck();
 			throw e;
 		}
+	}
+	
+	@Test(expected = UnauthorizedAccessException.class)
+	public void defaultuserCantPin() throws UnauthorizedAccessException{
+		try{
+			location.pinReview(defaultuser, review);
+		}catch(Exception e) {
+			nothingHasChangedCheck();
+			throw e;
+		}
+	}
+
+	private void nothingHasChangedCheck() {
+		assertTrue(location.getNotPinnedReviews().contains(review));
+		assertTrue(location.getPinnedReviews().isEmpty());
 	}
 
 }
