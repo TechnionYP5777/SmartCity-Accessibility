@@ -1,5 +1,7 @@
 package smartcity.accessibility.gui.components;
 
+import java.awt.Color;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +24,7 @@ public class SpinningWheel extends JFrame{
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    this.setSize(loading.getIconHeight(), loading.getIconWidth());
 	    this.setUndecorated(true);
+	    this.setBackground(new Color(1.0f,1.0f,1.0f,0f));
 	    this.pack();
 	    this.setLocationRelativeTo(null);
 	    this.setVisible(true);
