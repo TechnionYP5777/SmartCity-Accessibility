@@ -25,12 +25,6 @@ import smartcity.accessibility.mapmanagement.Location;
  * @author Koral Chapnik
  */
 public class NearbyPlacesAttempt {
-//	Map map; 
-//	boolean mapIsReady;
-	boolean onComplete;
-	public NearbyPlacesAttempt() {
-		onComplete = false;
-	}
 
 	public void findNearbyPlaces(MapView mapView, Location initLocation, double radius, List<String> kindsOfLocations, LocationListCallback c) {
 		Map map = mapView.getMap();
@@ -58,18 +52,11 @@ public class NearbyPlacesAttempt {
 						f.setName(result.getName());
 						$.add(f);
 					}
-               onComplete = true;
                 System.out.println("called to callback done");
                 c.done($);
             }
 		});
 	
-		while(!onComplete)
-			System.out.println("waiting");
-//		
-//		this.onComplete = this.mapIsReady = false;
-//		
-//		return $;
 	}
 	
 	/*
