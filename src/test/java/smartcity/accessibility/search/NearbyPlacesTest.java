@@ -46,7 +46,7 @@ public class NearbyPlacesTest {
 		});
 		
 		try {
-			Thread.sleep(90000);
+			Thread.sleep(900);
 		} catch (InterruptedException e) {
 		}
 					

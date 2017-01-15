@@ -8,7 +8,6 @@ import java.awt.event.WindowListener;
 import java.util.stream.IntStream;
 
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +21,7 @@ import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.gui.Application;
+import smartcity.accessibility.gui.components.SpinningWheel;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.navigation.JxMapsConvertor;
 import smartcity.accessibility.navigation.Navigation;
@@ -29,8 +29,6 @@ import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
-
-import smartcity.accessibility.gui.components.SpinningWheel;
 
 public class LocationFrame implements MouseListener {
 

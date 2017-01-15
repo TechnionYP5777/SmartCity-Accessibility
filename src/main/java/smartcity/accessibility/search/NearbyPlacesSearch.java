@@ -30,7 +30,7 @@ public class NearbyPlacesSearch {
 		Map map = mapView.getMap();
 		LatLng l = initLocation.getCoordinates();
 		PlaceSearchRequest request = new PlaceSearchRequest();
-		request.setLocation(map.getCenter());
+		request.setLocation(l);
 		request.setRadius(radius);
 		String[] types = kindsOfLocations.toArray((new String[kindsOfLocations.size()]));
 		request.setTypes(types);
