@@ -2,12 +2,9 @@ package smartcity.accessibility.navigation;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.teamdev.jxmaps.LatLng;
-import com.teamdev.jxmaps.swing.MapView;
-
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Street;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;

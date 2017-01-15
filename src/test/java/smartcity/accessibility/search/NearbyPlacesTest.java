@@ -1,38 +1,16 @@
 package smartcity.accessibility.search;
 
-import static org.junit.Assert.*;
-
-import java.awt.BorderLayout;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.parse4j.ParseException;
-
-import com.teamdev.jxmaps.InfoWindow;
 import com.teamdev.jxmaps.LatLng;
-import com.teamdev.jxmaps.Map;
-import com.teamdev.jxmaps.MapReadyHandler;
-import com.teamdev.jxmaps.MapStatus;
 import com.teamdev.jxmaps.MapViewOptions;
-import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.swing.MapView;
-import com.teamdev.jxmaps.PlacesService;
-
-import smartcity.accessibility.database.DatabaseManager;
-import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.Facility;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
-import smartcity.accessibility.socialnetwork.Review;
-import smartcity.accessibility.socialnetwork.Score;
-import smartcity.accessibility.socialnetwork.User;
-import smartcity.accessibility.socialnetwork.UserImpl;
 
 /**
  * @author Koral Chapnik
