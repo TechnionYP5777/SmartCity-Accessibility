@@ -27,14 +27,12 @@ import smartcity.accessibility.mapmanagement.Location;
 public class NearbyPlacesAttempt {
 //	Map map; 
 //	boolean mapIsReady;
-//	boolean onComplete;
-//	public NearbyPlacesAttempt() {
-//		onComplete = mapIsReady = false;
-//	}
+	boolean onComplete;
+	public NearbyPlacesAttempt() {
+		onComplete = false;
+	}
 
 	public void findNearbyPlaces(MapView mapView, Location initLocation, double radius, List<String> kindsOfLocations, LocationListCallback c) {
-		
-        ArrayList<Location> $ = new ArrayList<Location>();
 		Map map = mapView.getMap();
 		LatLng l = initLocation.getCoordinates();
 		map.setCenter(l);
@@ -51,6 +49,7 @@ public class NearbyPlacesAttempt {
             @Override
             public void onComplete(PlaceResult[] rs, PlacesServiceStatus s, PlaceSearchPagination __) {
             	System.out.println("arrived to OnComplete");
+            	ArrayList<Location> $ = new ArrayList<Location>();
             	if (s == PlacesServiceStatus.OK)
 					for (int i = 0; i < rs.length; ++i) {
 						PlaceResult result = rs[i];
@@ -59,14 +58,14 @@ public class NearbyPlacesAttempt {
 						f.setName(result.getName());
 						$.add(f);
 					}
-//                onComplete = true;
+               onComplete = true;
                 System.out.println("called to callback done");
-//                c.done($);
+                c.done($);
             }
 		});
 	
-//		while(!onComplete)
-//			System.out.println("waiting");
+		while(!onComplete)
+			System.out.println("waiting");
 //		
 //		this.onComplete = this.mapIsReady = false;
 //		

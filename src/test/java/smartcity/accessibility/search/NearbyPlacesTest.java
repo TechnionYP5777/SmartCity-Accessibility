@@ -38,22 +38,24 @@ public class NearbyPlacesTest {
 				System.out.println("the length is : " + ls.size());   
 				for (Location l : ls) {
 					LatLng a = l.getCoordinates();
-					JxMapsFunctionality.putMarker((ExtendedMapView) mapView, a, l.getName());
 					System.out.println("lat is : " + a.getLat() + " lng is : " + a.getLng());
+					JxMapsFunctionality.putMarker((ExtendedMapView) mapView, a, l.getName());
 			//		System.out.println("the name of the restaurant is : " + l.getAddress(mapView));
 				}
 	            
 			JxMapsFunctionality.openFrame(mapView, "JxMaps - Hello, World!", 16.0);
 		
-			try {
-				Thread.sleep(90000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-				
+			
 			}
 		});
+		
+		try {
+			Thread.sleep(90000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
 		
 	}
 }
