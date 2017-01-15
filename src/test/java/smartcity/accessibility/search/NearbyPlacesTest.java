@@ -40,6 +40,7 @@ import smartcity.accessibility.socialnetwork.UserImpl;
 public class NearbyPlacesTest {
 	
 	@Test
+	@Ignore
 	public void nearByPlacesTest() {
 		LatLng c = new LatLng(31.90588, 34.997571); //Modi'in Yehalom St, 20
 		double radius = 1000000;
