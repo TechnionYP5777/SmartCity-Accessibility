@@ -11,7 +11,9 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -47,8 +49,10 @@ import smartcity.accessibility.gui.ExtendedMarker;
 import smartcity.accessibility.gui.compoments.search.SearchFieldUI;
 import smartcity.accessibility.jxMapsFunctionality.OptionsWindow;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
+import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
 import smartcity.accessibility.navigation.JxMapsConvertor;
+import smartcity.accessibility.search.NearbyPlacesSearch;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 
@@ -295,17 +299,23 @@ public abstract class JxMapsFunctionality {
 			Application.currLocation.remove();
 		Application.currLocation = new Marker(map);
 		Application.currLocation.setPosition(l);
-		LocationManager.getLocationsNearPoint(l, new LocationListCallback() {
 
-			@Override
-			public void done(List<Location> ls) {
-				ClearMarkers(mv);
-				for (Location loc : ls) {
-					if (loc.getLocationType().equals(LocationTypes.Street))
-						continue;
-					JxMapsFunctionality.putExtendedMarker(mv, loc);
-				}
-			}
-		});
+		NearbyPlacesSearch.findNearbyPlaces(mv, new Location(l), 1000, Arrays.asList(LocationSubTypes.values()).stream()
+				.map(object -> object + "").collect(Collectors.toList()), new LocationListCallback() {
+					@Override
+					public void done(List<Location> ls) {
+						ClearMarkers(mv);
+
+						for (Location loc : ls) {
+							System.out.println(loc.getLocationSubType());
+							System.out.println(loc.getCoordinates());
+							if (loc.getLocationType() != null && loc.getLocationType().equals(LocationTypes.Street))
+								continue;
+							JxMapsFunctionality.putExtendedMarker(mv, loc);
+						}
+						map.setCenter(l);
+						map.setZoom(17.0);
+					}
+				});
 	}
 }

@@ -31,7 +31,7 @@ public class NearbyPlacesTest {
         options.importPlaces();
         MapView mapView = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
-		NearbyPlacesAttempt n = new NearbyPlacesAttempt();
+		NearbyPlacesSearch n = new NearbyPlacesSearch();
 		n.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations, new LocationListCallback() {
 			@Override
 			public void done(List<Location> ls) {

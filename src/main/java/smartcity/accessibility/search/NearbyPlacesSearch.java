@@ -24,14 +24,12 @@ import smartcity.accessibility.mapmanagement.Location;
 /**
  * @author Koral Chapnik
  */
-public class NearbyPlacesAttempt {
+public class NearbyPlacesSearch {
 
-	public void findNearbyPlaces(MapView mapView, Location initLocation, double radius, List<String> kindsOfLocations, LocationListCallback c) {
+	public static void findNearbyPlaces(MapView mapView, Location initLocation, double radius, List<String> kindsOfLocations, LocationListCallback c) {
 		Map map = mapView.getMap();
 		LatLng l = initLocation.getCoordinates();
-		map.setCenter(l);
-		map.setZoom(17.0);
-		PlaceSearchRequest request = new PlaceSearchRequest(map);
+		PlaceSearchRequest request = new PlaceSearchRequest();
 		request.setLocation(map.getCenter());
 		request.setRadius(radius);
 		String[] types = kindsOfLocations.toArray((new String[kindsOfLocations.size()]));
