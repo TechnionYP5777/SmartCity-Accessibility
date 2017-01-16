@@ -92,18 +92,26 @@ public class SearchQuery {
 		MapViewOptions options = new MapViewOptions();
 		options.importPlaces();
 //		NearbyPlacesAttempt n = new NearbyPlacesAttempt(options);
+		NearbyPlacesSearch n = new NearbyPlacesSearch();
 		MapView mapView = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
-		NearbyPlacesSearch n = new NearbyPlacesSearch();
 		n.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations, new LocationListCallback() {
 			
 			@Override
 			public void done(List<Location> ls) {
 				places = ls;	
+				SetSearchStatus(SearchStage.Done);
+				wakeTheWaiters();
 			}
 		});
-		SetSearchStatus(places.isEmpty() ? SearchStage.Done : SearchStage.Failed);
-		wakeTheWaiters();
+		//SetSearchStatus(places.isEmpty() ? SearchStage.Done : SearchStage.Failed);
+		//wakeTheWaiters();
+		try {
+			waitOnSearch();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new SearchQueryResult(places);
 	}
 
