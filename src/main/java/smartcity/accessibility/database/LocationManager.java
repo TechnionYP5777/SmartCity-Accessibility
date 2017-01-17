@@ -252,8 +252,27 @@ public class LocationManager {
 				collect(Collectors.toList());
 	}
 	
-	public static void getLocationsNearPoint(LatLng __, LocationListCallback c){
-		// call c.done with the result --alex
+	/**
+	 * return the location into the call back (without their reviews)
+	 * @param point
+	 * @param c
+	 * @param radius
+	 */
+	public static void getLocationsNearPoint(LatLng point, LocationListCallback c, double radius){
+		ArrayList<Location> ls = new ArrayList<Location>();
+		Map<String, Object> values = new HashMap<String,Object>();
+		values.put("location", new ParseGeoPoint(point.getLat(),point.getLng()));
+		FindCallback<ParseObject> callBackL = new FindCallback<ParseObject>(){
+			@Override
+			public void done(List<ParseObject> arg0, ParseException arg1) {
+				for (ParseObject obj :arg0){
+					ls.add(new Location(point,Location.stringToEnumTypes(obj.getString("type")),
+							Location.stringToEnumSubTypes(obj.getString("subtype"))));
+            	}
+				c.done(ls);
+			}
+		};
+		DatabaseManager.queryByLocation("Location",point,radius,"coordinates", callBackL);
 	}
 
 }
