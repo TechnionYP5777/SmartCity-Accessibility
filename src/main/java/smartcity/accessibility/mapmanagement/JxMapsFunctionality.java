@@ -188,7 +188,7 @@ public abstract class JxMapsFunctionality {
 	
 	private static Location getStreetLocationByAdress(String adress){
 		String[] Adress = adress.split(" ");
-		String[] StreetRepresenatation = Arrays.copyOfRange(Adress, 0, Math.max(0,adress.length()-2));
+		String[] StreetRepresenatation = Arrays.copyOfRange(Adress, 0, Math.max(0,Adress.length-1));
 		String StreetAdress = String.join(" ", StreetRepresenatation);
 		
 		SearchQuery sq = SearchQuery.adressSearch(StreetAdress);
