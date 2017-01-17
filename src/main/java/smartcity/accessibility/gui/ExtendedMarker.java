@@ -17,7 +17,8 @@ public class ExtendedMarker extends Marker {
 
 	private static HashMap<LocationSubTypes, Icon> iconMap = new HashMap<LocationSubTypes, Icon>();
 	private Location location;
-
+	private Location StreetLocation;
+	
 	public ExtendedMarker(Map map, Location loc) {
 		super(map);
 		setIcon(iconMap.get(iconMap.containsKey(loc.getLocationSubType()) ? loc.getLocationSubType() : LocationSubTypes.Default));
@@ -37,6 +38,28 @@ public class ExtendedMarker extends Marker {
 		 * super.setPosition(loc.getCoordinates());
 		 */
 		location = loc;
+	}
+	
+	public ExtendedMarker(Map map, Location loc, Location StreetLocation) {
+		super(map);
+		setIcon(iconMap.get(iconMap.containsKey(StreetLocation.getLocationSubType()) ? StreetLocation.getLocationSubType() : LocationSubTypes.Default));
+		
+		addEventListener("click", new MapMouseEvent() {
+
+			@Override
+			public void onEvent(MouseEvent arg0) {
+				new LocationFrame(LocationManager.getLocation(StreetLocation.getCoordinates()));
+
+			}
+
+		});
+		/*
+		 * not under extended markers jurisdiction
+		 * 
+		 * super.setPosition(loc.getCoordinates());
+		 */
+		location = loc;
+		this.StreetLocation = StreetLocation;
 	}
 
 	static {

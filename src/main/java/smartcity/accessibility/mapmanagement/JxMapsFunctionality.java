@@ -148,9 +148,11 @@ public abstract class JxMapsFunctionality {
 							JOptionPane.showMessageDialog(Application.frame, "no results were found",
 									"search found nothing :(", JOptionPane.INFORMATION_MESSAGE);
 						else {
-							Location dummy = sqr1.get(0);
-							LocationManager.getLocation(dummy.getCoordinates(), Location.LocationTypes.Street, Location.LocationSubTypes.Default);
-							JxMapsFunctionality.putExtendedMarker((ExtendedMapView) mv, dummy, searchField.getText());
+							Location exactAddLoc = sqr1.get(0);
+							//LocationManager.getLocation(dummy.getCoordinates(), Location.LocationTypes.Street, Location.LocationSubTypes.Default);
+							Location StreetLoc = getStreetLocationByAdress(searchField.getText());
+							JxMapsFunctionality.putExtendedMarkerWithStreet((ExtendedMapView) mv, exactAddLoc, StreetLoc, searchField.getText());
+							
 						}
 					}
 				};
@@ -184,9 +186,9 @@ public abstract class JxMapsFunctionality {
 		};
 	}
 	
-	private Location getStreetLocationByAdress(String adress){
+	private static Location getStreetLocationByAdress(String adress){
 		String[] Adress = adress.split(" ");
-		String[] StreetRepresenatation = Arrays.copyOfRange(Adress, 0, adress.length()-1);
+		String[] StreetRepresenatation = Arrays.copyOfRange(Adress, 0, Math.max(0,adress.length()-2));
 		String StreetAdress = String.join(" ", StreetRepresenatation);
 		
 		SearchQuery sq = SearchQuery.adressSearch(StreetAdress);
@@ -202,9 +204,10 @@ public abstract class JxMapsFunctionality {
 					"search found nothing :(", JOptionPane.INFORMATION_MESSAGE);
 		else {
 			Location dummy = sqr1.get(0);
-			LocationManager.getLocation(dummy.getCoordinates(), Location.LocationTypes.Street, Location.LocationSubTypes.Default);
+			return LocationManager.getLocation(dummy.getCoordinates(), Location.LocationTypes.Street, Location.LocationSubTypes.Default);
 			//JxMapsFunctionality.putExtendedMarker((ExtendedMapView) mv, dummy, searchField.getText());
 		}
+		return null;
 		
 	}
 
@@ -270,6 +273,19 @@ public abstract class JxMapsFunctionality {
 			window.setContent(loc.getName());
 			window.open(map, marker);
 		}
+	}
+	
+	public static ExtendedMarker putExtendedMarkerWithStreet(ExtendedMapView mv, Location l, Location sl, String name){
+		waitForMapReady(mv);
+		Map map = mv.getMap();
+		ExtendedMarker $ = new ExtendedMarker(map, l, sl);
+		$.setPosition(l.getCoordinates());
+		map.setCenter(l.getCoordinates());
+		final InfoWindow window = new InfoWindow(map);
+		window.setContent(name);
+		window.open(map, $);
+		mv.MarkerList.add($);
+		return $;
 	}
 
 	public static ExtendedMarker putExtendedMarker(ExtendedMapView mv, Location l) {
