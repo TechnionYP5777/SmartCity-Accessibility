@@ -119,7 +119,7 @@ public class LocationManager {
 	}
 	
 	/**
-	 * 
+	 * don't happen in background
 	 * @param point
 	 * @return
 	 */
@@ -146,6 +146,42 @@ public class LocationManager {
 		DatabaseManager.queryByFields("Review", values, callBack);
 		Location l = new Location(notPinned,pinned,point) {};
 		return l;
+	}
+	
+	/**
+	 * return list of location that belong to the point. since the reviews belong to
+	 * a LatLng point (as we save only the coordinates) the list of reviews will
+	 * return to all the locations.
+	 * @param point
+	 * @param o
+	 */
+	public static void getLocation(LatLng point,LocationListCallback o){
+		ArrayList<Review> reviews = new ArrayList<Review>();
+		ArrayList<Location> ls = new ArrayList<Location>();
+		Map<String, Object> values = new HashMap<String,Object>();
+		values.put("location", new ParseGeoPoint(point.getLat(),point.getLng()));
+		FindCallback<ParseObject> callBackL = new FindCallback<ParseObject>(){
+			@Override
+			public void done(List<ParseObject> arg0, ParseException arg1) {
+				for (ParseObject obj :arg0){
+					ls.add(new Location(point,Location.stringToEnumTypes(obj.getString("type")),
+							Location.stringToEnumSubTypes(obj.getString("subtype")),reviews));
+            	}
+				o.done(ls);
+			}
+		};
+		FindCallback<ParseObject> callBackR = new FindCallback<ParseObject>() {
+			@Override
+			public void done(List<ParseObject> arg0, ParseException arg1) {
+                if (arg1 == null) {
+                	for (ParseObject obj :arg0){
+                		//reviews.add(new Review(l, r, c, u)) will be complete after issue #124 will close
+                	}
+                	DatabaseManager.queryByFields("Location", values, callBackL);
+                }				
+			}
+		};
+		DatabaseManager.queryByFields("Review", values, callBackR);
 	}
 	
 	/**
