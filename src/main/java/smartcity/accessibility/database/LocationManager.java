@@ -83,7 +83,7 @@ public class LocationManager {
 	 */
 	public static List<LatLng> getNonAccessibleLocationsInRadius(Location source, Location destination,
 			Integer accessibilityThreshold) {
-		
+		StringBuilder mutex = new StringBuilder();
 		double radius = distanceBtween(source.getCoordinates(),destination.getCoordinates());
 		LatLng center = new LatLng((source.getCoordinates().getLat()+destination.getCoordinates().getLat())/2,
 				(source.getCoordinates().getLng()+destination.getCoordinates().getLng())/2);
@@ -97,6 +97,10 @@ public class LocationManager {
                 		ParseGeoPoint point = (ParseGeoPoint) obj.get("coordinates");
                 		points.add(new LatLng (point.getLatitude(),point.getLongitude()));
                 	}
+                	synchronized (mutex) {
+                		mutex.append("done");
+            			mutex.notifyAll();
+            		}
                 } else {
                     //TODO: check if this part needed
                 }
@@ -104,6 +108,14 @@ public class LocationManager {
 			}
 		};
 		DatabaseManager.queryByLocation("Location",center,radius/1000,callBack);
+		synchronized (mutex) {
+			if(!mutex.equals("done")){
+				try {
+					mutex.wait();
+				} catch (InterruptedException e) {
+				}
+			}
+		}
 		List<Location> loc =  new ArrayList<Location>();
 		for(LatLng l:points){
 			loc.add(getLocation(l));
