@@ -154,8 +154,8 @@ public class LocationManager {
 	 */
 	public static void saveLocation (Location l){
 		Map<String, Object> m = new HashMap<String,Object>();
-		m.put("subtype", l.getLocationSubType()); //check if it is possible to save such data
-		//check about the location type issue#57
+		m.put("subtype", l.getLocationSubType().toString());
+		m.put("type", l.getLocationType().toString());
 		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
 		DatabaseManager.putValue("Location",m, new SaveCallback() {
 			
