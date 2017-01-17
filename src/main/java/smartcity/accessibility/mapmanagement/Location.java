@@ -89,6 +89,20 @@ public class Location {
 		this(c,lt);
 		this.locationSubType = lst;
 	}
+	
+	/**
+	 * Added in order to create location when loading them from the DB 
+	 * @author assaflu
+	 * @param c
+	 * @param lt
+	 * @param lst
+	 * @param r
+	 */
+	public Location(LatLng c, LocationTypes lt, LocationSubTypes lst,ArrayList<Review> r){
+		this(c,lt);
+		this.reviews = r;
+		this.locationSubType = lst;
+	}
 
 	public void setName(String n) {
 		this.name = n;
@@ -242,6 +256,40 @@ public class Location {
 		return locationSubType;
 	}
 	
+	/**
+	 * turns string to enum LocationTypes
+	 * @author assaflu
+	 * @param s
+	 * @return
+	 */
+	public static LocationTypes stringToEnumTypes(String s){
+		switch(s){
+			case "Coordinate":
+				return LocationTypes.Coordinate;
+			case "Facility":
+				return LocationTypes.Facility;
+			case "Street":
+				return LocationTypes.Street;
+		}
+		return LocationTypes.Street; // default return
+	}
 	
+	/**
+	 * trun string to enum LocationSubTypes
+	 * @author assaflu
+	 * @param s
+	 * @return
+	 */
+	public static LocationSubTypes stringToEnumSubTypes(String s){
+		switch(s){
+		case "Restaurant":
+			return LocationSubTypes.Restaurant;
+		case "Hotel":
+			return LocationSubTypes.Hotel;
+		case "Bar":
+			return LocationSubTypes.Bar;
+		}
+		return LocationSubTypes.Default; // default return
+	}
 
 }
