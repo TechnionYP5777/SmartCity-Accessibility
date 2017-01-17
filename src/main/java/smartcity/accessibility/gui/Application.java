@@ -134,7 +134,7 @@ public class Application {
 
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				new LocationFrame(LocationManager.getLocation(arg0.latLng()));
+				//new LocationFrame(LocationManager.getLocation(arg0.latLng()));
 			}
 		});
 

@@ -172,6 +172,15 @@ public class LocationManager {
 		return l;
 	}
 	
+	/*
+	 * for linear use, this function would not just return as we are waiting on it's result and not just in a callback
+	 * probably something similiar to search and waitonmap
+	 */
+	public static Location getLocation(LatLng point, Location.LocationTypes type, Location.LocationSubTypes subtype){
+		System.out.println("omg I am a stub? what does that mean!!!! what am I??? ahhhhh");
+		return new Location(point, type, subtype);
+	}
+	
 	/**
 	 * return list of location that belong to the point. since the reviews belong to
 	 * a LatLng point (as we save only the coordinates) the list of reviews will

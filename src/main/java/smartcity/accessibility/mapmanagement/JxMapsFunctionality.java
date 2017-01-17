@@ -149,6 +149,7 @@ public abstract class JxMapsFunctionality {
 									"search found nothing :(", JOptionPane.INFORMATION_MESSAGE);
 						else {
 							Location dummy = sqr1.get(0);
+							LocationManager.getLocation(dummy.getCoordinates(), Location.LocationTypes.Street, Location.LocationSubTypes.Default);
 							JxMapsFunctionality.putExtendedMarker((ExtendedMapView) mv, dummy, searchField.getText());
 						}
 					}
@@ -181,6 +182,30 @@ public abstract class JxMapsFunctionality {
 				contentWindow.setSize(340, 40);
 			}
 		};
+	}
+	
+	private Location getStreetLocationByAdress(String adress){
+		String[] Adress = adress.split(" ");
+		String[] StreetRepresenatation = Arrays.copyOfRange(Adress, 0, adress.length()-1);
+		String StreetAdress = String.join(" ", StreetRepresenatation);
+		
+		SearchQuery sq = SearchQuery.adressSearch(StreetAdress);
+		SearchQueryResult sqr1 = sq.SearchByAddress(mv);
+		try {
+			sq.waitOnSearch();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (!sqr1.gotResults())
+			JOptionPane.showMessageDialog(Application.frame, "no results were found",
+					"search found nothing :(", JOptionPane.INFORMATION_MESSAGE);
+		else {
+			Location dummy = sqr1.get(0);
+			LocationManager.getLocation(dummy.getCoordinates(), Location.LocationTypes.Street, Location.LocationSubTypes.Default);
+			//JxMapsFunctionality.putExtendedMarker((ExtendedMapView) mv, dummy, searchField.getText());
+		}
+		
 	}
 
 	public static ExtendedMapView getMapView() {
