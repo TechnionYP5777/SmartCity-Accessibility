@@ -88,7 +88,6 @@ public class LocationManager {
 		LatLng center = new LatLng((source.getCoordinates().getLat()+destination.getCoordinates().getLat())/2,
 				(source.getCoordinates().getLng()+destination.getCoordinates().getLng())/2);
 		ArrayList<LatLng> points = new ArrayList<LatLng>();
-		
 		FindCallback<ParseObject> callBack = new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
@@ -116,14 +115,27 @@ public class LocationManager {
 				}
 			}
 		}
-		List<Location> loc =  new ArrayList<Location>();
+		final List<Location> loc =  new ArrayList<Location>();
+		LocationListCallback list = new LocationListCallback() {
+			
+			@Override
+			public void done(List<Location> ls) {
+				for(Location l :ls){
+					if(l.getLocationType().equals(Location.LocationTypes.Street)){
+						loc.add(l);
+					}
+				}
+			}
+		};
+		
 		for(LatLng l:points){
-			loc.add(getLocation(l));
+			getLocation(l,list);
 		}
+
 		
-		loc = FilterToAllAbove(loc, 1, accessibilityThreshold); // '1' will be changed in the future
+		List<Location> returnMe = FilterToAllAbove(loc, 1, accessibilityThreshold); // '1' will be changed in the future
 		
-		for(Location l:loc){
+		for(Location l:returnMe){
 			points.remove(l.getCoordinates());
 		}
 		
