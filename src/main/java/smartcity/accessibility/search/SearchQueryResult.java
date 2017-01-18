@@ -46,6 +46,20 @@ public class SearchQueryResult{
 					loc.getLocationType(), loc.getLocationSubType());
 		}
 	}
+	
+	public void filterLocations(int tresh) throws EmptySearchQuery{
+		if(locations.isEmpty()) throw new EmptySearchQuery();
+		
+		long rating;
+		for(Location loc : locations){
+			rating = Integer.parseInt(
+					Long.toUnsignedString(
+					loc.getRating(loc.getReviews().size()).getScore()));
+			if(rating < tresh) locations.remove(loc);
+		}
+		
+		if(locations.isEmpty()) throw new EmptySearchQuery();
+	}
 }
 	
 
