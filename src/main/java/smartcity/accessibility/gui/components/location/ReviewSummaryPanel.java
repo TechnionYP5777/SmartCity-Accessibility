@@ -3,6 +3,7 @@ package smartcity.accessibility.gui.components.location;
 import javax.swing.JPanel;
 
 import smartcity.accessibility.gui.components.JMultilineLabel;
+import smartcity.accessibility.gui.components.RatingStar;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
@@ -11,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JProgressBar;
 
 import java.awt.GridBagLayout;
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
@@ -50,17 +50,16 @@ public class ReviewSummaryPanel extends JPanel implements MouseListener {
 		add(lblTest, gbc_lblTest);
 		lblTest.setVisible(true);
 
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setMinimum(Score.getMinScore());
-		progressBar.setMaximum(Score.getMaxScore());
-		progressBar.setValue(r.getRating().getScore());
+		int numOfScores = Math.abs(Score.getMaxScore())+Math.abs(Score.getMinScore());
+		RatingStar rs = new RatingStar(numOfScores);
+		rs.setRate(r.getRating().getScore());
 		GridBagConstraints gbc_progressBar = new GridBagConstraints();
 		gbc_progressBar.fill = GridBagConstraints.BOTH;
 		gbc_progressBar.insets = new Insets(0, 0, 5, 0);
 		gbc_progressBar.gridx = 1;
 		gbc_progressBar.gridy = 0;
-		add(progressBar, gbc_progressBar);
-		progressBar.setVisible(true);
+		add(rs, gbc_progressBar);
+		rs.setVisible(true);
 
 		btnSeeFullReview = new JButton("See Full Review");
 		btnSeeFullReview.addMouseListener(this);
@@ -70,9 +69,6 @@ public class ReviewSummaryPanel extends JPanel implements MouseListener {
 		gbc_btnSeeFullReview.gridy = gbc_btnSeeFullReview.gridx = 1;
 		add(btnSeeFullReview, gbc_btnSeeFullReview);
 		btnSeeFullReview.setVisible(true);
-		
-		if (review.isPinned())
-			this.setBackground(Color.ORANGE);
 
 	}
 
