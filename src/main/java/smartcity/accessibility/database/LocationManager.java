@@ -97,13 +97,13 @@ public class LocationManager {
                 		ParseGeoPoint point = (ParseGeoPoint) obj.get("coordinates");
                 		points.add(new LatLng (point.getLatitude(),point.getLongitude()));
                 	}
-                	synchronized (mutex) {
-                		mutex.append("done");
-            			mutex.notifyAll();
-            		}
                 } else {
                     //TODO: check if this part needed
                 }
+            	synchronized (mutex) {
+            		mutex.append("done");
+        			mutex.notifyAll();
+        		}
 				
 			}
 		};
@@ -156,7 +156,7 @@ public class LocationManager {
 		FindCallback<ParseObject> callBack = new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
-                if (arg1 == null) {
+                if (arg1 == null && arg0!=null) {
                 	for (ParseObject obj :arg0){
                 		if((int)obj.get("pined")==0){
                 			//TODO: pinned.add(new Review(l, r, c, u));
