@@ -184,7 +184,7 @@ public class LocationManager {
 		StringBuilder mutex = new StringBuilder();
 		ArrayList<Review> reviews = new ArrayList<Review>();
 		Map<String, Object> values = new HashMap<String,Object>();
-		values.put("coordinates", new ParseGeoPoint(point.getLat(),point.getLng()));
+		values.put("location", new ParseGeoPoint(point.getLat(),point.getLng()));
 		FindCallback<ParseObject> callBackR = new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
@@ -224,8 +224,10 @@ public class LocationManager {
 	public static void getLocation(LatLng point,LocationListCallback o){
 		ArrayList<Review> reviews = new ArrayList<Review>();
 		ArrayList<Location> ls = new ArrayList<Location>();
-		Map<String, Object> values = new HashMap<String,Object>();
-		values.put("coordinates", new ParseGeoPoint(point.getLat(),point.getLng()));
+		Map<String, Object> valuesR = new HashMap<String,Object>();
+		Map<String, Object> valuesL = new HashMap<String,Object>();
+		valuesR.put("location", new ParseGeoPoint(point.getLat(),point.getLng()));
+		valuesL.put("coordinates", new ParseGeoPoint(point.getLat(),point.getLng()));
 		FindCallback<ParseObject> callBackL = new FindCallback<ParseObject>(){
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
@@ -243,11 +245,11 @@ public class LocationManager {
                 	for (ParseObject obj :arg0){
                 		//reviews.add(new Review(l, r, c, u)) will be complete after issue #124 will close
                 	}
-                	DatabaseManager.queryByFields("Location", values, callBackL);
+                	DatabaseManager.queryByFields("Location", valuesL, callBackL);
                 }				
 			}
 		};
-		DatabaseManager.queryByFields("Review", values, callBackR);
+		DatabaseManager.queryByFields("Review", valuesR, callBackR);
 	}
 	
 	/**
