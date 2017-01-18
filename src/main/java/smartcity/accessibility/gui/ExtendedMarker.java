@@ -38,6 +38,7 @@ public class ExtendedMarker extends Marker {
 		 * super.setPosition(loc.getCoordinates());
 		 */
 		location = loc;
+		this.StreetLocation = null;
 	}
 	
 	public ExtendedMarker(Map map, Location loc, Location StreetLocation) {
