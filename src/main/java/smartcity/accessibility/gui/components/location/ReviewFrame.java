@@ -151,6 +151,7 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 				|| Privilege.deletePrivilegeLevel(Application.appUser)) {
 			btnDelete = new JButton("Delete");
 			btnDelete.setBounds(335, 17, 89, 23);
+			btnDelete.addMouseListener(this);
 			frame.getContentPane().add(btnDelete);
 
 		}
@@ -181,6 +182,7 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 		lblDownvoteCount.setText(Integer.toString(review.getDownvotes()));
 		lblUpvoteCount.setText(Integer.toString(review.getUpvotes()));
 		if (arg0.getSource() == btnDelete) {
+			ReviewManager.deleteReview(review);
 			location.getReviews().remove(review);
 			frame.dispose();
 		}
