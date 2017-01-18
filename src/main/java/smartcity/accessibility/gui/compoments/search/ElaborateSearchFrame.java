@@ -166,7 +166,14 @@ public class ElaborateSearchFrame implements MouseListener {
 			esr.convertDummiesToReal();
 		} catch (EmptySearchQuery e) {
 			JOptionPane.showMessageDialog(Application.frame, e.getMessage(), "Bad Input",
-					JOptionPane.ERROR_MESSAGE);
+				JOptionPane.ERROR_MESSAGE);
+		}
+		
+		try {
+			esr.filterLocations(Threshold);
+		} catch (EmptySearchQuery e) {
+			JOptionPane.showMessageDialog(Application.frame, e.getMessage(), "Bad Input",
+				JOptionPane.ERROR_MESSAGE);
 		}
 		
 		JxMapsFunctionality.putAllExtendedMarker(JxMapsFunctionality.getMapView(), esr.getLocations());
