@@ -5,6 +5,8 @@ import java.util.List;
 import com.teamdev.jxmaps.GeocoderResult;
 import com.teamdev.jxmaps.Map;
 
+import smartcity.accessibility.database.LocationManager;
+import smartcity.accessibility.exceptions.EmptySearchQuery;
 import smartcity.accessibility.mapmanagement.Location;
 
 /**
@@ -34,6 +36,15 @@ public class SearchQueryResult{
 	
 	public Location get(int i){
 		return locations.size() < i + 1 ? null : locations.get(i);
+	}
+	
+	public void convertDummiesToReal() throws EmptySearchQuery{
+		if(locations.isEmpty()) throw new EmptySearchQuery();
+		
+		for(Location loc : locations){
+			loc = LocationManager.getLocation(loc.getCoordinates(),
+					loc.getLocationType(), loc.getLocationSubType());
+		}
 	}
 }
 	
