@@ -20,6 +20,7 @@ import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.components.JMultilineLabel;
+import smartcity.accessibility.gui.components.RatingStar;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
@@ -99,12 +100,12 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 		lblReview.setBounds(133, 11, 146, 31);
 		frame.getContentPane().add(lblReview);
 
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setBounds(133, 42, 146, 14);
-		progressBar.setMinimum(Score.getMinScore());
-		progressBar.setMaximum(Score.getMaxScore());
-		progressBar.setValue(review.getRating().getScore());
-		frame.getContentPane().add(progressBar);
+		int numOfScores = Math.abs(Score.getMaxScore())+Math.abs(Score.getMinScore());
+		RatingStar rs = new RatingStar(numOfScores);
+		rs.setBounds(133, 42, 146, 30);
+		rs.setRate(review.getRating().getScore());
+		rs.setClickable(false);
+		frame.getContentPane().add(rs);
 
 		JMultilineLabel txtReview = new JMultilineLabel(review.getContent());
 		txtReview.setBackground(new Color(255, 255, 255));

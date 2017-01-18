@@ -53,6 +53,7 @@ public class ReviewSummaryPanel extends JPanel implements MouseListener {
 		int numOfScores = Math.abs(Score.getMaxScore())+Math.abs(Score.getMinScore());
 		RatingStar rs = new RatingStar(numOfScores);
 		rs.setRate(r.getRating().getScore());
+		rs.setClickable(false);
 		GridBagConstraints gbc_progressBar = new GridBagConstraints();
 		gbc_progressBar.fill = GridBagConstraints.BOTH;
 		gbc_progressBar.insets = new Insets(0, 0, 5, 0);
