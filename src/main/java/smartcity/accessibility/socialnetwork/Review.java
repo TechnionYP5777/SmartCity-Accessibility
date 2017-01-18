@@ -30,6 +30,21 @@ public class Review {
 		this.isPinned = false;
 	}
 
+	/**
+	 * implemented for the DB functionality
+	 * @param l
+	 * @param r
+	 * @param c
+	 * @param u
+	 */
+	public Review(Location l, int r, String c, String u) {
+		this.location = l;
+		this.rating = new Score(r);
+		this.content = c;
+		this.user = u;
+		this.isPinned = false;
+	}
+	
 	public Score getRating() {
 		return this.rating;
 	}

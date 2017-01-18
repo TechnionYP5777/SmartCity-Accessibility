@@ -19,6 +19,7 @@ import com.teamdev.jxmaps.LatLng;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
+import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserImpl;
 
@@ -172,13 +173,45 @@ public class LocationManager {
 		return l;
 	}
 	
-	/*
-	 * for linear use, this function would not just return as we are waiting on it's result and not just in a callback
-	 * probably something similiar to search and waitonmap
+	/**
+	 * this function will return a specific location, not happened in the background
+	 * @param point
+	 * @param type
+	 * @param subtype
+	 * @return
 	 */
 	public static Location getLocation(LatLng point, Location.LocationTypes type, Location.LocationSubTypes subtype){
-		System.out.println("omg I am a stub? what does that mean!!!! what am I??? ahhhhh");
-		return new Location(point, type, subtype);
+		StringBuilder mutex = new StringBuilder();
+		ArrayList<Review> reviews = new ArrayList<Review>();
+		Map<String, Object> values = new HashMap<String,Object>();
+		values.put("coordinates", new ParseGeoPoint(point.getLat(),point.getLng()));
+		FindCallback<ParseObject> callBackR = new FindCallback<ParseObject>() {
+			@Override
+			public void done(List<ParseObject> arg0, ParseException arg1) {
+                if (arg1 == null) {
+                	for (ParseObject obj :arg0){
+                		//the location in the review doesn't have the reviews
+                		reviews.add(new Review(new Location(point,type,subtype),obj.getInt("rating"),obj.getString("comment"),obj.getString("user")));
+                	}
+                }
+            	synchronized (mutex) {
+            		mutex.append("done");
+        			mutex.notifyAll();
+        		}
+			}
+		};
+		
+		DatabaseManager.queryByFields("Review", values, callBackR);
+		synchronized (mutex) {
+			if(!mutex.equals("done")){
+				try {
+					mutex.wait();
+				} catch (InterruptedException e) {
+				}
+			}
+		}
+		//System.out.println("omg I am a stub? what does that mean!!!! what am I??? ahhhhh");
+		return new Location(point, type, subtype,reviews);
 	}
 	
 	/**
@@ -192,7 +225,7 @@ public class LocationManager {
 		ArrayList<Review> reviews = new ArrayList<Review>();
 		ArrayList<Location> ls = new ArrayList<Location>();
 		Map<String, Object> values = new HashMap<String,Object>();
-		values.put("location", new ParseGeoPoint(point.getLat(),point.getLng()));
+		values.put("coordinates", new ParseGeoPoint(point.getLat(),point.getLng()));
 		FindCallback<ParseObject> callBackL = new FindCallback<ParseObject>(){
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
