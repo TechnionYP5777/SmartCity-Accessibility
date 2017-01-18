@@ -150,8 +150,13 @@ public abstract class JxMapsFunctionality {
 						else {
 							Location exactAddLoc = sqr1.get(0);
 							//LocationManager.getLocation(dummy.getCoordinates(), Location.LocationTypes.Street, Location.LocationSubTypes.Default);
-							Location StreetLoc = getStreetLocationByAdress(searchField.getText());
-							JxMapsFunctionality.putExtendedMarkerWithStreet((ExtendedMapView) mv, exactAddLoc, StreetLoc, searchField.getText());
+							try{
+								Location StreetLoc = getStreetLocationByAdress(searchField.getText());
+								JxMapsFunctionality.putExtendedMarkerWithStreet((ExtendedMapView) mv, exactAddLoc, StreetLoc, searchField.getText());
+							}catch(Exception e){
+								JOptionPane.showMessageDialog(Application.frame,"Search Syntax is as follows:\n Country(optional) City(optional) Street StreetNumber",
+										 "bad search query", JOptionPane.INFORMATION_MESSAGE);
+							}
 							
 						}
 					}
