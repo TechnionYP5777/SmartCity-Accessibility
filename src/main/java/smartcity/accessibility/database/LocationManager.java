@@ -188,7 +188,7 @@ public class LocationManager {
 		FindCallback<ParseObject> callBackR = new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
-                if (arg1 == null) {
+                if (arg1 == null && arg0!=null) {
                 	for (ParseObject obj :arg0){
                 		//the location in the review doesn't have the reviews
                 		reviews.add(new Review(new Location(point,type,subtype),obj.getInt("rating"),obj.getString("comment"),obj.getString("user")));
