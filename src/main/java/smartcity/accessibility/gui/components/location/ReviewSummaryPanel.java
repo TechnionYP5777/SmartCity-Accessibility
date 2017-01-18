@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JProgressBar;
 
 import java.awt.GridBagLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
@@ -69,6 +70,9 @@ public class ReviewSummaryPanel extends JPanel implements MouseListener {
 		gbc_btnSeeFullReview.gridy = gbc_btnSeeFullReview.gridx = 1;
 		add(btnSeeFullReview, gbc_btnSeeFullReview);
 		btnSeeFullReview.setVisible(true);
+		
+		if (review.isPinned())
+			this.setBackground(Color.ORANGE);
 
 	}
 

@@ -131,33 +131,37 @@ public class LocationFrame implements MouseListener {
 
 		JScrollPane scrollPane = new JScrollPane(jp);
 
-		scrollPane.setBounds(25, 50, 400, 350);
+		scrollPane.setBounds(25, 100, 400, 300);
 		scrollPane.setVisible(true);
 		frame.getContentPane().add(scrollPane);
 
 		if (User.Privilege.addReviewPrivilegeLevel(Application.appUser)) {
 			btnAddReview = new JButton("Add Review");
 			btnAddReview.addMouseListener(this);
-			btnAddReview.setBounds(50, 437, 112, 23);
+			btnAddReview.setBounds(25, 437, 112, 23);
 			frame.getContentPane().add(btnAddReview);
 
 		}
 
 		btnNavigate = new JButton("Navigate");
-		btnNavigate.setBounds(350, 437, 89, 23);
+		btnNavigate.setBounds(336, 437, 89, 23);
 		btnNavigate.addMouseListener(this);
 		frame.getContentPane().add(btnNavigate);
 
 		btnRefresh = new JButton("Refresh");
-		btnRefresh.setBounds(250, 437, 89, 23);
+		btnRefresh.setBounds(336, 411, 89, 23);
 		btnRefresh.addMouseListener(this);
 		frame.getContentPane().add(btnRefresh);
 		frame.setVisible(true);
 		
-		btnOnStreet = new JButton("On Street");
-		btnOnStreet.setBounds(150, 437, 89, 23);
+		btnOnStreet = new JButton("Show Street");
+		btnOnStreet.setBounds(25, 411, 112, 23);
 		btnOnStreet.addMouseListener(this);
 		frame.getContentPane().add(btnOnStreet);
+		
+		JLabel label = new JLabel(loc.getName());
+		label.setBounds(25, 45, 400, 44);
+		frame.getContentPane().add(label);
 		frame.setVisible(true);
 		
 		
