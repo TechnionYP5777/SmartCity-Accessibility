@@ -129,7 +129,7 @@ public class ReviewManager {
 					m.put("rating",arg0.getParseObject("rating"));
 					m.put("comment",arg0.getParseObject("comment"));
 					m.put("pined",arg0.getParseObject("comment"));
-					DatabaseManager.putValue("HiddenReviews",m,new SaveCallback() {
+					DatabaseManager.putValue("HiddenReview",m,new SaveCallback() {
 						
 						@Override
 						public void done(ParseException arg0) {
