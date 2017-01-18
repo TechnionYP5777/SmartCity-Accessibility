@@ -38,6 +38,13 @@ public class SearchQueryResult{
 		return locations.size() < i + 1 ? null : locations.get(i);
 	}
 	
+	
+	/***
+	 * Iterate over the locations of the search query.
+	 * If they exist in the DB convert them to the real locations
+	 * if they do no exist leave them as they are (dummies).
+	 * @throws EmptySearchQuery - If the query is empty.
+	 */
 	public void convertDummiesToReal() throws EmptySearchQuery{
 		if(locations.isEmpty()) throw new EmptySearchQuery();
 		
@@ -47,6 +54,15 @@ public class SearchQueryResult{
 		}
 	}
 	
+	/***
+	 * Iterate over the locations of the search query, remove all
+	 * those that do not match the accessibility level.
+	 * If the location is a dummy (i.e doesn't exist in the DB) treat
+	 * them as if their accessibility level is maximal.
+	 * @param tresh - minimal accessibility level.
+	 * @throws EmptySearchQuery - If the query is empty or no location
+	 * meets the criteria
+	 */
 	public void filterLocations(int tresh) throws EmptySearchQuery{
 		if(locations.isEmpty()) throw new EmptySearchQuery();
 		
