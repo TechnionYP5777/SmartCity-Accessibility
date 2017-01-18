@@ -10,6 +10,8 @@ import javax.swing.WindowConstants;
 import org.apache.commons.lang3.Range;
 
 import com.teamdev.jxmaps.LatLng;
+
+import smartcity.accessibility.exceptions.EmptySearchQuery;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.components.JMultilineLabel;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
@@ -159,6 +161,14 @@ public class ElaborateSearchFrame implements MouseListener {
 
 		SearchQuery $ = SearchQuery.TypeSearch(locationTypeField.getText());
 		SearchQueryResult esr = $.searchByType(new Location(c), radius);
+		
+		try {
+			esr.convertDummiesToReal();
+		} catch (EmptySearchQuery e) {
+			JOptionPane.showMessageDialog(Application.frame, e.getMessage(), "Bad Input",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		
 		JxMapsFunctionality.putAllExtendedMarker(JxMapsFunctionality.getMapView(), esr.getLocations());
 		return $;
 		//NearbyPlacesAttempt.displayResults(locationTypeField.getText(), radius, c, JxMapsFunctionality.getMapView());
