@@ -231,22 +231,25 @@ public class LocationManager {
 		FindCallback<ParseObject> callBackL = new FindCallback<ParseObject>(){
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
-				for (ParseObject obj :arg0){
-					ls.add(new Location(point,Location.stringToEnumTypes(obj.getString("type")),
-							Location.stringToEnumSubTypes(obj.getString("subtype")),reviews));
-            	}
+				if(arg0!=null){
+					for (ParseObject obj :arg0){
+						ls.add(new Location(point,Location.stringToEnumTypes(obj.getString("type")),
+								Location.stringToEnumSubTypes(obj.getString("subtype")),reviews));
+	            	}
+				}
 				o.done(ls);
 			}
 		};
 		FindCallback<ParseObject> callBackR = new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
-                if (arg1 == null) {
+                if (arg1 == null && arg0 != null) {
                 	for (ParseObject obj :arg0){
                 		//reviews.add(new Review(l, r, c, u)) will be complete after issue #124 will close
                 	}
-                	DatabaseManager.queryByFields("Location", valuesL, callBackL);
-                }				
+                	
+                }	
+                DatabaseManager.queryByFields("Location", valuesL, callBackL);
 			}
 		};
 		DatabaseManager.queryByFields("Review", valuesR, callBackR);

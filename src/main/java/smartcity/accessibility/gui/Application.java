@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -14,6 +15,7 @@ import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.MouseEvent;
 
 import smartcity.accessibility.database.DatabaseManager;
+import smartcity.accessibility.database.LocationListCallback;
 import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.exceptions.UserNotFoundException;
@@ -134,7 +136,14 @@ public class Application {
 
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				//new LocationFrame(LocationManager.getLocation(arg0.latLng()));
+				LocationManager.getLocation(arg0.latLng(),new LocationListCallback() {
+					
+					@Override
+					public void done(List<Location> ls) {
+						new LocationFrame(!ls.isEmpty() ? ls.get(0) : new Location(arg0.latLng()));
+					}
+				});
+				
 			}
 		});
 
