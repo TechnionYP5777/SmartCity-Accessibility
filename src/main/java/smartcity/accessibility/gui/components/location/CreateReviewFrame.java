@@ -94,10 +94,7 @@ public class CreateReviewFrame implements MouseListener {
 		if (arg0.getSource() != btnCreate)
 			return;
 		try {
-			Review r = new Review(location, slider.getValue(), textArea.getText(), Application.appUser);
-			ReviewManager
-					.uploadReview(r);
-			location.addReview(r);
+			location.addReview((new Review(location, slider.getValue(), textArea.getText(), Application.appUser)));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
