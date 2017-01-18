@@ -17,6 +17,7 @@ import org.parse4j.ParseException;
 
 import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.gui.Application;
+import smartcity.accessibility.gui.components.RatingStar;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
@@ -28,6 +29,7 @@ public class CreateReviewFrame implements MouseListener {
 	private Location location;
 	private JSlider slider;
 	private JTextArea textArea;
+	private RatingStar rs;
 
 	/**
 	 * Create the application.
@@ -60,12 +62,12 @@ public class CreateReviewFrame implements MouseListener {
 		lblPassword.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblPassword.setBounds(12, 121, 101, 15);
 		frame.getContentPane().add(lblPassword);
-
-		slider = new JSlider();
-		slider.setMaximum(Score.getMaxScore());
-		slider.setMinimum(Score.getMinScore());
-		slider.setBounds(123, 50, 282, 26);
-		frame.getContentPane().add(slider);
+		
+		int numOfScores = Math.abs(Score.getMaxScore())+Math.abs(Score.getMinScore());
+		rs = new RatingStar(numOfScores);
+		rs.setBounds(123, 50, 282, 26);
+		rs.setVisible(true);
+		frame.getContentPane().add(rs);
 
 		textArea = new JTextArea();
 		textArea.setFont(new Font("Courier New", Font.PLAIN, 11));

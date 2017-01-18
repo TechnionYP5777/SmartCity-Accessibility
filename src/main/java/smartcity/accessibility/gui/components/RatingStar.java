@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 public class RatingStar extends JPanel implements MouseListener{
+	private static final long serialVersionUID = 1L;
 	private List<JLabel> labels;
 	private int currRate;
 	private Icon emptyStar;
@@ -21,8 +22,8 @@ public class RatingStar extends JPanel implements MouseListener{
 		super(new GridLayout(1,5,2,2));
 		this.clickAble = true;
 		this.labels = new ArrayList<JLabel>();
-		this.emptyStar = new ImageIcon("res/emptyStar");
-		this.fullStar = new ImageIcon("res/fullStar");
+		this.emptyStar = new ImageIcon("res/emptyStar.png");
+		this.fullStar = new ImageIcon("res/fullStar.png");
 		for(int i=0; i<numOfStars; ++i){
 			JLabel l = new JLabel();
 			l.setIcon(this.emptyStar);
@@ -38,6 +39,7 @@ public class RatingStar extends JPanel implements MouseListener{
 		for(int i=0;i<this.labels.size();i++){
 			this.labels.get(i).setIcon((i < rate) ? this.fullStar : this.emptyStar);
 		}
+		this.repaint();
 	}
 	public void setClickable(boolean b){
 		clickAble = b;
@@ -55,6 +57,7 @@ public class RatingStar extends JPanel implements MouseListener{
 				this.currRate = i+1;
 			}
 		}
+		this.repaint();
 	}
 	@Override
 	public void mouseEntered(MouseEvent __) {
