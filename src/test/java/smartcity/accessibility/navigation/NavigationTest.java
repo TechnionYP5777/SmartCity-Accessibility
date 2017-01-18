@@ -2,7 +2,11 @@ package smartcity.accessibility.navigation;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 
 import com.teamdev.jxmaps.LatLng;
 import smartcity.accessibility.mapmanagement.Location;
@@ -15,6 +19,9 @@ import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView
 
 public class NavigationTest {
 
+	@Rule
+	public Timeout globalTimeout= Timeout.seconds(10000);
+	
 	@Test
 	public void getMapSegmentFromLatLng() {
 		// TODO this test is temporal for it relay on things that will change!
@@ -34,12 +41,12 @@ public class NavigationTest {
 		ExtendedMapView mapview = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady(mapview);
 		JxMapsConvertor.displayRoute(mapview, Navigation.arrayToLatLng(shapePoints));
-		try {
-			Thread.sleep(100000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(100000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	@Test
@@ -56,28 +63,29 @@ public class NavigationTest {
 		ExtendedMapView mapview = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady(mapview);
 		JxMapsConvertor.displayRoute(mapview, Navigation.arrayToLatLng(shapePoints));
-		try {
-			Thread.sleep(100000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(100000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	@Test
-	public void displayMap() throws CommunicationFailed {
+	@Ignore
+	public void displayMap() throws CommunicationFailed { //ignore cause it uses deprecated classes
 		Location fromLocation = new Street(new LatLng(31.768762, 34.632052));
 		Location toLocation = new Street(new LatLng(31.770981, 34.620567));
 		LatLng[] shapePoints = Navigation.showRoute(fromLocation, toLocation, 0);
 		ExtendedMapView mapview = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady(mapview);
 		JxMapsConvertor.displayRoute(mapview, shapePoints);
-		try {
-			Thread.sleep(100000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(100000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 }
