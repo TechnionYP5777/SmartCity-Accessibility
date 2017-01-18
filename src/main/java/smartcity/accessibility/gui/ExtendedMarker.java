@@ -49,7 +49,7 @@ public class ExtendedMarker extends Marker {
 
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				new LocationFrame(LocationManager.getLocation(StreetLocation.getCoordinates()));
+				new LocationFrame(LocationManager.getLocation(loc.getCoordinates()), LocationManager.getLocation(StreetLocation.getCoordinates()));
 
 			}
 
