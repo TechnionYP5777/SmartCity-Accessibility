@@ -34,15 +34,25 @@ public class LocationFrame implements MouseListener {
 
 	private JFrame frame;
 	private Location loc;
+	private Location streetLoc;
 	private JButton btnAddReview;
 	private JButton btnNavigate;
 	private JButton btnRefresh;
-
+	private JButton btnOnStreet;
 	/**
 	 * Create the application.
 	 */
 	public LocationFrame(Location loc) {
 		this.loc = loc;
+		this.streetLoc = null;
+		System.out.println(this.loc);
+		// this.loc.getReviews().get(0).
+		initialize();
+	}
+	
+	public LocationFrame(Location loc, Location streetLocation) {
+		this.loc = loc;
+		this.streetLoc = streetLocation;
 		System.out.println(this.loc);
 		// this.loc.getReviews().get(0).
 		initialize();
@@ -128,21 +138,29 @@ public class LocationFrame implements MouseListener {
 		if (User.Privilege.addReviewPrivilegeLevel(Application.appUser)) {
 			btnAddReview = new JButton("Add Review");
 			btnAddReview.addMouseListener(this);
-			btnAddReview.setBounds(25, 437, 112, 23);
+			btnAddReview.setBounds(50, 437, 112, 23);
 			frame.getContentPane().add(btnAddReview);
 
 		}
 
 		btnNavigate = new JButton("Navigate");
-		btnNavigate.setBounds(336, 437, 89, 23);
+		btnNavigate.setBounds(350, 437, 89, 23);
 		btnNavigate.addMouseListener(this);
 		frame.getContentPane().add(btnNavigate);
 
 		btnRefresh = new JButton("Refresh");
-		btnRefresh.setBounds(179, 437, 89, 23);
+		btnRefresh.setBounds(250, 437, 89, 23);
 		btnRefresh.addMouseListener(this);
 		frame.getContentPane().add(btnRefresh);
 		frame.setVisible(true);
+		
+		btnOnStreet = new JButton("On Street");
+		btnOnStreet.setBounds(150, 437, 89, 23);
+		btnOnStreet.addMouseListener(this);
+		frame.getContentPane().add(btnOnStreet);
+		frame.setVisible(true);
+		
+		
 
 	}
 
