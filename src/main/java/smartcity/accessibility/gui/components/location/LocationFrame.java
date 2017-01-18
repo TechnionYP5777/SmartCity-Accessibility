@@ -170,6 +170,11 @@ public class LocationFrame implements MouseListener {
 			new CreateReviewFrame(loc);
 		if (e.getSource() == btnNavigate)
 			activateNavigation();
+		if (e.getSource() == btnOnStreet){
+			if(streetLoc == null)
+				return;
+			new LocationFrame(streetLoc);
+		}		
 		if (e.getSource() != btnRefresh)
 			return;
 		frame.dispose();

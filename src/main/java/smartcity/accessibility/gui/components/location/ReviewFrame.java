@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
@@ -22,8 +24,9 @@ import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User.Privilege;
+import javax.swing.JCheckBox;
 
-public class ReviewFrame implements MouseListener {
+public class ReviewFrame implements MouseListener, ChangeListener {
 
 	private JFrame frame;
 	private JButton btnDownvote;
@@ -33,6 +36,7 @@ public class ReviewFrame implements MouseListener {
 	private JLabel lblUpvoteCount;
 	private JLabel lblDownvoteCount;
 	private JButton btnDelete;
+	private JCheckBox chckbxPinned;
 
 	/**
 	 * Create the application.
@@ -128,7 +132,7 @@ public class ReviewFrame implements MouseListener {
 		lblDownvoteCount.setBounds(335, 364, 89, 14);
 		frame.getContentPane().add(lblDownvoteCount);
 
-		if(Privilege.commentReviewPrivilegeLevel(Application.appUser)){
+		if (Privilege.commentReviewPrivilegeLevel(Application.appUser)) {
 			btnUpvote = new JButton("Upvote");
 			btnUpvote.setBackground(Color.GREEN);
 			btnUpvote.setBounds(10, 411, 89, 23);
@@ -140,16 +144,22 @@ public class ReviewFrame implements MouseListener {
 			btnDownvote.setBounds(335, 411, 89, 23);
 			btnDownvote.addMouseListener(this);
 			frame.getContentPane().add(btnDownvote);
-			
-			
+
 		}
-	
-		if(Application.appUser.getName().equals(review.getUser()) || Privilege.deletePrivilegeLevel(Application.appUser)){
+
+		if (Application.appUser.getName().equals(review.getUser())
+				|| Privilege.deletePrivilegeLevel(Application.appUser)) {
 			btnDelete = new JButton("Delete");
 			btnDelete.setBounds(335, 17, 89, 23);
 			frame.getContentPane().add(btnDelete);
+
 		}
-		
+
+		chckbxPinned = new JCheckBox("Pinned");
+		chckbxPinned.setBounds(335, 42, 89, 23);
+		chckbxPinned.setEnabled(Privilege.pinPrivilegeLevel(Application.appUser));
+		chckbxPinned.addChangeListener(this);
+		frame.getContentPane().add(chckbxPinned);
 
 		frame.setVisible(true);
 	}
@@ -170,7 +180,7 @@ public class ReviewFrame implements MouseListener {
 			}
 		lblDownvoteCount.setText(Integer.toString(review.getDownvotes()));
 		lblUpvoteCount.setText(Integer.toString(review.getUpvotes()));
-		if (arg0.getSource() == btnDelete){
+		if (arg0.getSource() == btnDelete) {
 			location.getReviews().remove(review);
 			frame.dispose();
 		}
@@ -194,6 +204,20 @@ public class ReviewFrame implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent __) {
+
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent arg0) {
+		if (arg0.getSource() == chckbxPinned)
+			try {
+				if (chckbxPinned.isSelected())
+					review.pin(Application.appUser);
+				else
+					review.unPin(Application.appUser);
+			} catch (UnauthorizedAccessException e) {
+				e.printStackTrace();
+			}
 
 	}
 }
