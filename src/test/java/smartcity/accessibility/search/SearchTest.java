@@ -86,9 +86,9 @@ public class SearchTest{
 	        
 	        if(!sqr1.getLocations().isEmpty()){
 		        LatLng position1 = sqr1.getLocations().get(0).getCoordinates();//.getGeometry().getLocation();  
-		        fail();
+		        
 	        }else{
-		        ;
+	        	fail();
 	        }
 	 }
 	 
