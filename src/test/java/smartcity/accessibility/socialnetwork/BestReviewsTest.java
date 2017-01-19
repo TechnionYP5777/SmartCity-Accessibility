@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
 
@@ -25,6 +26,7 @@ public class BestReviewsTest {
 	private static Review r1;
 	private static Review r2;
 	private static Review r3;
+	private static Location l;
 	private static ArrayList<Review> r;
 	
 	@BeforeClass
@@ -33,10 +35,18 @@ public class BestReviewsTest {
 		u2 = UserImpl.RegularUser("Koral2","123","");
 		u3 = UserImpl.Admin("Simba", "355", "");
 		LatLng c = new LatLng(39.750307, -104.999472);
-		Location l = new Location(c);
+		l = new Location(c);
 		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1);
 		r2 = new Review(l, 2, "middle accessibility level", u2);
 		r3 = new Review(l, Score.getMaxScore(), "high accessibility level", u3);
+		try {
+			l.addReview(r1);
+			l.addReview(r2);
+			l.addReview(r3);
+		} catch (ParseException e) {
+			fail("shouldn't fail");
+		}
+		
 		r = new ArrayList<>();
 		r.add(r1);
 		r.add(r2);
@@ -45,7 +55,7 @@ public class BestReviewsTest {
 	
 	@Test
 	public void getMostRatedTest() {
-		BestReviews br = new BestReviews(1, r);
+		BestReviews br = new BestReviews(1, l);
 		List<Review> mostRated = br.getMostRated();
 		assertEquals(mostRated.size(), 1);
 		assertEquals(mostRated.get(0), r3);
@@ -56,7 +66,7 @@ public class BestReviewsTest {
 	
 	@Test
 	public void getTotalRatingTest() {
-		assertEquals((new BestReviews(3, r)).getTotalRating(),
+		assertEquals((new BestReviews(3, l)).getTotalRatingByAvg(),
 				((r1.getRating().getScore() + r2.getRating().getScore() + r3.getRating().getScore()) / 3));
 	}
 }

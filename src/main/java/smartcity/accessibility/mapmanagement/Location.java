@@ -8,15 +8,10 @@ import java.util.stream.Collectors;
 import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
-import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
-import smartcity.accessibility.search.SearchQuery;
-import smartcity.accessibility.search.SearchQueryResult;
 import smartcity.accessibility.socialnetwork.User;
-import smartcity.accessibility.socialnetwork.User.Privilege;
 import smartcity.accessibility.socialnetwork.BestReviews;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
@@ -55,12 +50,10 @@ public class Location {
 	private LocationTypes locationType;
 	private LocationSubTypes locationSubType;
 
-	// ArthurSap
 	public ArrayList<Review> getReviews() {
 		return reviews;
 	}
 
-	// ArthurSap
 	public List<Review> getPinnedReviews() {
 		return reviews.stream().filter(r -> r.isPinned()).collect(Collectors.toList());
 	}
@@ -128,34 +121,22 @@ public class Location {
 		this.reviews = new ArrayList<Review>();
 	}
 
-	// n is the number of reviews we want to calculate the Location's rating by
+	/**
+	 * The calculation of the rating works as follows:
+	 * if there are no
+	 * @param n - the number of reviews we want to calculate the Location's rating by
+	 * @return the rating of the specified location.
+	 */
 	public Score getRating(int n) {
 		int rating = -1;
-		List<Review> pinnedReviews = getPinnedReviews();
-		List<Review> notPinnedReviews = getNotPinnedReviews();
-		if (pinnedReviews.isEmpty() && notPinnedReviews.isEmpty())
+		if (reviews.isEmpty())
 			return new Score(Score.getMinScore());
-		BestReviews br = !pinnedReviews.isEmpty() ? new BestReviews(n, pinnedReviews) : new BestReviews(n, notPinnedReviews);
-		rating = br.getTotalRating();
+		rating = ( new BestReviews(n, this)).getTotalRatingByAvg();
 		return new Score(rating);
 	}
 
-/*
- * due to changes of search results, implementation for this should change
- * 
- * 	public String getAddress(MapView mapView) {
-		SearchQuery sq = SearchQuery.adressSearch("_");
-		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
-		SearchQueryResult result = sq.searchByCoordinates(mapView, coordinates);
-		try {
-			sq.waitOnSearch();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result.getCoordinations().get(0).getFormattedAddress();
-	}*/
 
+	
 	public LatLng getCoordinates() {
 		return this.coordinates;
 	}
