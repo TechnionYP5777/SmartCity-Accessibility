@@ -8,7 +8,7 @@ import org.junit.Test;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
-import smartcity.accessibility.mapmanagement.Coordinates;
+import smartcity.accessibility.mapmanagement.Location;;
 
 /**
  * @author Koral Chapnik
@@ -22,7 +22,7 @@ public class ReviewTest {
 	public static void init(){
 		u1 = UserImpl.RegularUser("Koral","123","");
 		u2 = UserImpl.Admin("KoralAdmin","123","");
-		r1 = new Review(new Coordinates(new LatLng(39.750307, -104.999472)), Score.getMinScore(),
+		r1 = new Review(new Location(new LatLng(39.750307, -104.999472)), Score.getMinScore(),
 				"very unaccessible place!", u1);
 	}
 	

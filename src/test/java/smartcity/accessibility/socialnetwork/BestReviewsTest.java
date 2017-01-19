@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import com.teamdev.jxmaps.LatLng;
 
-import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserImpl;
@@ -34,7 +33,7 @@ public class BestReviewsTest {
 		u2 = UserImpl.RegularUser("Koral2","123","");
 		u3 = UserImpl.Admin("Simba", "355", "");
 		LatLng c = new LatLng(39.750307, -104.999472);
-		Location l = new Coordinates(c);
+		Location l = new Location(c);
 		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1);
 		r2 = new Review(l, 2, "middle accessibility level", u2);
 		r3 = new Review(l, Score.getMaxScore(), "high accessibility level", u3);
