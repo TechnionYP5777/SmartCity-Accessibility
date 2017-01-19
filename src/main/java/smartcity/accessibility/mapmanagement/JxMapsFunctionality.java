@@ -26,7 +26,6 @@ import javax.swing.WindowConstants;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 import com.teamdev.jxmaps.ControlPosition;
-import com.teamdev.jxmaps.Geocoder;
 import com.teamdev.jxmaps.GeocoderCallback;
 import com.teamdev.jxmaps.GeocoderRequest;
 import com.teamdev.jxmaps.GeocoderResult;
@@ -47,8 +46,9 @@ import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.ExtendedMarker;
 import smartcity.accessibility.gui.compoments.search.SearchFieldUI;
+import smartcity.accessibility.gui.components.SpinningWheel;
+import smartcity.accessibility.gui.components.location.LocationFrame;
 import smartcity.accessibility.jxMapsFunctionality.OptionsWindow;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
 import smartcity.accessibility.navigation.JxMapsConvertor;
@@ -363,5 +363,17 @@ public abstract class JxMapsFunctionality {
 						map.setZoom(17.0);
 					}
 				});
+	}
+	
+	public static void onClick(LatLng l){
+		SpinningWheel wheel = new SpinningWheel();
+		LocationManager.getLocation(l,new LocationListCallback() {
+			
+			@Override
+			public void done(List<Location> ls) {
+				new LocationFrame(!ls.isEmpty() ? ls.get(0) : new Location(l));
+				wheel.dispose();
+			}
+		});
 	}
 }
