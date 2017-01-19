@@ -13,37 +13,35 @@ import com.teamdev.jxmaps.GeocoderCallback;
 import com.teamdev.jxmaps.GeocoderRequest;
 import com.teamdev.jxmaps.GeocoderResult;
 import com.teamdev.jxmaps.GeocoderStatus;
+import com.teamdev.jxmaps.LatLng;
+import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.LocationListCallback;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
-import smartcity.accessibility.search.SearchQuery.SearchStage;
-
-import com.teamdev.jxmaps.LatLng;
-import com.teamdev.jxmaps.MapViewOptions;
-
+import smartcity.accessibility.mapmanagement.Location;
 
 /**
  * Author Kolikant
  */
 public class SearchQuery {
 
-	private List<Location> places; //the nearby places result
-	public enum SearchStage{
-		NotRunning,
-		Running,
-		Done,
-		Failed;
-		
+	private List<Location> places; // the nearby places result
+
+	public enum SearchStage {
+		NotRunning, Running, Done, Failed;
+
 		private static SearchStage[] allValues = values();
-		public static SearchStage fromOrdinal(int i) {return allValues[i];}
+
+		public static SearchStage fromOrdinal(int i) {
+			return allValues[i];
+		}
 	}
 
 	public static final String EmptyList = "[]";
-	protected static final String isThisAdressSpliter ="<-This is Adress: ";
-	
+	protected static final String isThisAdressSpliter = "<-This is Adress: ";
+
 	String queryString;
 	boolean isAdress;
 	final AtomicInteger searchStatus;
@@ -55,32 +53,32 @@ public class SearchQuery {
 		searchStatus = new AtomicInteger();
 		SetSearchStatus(SearchStage.NotRunning);
 	}
-	
-	public static SearchQuery adressSearch(String adress){
-		return new SearchQuery(Boolean.toString(true)+isThisAdressSpliter+adress);
+
+	public static SearchQuery adressSearch(String adress) {
+		return new SearchQuery(Boolean.toString(true) + isThisAdressSpliter + adress);
 	}
 
-	public static SearchQuery TypeSearch(String Type){
-		return new SearchQuery(Boolean.toString(false)+isThisAdressSpliter+Type);
+	public static SearchQuery TypeSearch(String Type) {
+		return new SearchQuery(Boolean.toString(false) + isThisAdressSpliter + Type);
 	}
 
 	protected void SetSearchStatus(SearchStage s) {
 		searchStatus.set(s.ordinal());
 	}
 
-	public synchronized  void waitOnSearch() throws InterruptedException {
-		while(searchStatus.get() == SearchStage.Running.ordinal())
+	public synchronized void waitOnSearch() throws InterruptedException {
+		while (searchStatus.get() == SearchStage.Running.ordinal())
 			wait();
 	}
-	
-	protected synchronized void wakeTheWaiters(){
+
+	protected synchronized void wakeTheWaiters() {
 		notifyAll();
 	}
 
 	protected SearchQueryResult Search(GeocoderRequest r, MapView v) {
 		return !isAdress ? null : adressSearch(r, v);
 	}
-	
+
 	protected SearchQueryResult Search(Location initLocation, double radius) {
 		return isAdress ? null : typeSearch(initLocation, radius);
 	}
@@ -91,25 +89,21 @@ public class SearchQuery {
 		kindsOfLocations.add(queryString);
 		MapViewOptions options = new MapViewOptions();
 		options.importPlaces();
-//		NearbyPlacesAttempt n = new NearbyPlacesAttempt(options);
-		NearbyPlacesSearch n = new NearbyPlacesSearch();
 		MapView mapView = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
-		n.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations, new LocationListCallback() {
-			
-			@Override
-			public void done(List<Location> ls) {
-				places = ls;	
-				SetSearchStatus(SearchStage.Done);
-				wakeTheWaiters();
-			}
-		});
-		//SetSearchStatus(places.isEmpty() ? SearchStage.Done : SearchStage.Failed);
-		//wakeTheWaiters();
+		NearbyPlacesSearch.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations,
+				new LocationListCallback() {
+
+					@Override
+					public void done(List<Location> ls) {
+						places = ls;
+						SetSearchStatus(SearchStage.Done);
+						wakeTheWaiters();
+					}
+				});
 		try {
 			waitOnSearch();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new SearchQueryResult(places);
@@ -123,10 +117,10 @@ public class SearchQuery {
 			@Override
 			public void onComplete(GeocoderResult[] rs, GeocoderStatus s) {
 				System.out.println("arrived to search on complete");
-				if (s != GeocoderStatus.OK){
+				if (s != GeocoderStatus.OK) {
 					SetSearchStatus(SearchStage.Failed);
 					wakeTheWaiters();
-					return;	
+					return;
 				}
 				LatLng l = rs[0].getGeometry().getLocation();
 				Location f = new Location(l);
@@ -147,13 +141,6 @@ public class SearchQuery {
 		return Search(request, v);
 
 	}
-	
-
-/*	public SearchQueryResult SearchByFreeText(MapView mapView) {
-		GeocoderRequest request = new GeocoderRequest(v.getMap());
-		request.(adress);
-		return Search(request, v);
-	}*/
 
 	/**
 	 * Koral Chapnik
@@ -164,17 +151,14 @@ public class SearchQuery {
 		request.setLocation(c);
 		return Search(request, v);
 	}
-	
-	@SuppressWarnings("deprecation")
+
 	public SearchQueryResult searchByType(Location initLocation, double radius) {
 		return Search(initLocation, radius);
 	}
 
-
-
 	@Override
 	public String toString() {
-		return Boolean.toString(isAdress)+isThisAdressSpliter+queryString;
+		return Boolean.toString(isAdress) + isThisAdressSpliter + queryString;
 	}
 
 	public static SearchQuery toQuery(String s) {
@@ -199,8 +183,5 @@ public class SearchQuery {
 			$.add(SearchQuery.toQuery(s));
 		return $;
 	}
-
-
-
 
 }

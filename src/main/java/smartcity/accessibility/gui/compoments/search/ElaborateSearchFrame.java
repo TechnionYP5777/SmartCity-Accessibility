@@ -1,33 +1,27 @@
 package smartcity.accessibility.gui.compoments.search;
 
+import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.stream.IntStream;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-
-import org.apache.commons.lang3.Range;
 
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.exceptions.EmptySearchQuery;
 import smartcity.accessibility.gui.Application;
-import smartcity.accessibility.gui.components.JMultilineLabel;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 import smartcity.accessibility.socialnetwork.Score;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.stream.IntStream;
 
 /*
  * Author Kolikant
@@ -39,12 +33,11 @@ public class ElaborateSearchFrame implements MouseListener {
 
 	private JFrame frame;
 	private JTextField locationTypeField;
-	//private JTextField thresholdField;
 	private JTextField RadiusField;
 	private JTextField CurrentPositionField;
 	private JButton btnSearch;
 	private JComboBox<Integer> thresholdsBox;
-	
+
 	/**
 	 * Create the application.
 	 */
@@ -96,20 +89,16 @@ public class ElaborateSearchFrame implements MouseListener {
 		btnSearch.addMouseListener(this);
 		frame.getContentPane().add(btnSearch);
 
-		Object[] scores = IntStream.rangeClosed(Score.getMinScore(), Score.getMaxScore()).mapToObj(n -> Integer.valueOf(n)).toArray();
+		Object[] scores = IntStream.rangeClosed(Score.getMinScore(), Score.getMaxScore())
+				.mapToObj(n -> Integer.valueOf(n)).toArray();
 		Integer[] acscores = new Integer[scores.length];
-		for(int i = 0 ; i < scores.length; i++){
-			acscores[i] = (Integer)scores[i];
-		}
+		for (int i = 0; i < scores.length; ++i)
+			acscores[i] = (Integer) scores[i];
 		this.thresholdsBox = new JComboBox<>(acscores);
 		thresholdsBox.setBounds(151, startingLoc + jumps, 198, 25);
 		frame.getContentPane().add(thresholdsBox);
 		thresholdsBox.setVisible(true);
 		frame.setVisible(true);
-		
-		/*thresholdField = new JTextField();
-		thresholdField.setBounds(151, startingLoc + jumps, 198, 25);
-		frame.getContentPane().add(thresholdField);*/
 
 		RadiusField = new JTextField();
 		RadiusField.setBounds(151, startingLoc + 2 * jumps, 198, 25);
@@ -119,8 +108,7 @@ public class ElaborateSearchFrame implements MouseListener {
 		CurrentPositionField.setBounds(151, startingLoc + 3 * jumps, 198, 25);
 		frame.getContentPane().add(CurrentPositionField);
 		CurrentPositionField.setText((Application.currLocation.getPosition() + ""));
-		
-		
+
 	}
 
 	@Override
@@ -128,7 +116,7 @@ public class ElaborateSearchFrame implements MouseListener {
 		if (arg0.getSource() != btnSearch)
 			return;
 		JxMapsFunctionality.ClearMarkers(JxMapsFunctionality.getMapView());
-		createAndSearchQuery();	
+		createAndSearchQuery();
 
 		frame.dispose();
 	}
@@ -136,8 +124,8 @@ public class ElaborateSearchFrame implements MouseListener {
 	private SearchQuery createAndSearchQuery() {
 		int Threshold, radius;
 		try {
-			
-			Threshold = thresholdsBox.getSelectedIndex();//Integer.parseInt(thresholdField.getText());
+
+			Threshold = thresholdsBox.getSelectedIndex();
 			radius = Integer.parseInt(RadiusField.getText());
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(Application.frame, "Radius and Thresold must be numbers", "Bad Input",
@@ -154,33 +142,28 @@ public class ElaborateSearchFrame implements MouseListener {
 					JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-		/*
-		 * until the elaborate search is integrated with nearby searches, we
-		 * will just use nearby searches
-		 */
 
 		SearchQuery $ = SearchQuery.TypeSearch(locationTypeField.getText());
 		SearchQueryResult esr = $.searchByType(new Location(c), radius);
-		
+
 		try {
 			esr.convertDummiesToReal();
 		} catch (EmptySearchQuery e) {
-			JOptionPane.showMessageDialog(Application.frame, e.getMessage(), "Bad Input",
-				JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(Application.frame, e.getMessage(), "Bad Input", JOptionPane.ERROR_MESSAGE);
 		}
-		
+
 		try {
 			esr.filterLocations(Threshold);
 		} catch (EmptySearchQuery e) {
-			JOptionPane.showMessageDialog(Application.frame, e.getMessage(), "Bad Input",
-				JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(Application.frame, e.getMessage(), "Bad Input", JOptionPane.ERROR_MESSAGE);
 		}
-		
+
 		JxMapsFunctionality.putAllExtendedMarker(JxMapsFunctionality.getMapView(), esr.getLocations());
 		return $;
-		//NearbyPlacesAttempt.displayResults(locationTypeField.getText(), radius, c, JxMapsFunctionality.getMapView());
+		// NearbyPlacesAttempt.displayResults(locationTypeField.getText(),
+		// radius, c, JxMapsFunctionality.getMapView());
 
-		//return SearchQuery.freeTextSearch(locationTypeField.getText());
+		// return SearchQuery.freeTextSearch(locationTypeField.getText());
 	}
 
 	@Override
