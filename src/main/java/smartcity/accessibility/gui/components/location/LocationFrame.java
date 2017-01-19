@@ -39,6 +39,7 @@ public class LocationFrame implements MouseListener {
 	private JButton btnNavigate;
 	private JButton btnRefresh;
 	private JButton btnOnStreet;
+
 	/**
 	 * Create the application.
 	 */
@@ -49,12 +50,11 @@ public class LocationFrame implements MouseListener {
 		// this.loc.getReviews().get(0).
 		initialize();
 	}
-	
+
 	public LocationFrame(Location loc, Location streetLocation) {
 		this.loc = loc;
 		this.streetLoc = streetLocation;
 		System.out.println(this.loc);
-		// this.loc.getReviews().get(0).
 		initialize();
 	}
 
@@ -71,41 +71,39 @@ public class LocationFrame implements MouseListener {
 
 			@Override
 			public void windowActivated(WindowEvent arg0) {
-				
+
 			}
 
 			@Override
 			public void windowClosed(WindowEvent arg0) {
-				//alex according to git if the location isn't in the db i should save it so there is throwned exception --Assaf
 				LocationManager.updateLocation(loc);
-
 			}
 
 			@Override
 			public void windowClosing(WindowEvent arg0) {
-				
+
 			}
 
 			@Override
 			public void windowDeactivated(WindowEvent arg0) {
-				
+
 			}
 
 			@Override
 			public void windowDeiconified(WindowEvent arg0) {
-				
+
 			}
 
 			@Override
 			public void windowIconified(WindowEvent arg0) {
-				
+
 			}
 
 			@Override
 			public void windowOpened(WindowEvent arg0) {
-				
+
 			}
-			
+
 		});
 
 		JLabel lblLocation = new JLabel("Location", SwingConstants.CENTER);
@@ -114,7 +112,6 @@ public class LocationFrame implements MouseListener {
 		frame.getContentPane().add(lblLocation);
 
 		JPanel jp = new JPanel();
-		// jp.setSize(400,350);
 		jp.setLayout(new BoxLayout(jp, BoxLayout.Y_AXIS));
 		for (Review r : loc.getPinnedReviews()) {
 			ReviewSummaryPanel rsp = new ReviewSummaryPanel(r, loc);
@@ -140,7 +137,6 @@ public class LocationFrame implements MouseListener {
 			btnAddReview.addMouseListener(this);
 			btnAddReview.setBounds(25, 437, 112, 23);
 			frame.getContentPane().add(btnAddReview);
-
 		}
 
 		btnNavigate = new JButton("Navigate");
@@ -153,19 +149,16 @@ public class LocationFrame implements MouseListener {
 		btnRefresh.addMouseListener(this);
 		frame.getContentPane().add(btnRefresh);
 		frame.setVisible(true);
-		
+
 		btnOnStreet = new JButton("Show Street");
 		btnOnStreet.setBounds(25, 411, 112, 23);
 		btnOnStreet.addMouseListener(this);
 		frame.getContentPane().add(btnOnStreet);
-		
+
 		JLabel label = new JLabel(loc.getName());
 		label.setBounds(25, 45, 400, 44);
 		frame.getContentPane().add(label);
 		frame.setVisible(true);
-		
-		
-
 	}
 
 	@Override
@@ -174,11 +167,11 @@ public class LocationFrame implements MouseListener {
 			new CreateReviewFrame(loc);
 		if (e.getSource() == btnNavigate)
 			activateNavigation();
-		if (e.getSource() == btnOnStreet){
-			if(streetLoc == null)
+		if (e.getSource() == btnOnStreet) {
+			if (streetLoc == null)
 				return;
 			new LocationFrame(streetLoc);
-		}		
+		}
 		if (e.getSource() != btnRefresh)
 			return;
 		frame.dispose();
@@ -205,36 +198,38 @@ public class LocationFrame implements MouseListener {
 	public void mouseReleased(MouseEvent __) {
 
 	}
-	
+
 	/**
 	 * @author yael
 	 */
-	public void activateNavigation(){
+	public void activateNavigation() {
 		Location src = new Location(Application.currLocation.getPosition());
 		Location dst = loc;
-		Object[] range = IntStream.rangeClosed(Score.getMinScore(), Score.getMaxScore()).mapToObj(n -> Integer.valueOf(n)).toArray();
-		Integer accessibilityThreshold = (Integer)JOptionPane.showInputDialog(frame,
-                "Insert the accessibility threshold for the navigation:\n",
-                "choose accessibilityThreshold",
-                JOptionPane.PLAIN_MESSAGE, null, range, 5);
-		if(accessibilityThreshold == null)
+		Integer accessibilityThreshold = (Integer) JOptionPane.showInputDialog(frame,
+				"Insert the accessibility threshold for the navigation:\n", "choose accessibilityThreshold",
+				JOptionPane.PLAIN_MESSAGE, null, IntStream.rangeClosed(Score.getMinScore(), Score.getMaxScore())
+						.mapToObj(n -> Integer.valueOf(n)).toArray(),
+				5);
+		if (accessibilityThreshold == null)
 			return;
 		SpinningWheel wheel = new SpinningWheel();
-	    frame.dispose();
+		frame.dispose();
 		(new Thread() {
 			@Override
 			public void run() {
 				try {
 					LatLng[] shapePoints = Navigation.showRoute(src, dst, accessibilityThreshold);
 					JxMapsConvertor.displayRoute(Application.mapView, shapePoints);
-					if(!src.getCoordinates().equals(shapePoints[0]))
+					if (!src.getCoordinates().equals(shapePoints[0]))
 						JxMapsConvertor.addStartLine(Application.mapView, src.getCoordinates(), shapePoints[0]);
-					if(!dst.getCoordinates().equals(shapePoints[shapePoints.length-1]))
-						JxMapsConvertor.addEndLine(Application.mapView, dst.getCoordinates(), shapePoints[shapePoints.length-1]);
+					if (!dst.getCoordinates().equals(shapePoints[shapePoints.length - 1]))
+						JxMapsConvertor.addEndLine(Application.mapView, dst.getCoordinates(),
+								shapePoints[shapePoints.length - 1]);
 					wheel.dispose();
 				} catch (CommunicationFailed e) {
-					JOptionPane.showMessageDialog(frame,  "Navigation failed to conncet to servers. \n please check your internet connection and try again.",
-						    "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frame,
+							"Navigation failed to conncet to servers. \n please check your internet connection and try again.",
+							"Error", JOptionPane.ERROR_MESSAGE);
 					wheel.dispose();
 				}
 			}

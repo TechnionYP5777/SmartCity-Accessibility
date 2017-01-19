@@ -1,5 +1,12 @@
 package smartcity.accessibility.gui.components.location;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import smartcity.accessibility.gui.components.JMultilineLabel;
@@ -8,15 +15,6 @@ import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 
-import javax.swing.JButton;
-import javax.swing.JProgressBar;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 public class ReviewSummaryPanel extends JPanel implements MouseListener {
 
 	private static int MAX_CHARS = 100;
@@ -24,14 +22,8 @@ public class ReviewSummaryPanel extends JPanel implements MouseListener {
 	private Review review;
 	private Location location;
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3831232049823976748L;
 
-	/**
-	 * Create the panel.
-	 */
 	public ReviewSummaryPanel(Review r, Location loc) {
 		review = r;
 		location = loc;
@@ -50,7 +42,7 @@ public class ReviewSummaryPanel extends JPanel implements MouseListener {
 		add(lblTest, gbc_lblTest);
 		lblTest.setVisible(true);
 
-		int numOfScores = Math.abs(Score.getMaxScore())+Math.abs(Score.getMinScore());
+		int numOfScores = Math.abs(Score.getMaxScore()) + Math.abs(Score.getMinScore());
 		RatingStar rs = new RatingStar(numOfScores);
 		rs.setRate(r.getRating().getScore());
 		rs.setClickable(false);

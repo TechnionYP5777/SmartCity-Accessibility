@@ -46,9 +46,9 @@ import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.ExtendedMarker;
 import smartcity.accessibility.gui.compoments.search.SearchFieldUI;
+import smartcity.accessibility.gui.components.OptionsWindow;
 import smartcity.accessibility.gui.components.SpinningWheel;
 import smartcity.accessibility.gui.components.location.LocationFrame;
-import smartcity.accessibility.jxMapsFunctionality.OptionsWindow;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
 import smartcity.accessibility.navigation.JxMapsConvertor;
@@ -149,15 +149,19 @@ public abstract class JxMapsFunctionality {
 									"search found nothing :(", JOptionPane.INFORMATION_MESSAGE);
 						else {
 							Location exactAddLoc = sqr1.get(0);
-							//LocationManager.getLocation(dummy.getCoordinates(), Location.LocationTypes.Street, Location.LocationSubTypes.Default);
-							try{
+							// LocationManager.getLocation(dummy.getCoordinates(),
+							// Location.LocationTypes.Street,
+							// Location.LocationSubTypes.Default);
+							try {
 								Location StreetLoc = getStreetLocationByAdress(searchField.getText());
-								JxMapsFunctionality.putExtendedMarkerWithStreet((ExtendedMapView) mv, exactAddLoc, StreetLoc, searchField.getText());
-							}catch(Exception e){
-								JOptionPane.showMessageDialog(Application.frame,"Search Syntax is as follows:\n Country(optional) City(optional) Street StreetNumber",
-										 "bad search query", JOptionPane.INFORMATION_MESSAGE);
+								JxMapsFunctionality.putExtendedMarkerWithStreet((ExtendedMapView) mv, exactAddLoc,
+										StreetLoc, searchField.getText());
+							} catch (Exception e) {
+								JOptionPane.showMessageDialog(Application.frame,
+										"Search Syntax is as follows:\n Country(optional) City(optional) Street StreetNumber",
+										"bad search query", JOptionPane.INFORMATION_MESSAGE);
 							}
-							
+
 						}
 					}
 				};
@@ -190,12 +194,12 @@ public abstract class JxMapsFunctionality {
 			}
 		};
 	}
-	
-	private static Location getStreetLocationByAdress(String adress){
+
+	private static Location getStreetLocationByAdress(String adress) {
 		String[] Adress = adress.split(" ");
-		String[] StreetRepresenatation = Arrays.copyOfRange(Adress, 0, Math.max(0,Adress.length-1));
+		String[] StreetRepresenatation = Arrays.copyOfRange(Adress, 0, Math.max(0, Adress.length - 1));
 		String StreetAdress = String.join(" ", StreetRepresenatation);
-		
+
 		SearchQuery sq = SearchQuery.adressSearch(StreetAdress);
 		SearchQueryResult sqr1 = sq.SearchByAddress(mv);
 		try {
@@ -205,15 +209,17 @@ public abstract class JxMapsFunctionality {
 			e.printStackTrace();
 		}
 		if (!sqr1.gotResults())
-			JOptionPane.showMessageDialog(Application.frame, "no results were found",
-					"search found nothing :(", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(Application.frame, "no results were found", "search found nothing :(",
+					JOptionPane.INFORMATION_MESSAGE);
 		else {
 			Location dummy = sqr1.get(0);
-			return LocationManager.getLocation(dummy.getCoordinates(), Location.LocationTypes.Street, Location.LocationSubTypes.Default);
-			//JxMapsFunctionality.putExtendedMarker((ExtendedMapView) mv, dummy, searchField.getText());
+			return LocationManager.getLocation(dummy.getCoordinates(), Location.LocationTypes.Street,
+					Location.LocationSubTypes.Default);
+			// JxMapsFunctionality.putExtendedMarker((ExtendedMapView) mv,
+			// dummy, searchField.getText());
 		}
 		return null;
-		
+
 	}
 
 	public static ExtendedMapView getMapView() {
@@ -279,8 +285,8 @@ public abstract class JxMapsFunctionality {
 			window.open(map, marker);
 		}
 	}
-	
-	public static ExtendedMarker putExtendedMarkerWithStreet(ExtendedMapView mv, Location l, Location sl, String name){
+
+	public static ExtendedMarker putExtendedMarkerWithStreet(ExtendedMapView mv, Location l, Location sl, String name) {
 		waitForMapReady(mv);
 		Map map = mv.getMap();
 		ExtendedMarker $ = new ExtendedMarker(map, l, sl);
@@ -364,11 +370,11 @@ public abstract class JxMapsFunctionality {
 					}
 				});
 	}
-	
-	public static void onClick(LatLng l){
+
+	public static void onClick(LatLng l) {
 		SpinningWheel wheel = new SpinningWheel();
-		LocationManager.getLocation(l,new LocationListCallback() {
-			
+		LocationManager.getLocation(l, new LocationListCallback() {
+
 			@Override
 			public void done(List<Location> ls) {
 				new LocationFrame(!ls.isEmpty() ? ls.get(0) : new Location(l));
