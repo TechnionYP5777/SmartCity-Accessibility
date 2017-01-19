@@ -160,10 +160,6 @@ public class ElaborateSearchFrame implements MouseListener {
 
 		JxMapsFunctionality.putAllExtendedMarker(JxMapsFunctionality.getMapView(), esr.getLocations());
 		return $;
-		// NearbyPlacesAttempt.displayResults(locationTypeField.getText(),
-		// radius, c, JxMapsFunctionality.getMapView());
-
-		// return SearchQuery.freeTextSearch(locationTypeField.getText());
 	}
 
 	@Override
