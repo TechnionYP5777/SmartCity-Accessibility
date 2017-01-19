@@ -1,8 +1,4 @@
-/*
- * Copyright (c) 2000-2016 TeamDev Ltd. All rights reserved.
- * Use is subject to Apache 2.0 license terms.
- */
-package smartcity.accessibility.jxMapsFunctionality;
+package smartcity.accessibility.gui.components;
 
 import com.teamdev.jxmaps.swing.MapView;
 
@@ -12,13 +8,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-/**
- * Base class for windows with options. Some examples can have options.
- *
- * @author Vitaly Eremenko
- * @author Sergei Piletsky
- */
 
 public abstract class OptionsWindow {
     protected JFrame parentFrame;

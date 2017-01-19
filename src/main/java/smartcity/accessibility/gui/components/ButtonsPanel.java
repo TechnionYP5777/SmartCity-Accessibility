@@ -16,9 +16,6 @@ import smartcity.accessibility.socialnetwork.UserImpl;
 
 public class ButtonsPanel extends JPanel implements MouseListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8394584034225983460L;
 
 	public static GButton LOGIN_BUTTON;
@@ -29,34 +26,31 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 	public static GButton SEARCH_BY_TYPE;
 
 	public ButtonsPanel() {
-		// setSize(MapFrame.FRAME_X_SIZE, 100);
-		
 		USER_PROFILE_BUTTON = new GButton("");
 		add(USER_PROFILE_BUTTON);
 		USER_PROFILE_BUTTON.setVisible(false);
 		USER_PROFILE_BUTTON.addMouseListener(this);
-		
+
 		LOGIN_BUTTON = new GButton("Login");
 		LOGIN_BUTTON.addMouseListener(this);
 		add(LOGIN_BUTTON);
 		LOGIN_BUTTON.setVisible(true);
-		
+
 		LOGOUT_BUTTON = new GButton("Logout");
 		LOGOUT_BUTTON.addMouseListener(this);
 		add(LOGOUT_BUTTON);
 		LOGOUT_BUTTON.setVisible(false);
-		
+
 		SIGNUP_BUTTON = new GButton("Signup");
 		SIGNUP_BUTTON.addMouseListener(this);
 		add(SIGNUP_BUTTON);
 		SIGNUP_BUTTON.setVisible(true);
-		
-		
+
 		CLEAR_MARKERS_BUTTON = new GButton("Clear Markers");
 		CLEAR_MARKERS_BUTTON.addMouseListener(this);
 		add(CLEAR_MARKERS_BUTTON);
 		CLEAR_MARKERS_BUTTON.setVisible(true);
-		
+
 		SEARCH_BY_TYPE = new GButton("Elaborate Search");
 		SEARCH_BY_TYPE.addMouseListener(this);
 		add(SEARCH_BY_TYPE);
@@ -69,13 +63,13 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 			new LoginFrame();
 		if (e.getSource() == SIGNUP_BUTTON)
 			new SignUpFrame();
-		if(e.getSource() == CLEAR_MARKERS_BUTTON)
+		if (e.getSource() == CLEAR_MARKERS_BUTTON)
 			JxMapsFunctionality.ClearMarkers(JxMapsFunctionality.getMapView());
-		if(e.getSource() == SEARCH_BY_TYPE)
+		if (e.getSource() == SEARCH_BY_TYPE)
 			new ElaborateSearchFrame();
-		if(e.getSource() == ButtonsPanel.USER_PROFILE_BUTTON)
+		if (e.getSource() == ButtonsPanel.USER_PROFILE_BUTTON)
 			new UserProfileFrame();
-		if(e.getSource() == ButtonsPanel.LOGOUT_BUTTON){
+		if (e.getSource() == ButtonsPanel.LOGOUT_BUTTON) {
 			UserManager.logoutCurrUser();
 			Application.appUser = UserImpl.DefaultUser();
 			LOGOUT_BUTTON.setVisible(false);

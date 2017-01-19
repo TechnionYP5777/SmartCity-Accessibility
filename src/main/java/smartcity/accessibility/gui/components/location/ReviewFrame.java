@@ -8,9 +8,9 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
@@ -25,7 +25,6 @@ import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User.Privilege;
-import javax.swing.JCheckBox;
 
 public class ReviewFrame implements MouseListener, ChangeListener {
 
@@ -39,18 +38,12 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 	private JButton btnDelete;
 	private JCheckBox chckbxPinned;
 
-	/**
-	 * Create the application.
-	 */
 	public ReviewFrame(Review r, Location loc) {
 		review = r;
 		location = loc;
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 500);
@@ -100,7 +93,7 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 		lblReview.setBounds(133, 11, 146, 31);
 		frame.getContentPane().add(lblReview);
 
-		int numOfScores = Math.abs(Score.getMaxScore())+Math.abs(Score.getMinScore());
+		int numOfScores = Math.abs(Score.getMaxScore()) + Math.abs(Score.getMinScore());
 		RatingStar rs = new RatingStar(numOfScores);
 		rs.setBounds(133, 42, 146, 30);
 		rs.setRate(review.getRating().getScore());

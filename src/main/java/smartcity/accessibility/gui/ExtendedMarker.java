@@ -18,7 +18,7 @@ public class ExtendedMarker extends Marker {
 
 	private static HashMap<LocationSubTypes, Icon> iconMap = new HashMap<LocationSubTypes, Icon>();
 	private Location location;
-	private Location StreetLocation;
+	private Location subLocation;
 
 	public ExtendedMarker(Map map, Location loc) {
 		super(map);
@@ -34,36 +34,36 @@ public class ExtendedMarker extends Marker {
 			}
 
 		});
-		/*
-		 * not under extended markers jurisdiction
-		 * 
-		 * super.setPosition(loc.getCoordinates());
-		 */
+
 		location = loc;
-		this.StreetLocation = null;
+		this.subLocation = null;
 	}
 
-	public ExtendedMarker(Map map, Location loc, Location StreetLocation) {
+	public ExtendedMarker(Map map, Location loc, Location subLocation) {
 		super(map);
-		setIcon(iconMap.get(iconMap.containsKey(StreetLocation.getLocationSubType())
-				? StreetLocation.getLocationSubType() : LocationSubTypes.Default));
+		setIcon(iconMap.get(!iconMap.containsKey(subLocation.getLocationSubType()) ? LocationSubTypes.Default
+				: subLocation.getLocationSubType()));
 
 		addEventListener("click", new MapMouseEvent() {
 
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				new LocationFrame(LocationManager.getLocation(loc.getCoordinates()), LocationManager.getLocation(StreetLocation.getCoordinates()));
+				new LocationFrame(LocationManager.getLocation(loc.getCoordinates()),
+						LocationManager.getLocation(subLocation.getCoordinates()));
 
 			}
 
 		});
-		/*
-		 * not under extended markers jurisdiction
-		 * 
-		 * super.setPosition(loc.getCoordinates());
-		 */
 		location = loc;
-		this.StreetLocation = StreetLocation;
+		this.subLocation = subLocation;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public Location getSubLocation() {
+		return subLocation;
 	}
 
 	static {

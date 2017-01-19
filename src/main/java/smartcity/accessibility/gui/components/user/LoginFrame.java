@@ -1,6 +1,5 @@
 package smartcity.accessibility.gui.components.user;
 
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,52 +25,45 @@ public class LoginFrame implements MouseListener {
 	private JPasswordField passwordField;
 	private JButton btnLogin;
 
-
-	/**
-	 * Create the application.
-	 */
 	public LoginFrame() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 400, 400);
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JLabel lblSignupForm = new JLabel("Login Form");
 		lblSignupForm.setFont(new Font("Dialog", Font.BOLD, 15));
 		lblSignupForm.setBounds(151, 25, 166, 15);
 		frame.getContentPane().add(lblSignupForm);
-		
+
 		JLabel lblUsername = new JLabel("Username: ");
 		lblUsername.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblUsername.setBounds(12, 61, 101, 15);
 		frame.getContentPane().add(lblUsername);
-		
+
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblPassword.setBounds(12, 121, 101, 15);
 		frame.getContentPane().add(lblPassword);
-		
+
 		textField = new JTextField();
 		textField.setBounds(151, 59, 198, 25);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
-		
+
 		btnLogin = new JButton("Login");
 		btnLogin.setBounds(151, 303, 117, 25);
 		btnLogin.addMouseListener(this);
 		frame.getContentPane().add(btnLogin);
-		
+
 		passwordField = new JPasswordField();
 		passwordField.setBounds(151, 119, 198, 25);
 		frame.getContentPane().add(passwordField);
-		
+
 		frame.setVisible(true);
 	}
 
@@ -95,17 +87,17 @@ public class LoginFrame implements MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		
+
 	}
 
 	@Override

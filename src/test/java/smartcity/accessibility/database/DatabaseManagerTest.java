@@ -84,7 +84,7 @@ public class DatabaseManagerTest {
 	@Test
 	public void b() {
 		ParseObject pe = DatabaseManager.getValue(testParseClass, id_result);
-		assertNotNull(pe);
+		assert pe != null;
 		assertEquals("res1", pe.get("test2"));
 		assertEquals(65, pe.get("test1"));
 	}
@@ -124,7 +124,7 @@ public class DatabaseManagerTest {
 			e.printStackTrace();
 			fail("failed to put value to server");
 		}
-		assertNotNull(o);
+		assert o != null;
 
 		assertEquals(m.get("a"), o.get("a"));
 		assertEquals(m.get("c"), o.get("c"));
@@ -158,8 +158,8 @@ public class DatabaseManagerTest {
 		assertEquals(1, value);
 	}
 
-	@SuppressWarnings("serial")
 	@Test
+	@SuppressWarnings("serial")
 	public void f() throws ParseException {
 		final AtomicInteger res = new AtomicInteger();
 		HashMap<String, Object> h = new HashMap<String, Object>() {
@@ -185,8 +185,7 @@ public class DatabaseManagerTest {
 							res.compareAndSet(0, -2);
 							return;
 						}
-						ParseObject p = DatabaseManager.getValue(testParseClass, po.getObjectId());
-						if (p != null)
+						if (DatabaseManager.getValue(testParseClass, po.getObjectId()) != null)
 							res.compareAndSet(0, -3);
 						res.compareAndSet(0, 1);
 					}

@@ -46,9 +46,9 @@ import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.ExtendedMarker;
 import smartcity.accessibility.gui.compoments.search.SearchFieldUI;
+import smartcity.accessibility.gui.components.OptionsWindow;
 import smartcity.accessibility.gui.components.SpinningWheel;
 import smartcity.accessibility.gui.components.location.LocationFrame;
-import smartcity.accessibility.jxMapsFunctionality.OptionsWindow;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
 import smartcity.accessibility.navigation.JxMapsConvertor;
@@ -211,6 +211,8 @@ public abstract class JxMapsFunctionality {
 					Location.LocationSubTypes.Default);
 		JOptionPane.showMessageDialog(Application.frame, "no results were found", "search found nothing :(",
 				JOptionPane.INFORMATION_MESSAGE);
+			// JxMapsFunctionality.putExtendedMarker((ExtendedMapView) mv,
+			// dummy, searchField.getText());
 		return null;
 	}
 

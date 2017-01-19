@@ -46,7 +46,6 @@ public class Application {
 			e.printStackTrace();
 		}
 
-		//new MapViewOptions(MapComponentType.HEAVYWEIGHT).importPlaces();
 		mapView = JxMapsFunctionality.getMapView();
 
 		mapView.setSize(FRAME_X_SIZE, FRAME_Y_SIZE - 100);
@@ -109,10 +108,7 @@ public class Application {
 				try {
 					UserManager.updateAllUserInformation(appUser);
 				} catch (UserNotFoundException e1) {
-					/*
-					 * user was not default and failed to save it's information.
-					 * what do we want to do?
-					 */
+
 				}
 			}
 
@@ -132,7 +128,7 @@ public class Application {
 			@Override
 			public void onEvent(MouseEvent arg0) {
 				JxMapsFunctionality.onClick(arg0.latLng());
-				
+
 			}
 		});
 

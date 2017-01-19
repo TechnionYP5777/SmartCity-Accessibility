@@ -207,13 +207,13 @@ public abstract class DatabaseManager {
 			}
 		});
 	}
-	
+
 	/**
-	 * Update the object from class @objectClass with id @id using the fields in @values
-	 * fields that don't appear in values assume to be unchanged
-	 * if object is not found on the server no action is taken
+	 * Update the object from class @objectClass with id @id using the fields
+	 * in @values fields that don't appear in values assume to be unchanged if
+	 * object is not found on the server no action is taken
 	 */
-	public static void update(final String objectClass ,final String id, Map<String, Object> values){
+	public static void update(final String objectClass, final String id, Map<String, Object> values) {
 		ParseQuery.getQuery(objectClass).getInBackground(id, new GetCallback<ParseObject>() {
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
