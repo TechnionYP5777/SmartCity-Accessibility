@@ -12,6 +12,7 @@ import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserImpl;
@@ -59,9 +60,17 @@ public class BestReviewsTest {
 		List<Review> mostRated = br.getMostRated();
 		assertEquals(mostRated.size(), 1);
 		assertEquals(mostRated.get(0), r3);
+		try {
+			r1.pin(u3);
+		} catch (UnauthorizedAccessException e) {
+			fail("shouldn't fail");
+		}
 		br.setN(2);
 		mostRated = br.getMostRated();
 		assertEquals(mostRated.size(), 2);
+		assertTrue(mostRated.contains(r1));
+		assertTrue(mostRated.contains(r3));
+		assertEquals(br.getTotalRatingByAvg(), r1.getRating().getScore() + r3.getRating().getScore() / 2);
 	}
 	
 	@Test
