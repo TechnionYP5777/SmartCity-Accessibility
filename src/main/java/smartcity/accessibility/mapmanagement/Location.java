@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.eclipse.persistence.internal.security.PrivilegedAccessHelper;
 import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
