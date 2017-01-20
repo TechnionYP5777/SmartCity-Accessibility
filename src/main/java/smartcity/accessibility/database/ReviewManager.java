@@ -94,12 +94,11 @@ public class ReviewManager {
 		FindCallback<ParseObject> p = new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
-				if (arg1 != null)
-					o.done(null, arg1);
-				else{
-					o.done(arg0.get(0),null);
-				}
-				
+				if(arg0==null){
+					o.done(null,arg1);
+				}else{
+					o.done(arg0.get(0),arg1);
+				}				
 			}
 		};
 		Map<String, Object> m = new HashMap<String,Object>();
@@ -121,14 +120,14 @@ public class ReviewManager {
 		GetCallback<ParseObject> p = new GetCallback<ParseObject>() {
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
-				if(arg1!=null){
+				if(arg1==null){
 					DatabaseManager.deleteById("Review",(arg0.getObjectId() + ""));
 					Map<String, Object> m = new HashMap<String,Object>();
-					m.put("user", arg0.getParseObject("user"));
-					m.put("location",arg0.getParseObject("location"));
-					m.put("rating",arg0.getParseObject("rating"));
-					m.put("comment",arg0.getParseObject("comment"));
-					m.put("pined",arg0.getParseObject("comment"));
+					m.put("user", arg0.getString("user"));
+					m.put("location",arg0.getParseGeoPoint("location"));
+					m.put("rating",arg0.getInt("rating"));
+					m.put("comment",arg0.getString("comment"));
+					m.put("pined",arg0.getInt("pined"));
 					DatabaseManager.putValue("HiddenReview",m,new SaveCallback() {
 						
 						@Override
