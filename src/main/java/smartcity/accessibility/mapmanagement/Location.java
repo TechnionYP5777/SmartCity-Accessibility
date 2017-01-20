@@ -217,7 +217,8 @@ public class Location {
 	 * @throws UnauthorizedAccessException - if the user isn't an admin or higher
 	 */
 	public void deleteReview(User u, Review r) throws UnauthorizedAccessException{
-		checkExistence(r);
+		Review review = checkExistence(r);
+		if (review == null) return;
 		
 		if(!Privilege.deletePrivilegeLevel(u) && !u.equals(r.getUser())){
 			throw (new UnauthorizedAccessException(Privilege.minDeleteLevel()));
