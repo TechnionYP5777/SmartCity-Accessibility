@@ -148,6 +148,8 @@ public class LocationManager {
 			points.remove(l.getCoordinates());
 		}
 		
+		points.remove(destination.getCoordinates());
+		points.remove(source.getCoordinates());
 		return points;
 	}
 	
