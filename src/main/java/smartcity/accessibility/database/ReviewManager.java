@@ -73,14 +73,22 @@ public class ReviewManager {
 			m.put("pined",1);
 		else
 			m.put("pined",0);
-		DatabaseManager.putValue("Review",m,new SaveCallback() {
-			
+		DatabaseManager.putValue("Review",m,new SaveCallback() {			
 			@Override
 			public void done(ParseException arg0) {
 				// do nothing
 				
 			}
-		}); 
+		});
+		System.out.println("here1");
+		LocationManager.checkLocationInDB(r.getLocation(),new GetCallback<ParseObject>(){
+			@Override
+			public void done(ParseObject arg0, ParseException arg1) {
+				if(arg0==null){
+					LocationManager.saveLocation(r.getLocation());
+				}				
+			}
+		});
 	}
 	
 	/**

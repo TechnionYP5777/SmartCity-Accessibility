@@ -30,20 +30,28 @@ import smartcity.accessibility.socialnetwork.UserImpl;
 public class LocationManager {
 
 	/**
-	 * If the location saved it to the callback function
+	 * If the location saved return it to the callback function
 	 * If it's not saved notify the callback function
 	 * @param l
 	 * @param o
 	 */
-	private static void checkLocationInDB(Location l,GetCallback<ParseObject> o){
+	static void checkLocationInDB(Location l,GetCallback<ParseObject> o){
 		Map<String, Object> m = new HashMap<String,Object>();
 		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
-		m.put("subtype", l.getLocationSubType());
-		//check about the location type issue #57
+		if(l.getLocationSubType()==null){
+			m.put("subtype", Location.LocationSubTypes.Default.toString());
+		}else{
+			m.put("subtype", l.getLocationSubType().toString());
+		}
+		if(l.getLocationType()==null){
+			m.put("subtype", Location.LocationTypes.Coordinate.toString());
+		}else{
+			m.put("type", l.getLocationType().toString());
+		}
 		GetCallback<ParseObject> hiddenCallBack = new GetCallback<ParseObject>() {
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
-				if(arg1==null){
+				if(arg1==null && arg0!=null){
 					o.done(arg0, null);
 				}
 				else{
@@ -261,8 +269,16 @@ public class LocationManager {
 	 */
 	public static void saveLocation (Location l){
 		Map<String, Object> m = new HashMap<String,Object>();
-		m.put("subtype", l.getLocationSubType().toString());
-		m.put("type", l.getLocationType().toString());
+		if(l.getLocationSubType()==null){
+			m.put("subtype", Location.LocationSubTypes.Default.toString());
+		}else{
+			m.put("subtype", l.getLocationSubType().toString());
+		}
+		if(l.getLocationType()==null){
+			m.put("subtype", Location.LocationTypes.Coordinate.toString());
+		}else{
+			m.put("type", l.getLocationType().toString());
+		}
 		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
 		DatabaseManager.putValue("Location",m, new SaveCallback() {
 			
