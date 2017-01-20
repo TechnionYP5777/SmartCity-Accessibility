@@ -15,6 +15,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 import org.parse4j.ParseException;
+import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
 import org.parse4j.ParseUser;
 import org.parse4j.callback.FindCallback;
@@ -34,8 +35,6 @@ public class ReviewManagerTest {
 	public static String testParseClass = "DatabaseManagerTestClass";
 	public static String id_result = "";
 
-	@Rule
-	public Timeout globalTimeout = Timeout.seconds(20);
 
 	
 	@BeforeClass
@@ -63,7 +62,7 @@ public class ReviewManagerTest {
 		Thread.sleep(6000);
 		UserImpl u1 = new UserImpl("assaf", "132456", null);
 		UserImpl u2 = new UserImpl("artur", "132456", null);
-		ArrayList<Review> pinned = new ArrayList<Review>();;
+		ArrayList<Review> pinned = new ArrayList<Review>();
 		GetCallback<ParseObject> g = new GetCallback<ParseObject>() {
 			
 			@Override
@@ -79,7 +78,7 @@ public class ReviewManagerTest {
 		
 	}
 	
-	@Test(timeout = 60000)
+	@Test
 	public void deleteReviewTest() throws InterruptedException{
 		LatLng k = new LatLng(21,20);
 		Location L = new Location(k);
@@ -90,7 +89,30 @@ public class ReviewManagerTest {
 		Thread.sleep(6000);
 		ReviewManager.deleteReview(r1);
 		Thread.sleep(10000);
-
+		ArrayList<Review> pinned = new ArrayList<Review>();
+		GetCallback<ParseObject> g = new GetCallback<ParseObject>() {
+			
+			@Override
+			public void done(ParseObject arg0, ParseException arg1) {
+				if(arg0!=null){
+					pinned.add(new Review(L, arg0.getInt("rating"),arg0.getString("comment"), arg0.getString("user")));
+				}				
+			}
+		};
+		UserImpl u1 = new UserImpl("assaf", "132456", null);
+		ReviewManager.getReviewByUserAndLocation(u1,L,g);
+		Thread.sleep(6000);
+		if(!pinned.isEmpty()){
+			assert(false);
+		}
+		Map<String, Object> m = new HashMap<String,Object>();
+		m.put("user","assaf");
+		m.put("location", new ParseGeoPoint(k.getLat(),k.getLng()));
+		DatabaseManager.getObjectByFields("HiddenReview",m,g);
+		Thread.sleep(6000);
+		if(pinned.isEmpty()){
+			assert(false);
+		}
 		
 	}
 }
