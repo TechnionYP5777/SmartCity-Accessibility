@@ -6,7 +6,7 @@ import org.junit.Test;
  * @author Koral Chapnik
  */
 public class ScoreTest {
-	private static final int TEST_MIN_SCORE = 0;
+	private static final int TEST_MIN_SCORE = 1;
 	private static final int TEST_MAX_SCORE = 5;
 	
 	@Test

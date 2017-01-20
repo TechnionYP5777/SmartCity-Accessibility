@@ -20,8 +20,8 @@ import smartcity.accessibility.navigation.mapquestcommunication.RouteWraper;
 import smartcity.accessibility.navigation.mapquestcommunication.Shape;
 
 /**
- * This class help finds routes in the city. The class contains segments of the
- * map that should be avoided in the routes it returns.
+ * This class help finds routes in the city. The class able to find segments of
+ * the map that should be avoided in the routes it returns.
  * 
  * @author yael
  */
@@ -51,8 +51,6 @@ public abstract class Navigation {
 
 	public static Route getRouteFromMapQuest(Latlng from, Latlng to, List<MapSegment> segmentsToAvoid)
 			throws CommunicationFailed {
-		// TODO make this code more OOP style...
-
 		Client client = ClientBuilder.newClient();
 		String path = "http://www.mapquestapi.com/directions/v2/route?";
 		WebTarget target = client.target(path).queryParam("key", mapquestKey)
@@ -80,7 +78,7 @@ public abstract class Navigation {
 	}
 
 	private static List<MapSegment> getSegmentsToAvoid(Location source, Location destination,
-			Integer accessibilityThreshold) {
+			Integer accessibilityThreshold) throws CommunicationFailed {
 		List<LatLng> locationsToAvoid = LocationManager.getNonAccessibleLocationsInRadius(source, destination,
 				accessibilityThreshold);
 		List<MapSegment> $ = new ArrayList<MapSegment>();
@@ -89,9 +87,17 @@ public abstract class Navigation {
 		return $;
 	}
 
-	public static MapSegment getMapSegmentOfLatLng(double lat, double lng) {
-		return ClientBuilder.newClient().target(("http://www.mapquestapi.com/directions/v2/findlinkid?" + "key="
-				+ mapquestKey + "&" + "lat=" + lat + "&" + "lng=" + lng)).request().get(MapSegment.class);
+	public static MapSegment getMapSegmentOfLatLng(double lat, double lng) throws CommunicationFailed {
+		Response response;
+		try {
+			response = ClientBuilder.newClient().target("http://www.mapquestapi.com/directions/v2/findlinkid?")
+					.queryParam("key", mapquestKey).queryParam("lat", lat).queryParam("lng", lng).request().get();
+		} catch (ProcessingException e) {
+			throw new CommunicationFailed();
+		}
+		if (response.getStatus() != 200)
+			throw new CommunicationFailed();
+		return response.readEntity(MapSegment.class);
 	}
 
 };

@@ -18,22 +18,24 @@ import javax.swing.JLabel;
  * @author yael
  */
 public class RatingStar extends JPanel implements MouseListener {
+	private static final int padding = 2;
 	private static final long serialVersionUID = 1L;
 	private List<JLabel> labels;
 	private int currRate;
 	private Icon emptyStar;
 	private Icon fullStar;
 	private boolean clickAble;
-
+	
 	public RatingStar(int numOfStars) {
-		super(new GridLayout(1, 5, 2, 2));
+		super(new GridLayout(1, numOfStars, padding, padding));
 		this.clickAble = true;
 		this.labels = new ArrayList<JLabel>();
 		this.emptyStar = new ImageIcon("res/emptyStar.png");
 		this.fullStar = new ImageIcon("res/fullStar.png");
+		this.currRate = 1;
 		for (int i = 0; i < numOfStars; ++i) {
 			JLabel l = new JLabel();
-			l.setIcon(this.emptyStar);
+			l.setIcon((i == 0) ? this.fullStar : this.emptyStar);
 			l.addMouseListener(this);
 			this.add(l);
 			this.labels.add(l);

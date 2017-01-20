@@ -1,6 +1,8 @@
 package smartcity.accessibility.navigation.mapquestcommunication;
+
 /**
  * This class hold information about the response from mapquest
+ * 
  * @author yael
  *
  */
