@@ -240,6 +240,8 @@ public class Location {
 	 * @return
 	 */
 	public static LocationTypes stringToEnumTypes(String s){
+		if(s == null)
+			return LocationTypes.Street;
 		switch(s){
 			case "Coordinate":
 				return LocationTypes.Coordinate;
