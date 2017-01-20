@@ -7,11 +7,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 /**
- * This Class is a frame that display a spinning wheel. Use: SpinningWheel wheel
- * = new SpinningWheel(); //long calculation.... wheel.dispose();
- * 
+ * This Class is a frame that display a spinning wheel. 
+ * Use: 
+ * SpinningWheel wheel = new SpinningWheel(); 
+ * //long calculation.... 
+ * wheel.dispose();
  * @author yael
- *
  */
 public class SpinningWheel extends JFrame {
 

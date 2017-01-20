@@ -10,7 +10,7 @@ import javax.swing.WindowConstants;
 import smartcity.accessibility.gui.Application;
 
 /**
- * 
+ * This class represent a frame that contains the User Profile
  * @author yael
  *
  */
