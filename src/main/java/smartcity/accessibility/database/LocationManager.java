@@ -115,7 +115,7 @@ public class LocationManager {
 				
 			}
 		};
-		DatabaseManager.queryByLocation("Location",center,radius/1000,callBack);
+		DatabaseManager.queryByLocation("Location",center,radius/1000,"coordinates",callBack);
 		synchronized (mutex) {
 			if(!mutex.equals("done")){
 				try {
