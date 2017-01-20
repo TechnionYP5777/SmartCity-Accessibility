@@ -1,4 +1,4 @@
-package smartcity.accessibility.gui.compoments.search;
+package smartcity.accessibility.gui.components.search;
 
 import java.awt.Color;
 import java.awt.Graphics;

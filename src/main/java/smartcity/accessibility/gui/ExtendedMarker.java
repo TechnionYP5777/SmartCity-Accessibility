@@ -1,7 +1,6 @@
 package smartcity.accessibility.gui;
 
 import java.util.HashMap;
-import java.util.List;
 
 import com.teamdev.jxmaps.Icon;
 import com.teamdev.jxmaps.Map;
@@ -9,9 +8,9 @@ import com.teamdev.jxmaps.MapMouseEvent;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.MouseEvent;
 
-import smartcity.accessibility.database.LocationListCallback;
 import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.gui.components.location.LocationFrame;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 
@@ -19,7 +18,7 @@ public class ExtendedMarker extends Marker {
 
 	private static HashMap<LocationSubTypes, Icon> iconMap = new HashMap<LocationSubTypes, Icon>();
 	private Location location;
-	private Location StreetLocation;
+	private Location subLocation;
 
 	public ExtendedMarker(Map map, Location loc) {
 		super(map);
@@ -30,47 +29,41 @@ public class ExtendedMarker extends Marker {
 
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				LocationManager.getLocation(arg0.latLng(), new LocationListCallback() {
-
-					@Override
-					public void done(List<Location> ls) {
-						new LocationFrame(!ls.isEmpty() ? ls.get(0) : new Location(arg0.latLng()));
-					}
-				});
+				JxMapsFunctionality.onClick(arg0.latLng());
 
 			}
 
 		});
-		/*
-		 * not under extended markers jurisdiction
-		 * 
-		 * super.setPosition(loc.getCoordinates());
-		 */
+
 		location = loc;
-		this.StreetLocation = null;
+		this.subLocation = null;
 	}
 
-	public ExtendedMarker(Map map, Location loc, Location StreetLocation) {
+	public ExtendedMarker(Map map, Location loc, Location subLocation) {
 		super(map);
-		setIcon(iconMap.get(iconMap.containsKey(StreetLocation.getLocationSubType())
-				? StreetLocation.getLocationSubType() : LocationSubTypes.Default));
+		setIcon(iconMap.get(!iconMap.containsKey(subLocation.getLocationSubType()) ? LocationSubTypes.Default
+				: subLocation.getLocationSubType()));
 
 		addEventListener("click", new MapMouseEvent() {
 
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				new LocationFrame(LocationManager.getLocation(loc.getCoordinates()), LocationManager.getLocation(StreetLocation.getCoordinates()));
+				new LocationFrame(LocationManager.getLocation(loc.getCoordinates()),
+						LocationManager.getLocation(subLocation.getCoordinates()));
 
 			}
 
 		});
-		/*
-		 * not under extended markers jurisdiction
-		 * 
-		 * super.setPosition(loc.getCoordinates());
-		 */
 		location = loc;
-		this.StreetLocation = StreetLocation;
+		this.subLocation = subLocation;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public Location getSubLocation() {
+		return subLocation;
 	}
 
 	static {

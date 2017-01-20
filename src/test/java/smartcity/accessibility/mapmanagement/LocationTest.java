@@ -8,7 +8,6 @@ import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
 import smartcity.accessibility.database.DatabaseManager;
-import smartcity.accessibility.mapmanagement.Coordinates;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
@@ -32,7 +31,7 @@ public class LocationTest {
 		User u2 = UserImpl.RegularUser("Koral2","123","");
 		User u3 = UserImpl.RegularUser("Koral3","123","");
 		LatLng c = new LatLng(31.90588, 34.997571); //Modi'in Yehalom St, 20
-		l = new Coordinates(c);
+		l = new Location(c);
 		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1);
 		r2 = new Review(l, 5, "middle accessibility level", u2);
 		r3 = new Review(l, Score.getMaxScore(), "high accessibility level", u3);

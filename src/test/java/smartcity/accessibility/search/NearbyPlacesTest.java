@@ -10,7 +10,6 @@ import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.LocationListCallback;
-import smartcity.accessibility.mapmanagement.Facility;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
@@ -26,7 +25,7 @@ public class NearbyPlacesTest {
 		double radius = 1000000;
 		ArrayList<String> kindsOfLocations = new ArrayList<String>();
 		kindsOfLocations.add("restaurant");
-		Location initLocation = new Facility(c);
+		Location initLocation = new Location(c);
 		MapViewOptions options = new MapViewOptions();
         options.importPlaces();
         MapView mapView = JxMapsFunctionality.getMapView();

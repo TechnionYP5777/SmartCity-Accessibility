@@ -10,12 +10,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
 import javax.swing.JTextArea;
 
 import org.parse4j.ParseException;
 
-import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.components.RatingStar;
 import smartcity.accessibility.mapmanagement.Location;
@@ -27,21 +25,14 @@ public class CreateReviewFrame implements MouseListener {
 	private JFrame frame;
 	private JButton btnCreate;
 	private Location location;
-	private JSlider slider;
 	private JTextArea textArea;
 	private RatingStar rs;
 
-	/**
-	 * Create the application.
-	 */
 	public CreateReviewFrame(Location l) {
 		location = l;
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 500);
@@ -62,8 +53,8 @@ public class CreateReviewFrame implements MouseListener {
 		lblPassword.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblPassword.setBounds(12, 121, 101, 15);
 		frame.getContentPane().add(lblPassword);
-		
-		int numOfScores = Math.abs(Score.getMaxScore())+Math.abs(Score.getMinScore());
+
+		int numOfScores = Math.abs(Score.getMaxScore()) + Math.abs(Score.getMinScore());
 		rs = new RatingStar(numOfScores);
 		rs.setBounds(123, 50, 282, 26);
 		rs.setVisible(true);

@@ -11,20 +11,27 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
-public class RatingStar extends JPanel implements MouseListener{
+/**
+ * Rating Star class - receive the number of starts. the minimum rate must be
+ * one.
+ * 
+ * @author yael
+ */
+public class RatingStar extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	private List<JLabel> labels;
 	private int currRate;
 	private Icon emptyStar;
 	private Icon fullStar;
 	private boolean clickAble;
-	public RatingStar(int numOfStars){
-		super(new GridLayout(1,5,2,2));
+
+	public RatingStar(int numOfStars) {
+		super(new GridLayout(1, 5, 2, 2));
 		this.clickAble = true;
 		this.labels = new ArrayList<JLabel>();
 		this.emptyStar = new ImageIcon("res/emptyStar.png");
 		this.fullStar = new ImageIcon("res/fullStar.png");
-		for(int i=0; i<numOfStars; ++i){
+		for (int i = 0; i < numOfStars; ++i) {
 			JLabel l = new JLabel();
 			l.setIcon(this.emptyStar);
 			l.addMouseListener(this);
@@ -32,44 +39,51 @@ public class RatingStar extends JPanel implements MouseListener{
 			this.labels.add(l);
 		}
 	}
-	public int getRate(){
+
+	public int getRate() {
 		return this.currRate;
 	}
-	public void setRate(int rate){
-		for(int i=0;i<this.labels.size();i++){
+
+	public void setRate(int rate) {
+		for (int i = 0; i < this.labels.size(); ++i)
 			this.labels.get(i).setIcon((i < rate) ? this.fullStar : this.emptyStar);
-		}
 		this.repaint();
 	}
-	public void setClickable(boolean b){
+
+	public void setClickable(boolean b) {
 		clickAble = b;
 	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(!clickAble)
+		if (!clickAble)
 			return;
 		boolean flag = true;
-		for(int i= 0;i<labels.size();i++){
+		for (int i = 0; i < labels.size(); ++i) {
 			JLabel l = labels.get(i);
 			l.setIcon(flag ? this.fullStar : this.emptyStar);
-			if(e.getSource().equals(l)){
+			if (e.getSource().equals(l)) {
 				flag = false;
-				this.currRate = i+1;
+				this.currRate = i + 1;
 			}
 		}
 		this.repaint();
 	}
+
 	@Override
 	public void mouseEntered(MouseEvent __) {
 	}
+
 	@Override
 	public void mouseExited(MouseEvent __) {
 	}
+
 	@Override
 	public void mousePressed(MouseEvent __) {
 	}
+
 	@Override
 	public void mouseReleased(MouseEvent __) {
 	}
-	
+
 }

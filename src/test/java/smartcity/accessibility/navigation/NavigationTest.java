@@ -10,7 +10,6 @@ import org.junit.rules.Timeout;
 
 import com.teamdev.jxmaps.LatLng;
 import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.mapmanagement.Street;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 
@@ -74,8 +73,8 @@ public class NavigationTest {
 	@Test
 	@Ignore
 	public void displayMap() throws CommunicationFailed { //ignore cause it uses deprecated classes
-		Location fromLocation = new Street(new LatLng(31.768762, 34.632052));
-		Location toLocation = new Street(new LatLng(31.770981, 34.620567));
+		Location fromLocation = new Location(new LatLng(31.768762, 34.632052));
+		Location toLocation = new Location(new LatLng(31.770981, 34.620567));
 		LatLng[] shapePoints = Navigation.showRoute(fromLocation, toLocation, 0);
 		ExtendedMapView mapview = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady(mapview);

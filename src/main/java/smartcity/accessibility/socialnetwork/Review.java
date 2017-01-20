@@ -32,6 +32,7 @@ public class Review {
 
 	/**
 	 * implemented for the DB functionality
+	 * 
 	 * @param l
 	 * @param r
 	 * @param c
@@ -44,7 +45,7 @@ public class Review {
 		this.user = u;
 		this.isPinned = false;
 	}
-	
+
 	public Score getRating() {
 		return this.rating;
 	}
@@ -56,27 +57,27 @@ public class Review {
 	public String getContent() {
 		return this.content;
 	}
-	
+
 	public void pin(User u) throws UnauthorizedAccessException {
 		if (!isAccessAllowed(u))
-				throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
+			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
 		this.isPinned = true;
 	}
-	
+
 	private boolean isAccessAllowed(User u) {
 		return Privilege.pinPrivilegeLevel(u);
 	}
-	
+
 	public void unPin(User u) throws UnauthorizedAccessException {
 		if (!isAccessAllowed(u))
-				throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
+			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
 		this.isPinned = false;
 	}
 
 	public boolean isPinned() {
 		return this.isPinned;
 	}
-	
+
 	/**
 	 * @return the user name
 	 */
@@ -93,7 +94,7 @@ public class Review {
 
 	/**
 	 * @author KaplanAlexander
-	 * @throws UnauthorizedAccessException 
+	 * @throws UnauthorizedAccessException
 	 */
 	public void upvote(User u) throws UnauthorizedAccessException {
 		comment(u, ReviewComment.POSITIVE_RATING);
@@ -101,7 +102,7 @@ public class Review {
 
 	/**
 	 * @author KaplanAlexander
-	 * @throws UnauthorizedAccessException 
+	 * @throws UnauthorizedAccessException
 	 */
 	public void downvote(User u) throws UnauthorizedAccessException {
 		comment(u, ReviewComment.NEGATIVE_RATING);
@@ -109,16 +110,16 @@ public class Review {
 
 	/**
 	 * @author KaplanAlexander
-	 * @throws UnauthorizedAccessException 
+	 * @throws UnauthorizedAccessException
 	 */
 	protected void comment(User u, int rating) throws UnauthorizedAccessException {
-		if(!Privilege.commentReviewPrivilegeLevel(u))
+		if (!Privilege.commentReviewPrivilegeLevel(u))
 			throw (new UnauthorizedAccessException(Privilege.minCommentLevel()));
 		if (comments.contains(new ReviewComment(u)))
 			comments.remove(new ReviewComment(u));
 		comments.add(new ReviewComment(rating, u));
 	}
-	
+
 	/**
 	 * @author KaplanAlexander
 	 */
