@@ -219,7 +219,7 @@ public class Location {
 	public void deleteReview(User u, Review r) throws UnauthorizedAccessException{
 		checkExistence(r);
 		
-		if(!Privilege.deletePrivilegeLevel(u)){
+		if(!Privilege.deletePrivilegeLevel(u) && !u.equals(r.getUser())){
 			throw (new UnauthorizedAccessException(Privilege.minDeleteLevel()));
 		}
 		

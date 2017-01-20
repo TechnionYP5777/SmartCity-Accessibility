@@ -42,7 +42,7 @@ public class DeleteReviewsTest {
 	@Test(expected = UnauthorizedAccessException.class)
 	public void regularUserCantDelete() throws UnauthorizedAccessException {
 		try{
-			location.deleteReview(user, review);
+			location.deleteReview(user, review2);
 		}catch(UnauthorizedAccessException e) {
 			nothingHasChangedCheck();
 			throw e;
@@ -69,7 +69,18 @@ public class DeleteReviewsTest {
 		//No other review has be affected
 		assertTrue(location.getReviews().contains(review2));
 		assertTrue(location.getReviews().size() == 1);
+	}
+	
+	@Test
+	public void userCanOwnedDelete() throws UnauthorizedAccessException{
+		location.deleteReview(user, review);
 		
+		//Review has been deleted
+		assertFalse(location.getReviews().contains(review));
+		
+		//No other review has be affected
+		assertTrue(location.getReviews().contains(review2));
+		assertTrue(location.getReviews().size() == 1);
 	}
 
 }
