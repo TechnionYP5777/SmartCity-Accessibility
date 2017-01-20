@@ -1,7 +1,9 @@
 package smartcity.accessibility.navigation;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
@@ -57,7 +59,7 @@ public abstract class Navigation {
 				.queryParam("from", from.getLat() + "," + from.getLng())
 				.queryParam("to", to.getLat() + "," + to.getLng()).queryParam("fullShape", true)
 				.queryParam("shapeFormat", "raw").queryParam("routeType", "pedestrian");
-		List<String> mustAvoidLinkIds = new ArrayList<>();
+		Set<String> mustAvoidLinkIds = new HashSet<String>();
 		if (!segmentsToAvoid.isEmpty()) {
 			for (MapSegment m : segmentsToAvoid)
 				mustAvoidLinkIds.add((m.getLinkId() + ""));
