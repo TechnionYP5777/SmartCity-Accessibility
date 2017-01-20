@@ -18,12 +18,12 @@ public class JxMapsConvertor {
 	private static Polyline prevStartLine; // line for the start of the route
 	private static Polyline prevEndLine; // line for the end of the route
 	private static final String colorOfRoute = "#FF0000";
-	private static final String colorOfExternalLines = "#0066ff"; 
+	private static final String colorOfExternalLines = "#0066ff";
 	private static final double thicknessOfLine = 2.0;
 
 	public static void displayRoute(MapView v, LatLng[] shapeLatlng) {
 		removePrevPolyline();
-		prevRoute = addLine(v, shapeLatlng,colorOfRoute,thicknessOfLine);
+		prevRoute = addLine(v, shapeLatlng, colorOfRoute, thicknessOfLine);
 	}
 
 	public static void removePrevPolyline() {
@@ -35,7 +35,7 @@ public class JxMapsConvertor {
 			prevEndLine.setVisible(false);
 	}
 
-	private static Polyline addLine(MapView v, LatLng[] latLngArr,String color,double thickness) {
+	private static Polyline addLine(MapView v, LatLng[] latLngArr, String color, double thickness) {
 		final Map map = v.getMap();
 		Polyline $ = new Polyline(map);
 		$.setPath(latLngArr);
