@@ -36,6 +36,7 @@ public interface User {
 	    
 	    public static Privilege minCommentLevel(){return RegularUser;}
 	    public static Privilege minPinLevel(){return Admin;}
+	    public static Privilege minDeleteLevel() { return Admin;}
 
 	}
 	

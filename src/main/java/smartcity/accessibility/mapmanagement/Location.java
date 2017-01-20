@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import org.eclipse.persistence.internal.security.PrivilegedAccessHelper;
 import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
@@ -12,6 +12,7 @@ import com.teamdev.jxmaps.LatLng;
 import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.User.Privilege;
 import smartcity.accessibility.socialnetwork.BestReviews;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
@@ -182,13 +183,9 @@ public class Location {
 	 * @throws UnauthorizedAccessException
 	 **/
 	public void pinReview(User u, Review r) throws UnauthorizedAccessException {
-		Review review = getReview(r);
-		if (review == null) {
-			System.out.print("ERROR! This review doesn't exist in current location!");
-			System.out.println("\tCurrent Location: " + this.coordinates);
-			return;
-		}
-
+		Review review = checkExistence(r);
+		if (review == null) return;
+		
 		if (getPinnedReviews().contains(r)) {
 			System.out.println("Review is already pinned.");
 			return;
@@ -203,18 +200,48 @@ public class Location {
 	 * @throws UnauthorizedAccessException
 	 */
 	public void unpinReview(User u, Review r) throws UnauthorizedAccessException {	
-		Review review = getReview(r);
-		if (review == null) {
-			System.out.print("ERROR! This review doesn't exist in current location!");
-			System.out.println("\tCurrent Location: " + this.coordinates);
-			return;
-		}
+		Review review = checkExistence(r);
+		if (review == null) return;
 		
 		if (!review.isPinned()) {
 			System.out.println("Review is already un-pinned.");
 			return;
 		}
 		review.unPin(u);
+	}
+	
+	
+	/**
+	 * Deletes a review from this location
+	 * @param u - the user that wishes to delete a review
+	 * @param r - the review to be deleted 
+	 * @throws UnauthorizedAccessException - if the user isn't an admin or higher
+	 */
+	public void deleteReview(User u, Review r) throws UnauthorizedAccessException{
+		checkExistence(r);
+		
+		if(!Privilege.deletePrivilegeLevel(u)){
+			throw (new UnauthorizedAccessException(Privilege.minDeleteLevel()));
+		}
+		
+		reviews.remove(r);
+		ReviewManager.deleteReview(r);		
+	}
+
+	
+	/**
+	 * Checks whether a given review belongs to this location
+	 * @param r - the review to be checked
+	 * @return - the review if it exists or null otherwise
+	 */
+	private Review checkExistence(Review r) {
+		Review review = getReview(r);
+		if (review == null) {
+			System.out.print("ERROR! This review doesn't exist in current location!");
+			System.out.println("\tCurrent Location: " + this.coordinates);
+			return null;
+		}
+		return review;
 	}
 
 	
