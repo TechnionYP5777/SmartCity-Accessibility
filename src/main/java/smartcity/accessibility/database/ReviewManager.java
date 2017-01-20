@@ -120,7 +120,7 @@ public class ReviewManager {
 		GetCallback<ParseObject> p = new GetCallback<ParseObject>() {
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
-				if(arg1==null){
+				if(arg1==null && arg0!=null){
 					DatabaseManager.deleteById("Review",(arg0.getObjectId() + ""));
 					Map<String, Object> m = new HashMap<String,Object>();
 					m.put("user", arg0.getString("user"));

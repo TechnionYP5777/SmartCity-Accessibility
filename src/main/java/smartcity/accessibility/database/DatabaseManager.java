@@ -201,9 +201,11 @@ public abstract class DatabaseManager {
 		pq.findInBackground(new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
-				if (arg1 != null || arg0.isEmpty())
+				if (arg1 != null || arg0==null)
 					o.done(null, arg1);
-				o.done(arg0.get(0), null);
+				else{
+					o.done(arg0.get(0), null);
+				}
 			}
 		});
 	}

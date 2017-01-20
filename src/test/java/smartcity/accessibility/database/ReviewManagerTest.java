@@ -85,9 +85,10 @@ public class ReviewManagerTest {
 		Review r1 = new Review(L, 5, "theardtest1","assaf");
 		Review r2 = new Review(L, 5, "theardtest2","artur");
 		ReviewManager.uploadReview(r1);
-		ReviewManager.uploadReview(r2);
 		Thread.sleep(6000);
 		ReviewManager.deleteReview(r1);
+		Thread.sleep(10000);
+		ReviewManager.deleteReview(r2);
 		Thread.sleep(10000);
 		ArrayList<Review> pinned = new ArrayList<Review>();
 		GetCallback<ParseObject> g = new GetCallback<ParseObject>() {
