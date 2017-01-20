@@ -203,9 +203,8 @@ public abstract class DatabaseManager {
 			public void done(List<ParseObject> arg0, ParseException arg1) {
 				if (arg1 != null || arg0==null)
 					o.done(null, arg1);
-				else{
+				else
 					o.done(arg0.get(0), null);
-				}
 			}
 		});
 	}

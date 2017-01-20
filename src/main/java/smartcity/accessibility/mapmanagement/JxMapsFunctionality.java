@@ -361,8 +361,20 @@ public abstract class JxMapsFunctionality {
 						}
 						map.setCenter(l);
 						map.setZoom(17.0);
+						LocationManager.getLocationsNearPoint(l, new LocationListCallback() {
+
+							@Override
+							public void done(List<Location> sl) {
+								if (sl != null)
+									for (Location loc : sl)
+										if (!ls.contains(loc))
+											new ExtendedMarker(map, loc).setPosition(loc.getCoordinates());
+							}
+						}, 10);
 					}
 				});
+		
+		
 	}
 
 	public static void onClick(LatLng l) {

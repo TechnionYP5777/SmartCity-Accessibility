@@ -220,13 +220,9 @@ public class Location {
 	
 	@Override
 	public boolean equals(Object o) {
-		if (o == this)
-			return true;
-
-		if (!(o instanceof Location))
-			return false;
-
-		return ((Location) o).coordinates.equals(this.coordinates);
+		return o == this || (o instanceof Location && ((Location) o).coordinates.equals(this.coordinates)
+				&& ((Location) o).locationSubType.equals(locationSubType)
+				&& ((Location) o).locationType.equals(locationType));
 	}
 
 	public LocationTypes getLocationType() {
