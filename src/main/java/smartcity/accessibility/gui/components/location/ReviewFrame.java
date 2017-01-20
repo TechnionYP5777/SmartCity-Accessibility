@@ -176,8 +176,11 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 		lblDownvoteCount.setText(Integer.toString(review.getDownvotes()));
 		lblUpvoteCount.setText(Integer.toString(review.getUpvotes()));
 		if (arg0.getSource() == btnDelete) {
-			ReviewManager.deleteReview(review);
-			location.getReviews().remove(review);
+			try {
+				location.deleteReview(Application.appUser, review);
+			} catch (UnauthorizedAccessException e) {
+				e.printStackTrace();
+			}
 			frame.dispose();
 		}
 		frame.repaint();
