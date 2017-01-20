@@ -1,8 +1,9 @@
 package smartcity.accessibility.navigation.mapquestcommunication;
 
 /**
+ * This class represent lat and lng of a location.
  * 
- * @author yael This class represent lat and lng of a location.
+ * @author yael
  */
 public class Latlng {
 	private Double lat;

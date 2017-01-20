@@ -3,7 +3,6 @@ package smartcity.accessibility.navigation;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
@@ -16,22 +15,33 @@ import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 
+/**
+ * This class contains test for Navigation. the tests are for the Navigation as
+ * a whole unit and not for specific class but the main class is
+ * Navigation.java. (Add sleep in the end of tests in order to view the map
+ * before the test ends!)
+ * 
+ * @author yael
+ *
+ */
 public class NavigationTest {
 
 	@Rule
-	public Timeout globalTimeout= Timeout.seconds(10000);
-	
+	public Timeout globalTimeout = Timeout.seconds(10000);
+
 	@Test
 	public void getMapSegmentFromLatLng() {
-		// TODO this test is temporal for it relay on things that will change!
-		MapSegment m = Navigation.getMapSegmentOfLatLng(31.766932, 34.631666);
+		MapSegment m = null;
+		try {
+			m = Navigation.getMapSegmentOfLatLng(31.766932, 34.631666);
+		} catch (CommunicationFailed e) {
+		}
 		System.out.println(m.getLinkId());
 		System.out.println(m.getStreet());
 	}
 
 	@Test
 	public void avoidOneSegement() throws CommunicationFailed {
-		// TODO this test is temporal for it relay on things that will change!
 		Latlng from = new Latlng(31.768762, 34.632052);// abba ahimeir
 		Latlng to = new Latlng(31.770981, 34.620567);// HaYam HaTichon Blvd 1
 		List<MapSegment> segmentsToAvoid = new ArrayList<MapSegment>();
@@ -40,17 +50,10 @@ public class NavigationTest {
 		ExtendedMapView mapview = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady(mapview);
 		JxMapsConvertor.displayRoute(mapview, Navigation.arrayToLatLng(shapePoints));
-//		try {
-//			Thread.sleep(100000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 
 	@Test
 	public void avoidTwoSegement() throws CommunicationFailed {
-		// TODO this test is temporal for it relay on things that will change!
 		Latlng from = new Latlng(31.768762, 34.632052);// abba ahimeir
 		Latlng to = new Latlng(31.770981, 34.620567);// HaYam HaTichon Blvd 1
 		List<MapSegment> segmentsToAvoid = new ArrayList<MapSegment>();
@@ -62,29 +65,16 @@ public class NavigationTest {
 		ExtendedMapView mapview = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady(mapview);
 		JxMapsConvertor.displayRoute(mapview, Navigation.arrayToLatLng(shapePoints));
-//		try {
-//			Thread.sleep(100000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 
 	@Test
-	@Ignore
-	public void displayMap() throws CommunicationFailed { //ignore cause it uses deprecated classes
+	public void displayMap() throws CommunicationFailed {
 		Location fromLocation = new Location(new LatLng(31.768762, 34.632052));
 		Location toLocation = new Location(new LatLng(31.770981, 34.620567));
 		LatLng[] shapePoints = Navigation.showRoute(fromLocation, toLocation, 0);
 		ExtendedMapView mapview = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady(mapview);
 		JxMapsConvertor.displayRoute(mapview, shapePoints);
-//		try {
-//			Thread.sleep(100000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 
 }

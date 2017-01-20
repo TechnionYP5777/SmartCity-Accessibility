@@ -89,10 +89,10 @@ public abstract class Navigation {
 
 	public static MapSegment getMapSegmentOfLatLng(double lat, double lng) throws CommunicationFailed {
 		Response response;
-		try{
+		try {
 			response = ClientBuilder.newClient().target("http://www.mapquestapi.com/directions/v2/findlinkid?")
-				.queryParam("key", mapquestKey).queryParam("lat", lat).queryParam("lng", lng).request().get();
-		}catch(ProcessingException e) {
+					.queryParam("key", mapquestKey).queryParam("lat", lat).queryParam("lng", lng).request().get();
+		} catch (ProcessingException e) {
 			throw new CommunicationFailed();
 		}
 		if (response.getStatus() != 200)

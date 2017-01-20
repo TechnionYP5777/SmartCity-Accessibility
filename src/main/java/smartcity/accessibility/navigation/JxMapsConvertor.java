@@ -13,7 +13,7 @@ import com.teamdev.jxmaps.swing.MapView;
  * @author yael
  *
  */
-public class JxMapsConvertor {
+public abstract class JxMapsConvertor {
 	private static Polyline prevRoute;
 	private static Polyline prevStartLine; // line for the start of the route
 	private static Polyline prevEndLine; // line for the end of the route
