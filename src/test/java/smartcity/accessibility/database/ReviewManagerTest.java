@@ -24,11 +24,13 @@ import org.parse4j.callback.SaveCallback;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.User.Privilege;
 import smartcity.accessibility.socialnetwork.UserImpl;
 
 public class ReviewManagerTest {
@@ -116,4 +118,71 @@ public class ReviewManagerTest {
 		}
 		
 	}
+
+	@Test
+	public void updateReviewTest() throws InterruptedException{
+		LatLng k = new LatLng(21,21);
+		Location L = new Location(k);
+		UserImpl u1 = new UserImpl("assaf", "132456", Privilege.Admin);
+		UserImpl u2 = new UserImpl("artur", "132456", Privilege.Admin);
+		UserImpl u3 = new UserImpl("userrrr", "132456", Privilege.Admin);
+		Review r1 = new Review(L, 5, "forthtest1","assaf");
+		Review r2 = new Review(L, 5, "forthtest2","artur");
+		Review r3 = new Review(L, 5, "forthtest3","userrrr");
+		ReviewManager.uploadReview(r1);
+		Thread.sleep(6000);
+		ReviewManager.uploadReview(r2);
+		Thread.sleep(6000);
+		ReviewManager.deleteReview(r1);
+		Thread.sleep(10000);
+		try {
+			r2.pin(u2);
+		} catch (UnauthorizedAccessException e) {
+		}
+		ReviewManager.updateReview(r1);
+		ReviewManager.updateReview(r2);
+		ReviewManager.updateReview(r3);
+		Thread.sleep(15000);
+		ArrayList<Review> pinned = new ArrayList<Review>();
+		GetCallback<ParseObject> g = new GetCallback<ParseObject>() {
+			
+			@Override
+			public void done(ParseObject arg0, ParseException arg1) {
+				if(arg0!=null){
+					pinned.add(new Review(L, arg0.getInt("rating"),arg0.getString("comment"), arg0.getString("user")));
+					if( arg0.getInt("pined")==1){
+						try {
+							pinned.get(0).pin(u2);
+						} catch (UnauthorizedAccessException e) {
+						}
+					}
+				}				
+			}
+		};
+
+		ReviewManager.getReviewByUserAndLocation(u1,L,g);
+		Thread.sleep(6000);
+		if(!pinned.isEmpty()){
+			System.out.println("here1");
+			assert(false);
+		}
+		ReviewManager.getReviewByUserAndLocation(u2,L,g);
+		Thread.sleep(6000);
+		if(pinned.isEmpty()){
+			System.out.println("here2");
+			assert(false);
+		}
+		if(!pinned.get(0).isPinned()){
+			System.out.println("here3");
+			assert(false);
+		}
+		pinned.remove(0);
+		ReviewManager.getReviewByUserAndLocation(u3,L,g);
+		Thread.sleep(6000);
+		if(pinned.isEmpty()){
+			System.out.println("here4");
+			assert(false);
+		}
+	}
 }
+

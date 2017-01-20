@@ -34,15 +34,18 @@ public class ReviewManager {
 		GetCallback<ParseObject> hiddenCallBack = new GetCallback<ParseObject>() {
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
-				if(arg1==null){
+				if(arg0==null){
 					DatabaseManager.getObjectByFields("Review",m,new GetCallback<ParseObject>() {
 
 						@Override
 						public void done(ParseObject arg0, ParseException arg1) {
 							if(arg0!=null)
 								o.done(arg0, null);
-							else
-								o.done(null,null);							
+							else{
+								
+								o.done(null,null);
+							}
+															
 						}
 						
 					});
@@ -55,7 +58,7 @@ public class ReviewManager {
 				
 			}
 		};
-		DatabaseManager.getObjectByFields("HiddenReviews",m,hiddenCallBack);
+		DatabaseManager.getObjectByFields("HiddenReview",m,hiddenCallBack);
 	}
 	
 	/**
@@ -80,7 +83,6 @@ public class ReviewManager {
 				
 			}
 		});
-		System.out.println("here1");
 		LocationManager.checkLocationInDB(r.getLocation(),new GetCallback<ParseObject>(){
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
