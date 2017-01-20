@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 
 import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.gui.Application;
-import smartcity.accessibility.gui.compoments.search.ElaborateSearchFrame;
+import smartcity.accessibility.gui.components.search.ElaborateSearchFrame;
 import smartcity.accessibility.gui.components.user.LoginFrame;
 import smartcity.accessibility.gui.components.user.SignUpFrame;
 import smartcity.accessibility.gui.components.user.UserProfileFrame;

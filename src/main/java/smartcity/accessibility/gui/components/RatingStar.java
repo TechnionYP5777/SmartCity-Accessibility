@@ -11,6 +11,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
+/**
+ * Rating Star class - receive the number of starts. the minimum rate must be
+ * one.
+ * 
+ * @author yael
+ */
 public class RatingStar extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	private List<JLabel> labels;
