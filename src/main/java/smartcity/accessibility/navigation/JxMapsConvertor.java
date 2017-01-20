@@ -21,17 +21,9 @@ public class JxMapsConvertor {
 	private static final String colorOfExternalLines = "#0066ff"; 
 	private static final double thicknessOfLine = 2.0;
 
-	public static void displayRoute(MapView mapView, LatLng[] shapeLatlng) {
+	public static void displayRoute(MapView v, LatLng[] shapeLatlng) {
 		removePrevPolyline();
-		final Map map = mapView.getMap();
-		Polyline polyline = new Polyline(map);
-		polyline.setPath(shapeLatlng);
-		PolylineOptions options = new PolylineOptions();
-		options.setGeodesic(true);
-		options.setStrokeColor(colorOfRoute);
-		options.setStrokeWeight(thicknessOfLine);
-		polyline.setOptions(options);
-		prevRoute = polyline;
+		prevRoute = addLine(v, shapeLatlng,colorOfRoute,thicknessOfLine);
 	}
 
 	public static void removePrevPolyline() {
@@ -43,24 +35,23 @@ public class JxMapsConvertor {
 			prevEndLine.setVisible(false);
 	}
 
-	private static Polyline addLine(MapView v, LatLng src, LatLng dst) {
+	private static Polyline addLine(MapView v, LatLng[] latLngArr,String color,double thickness) {
 		final Map map = v.getMap();
 		Polyline $ = new Polyline(map);
-		LatLng[] latLngArr = { src, dst };
 		$.setPath(latLngArr);
 		PolylineOptions options = new PolylineOptions();
 		options.setGeodesic(true);
-		options.setStrokeColor(colorOfExternalLines);
-		options.setStrokeWeight(thicknessOfLine);
+		options.setStrokeColor(color);
+		options.setStrokeWeight(thickness);
 		$.setOptions(options);
 		return $;
 	}
 
 	public static void addStartLine(MapView v, LatLng src, LatLng dst) {
-		prevStartLine = addLine(v, src, dst);
+		prevStartLine = addLine(v, (new LatLng[] { src, dst }), colorOfExternalLines, thicknessOfLine);
 	}
 
 	public static void addEndLine(MapView v, LatLng src, LatLng dst) {
-		prevEndLine = addLine(v, src, dst);
+		prevEndLine = addLine(v, (new LatLng[] { src, dst }), colorOfExternalLines, thicknessOfLine);
 	}
 }
