@@ -51,6 +51,8 @@ public class ReviewManagerTest {
 		Review r = new Review(L, 5, "firstTest","assaf");
 		ReviewManager.uploadReview(r);
 		Thread.sleep(6000);
+		ReviewManager.uploadReview(r);
+		Thread.sleep(6000);
 	}
 	
 	@Test
@@ -103,7 +105,7 @@ public class ReviewManagerTest {
 		};
 		UserImpl u1 = new UserImpl("assaf", "132456", null);
 		ReviewManager.getReviewByUserAndLocation(u1,L,g);
-		Thread.sleep(6000);
+		Thread.sleep(9000);
 		if(!pinned.isEmpty()){
 			assert(false);
 		}

@@ -20,7 +20,7 @@ import smartcity.accessibility.socialnetwork.User;
 public class ReviewManager {
 	
 	/**
-	 * If the review saved in the DB as hidden review - does nothing
+	 * If the review saved in the DB as hidden review - return the review
 	 * If the review saved as review return it to the callback function
 	 * If it's not saved notify the callback function
 	 * @param r
@@ -51,7 +51,7 @@ public class ReviewManager {
 					});
 				}
 				else{
-					//do nothing 
+					o.done(arg0, null); 
 				}
 					
 				//arg1.printStackTrace();
@@ -93,10 +93,30 @@ public class ReviewManager {
 									}
 									else{
 										m.put("locationID",arg0.getObjectId());
-										DatabaseManager.putValue("Review",m,new SaveCallback() {			
+										checkReviewInDB(r,new GetCallback<ParseObject>() {
+
 											@Override
-											public void done(ParseException arg0) {
-												// do nothing
+											public void done(ParseObject arg0, ParseException arg1) {
+												if(arg0!=null && arg0.getClassName().equals("HiddenReview")){
+													DatabaseManager.putValue("Review",m,new SaveCallback() {			
+														@Override
+														public void done(ParseException arg0) {
+															// do nothing
+															
+														}
+													});
+												}
+												else{
+													if(arg0==null){
+														DatabaseManager.putValue("Review",m,new SaveCallback() {			
+															@Override
+															public void done(ParseException arg0) {
+																// do nothing
+																
+															}
+														});
+													}
+												}
 												
 											}
 										});
@@ -108,10 +128,30 @@ public class ReviewManager {
 				}
 				else{
 					m.put("locationID",arg0.getObjectId());
-					DatabaseManager.putValue("Review",m,new SaveCallback() {			
+					checkReviewInDB(r,new GetCallback<ParseObject>() {
+
 						@Override
-						public void done(ParseException arg0) {
-							// do nothing
+						public void done(ParseObject arg0, ParseException arg1) {
+							if(arg0!=null && arg0.getClassName().equals("HiddenReview")){
+								DatabaseManager.putValue("Review",m,new SaveCallback() {			
+									@Override
+									public void done(ParseException arg0) {
+										// do nothing
+										
+									}
+								});
+							}
+							else{
+								if(arg0==null){
+									DatabaseManager.putValue("Review",m,new SaveCallback() {			
+										@Override
+										public void done(ParseException arg0) {
+											// do nothing
+												
+										}
+									});
+								}
+							}
 							
 						}
 					});
@@ -129,20 +169,34 @@ public class ReviewManager {
 	 * @param o
 	 */
 	public static void getReviewByUserAndLocation(User u,Location l,GetCallback<ParseObject> o){
-		FindCallback<ParseObject> p = new FindCallback<ParseObject>() {
+		GetCallback<ParseObject> p = new GetCallback<ParseObject>() {
 			@Override
-			public void done(List<ParseObject> arg0, ParseException arg1) {
+			public void done(ParseObject arg0, ParseException arg1) {
 				if(arg0==null){
 					o.done(null,arg1);
 				}else{
-					o.done(arg0.get(0),arg1);
+					Map<String, Object> m = new HashMap<String,Object>();
+					m.put("user", u.getName());
+					m.put("locationID", arg0.getObjectId());
+					DatabaseManager.queryByFields("Review",m,new FindCallback<ParseObject>() {
+
+						@Override
+						public void done(List<ParseObject> arg0, ParseException arg1) {
+							if(arg0!=null){
+								o.done(arg0.get(0),arg1);
+							}
+							else{
+								o.done(null, arg1);
+							}
+							
+						}
+					});
 				}				
 			}
 		};
-		Map<String, Object> m = new HashMap<String,Object>();
-		m.put("user", u.getName());
-		m.put("location", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
-		DatabaseManager.queryByFields("Review",m,p);	
+		LocationManager.checkLocationInDB(l, p);
+		
+			
 	}
 	
 	/**
@@ -153,32 +207,37 @@ public class ReviewManager {
 	public static void deleteReview(Review r){
 		Map<String, Object> m = new HashMap<String,Object>();
 		m.put("user", r.getUser());
-		m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),r.getLocation().getCoordinates().getLng()));
-		
+			
 		GetCallback<ParseObject> p = new GetCallback<ParseObject>() {
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
-				if(arg1==null && arg0!=null){
-					DatabaseManager.deleteById("Review",(arg0.getObjectId() + ""));
-					Map<String, Object> m = new HashMap<String,Object>();
-					m.put("user", arg0.getString("user"));
-					m.put("location",arg0.getParseGeoPoint("location"));
-					m.put("rating",arg0.getInt("rating"));
-					m.put("comment",arg0.getString("comment"));
-					m.put("pined",arg0.getInt("pined"));
-					DatabaseManager.putValue("HiddenReview",m,new SaveCallback() {
-						
-						@Override
-						public void done(ParseException arg0) {
-							// do nothing
-							
+				m.put("locationID",arg0.getObjectId());
+				DatabaseManager.getObjectByFields("Review",m,new GetCallback<ParseObject>() {
+					
+					@Override
+					public void done(ParseObject arg0, ParseException arg1) {
+						if(arg1==null && arg0!=null){
+							DatabaseManager.deleteById("Review",(arg0.getObjectId() + ""));
+							m.put("location",arg0.getParseGeoPoint("location"));
+							m.put("rating",arg0.getInt("rating"));
+							m.put("comment",arg0.getString("comment"));
+							m.put("pined",arg0.getInt("pined"));
+							DatabaseManager.putValue("HiddenReview",m,new SaveCallback() {
+								
+								@Override
+								public void done(ParseException arg0) {
+									// do nothing
+									
+								}
+							});
 						}
-					});
-				}
-				//arg1.printStackTrace();
+						//arg1.printStackTrace();
+						
+					}
+				});
 			}
 		};
-		DatabaseManager.getObjectByFields("Review",m,p);	
+		LocationManager.checkLocationInDB(r.getLocation(), p);
 	}
 	
 	/**
@@ -191,24 +250,26 @@ public class ReviewManager {
 	GetCallback<ParseObject> p = new GetCallback<ParseObject>() {
 		@Override
 			public void done(ParseObject arg0, ParseException arg1) {
-				Map<String, Object> m = new HashMap<String,Object>();
-				m.put("user", r.getUser());
-				m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),r.getLocation().getCoordinates().getLng()));
-				m.put("rating",r.getRating().getScore());
-				m.put("comment",r.getContent());
-				if(r.isPinned())
-					m.put("pined",1);
-				else
-					m.put("pined",0);
-				if(arg0!=null){
+			if(arg0==null){
+				uploadReview(r);
+			}
+			else {
+				if(!arg0.getClassName().equals("HiddenReview")){
+					Map<String, Object> m = new HashMap<String,Object>();
+					m.put("user", r.getUser());
+					m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),r.getLocation().getCoordinates().getLng()));
+					m.put("rating",r.getRating().getScore());
+					m.put("comment",r.getContent());
+					if(r.isPinned())
+						m.put("pined",1);
+					else
+						m.put("pined",0);
 					DatabaseManager.update("Review",arg0.getObjectId(), m);
 				}
-				else{
-					uploadReview(r);
-				}
-				//arg1.printStackTrace();
-			}
-		};
+			}	
+			
+		}
+	};
 		
 		checkReviewInDB(r,p);
 		// needs to be done in background
