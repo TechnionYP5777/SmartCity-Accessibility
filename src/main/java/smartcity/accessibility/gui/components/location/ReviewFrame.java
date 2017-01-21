@@ -93,7 +93,7 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 		lblReview.setBounds(133, 11, 146, 31);
 		frame.getContentPane().add(lblReview);
 
-		int numOfScores = Math.abs(Score.getMaxScore()) + Math.abs(Score.getMinScore());
+		int numOfScores = Math.abs(Score.getMaxScore());
 		RatingStar rs = new RatingStar(numOfScores);
 		rs.setBounds(133, 42, 146, 30);
 		rs.setRate(review.getRating().getScore());

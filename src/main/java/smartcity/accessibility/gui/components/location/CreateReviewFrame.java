@@ -54,7 +54,7 @@ public class CreateReviewFrame implements MouseListener {
 		lblPassword.setBounds(12, 121, 101, 15);
 		frame.getContentPane().add(lblPassword);
 
-		int numOfScores = Math.abs(Score.getMaxScore()) + Math.abs(Score.getMinScore());
+		int numOfScores = Math.abs(Score.getMaxScore());
 		rs = new RatingStar(numOfScores);
 		rs.setBounds(123, 50, 282, 26);
 		rs.setVisible(true);

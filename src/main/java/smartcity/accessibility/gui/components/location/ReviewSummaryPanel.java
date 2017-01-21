@@ -43,7 +43,7 @@ public class ReviewSummaryPanel extends JPanel implements MouseListener {
 		add(lblTest, gbc_lblTest);
 		lblTest.setVisible(true);
 
-		int numOfScores = Math.abs(Score.getMaxScore()) + Math.abs(Score.getMinScore());
+		int numOfScores = Math.abs(Score.getMaxScore());
 		RatingStar rs = new RatingStar(numOfScores);
 		rs.setRate(r.getRating().getScore());
 		rs.setClickable(false);
