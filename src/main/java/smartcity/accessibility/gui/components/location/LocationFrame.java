@@ -231,8 +231,12 @@ public class LocationFrame implements MouseListener {
 								shapePoints[shapePoints.length - 1]);
 					wheel.dispose();
 				} catch (CommunicationFailed e) {
+					String errorMessage = "Navigation failed to conncet to servers. "
+							+ "\n please check your internet connection and try again. ";
+					if(!e.getMessage().isEmpty())
+						errorMessage += "\n more details: "+e.getMessage();
 					JOptionPane.showMessageDialog(frame,
-							"Navigation failed to conncet to servers. \n please check your internet connection and try again.",
+							errorMessage,
 							"Error", JOptionPane.ERROR_MESSAGE);
 					wheel.dispose();
 				}

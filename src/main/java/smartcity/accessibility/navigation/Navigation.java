@@ -69,13 +69,13 @@ public abstract class Navigation {
 		try {
 			response = target.request().get();
 		} catch (ProcessingException e) {
-			throw new CommunicationFailed();
+			throw new CommunicationFailed("");
 		}
 		if (response.getStatus() != 200)
-			throw new CommunicationFailed();
+			throw new CommunicationFailed("");
 		RouteWraper routeWraper = response.readEntity(RouteWraper.class);
 		if (routeWraper.getInfo().getStatuscode() != 0)
-			throw new CommunicationFailed();
+			throw new CommunicationFailed(String.join(",",routeWraper.getInfo().getMessages()));
 		return routeWraper.getRoute();
 	}
 
@@ -95,10 +95,10 @@ public abstract class Navigation {
 			response = ClientBuilder.newClient().target("http://www.mapquestapi.com/directions/v2/findlinkid?")
 					.queryParam("key", mapquestKey).queryParam("lat", lat).queryParam("lng", lng).request().get();
 		} catch (ProcessingException e) {
-			throw new CommunicationFailed();
+			throw new CommunicationFailed("");
 		}
 		if (response.getStatus() != 200)
-			throw new CommunicationFailed();
+			throw new CommunicationFailed("");
 		return response.readEntity(MapSegment.class);
 	}
 
