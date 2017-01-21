@@ -282,17 +282,24 @@ public class LocationManager {
 			m.put("type", l.getLocationType().toString());
 		}
 		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(),l.getCoordinates().getLng()));
-		DatabaseManager.putValue("Location",m, new SaveCallback() {
-			
+		checkLocationInDB(l,new GetCallback<ParseObject>() {
+
 			@Override
-			public void done(ParseException arg0) {
-				o.done(arg0);
-				
+			public void done(ParseObject arg0, ParseException arg1) {
+				if(arg0==null){
+					DatabaseManager.putValue("Location",m, new SaveCallback() {
+						
+						@Override
+						public void done(ParseException arg0) {
+							o.done(arg0);
+							for(Review r :l.getReviews()){
+								ReviewManager.updateReview(r);
+							}
+						}
+					});
+				}				
 			}
 		});
-		for(Review r :l.getReviews()){
-			ReviewManager.updateReview(r);
-		}
 	}
 	
 	/**
