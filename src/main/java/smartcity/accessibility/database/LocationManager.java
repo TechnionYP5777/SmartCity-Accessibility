@@ -44,7 +44,7 @@ public class LocationManager {
 			m.put("subtype", l.getLocationSubType().toString());
 		}
 		if(l.getLocationType()==null){
-			m.put("subtype", Location.LocationTypes.Coordinate.toString());
+			m.put("type", Location.LocationTypes.Coordinate.toString());
 		}else{
 			m.put("type", l.getLocationType().toString());
 		}
@@ -277,7 +277,7 @@ public class LocationManager {
 			m.put("subtype", l.getLocationSubType().toString());
 		}
 		if(l.getLocationType()==null){
-			m.put("subtype", Location.LocationTypes.Coordinate.toString());
+			m.put("type", Location.LocationTypes.Coordinate.toString());
 		}else{
 			m.put("type", l.getLocationType().toString());
 		}
