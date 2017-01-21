@@ -75,7 +75,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 			LOGOUT_BUTTON.setVisible(false);
 			LOGIN_BUTTON.setVisible(true);
 			USER_PROFILE_BUTTON.setVisible(false);
-			SIGNUP_BUTTON.setVisible(false);
+			SIGNUP_BUTTON.setVisible(true);
 		}
 		System.out.println("clicked " + e.getSource());
 

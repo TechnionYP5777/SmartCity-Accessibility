@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import javax.swing.BoxLayout;
@@ -113,13 +114,16 @@ public class LocationFrame implements MouseListener {
 
 		JPanel jp = new JPanel();
 		jp.setLayout(new BoxLayout(jp, BoxLayout.Y_AXIS));
-		for (Review r : loc.getPinnedReviews()) {
+		List<Review> pinned = loc.getPinnedReviews();
+		for (Review r : pinned) {
 			ReviewSummaryPanel rsp = new ReviewSummaryPanel(r, loc);
 			rsp.setVisible(true);
 			jp.add(rsp);
 			jp.add(new JSeparator(SwingConstants.HORIZONTAL));
 		}
 		for (Review r : loc.getReviews()) {
+			if(pinned.contains(r))
+				continue;
 			ReviewSummaryPanel rsp = new ReviewSummaryPanel(r, loc);
 			rsp.setVisible(true);
 			jp.add(rsp);

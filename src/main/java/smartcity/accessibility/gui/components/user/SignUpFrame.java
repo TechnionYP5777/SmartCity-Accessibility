@@ -82,6 +82,9 @@ public class SignUpFrame implements MouseListener {
 				Application.appUser = u;
 				ButtonsPanel.USER_PROFILE_BUTTON.setText("view profile");
 				ButtonsPanel.USER_PROFILE_BUTTON.setVisible(true);
+				ButtonsPanel.LOGOUT_BUTTON.setVisible(true);
+				ButtonsPanel.LOGIN_BUTTON.setVisible(false);
+				ButtonsPanel.SIGNUP_BUTTON.setVisible(false);
 			}
 		} catch (UsernameAlreadyTakenException e) {
 			JOptionPane.showMessageDialog(Application.frame, "Signup Failed.", "Signup error",

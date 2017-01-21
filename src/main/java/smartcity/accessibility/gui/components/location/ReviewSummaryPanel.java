@@ -1,5 +1,6 @@
 package smartcity.accessibility.gui.components.location;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -63,6 +64,8 @@ public class ReviewSummaryPanel extends JPanel implements MouseListener {
 		add(btnSeeFullReview, gbc_btnSeeFullReview);
 		btnSeeFullReview.setVisible(true);
 
+		if(review.isPinned())
+			setBackground(Color.ORANGE);
 	}
 
 	private static String getSummary(String text) {
