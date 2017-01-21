@@ -269,7 +269,7 @@ public class LocationManager {
 	 * Save the location in the DB happen in the background
 	 * @param l
 	 */
-	public static void saveLocation (Location l){
+	public static void saveLocation (Location l,SaveCallback o){
 		Map<String, Object> m = new HashMap<String,Object>();
 		if(l.getLocationSubType()==null){
 			m.put("subtype", Location.LocationSubTypes.Default.toString());
@@ -286,7 +286,7 @@ public class LocationManager {
 			
 			@Override
 			public void done(ParseException arg0) {
-				// does nothing
+				o.done(arg0);
 				
 			}
 		});
@@ -314,7 +314,14 @@ public class LocationManager {
 						}
 					}
 					else{
-						saveLocation(l);
+						saveLocation(l,new SaveCallback() {
+							
+							@Override
+							public void done(ParseException arg0) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
 					}
 					//arg1.printStackTrace();
 				}

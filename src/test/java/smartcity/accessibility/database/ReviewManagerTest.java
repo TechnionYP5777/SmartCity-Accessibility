@@ -61,7 +61,7 @@ public class ReviewManagerTest {
 		Review r2 = new Review(L, 5, "secondTest2","artur");
 		ReviewManager.uploadReview(r1);
 		ReviewManager.uploadReview(r2);
-		Thread.sleep(6000);
+		Thread.sleep(7000);
 		UserImpl u1 = new UserImpl("assaf", "132456", null);
 		UserImpl u2 = new UserImpl("artur", "132456", null);
 		ArrayList<Review> pinned = new ArrayList<Review>();
@@ -77,7 +77,6 @@ public class ReviewManagerTest {
 		Thread.sleep(6000);
 		System.out.println(pinned.get(0).getRating().getScore()+"  "+pinned.get(0).getContent());
 		System.out.println(pinned.get(1).getRating().getScore()+"  "+pinned.get(1).getContent());
-		
 	}
 	
 	@Test

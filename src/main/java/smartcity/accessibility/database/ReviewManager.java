@@ -76,21 +76,49 @@ public class ReviewManager {
 			m.put("pined",1);
 		else
 			m.put("pined",0);
-		DatabaseManager.putValue("Review",m,new SaveCallback() {			
-			@Override
-			public void done(ParseException arg0) {
-				// do nothing
-				
-			}
-		});
 		LocationManager.checkLocationInDB(r.getLocation(),new GetCallback<ParseObject>(){
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
 				if(arg0==null){
-					LocationManager.saveLocation(r.getLocation());
-				}				
+					LocationManager.saveLocation(r.getLocation(),new SaveCallback() {
+						
+						@Override
+						public void done(ParseException arg0) {
+							LocationManager.checkLocationInDB(r.getLocation(),new GetCallback<ParseObject>() {
+
+								@Override
+								public void done(ParseObject arg0, ParseException arg1) {
+									if(arg0==null){
+										System.out.println("something went worng");
+									}
+									else{
+										m.put("locationID",arg0.getObjectId());
+										DatabaseManager.putValue("Review",m,new SaveCallback() {			
+											@Override
+											public void done(ParseException arg0) {
+												// do nothing
+												
+											}
+										});
+									}
+								}
+							});
+						}
+					});
+				}
+				else{
+					m.put("locationID",arg0.getObjectId());
+					DatabaseManager.putValue("Review",m,new SaveCallback() {			
+						@Override
+						public void done(ParseException arg0) {
+							// do nothing
+							
+						}
+					});
+				}
 			}
 		});
+		
 	}
 	
 	/**
