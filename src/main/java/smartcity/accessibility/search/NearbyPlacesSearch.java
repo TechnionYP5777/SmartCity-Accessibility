@@ -28,14 +28,11 @@ public class NearbyPlacesSearch {
 		request.setLocation(l);
 		request.setRadius(radius);
 		request.setTypes(kindsOfLocations.toArray((new String[kindsOfLocations.size()])));
-		PlacesService ps = v.getServices().getPlacesService();
-		System.out.println("doing the nearby search");
-		ps.nearbySearch(request, new PlaceNearbySearchCallback(map) {
-            @Override
-            public void onComplete(PlaceResult[] rs, PlacesServiceStatus s, PlaceSearchPagination __) {
-            	System.out.println("arrived to OnComplete");
-            	ArrayList<Location> $ = new ArrayList<Location>();
-            	if (s == PlacesServiceStatus.OK)
+		v.getServices().getPlacesService().nearbySearch(request, new PlaceNearbySearchCallback(map) {
+			@Override
+			public void onComplete(PlaceResult[] rs, PlacesServiceStatus s, PlaceSearchPagination __) {
+				ArrayList<Location> $ = new ArrayList<Location>();
+				if (s == PlacesServiceStatus.OK)
 					for (int i = 0; i < rs.length; ++i) {
 						PlaceResult result = rs[i];
 						LatLng l = result.getGeometry() == null ? null : result.getGeometry().getLocation();
@@ -43,9 +40,9 @@ public class NearbyPlacesSearch {
 						f.setName(result.getName());
 						$.add(f);
 					}
-                System.out.println("called to callback done");
-                c.done($);
-            }
+				System.out.println("called to callback done");
+				c.done($);
+			}
 		});
 	
 	}
