@@ -20,7 +20,8 @@ public class Review {
 	private Score rating;
 	private String content;
 	private boolean isPinned;
-	private String locationID; //the location id in the db - doesn't have to be added to the default constractor
+	private String locationID; // the location id in the db - doesn't have to be
+								// added to the default constractor
 	private List<ReviewComment> comments = new ArrayList<ReviewComment>();
 
 	public Review(Location l, int r, String c, User u) {
@@ -46,7 +47,7 @@ public class Review {
 		this.user = u;
 		this.isPinned = false;
 	}
-	
+
 	/**
 	 * implemented for the DB functionality
 	 * 
@@ -75,9 +76,10 @@ public class Review {
 		return this.content;
 	}
 
-	public String getLocationID(){
+	public String getLocationID() {
 		return this.locationID;
 	}
+
 	public void pin(User u) throws UnauthorizedAccessException {
 		if (!isAccessAllowed(u))
 			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
@@ -85,17 +87,18 @@ public class Review {
 	}
 
 	/**
-	 * implemented for the DB, hence only admin can preform 
+	 * implemented for the DB, hence only admin can preform
+	 * 
 	 * @param u
 	 * @param l
 	 * @throws UnauthorizedAccessException
 	 */
-	public void locationSet(User u,Location l) throws UnauthorizedAccessException {
+	public void locationSet(User u, Location l) throws UnauthorizedAccessException {
 		if (!isAccessAllowed(u))
 			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
 		this.location = l;
 	}
-	
+
 	private boolean isAccessAllowed(User u) {
 		return Privilege.pinPrivilegeLevel(u);
 	}
