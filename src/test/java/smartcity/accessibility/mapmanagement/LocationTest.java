@@ -10,6 +10,7 @@ import com.teamdev.jxmaps.LatLng;
 import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.socialnetwork.BestReviews;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
@@ -69,6 +70,15 @@ public class LocationTest {
 	public void getUnPinnedReviewsTest() {
 		assertEquals(l.getNotPinnedReviews().size(),3);
 	}
+	
+	@Test
+	public void getRating() {
+		assertEquals(l.getRating(1).getScore(),2);
+		assertEquals(l.getRating(2).getScore(),3);
+		assertEquals(l.getRating(5).getScore(), 3);
+		
+	}
+
 	
 
 }
