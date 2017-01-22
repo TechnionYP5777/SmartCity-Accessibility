@@ -4,24 +4,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
-import smartcity.accessibility.socialnetwork.User;
-import smartcity.accessibility.socialnetwork.User.Privilege;
 import smartcity.accessibility.socialnetwork.BestReviews;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
+import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.User.Privilege;
 
 /**
  * @author Koral Chapnik
  */
 
 public class Location {
-	public final static int N = 5;
+	
 	public enum LocationSubTypes {
 		Restaurant, Hotel, Bar, Default
 	}
@@ -41,8 +42,6 @@ public class Location {
 			return Collections.unmodifiableList(subTypes);
 		}
 	}
-
-	private static final long serialVersionUID = -9204783865281694652L;
 
 	private ArrayList<Review> reviews;
 	private LatLng coordinates;
