@@ -131,9 +131,7 @@ public class LocationManager {
 			@Override
 			public void done(List<Location> ls) {
 				for(Location l :ls){
-					if(l.getLocationType().equals(Location.LocationTypes.Street)){
-						loc.add(l);
-					}
+					loc.add(l);
 				}
 			}
 		};
