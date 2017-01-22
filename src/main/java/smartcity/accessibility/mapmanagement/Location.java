@@ -22,7 +22,7 @@ import smartcity.accessibility.socialnetwork.User.Privilege;
  */
 
 public class Location {
-	public final static int N = 5;
+	
 	public enum LocationSubTypes {
 		Restaurant, Hotel, Bar, Default
 	}

@@ -3,16 +3,16 @@ package smartcity.accessibility.search;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
+
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.LocationListCallback;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
+import smartcity.accessibility.mapmanagement.Location;
 
 /**
  * @author Koral Chapnik
@@ -30,8 +30,7 @@ public class NearbyPlacesTest {
         options.importPlaces();
         MapView mapView = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
-		NearbyPlacesSearch n = new NearbyPlacesSearch();
-		n.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations, new LocationListCallback() {
+		NearbyPlacesSearch.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations, new LocationListCallback() {
 			@Override
 			public void done(List<Location> ls) {
 				System.out.println("the length is : " + ls.size());   

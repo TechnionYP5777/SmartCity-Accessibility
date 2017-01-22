@@ -15,7 +15,7 @@ import smartcity.accessibility.mapmanagement.Location;
 public class BestReviews {
 	private int n;
 	private Location l;
-	private static int DEFAULT = 5;
+	public static int DEFAULT = 5;
 	
 	/**
 	 * @param n - the number of best reviews to return from this class methods
@@ -27,7 +27,6 @@ public class BestReviews {
 	}
 	
 	public BestReviews(Location l) {
-		this.n = DEFAULT;
 		this.l = l;
 	}
 	
