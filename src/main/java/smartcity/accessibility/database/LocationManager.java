@@ -225,41 +225,60 @@ public class LocationManager {
 	}
 	
 	/**
-	 * return list of location that belong to the point. since the reviews belong to
-	 * a LatLng point (as we save only the coordinates) the list of reviews will
-	 * return to all the locations.
+	 * return list of location that belong to the point, each location with it's own reviews
 	 * @param point
 	 * @param o
 	 */
 	public static void getLocation(LatLng point,LocationListCallback o){
 		ArrayList<Review> reviews = new ArrayList<Review>();
-		ArrayList<Location> ls = new ArrayList<Location>();
+		ArrayList<Location> ls = new ArrayList<Location>();		
 		Map<String, Object> valuesR = new HashMap<String,Object>();
 		Map<String, Object> valuesL = new HashMap<String,Object>();
-		valuesR.put("location", new ParseGeoPoint(point.getLat(),point.getLng()));
+		
 		valuesL.put("coordinates", new ParseGeoPoint(point.getLat(),point.getLng()));
+		valuesR.put("location",new ParseGeoPoint(point.getLat(),point.getLng()));
+		
 		FindCallback<ParseObject> callBackL = new FindCallback<ParseObject>(){
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
 				if(arg0!=null){
-					for (ParseObject obj :arg0){
+					int index=0;
+					for (ParseObject obj :arg0){ //get all the locations belong to the latlng and their id's
 						ls.add(new Location(point,Location.stringToEnumTypes(obj.getString("type")),
-								Location.stringToEnumSubTypes(obj.getString("subtype")),reviews));
+								Location.stringToEnumSubTypes(obj.getString("subtype"))));
+						for(Review r:reviews){
+							if(r.getLocationID().equals(obj.getObjectId())){
+								try {
+									r.locationSet(new UserImpl("db", "123123",User.Privilege.Admin),ls.get(index));
+								} catch (UnauthorizedAccessException e) {
+									System.out.println("someting went worng loading reviews to location");
+								}
+								ls.get(index).addReviewNoSave(r);
+							}
+						}
 	            	}
 				}
 				o.done(ls);
 			}
 		};
+		
 		FindCallback<ParseObject> callBackR = new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
-                if (arg1 == null && arg0 != null) {
+                if (arg1 == null && arg0 != null) { //fetch all the reviews of the latlng
                 	for (ParseObject obj :arg0){
-                		//reviews.add(new Review(l, r, c, u)) will be complete after issue #124 will close
+                		Review r = new Review(obj.getString("locationID"),obj.getInt("rating"),obj.getString("comment"),obj.getString("user"));
+                		if(obj.getInt("pined")==1){
+                			try {
+								r.pin(new UserImpl("db", "123123",User.Privilege.Admin));
+							} catch (UnauthorizedAccessException e) {
+								System.out.println("someting went worng loading reviews to location");
+							}
+                		}
+                		reviews.add(r);
                 	}
-                	
-                }	
-                DatabaseManager.queryByFields("Location", valuesL, callBackL);
+                	DatabaseManager.queryByFields("Location", valuesL, callBackL);
+                }
 			}
 		};
 		DatabaseManager.queryByFields("Review", valuesR, callBackR);
@@ -368,10 +387,12 @@ public class LocationManager {
 		FindCallback<ParseObject> callBackL = new FindCallback<ParseObject>(){
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
-				for (ParseObject obj :arg0){
-					ls.add(new Location(point,Location.stringToEnumTypes(obj.getString("type")),
-							Location.stringToEnumSubTypes(obj.getString("subtype"))));
-            	}
+				if(arg0!=null){
+					for (ParseObject obj :arg0){
+						ls.add(new Location(point,Location.stringToEnumTypes(obj.getString("type")),
+								Location.stringToEnumSubTypes(obj.getString("subtype"))));
+	            	}
+				}
 				c.done(ls);
 			}
 		};

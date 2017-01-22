@@ -135,7 +135,13 @@ public class Location {
 		return new Score(rating);
 	}
 
-
+	/**
+	 * use for adding reviews in from the db
+	 * @param r
+	 */
+	public void addReviewNoSave(Review r){
+		reviews.add(r);
+	}
 	
 	public LatLng getCoordinates() {
 		return this.coordinates;
