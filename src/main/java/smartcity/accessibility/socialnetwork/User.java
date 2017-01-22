@@ -63,20 +63,20 @@ public interface User {
 		// q.Search();
 	}
 
-	public String getName();
+	String getName();
 
-	public void setLocalName(String name) throws UnauthorizedAccessException;
+	void setLocalName(String name) throws UnauthorizedAccessException;
 
-	public String getPassword();
+	String getPassword();
 
-	public Privilege getPrivilege();
+	Privilege getPrivilege();
 
-	public List<SearchQuery> getFavouriteSearchQueries();
+	List<SearchQuery> getFavouriteSearchQueries();
 
-	public void setFavouriteSearchQueries(String favouriteQueries);
+	void setFavouriteSearchQueries(String favouriteQueries);
 
-	public void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries);
+	void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries);
 
-	public String getLocalName();
+	String getLocalName();
 
 }
