@@ -367,8 +367,8 @@ public abstract class JxMapsFunctionality {
 							public void done(List<Location> sl) {
 								if (sl != null)
 									for (Location loc : sl)
-										if (!ls.contains(loc))
-											new ExtendedMarker(map, loc).setPosition(loc.getCoordinates());
+										if (!ls.contains(loc) && !loc.getCoordinates().equals(l))
+											JxMapsFunctionality.putExtendedMarker(mv, loc);
 							}
 						}, 10);
 					}
