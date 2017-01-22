@@ -53,9 +53,9 @@ public class LocationManagerTest {
 		Review r1 = new Review(L, 5, "secondTestLocation1","assaf");
 		Review r2 = new Review(L, 5, "secondTestLocation1","artur");
 		ReviewManager.uploadReview(r1);
-		Thread.sleep(7000);
+		Thread.sleep(10000);
 		ReviewManager.uploadReview(r2);
-		Thread.sleep(7000);
+		Thread.sleep(10000);
 		Location newLoc = LocationManager.getLocation(k,Location.LocationTypes.Coordinate,Location.LocationSubTypes.Bar);
 		assert(newLoc.getReviews().get(0).getUser().equals("assaf"));
 	}
@@ -80,7 +80,12 @@ public class LocationManagerTest {
 				}
 			}
 		});
-		Thread.sleep(7000);
+		Thread.sleep(10000);
 		assert(pinned.size()==2);
 	}
+
+	public void updateLocationTest(){
+		
+	}
+
 }
