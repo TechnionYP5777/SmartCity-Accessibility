@@ -94,6 +94,7 @@ public class LocationManager {
 	public static List<LatLng> getNonAccessibleLocationsInRadius(Location source, Location destination,
 			Integer accessibilityThreshold) {
 		StringBuilder mutex = new StringBuilder();
+		final AtomicInteger secondM = new AtomicInteger(0);
 		double radius = distanceBtween(source.getCoordinates(),destination.getCoordinates());
 		LatLng center = new LatLng((source.getCoordinates().getLat()+destination.getCoordinates().getLat())/2,
 				(source.getCoordinates().getLng()+destination.getCoordinates().getLng())/2);
@@ -133,11 +134,24 @@ public class LocationManager {
 				for(Location l :ls){
 					loc.add(l);
 				}
+				synchronized (secondM) {
+					secondM.set(1);
+					secondM.notifyAll();
+        		}
 			}
 		};
 		
 		for(LatLng l:points){
 			getLocation(l,list);
+			synchronized (secondM) {
+				if(secondM.get()==0){
+					try {
+						secondM.wait();
+					} catch (InterruptedException e) {
+					}
+				}
+				secondM.set(0);
+    		}
 		}
 
 		

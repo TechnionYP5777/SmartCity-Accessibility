@@ -8,6 +8,7 @@ import com.teamdev.jxmaps.Map;
 import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.exceptions.EmptySearchQuery;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.socialnetwork.BestReviews;
 
 /**
  * @author Kolikant
@@ -73,7 +74,7 @@ public class SearchQueryResult {
 
 		long rating;
 		for (Location loc : clone) {
-			rating = Integer.parseInt(Long.toUnsignedString(loc.getRating(Location.N).getScore()));
+			rating = Integer.parseInt(Long.toUnsignedString(loc.getRating(BestReviews.DEFAULT).getScore()));
 			if (rating < tresh)
 				locations.remove(loc);
 		}

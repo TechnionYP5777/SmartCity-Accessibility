@@ -20,7 +20,8 @@ public class Review {
 	private Score rating;
 	private String content;
 	private boolean isPinned;
-	private String locationID; //the location id in the db - doesn't have to be added to the default constractor
+	private String locationID; // the location id in the db - doesn't have to be
+								// added to the default constractor
 	private List<ReviewComment> comments = new ArrayList<ReviewComment>();
 
 	public Review(Location l, int r, String c, User u) {
@@ -46,7 +47,7 @@ public class Review {
 		this.user = u;
 		this.isPinned = false;
 	}
-	
+
 	/**
 	 * implemented for the DB functionality
 	 * 
@@ -75,33 +76,35 @@ public class Review {
 		return this.content;
 	}
 
-	public String getLocationID(){
+	public String getLocationID() {
 		return this.locationID;
 	}
-	public void pin(User u) throws UnauthorizedAccessException {
-		if (!isAccessAllowed(u))
+
+	public void pin(User ¢) throws UnauthorizedAccessException {
+		if (!isAccessAllowed(¢))
 			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
 		this.isPinned = true;
 	}
 
 	/**
-	 * implemented for the DB, hence only admin can preform 
+	 * implemented for the DB, hence only admin can preform
+	 * 
 	 * @param u
 	 * @param l
 	 * @throws UnauthorizedAccessException
 	 */
-	public void locationSet(User u,Location l) throws UnauthorizedAccessException {
+	public void locationSet(User u, Location l) throws UnauthorizedAccessException {
 		if (!isAccessAllowed(u))
 			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
 		this.location = l;
 	}
-	
-	private boolean isAccessAllowed(User u) {
-		return Privilege.pinPrivilegeLevel(u);
+
+	private boolean isAccessAllowed(User ¢) {
+		return Privilege.pinPrivilegeLevel(¢);
 	}
 
-	public void unPin(User u) throws UnauthorizedAccessException {
-		if (!isAccessAllowed(u))
+	public void unPin(User ¢) throws UnauthorizedAccessException {
+		if (!isAccessAllowed(¢))
 			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
 		this.isPinned = false;
 	}
@@ -128,16 +131,16 @@ public class Review {
 	 * @author KaplanAlexander
 	 * @throws UnauthorizedAccessException
 	 */
-	public void upvote(User u) throws UnauthorizedAccessException {
-		comment(u, ReviewComment.POSITIVE_RATING);
+	public void upvote(User ¢) throws UnauthorizedAccessException {
+		comment(¢, ReviewComment.POSITIVE_RATING);
 	}
 
 	/**
 	 * @author KaplanAlexander
 	 * @throws UnauthorizedAccessException
 	 */
-	public void downvote(User u) throws UnauthorizedAccessException {
-		comment(u, ReviewComment.NEGATIVE_RATING);
+	public void downvote(User ¢) throws UnauthorizedAccessException {
+		comment(¢, ReviewComment.NEGATIVE_RATING);
 	}
 
 	/**
@@ -172,21 +175,21 @@ public class Review {
 	protected int getComments(int rating) {
 		return ReviewComment.summarizeComments(comments.stream().filter(new Predicate<ReviewComment>() {
 			@Override
-			public boolean test(ReviewComment c) {
-				return (c.getRating() == rating);
+			public boolean test(ReviewComment ¢) {
+				return (¢.getRating() == rating);
 			}
 		}).collect(Collectors.toList()));
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (o == this)
+	public boolean equals(Object ¢) {
+		if (¢ == this)
 			return true;
 
-		if (!(o instanceof Review))
+		if (!(¢ instanceof Review))
 			return false;
 
-		Review $ = (Review) o;
+		Review $ = (Review) ¢;
 
 		return $.location.equals(this.location) && $.user.equals(this.user) && $.rating.equals(this.rating)
 				&& $.content.equals(this.content);

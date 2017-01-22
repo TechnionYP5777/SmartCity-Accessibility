@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.Map;
-import com.teamdev.jxmaps.MapServices;
-import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.PlaceNearbySearchCallback;
 import com.teamdev.jxmaps.PlaceResult;
 import com.teamdev.jxmaps.PlaceSearchPagination;
@@ -15,10 +13,7 @@ import com.teamdev.jxmaps.PlacesService;
 import com.teamdev.jxmaps.PlacesServiceStatus;
 import com.teamdev.jxmaps.swing.MapView;
 
-import javassist.tools.Callback;
 import smartcity.accessibility.database.LocationListCallback;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
 
 /**
@@ -26,16 +21,14 @@ import smartcity.accessibility.mapmanagement.Location;
  */
 public class NearbyPlacesSearch {
 
-	public static void findNearbyPlaces(MapView mapView, Location initLocation, double radius, List<String> kindsOfLocations, LocationListCallback c) {
-		Map map = mapView.getMap();
+	public static void findNearbyPlaces(MapView v, Location initLocation, double radius, List<String> kindsOfLocations, LocationListCallback c) {
+		Map map = v.getMap();
 		LatLng l = initLocation.getCoordinates();
 		PlaceSearchRequest request = new PlaceSearchRequest();
 		request.setLocation(l);
 		request.setRadius(radius);
-		String[] types = kindsOfLocations.toArray((new String[kindsOfLocations.size()]));
-		request.setTypes(types);
-		MapServices ms = mapView.getServices();
-		PlacesService ps = ms.getPlacesService();
+		request.setTypes(kindsOfLocations.toArray((new String[kindsOfLocations.size()])));
+		PlacesService ps = v.getServices().getPlacesService();
 		System.out.println("doing the nearby search");
 		ps.nearbySearch(request, new PlaceNearbySearchCallback(map) {
             @Override
@@ -57,21 +50,6 @@ public class NearbyPlacesSearch {
 	
 	}
 	
-	/*
-	 * Kolikant
-	 */
-	public static void displayResults(String type, int radius, LatLng c, MapView mapView){
-//		ArrayList<String> kindsOfLocations = new ArrayList<String>();
-//		kindsOfLocations.add(type);
-//		Location initLocation = new Location(c);
-//		MapViewOptions options = new MapViewOptions();
-//		options.importPlaces();
-//		NearbyPlacesAttempt n = new NearbyPlacesAttempt();
-//		ArrayList<Location> places = n.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations);
-//		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
-//
-//		for (Location l : places)
-//			JxMapsFunctionality.putExtendedMarker((ExtendedMapView) mapView, l, l.getName());
-	}
+
 	
 }

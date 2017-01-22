@@ -39,13 +39,11 @@ public class UserImpl implements User {
 	@Override
 	public String getName() {
 		return userName;
-		// TODO stuff on user name for privilege level
 	}
-	
+
 	@Override
 	public String getLocalName() {
 		return localName;
-		// TODO stuff on user name for privilege level
 	}
 
 	@Override
@@ -85,9 +83,10 @@ public class UserImpl implements User {
 
 	@Override
 	public boolean equals(Object o) {
-		return o == this || (o instanceof UserImpl && this.userName.equals(((UserImpl) o).userName)
-				&& this.password.equals(((UserImpl) o).password)
-				&& this.privilegeLevel == ((UserImpl) o).privilegeLevel)
+		return o == this
+				|| (o instanceof UserImpl && this.userName.equals(((UserImpl) o).userName)
+						&& this.password.equals(((UserImpl) o).password)
+						&& this.privilegeLevel == ((UserImpl) o).privilegeLevel)
 				|| (o instanceof String && userName.equals(o));
 	}
 

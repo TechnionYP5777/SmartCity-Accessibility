@@ -22,7 +22,7 @@ import smartcity.accessibility.socialnetwork.User.Privilege;
  */
 
 public class Location {
-	public final static int N = 5;
+
 	public enum LocationSubTypes {
 		Restaurant, Hotel, Bar, Default
 	}
@@ -56,7 +56,7 @@ public class Location {
 	public List<Review> getPinnedReviews() {
 		return reviews.stream().filter(r -> r.isPinned()).collect(Collectors.toList());
 	}
-	
+
 	public List<Review> getNotPinnedReviews() {
 		return reviews.stream().filter(r -> !r.isPinned()).collect(Collectors.toList());
 	}
@@ -76,28 +76,29 @@ public class Location {
 		this.coordinates = c;
 		this.locationType = lt;
 	}
-	
-	public Location(LatLng c, LocationTypes lt, LocationSubTypes lst){
-		this(c,lt);
+
+	public Location(LatLng c, LocationTypes lt, LocationSubTypes lst) {
+		this(c, lt);
 		this.locationSubType = lst;
 	}
-	
+
 	/**
-	 * Added in order to create location when loading them from the DB 
+	 * Added in order to create location when loading them from the DB
+	 * 
 	 * @author assaflu
 	 * @param c
 	 * @param lt
 	 * @param lst
 	 * @param r
 	 */
-	public Location(LatLng c, LocationTypes lt, LocationSubTypes lst,ArrayList<Review> r){
-		this(c,lt);
+	public Location(LatLng c, LocationTypes lt, LocationSubTypes lst, ArrayList<Review> r) {
+		this(c, lt);
 		this.reviews.addAll(r);
 		this.locationSubType = lst;
 	}
 
-	public void setName(String n) {
-		this.name = n;
+	public void setName(String ¢) {
+		this.name = ¢;
 	}
 
 	public String getName() {
@@ -109,39 +110,42 @@ public class Location {
 		this.coordinates = c;
 	}
 
-	public Location(ArrayList<Review> pinned,ArrayList<Review> unPinned, LatLng c) {
+	public Location(ArrayList<Review> pinned, ArrayList<Review> unPinned, LatLng c) {
 		initiateArrays();
 		this.reviews.addAll(pinned);
 		this.reviews.addAll(unPinned);
 		this.coordinates = c;
 	}
-	
+
 	private void initiateArrays() {
 		this.reviews = new ArrayList<Review>();
 	}
 
 	/**
-	 * The calculation of the rating works as follows:
-	 * if there are no
-	 * @param n - the number of reviews we want to calculate the Location's rating by
+	 * The calculation of the rating works as follows: if there are no
+	 * 
+	 * @param ¢
+	 *            - the number of reviews we want to calculate the Location's
+	 *            rating by
 	 * @return the rating of the specified location.
 	 */
-	public Score getRating(int n) {
-		int rating = Score.getMaxScore();
+	public Score getRating(int ¢) {
+		int $ = Score.getMaxScore();
 		if (reviews.isEmpty())
-			return new Score(rating);
-		rating = ( new BestReviews(n, this)).getTotalRatingByAvg();
-		return new Score(rating);
+			return new Score($);
+		$ = (new BestReviews(¢, this)).getTotalRatingByAvg();
+		return new Score($);
 	}
 
 	/**
 	 * use for adding reviews in from the db
-	 * @param r
+	 * 
+	 * @param ¢
 	 */
-	public void addReviewNoSave(Review r){
-		reviews.add(r);
+	public void addReviewNoSave(Review ¢) {
+		reviews.add(¢);
 	}
-	
+
 	public LatLng getCoordinates() {
 		return this.coordinates;
 	}
@@ -158,27 +162,26 @@ public class Location {
 	 * @author ArthurSap
 	 * @throws ParseException
 	 */
-	public void addReview(Review r) throws ParseException {
-		actuallyAddReview(r);
+	public void addReview(Review ¢) throws ParseException {
+		actuallyAddReview(¢);
 	}
 
 	/**
 	 * @author ArthurSap
 	 * @throws ParseException
 	 */
-	private void actuallyAddReview(Review r) throws ParseException {
-		reviews.add(r);
-		ReviewManager.uploadReview(r);
+	private void actuallyAddReview(Review ¢) throws ParseException {
+		reviews.add(¢);
+		ReviewManager.uploadReview(¢);
 	}
 
-	
-	private Review getReview(Review r) {
-		for (Review rev : reviews)
-			if (rev.equals(r))
-				return rev;
+	private Review getReview(Review ¢) {
+		for (Review $ : reviews)
+			if ($.equals(¢))
+				return $;
 		return null;
 	}
-	
+
 	/**
 	 * Marks a review as important - whilst calculating the location's
 	 * accessibility level always takes this review in the calculation. Also,
@@ -188,14 +191,11 @@ public class Location {
 	 **/
 	public void pinReview(User u, Review r) throws UnauthorizedAccessException {
 		Review review = checkExistence(r);
-		if (review == null) return;
-		
-		if (getPinnedReviews().contains(r)) {
-			System.out.println("Review is already pinned.");
-			return;
-		}
-
-		review.pin(u);
+		if (review != null)
+			if (!getPinnedReviews().contains(r))
+				review.pin(u);
+			else
+				System.out.println("Review is already pinned.");
 	}
 
 	/**
@@ -203,58 +203,57 @@ public class Location {
 	 * 
 	 * @throws UnauthorizedAccessException
 	 */
-	public void unpinReview(User u, Review r) throws UnauthorizedAccessException {	
+	public void unpinReview(User u, Review r) throws UnauthorizedAccessException {
 		Review review = checkExistence(r);
-		if (review == null) return;
-		
-		if (!review.isPinned()) {
-			System.out.println("Review is already un-pinned.");
-			return;
-		}
-		review.unPin(u);
+		if (review != null)
+			if (review.isPinned())
+				review.unPin(u);
+			else
+				System.out.println("Review is already un-pinned.");
 	}
-	
-	
+
 	/**
 	 * Deletes a review from this location
-	 * @param u - the user that wishes to delete a review
-	 * @param r - the review to be deleted 
-	 * @throws UnauthorizedAccessException - if the user isn't an admin or higher
+	 * 
+	 * @param u
+	 *            - the user that wishes to delete a review
+	 * @param r
+	 *            - the review to be deleted
+	 * @throws UnauthorizedAccessException
+	 *             - if the user isn't an admin or higher
 	 */
-	public void deleteReview(User u, Review r) throws UnauthorizedAccessException{
-		Review review = checkExistence(r);
-		if (review == null) return;
-		
-		if(!Privilege.deletePrivilegeLevel(u) && !u.equals(r.getUser())){
+	public void deleteReview(User u, Review r) throws UnauthorizedAccessException {
+		if (checkExistence(r) == null)
+			return;
+
+		if (!Privilege.deletePrivilegeLevel(u) && !u.equals(r.getUser()))
 			throw (new UnauthorizedAccessException(Privilege.minDeleteLevel()));
-		}
-		
+
 		reviews.remove(r);
-		ReviewManager.deleteReview(r);		
+		ReviewManager.deleteReview(r);
 	}
 
-	
 	/**
 	 * Checks whether a given review belongs to this location
-	 * @param r - the review to be checked
+	 * 
+	 * @param ¢
+	 *            - the review to be checked
 	 * @return - the review if it exists or null otherwise
 	 */
-	private Review checkExistence(Review r) {
-		Review review = getReview(r);
-		if (review == null) {
-			System.out.print("ERROR! This review doesn't exist in current location!");
-			System.out.println("\tCurrent Location: " + this.coordinates);
-			return null;
-		}
-		return review;
+	private Review checkExistence(Review ¢) {
+		Review $ = getReview(¢);
+		if ($ != null)
+			return $;
+		System.out.print("ERROR! This review doesn't exist in current location!");
+		System.out.println("\tCurrent Location: " + this.coordinates);
+		return null;
 	}
 
-	
 	@Override
-	public boolean equals(Object o) {
-		return o == this || (o instanceof Location && ((Location) o).coordinates.equals(this.coordinates)
-				&& ((Location) o).locationSubType.equals(locationSubType)
-				&& ((Location) o).locationType.equals(locationType));
+	public boolean equals(Object ¢) {
+		return ¢ == this || (¢ instanceof Location && ((Location) ¢).coordinates.equals(this.coordinates)
+				&& ((Location) ¢).locationSubType.equals(locationSubType)
+				&& ((Location) ¢).locationType.equals(locationType));
 	}
 
 	public LocationTypes getLocationType() {
@@ -264,35 +263,37 @@ public class Location {
 	public LocationSubTypes getLocationSubType() {
 		return locationSubType;
 	}
-	
+
 	/**
 	 * turns string to enum LocationTypes
+	 * 
 	 * @author assaflu
-	 * @param s
+	 * @param ¢
 	 * @return
 	 */
-	public static LocationTypes stringToEnumTypes(String s){
-		if(s == null)
+	public static LocationTypes stringToEnumTypes(String ¢) {
+		if (¢ == null)
 			return LocationTypes.Street;
-		switch(s){
-			case "Coordinate":
-				return LocationTypes.Coordinate;
-			case "Facility":
-				return LocationTypes.Facility;
-			case "Street":
-				return LocationTypes.Street;
+		switch (¢) {
+		case "Coordinate":
+			return LocationTypes.Coordinate;
+		case "Facility":
+			return LocationTypes.Facility;
+		case "Street":
+			return LocationTypes.Street;
 		}
 		return LocationTypes.Street; // default return
 	}
-	
+
 	/**
 	 * trun string to enum LocationSubTypes
+	 * 
 	 * @author assaflu
-	 * @param s
+	 * @param ¢
 	 * @return
 	 */
-	public static LocationSubTypes stringToEnumSubTypes(String s){
-		switch(s){
+	public static LocationSubTypes stringToEnumSubTypes(String ¢) {
+		switch (¢) {
 		case "Restaurant":
 			return LocationSubTypes.Restaurant;
 		case "Hotel":
