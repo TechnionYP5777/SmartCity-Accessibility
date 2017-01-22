@@ -48,7 +48,7 @@ public class LocationManagerTest {
 	
 	@Test
 	public void getLocationsyncronizedTest() throws InterruptedException{
-		LatLng k = new LatLng(20,20);
+		LatLng k = new LatLng(40,40);
 		Location L = new Location(k,Location.LocationTypes.Coordinate,Location.LocationSubTypes.Bar);
 		Review r1 = new Review(L, 5, "secondTestLocation1","assafL");
 		Review r2 = new Review(L, 5, "secondTestLocation1","arturL");
@@ -62,7 +62,7 @@ public class LocationManagerTest {
 	
 	@Test
 	public void getLocationbackground() throws InterruptedException{
-		LatLng k = new LatLng(21,20);
+		LatLng k = new LatLng(41,40);
 		Location L = new Location(k,Location.LocationTypes.Coordinate,Location.LocationSubTypes.Bar);
 		Review r1 = new Review(L, 5, "secondTestLocation2","assafL");
 		Review r2 = new Review(L, 5, "secondTestLocation2","arturL");
