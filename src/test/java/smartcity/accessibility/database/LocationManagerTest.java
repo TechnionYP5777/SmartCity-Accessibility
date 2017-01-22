@@ -50,22 +50,22 @@ public class LocationManagerTest {
 	public void getLocationsyncronizedTest() throws InterruptedException{
 		LatLng k = new LatLng(20,20);
 		Location L = new Location(k,Location.LocationTypes.Coordinate,Location.LocationSubTypes.Bar);
-		Review r1 = new Review(L, 5, "secondTestLocation1","assaf");
-		Review r2 = new Review(L, 5, "secondTestLocation1","artur");
+		Review r1 = new Review(L, 5, "secondTestLocation1","assafL");
+		Review r2 = new Review(L, 5, "secondTestLocation1","arturL");
 		ReviewManager.uploadReview(r1);
 		Thread.sleep(10000);
 		ReviewManager.uploadReview(r2);
 		Thread.sleep(10000);
 		Location newLoc = LocationManager.getLocation(k,Location.LocationTypes.Coordinate,Location.LocationSubTypes.Bar);
-		assert(newLoc.getReviews().get(0).getUser().equals("assaf"));
+		assert(newLoc.getReviews().get(0).getUser().equals("assafL"));
 	}
 	
 	@Test
 	public void getLocationbackground() throws InterruptedException{
-		LatLng k = new LatLng(20,20);
+		LatLng k = new LatLng(21,20);
 		Location L = new Location(k,Location.LocationTypes.Coordinate,Location.LocationSubTypes.Bar);
-		Review r1 = new Review(L, 5, "secondTestLocation1","assaf");
-		Review r2 = new Review(L, 5, "secondTestLocation1","artur");
+		Review r1 = new Review(L, 5, "secondTestLocation2","assafL");
+		Review r2 = new Review(L, 5, "secondTestLocation2","arturL");
 		ReviewManager.uploadReview(r1);
 		Thread.sleep(7000);
 		ReviewManager.uploadReview(r2);
@@ -82,10 +82,6 @@ public class LocationManagerTest {
 		});
 		Thread.sleep(10000);
 		assert(pinned.size()==2);
-	}
-
-	public void updateLocationTest(){
-		
 	}
 
 }
