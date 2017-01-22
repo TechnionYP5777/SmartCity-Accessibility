@@ -12,30 +12,13 @@ public class ScoreTest {
 	@Test
 	public void testGetScore() {
 		assert ((new Score(5)).getScore() == 5);
+		assert (new Score(3)).getScore() == 3;
 	}
-
-	// @Test
-	// public void testSetScore() {
-	// Score newScore = null;
-	// newScore = new Score(4);
-	//
-	//
-	// try {
-	// newScore.setScore(100);
-	// Assert.fail("should't create the score cause 100 exceeds valis values");
-	// } catch (ScoreNotInRangeException e) {
-	// }
-	//
-	// try {
-	// newScore.setScore(2);
-	// } catch (ScoreNotInRangeException e) {
-	// Assert.fail("should't throw an exception cause 2 is legal value");
-	// }
-	// }
-	//
+	
 	@Test
 	public void testGetMinMaxScore() {
 		assert (Score.getMinScore() == TEST_MIN_SCORE);
 		assert (Score.getMaxScore() == TEST_MAX_SCORE);
 	}
+	
 }
