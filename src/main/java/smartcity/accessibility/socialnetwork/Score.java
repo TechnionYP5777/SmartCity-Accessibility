@@ -29,8 +29,8 @@ public class Score {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		return o == this || (o instanceof Score && ((Score) o).getScore() == this.score);
+	public boolean equals(Object ¢) {
+		return ¢ == this || (¢ instanceof Score && ((Score) ¢).getScore() == this.score);
 	}
 
 }

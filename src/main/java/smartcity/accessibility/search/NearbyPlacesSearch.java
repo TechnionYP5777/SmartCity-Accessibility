@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.Map;
-import com.teamdev.jxmaps.MapServices;
-import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.PlaceNearbySearchCallback;
 import com.teamdev.jxmaps.PlaceResult;
 import com.teamdev.jxmaps.PlaceSearchPagination;
@@ -15,10 +13,7 @@ import com.teamdev.jxmaps.PlacesService;
 import com.teamdev.jxmaps.PlacesServiceStatus;
 import com.teamdev.jxmaps.swing.MapView;
 
-import javassist.tools.Callback;
 import smartcity.accessibility.database.LocationListCallback;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
 
 /**
@@ -55,21 +50,6 @@ public class NearbyPlacesSearch {
 	
 	}
 	
-	/*
-	 * Kolikant
-	 */
-	public static void displayResults(String type, int radius, LatLng c, MapView v){
-//		ArrayList<String> kindsOfLocations = new ArrayList<String>();
-//		kindsOfLocations.add(type);
-//		Location initLocation = new Location(c);
-//		MapViewOptions options = new MapViewOptions();
-//		options.importPlaces();
-//		NearbyPlacesAttempt n = new NearbyPlacesAttempt();
-//		ArrayList<Location> places = n.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations);
-//		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
-//
-//		for (Location l : places)
-//			JxMapsFunctionality.putExtendedMarker((ExtendedMapView) mapView, l, l.getName());
-	}
+
 	
 }
