@@ -1,5 +1,6 @@
 package smartcity.accessibility.search;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.teamdev.jxmaps.Map;
@@ -45,9 +46,14 @@ public class SearchQueryResult {
 		if (locations.isEmpty())
 			throw new EmptySearchQuery();
 
+		ArrayList<Location> arr = new ArrayList<Location>();
 		for (Location loc : locations)
-			loc = LocationManager.getLocation(loc.getCoordinates(), loc.getLocationType(), loc.getLocationSubType());
+			arr.add(LocationManager.getLocation(loc.getCoordinates(), loc.getLocationType(), loc.getLocationSubType()));
+		
+		locations.clear();
+		locations.addAll(arr);
 	}
+	
 
 	/***
 	 * Iterate over the locations of the search query, remove all those that do
@@ -61,12 +67,13 @@ public class SearchQueryResult {
 	 *             - If the query is empty or no location meets the criteria
 	 */
 	public void filterLocations(int tresh) throws EmptySearchQuery {
+		List<Location> clone = new ArrayList<>(locations);
 		if (locations.isEmpty())
 			throw new EmptySearchQuery();
 
 		long rating;
-		for (Location loc : locations) {
-			rating = Integer.parseInt(Long.toUnsignedString(loc.getRating(loc.getReviews().size()).getScore()));
+		for (Location loc : clone) {
+			rating = Integer.parseInt(Long.toUnsignedString(loc.getRating(Location.N).getScore()));
 			if (rating < tresh)
 				locations.remove(loc);
 		}

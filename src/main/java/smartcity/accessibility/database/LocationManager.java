@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 //import org.eclipse.persistence.internal.sessions.remote.SequencingFunctionCall.GetNextValue;
@@ -191,7 +192,8 @@ public class LocationManager {
 	 * @return
 	 */
 	public static Location getLocation(LatLng point, Location.LocationTypes type, Location.LocationSubTypes subtype){
-		StringBuilder mutex = new StringBuilder();
+		//StringBuilder mutex = new StringBuilder();
+		final AtomicInteger mutI = new AtomicInteger(0);
 		ArrayList<Review> reviews = new ArrayList<Review>();
 		Map<String, Object> values = new HashMap<String,Object>();
 		values.put("location", new ParseGeoPoint(point.getLat(),point.getLng()));
@@ -204,18 +206,18 @@ public class LocationManager {
                 		reviews.add(new Review(new Location(point,type,subtype),obj.getInt("rating"),obj.getString("comment"),obj.getString("user")));
                 	}
                 }
-            	synchronized (mutex) {
-            		mutex.append("done");
-        			mutex.notifyAll();
+            	synchronized (mutI) {
+            		mutI.set(1);;
+            		mutI.notifyAll();
         		}
 			}
 		};
 		
 		DatabaseManager.queryByFields("Review", values, callBackR);
-		synchronized (mutex) {
-			if(!mutex.equals("done")){
+		synchronized (mutI) {
+			if((mutI.get()==0)){
 				try {
-					mutex.wait();
+					mutI.wait();
 				} catch (InterruptedException e) {
 				}
 			}

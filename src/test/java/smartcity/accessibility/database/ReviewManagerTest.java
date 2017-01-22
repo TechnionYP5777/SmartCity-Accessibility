@@ -27,6 +27,7 @@ import com.teamdev.jxmaps.LatLng;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.Location.LocationTypes;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.User;
@@ -58,7 +59,7 @@ public class ReviewManagerTest {
 	@Test
 	public void getReviewByUserAndLocationTest() throws InterruptedException{
 		LatLng k = new LatLng(20,20);
-		Location L = new Location(k);
+		Location L = new Location(k,Location.LocationTypes.Coordinate,Location.LocationSubTypes.Bar);
 		Review r1 = new Review(L, 5, "secondTest1","assaf");
 		Review r2 = new Review(L, 5, "secondTest2","artur");
 		ReviewManager.uploadReview(r1);
@@ -78,6 +79,8 @@ public class ReviewManagerTest {
 		ReviewManager.getReviewByUserAndLocation(u1,L,g);
 		ReviewManager.getReviewByUserAndLocation(u2,L,g);
 		Thread.sleep(7000);
+		Location newLoc = LocationManager.getLocation(k,Location.LocationTypes.Coordinate,Location.LocationSubTypes.Bar);
+		System.out.println(newLoc.getReviews().get(0).getUser());
 		System.out.println(pinned.get(0).getRating().getScore()+"  "+pinned.get(0).getContent());
 		System.out.println(pinned.get(1).getRating().getScore()+"  "+pinned.get(1).getContent());
 	}

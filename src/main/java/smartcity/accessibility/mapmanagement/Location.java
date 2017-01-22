@@ -21,7 +21,7 @@ import smartcity.accessibility.socialnetwork.Score;
  */
 
 public class Location {
-
+	public final static int N = 5;
 	public enum LocationSubTypes {
 		Restaurant, Hotel, Bar, Default
 	}
@@ -93,7 +93,7 @@ public class Location {
 	 */
 	public Location(LatLng c, LocationTypes lt, LocationSubTypes lst,ArrayList<Review> r){
 		this(c,lt);
-		this.reviews = r;
+		this.reviews.addAll(r);
 		this.locationSubType = lst;
 	}
 
@@ -128,9 +128,9 @@ public class Location {
 	 * @return the rating of the specified location.
 	 */
 	public Score getRating(int n) {
-		int rating = -1;
+		int rating = Score.getMaxScore();
 		if (reviews.isEmpty())
-			return new Score(Score.getMinScore());
+			return new Score(rating);
 		rating = ( new BestReviews(n, this)).getTotalRatingByAvg();
 		return new Score(rating);
 	}

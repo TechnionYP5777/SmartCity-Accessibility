@@ -125,7 +125,7 @@ public class ElaborateSearchFrame implements MouseListener {
 		int Threshold, radius;
 		try {
 
-			Threshold = thresholdsBox.getSelectedIndex();
+			Threshold = thresholdsBox.getSelectedIndex() + 1;
 			radius = Integer.parseInt(RadiusField.getText());
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(Application.frame, "Radius and Thresold must be numbers", "Bad Input",
