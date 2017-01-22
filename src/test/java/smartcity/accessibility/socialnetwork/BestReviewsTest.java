@@ -68,7 +68,7 @@ public class BestReviewsTest {
 		br.setN(2);
 		mostRated = br.getMostRated();
 		assertEquals(mostRated.size(), 2);
-		assertTrue(mostRated.contains(r1));
+		assert mostRated.contains(r1);
 		assertTrue(mostRated.contains(r3));
 		assertEquals(br.getTotalRatingByAvg(), r1.getRating().getScore() + r3.getRating().getScore() / 2);
 	}

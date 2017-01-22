@@ -1,6 +1,7 @@
 package smartcity.accessibility.socialnetwork;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,16 +24,16 @@ public class DeleteReviewsTest {
 		user = UserImpl.RegularUser("RegularUser", "", "");
 		admin = UserImpl.Admin("Admin", "", "");
 		location = new Location(new LatLng(100, 100));
-		
+
 		review = new Review(location, 5, "Nothing here", user);
 		review2 = new Review(location, 3, "Nothing here either", admin);
-		
+
 		location.addReview(review);
 		location.addReview(review2);
-		//Check successful add
+		// Check successful add
 		nothingHasChangedCheck();
 	}
-	
+
 	private void nothingHasChangedCheck() {
 		assertTrue(location.getReviews().contains(review));
 		assertTrue(location.getReviews().contains(review2));
@@ -41,44 +42,44 @@ public class DeleteReviewsTest {
 
 	@Test(expected = UnauthorizedAccessException.class)
 	public void regularUserCantDelete() throws UnauthorizedAccessException {
-		try{
+		try {
 			location.deleteReview(user, review2);
-		}catch(UnauthorizedAccessException e) {
+		} catch (UnauthorizedAccessException e) {
 			nothingHasChangedCheck();
 			throw e;
 		}
 	}
-	
+
 	@Test(expected = UnauthorizedAccessException.class)
 	public void defaultUserCantDelete() throws UnauthorizedAccessException {
-		try{
+		try {
 			location.deleteReview(defaultuser, review);
-		}catch(UnauthorizedAccessException e) {
+		} catch (UnauthorizedAccessException e) {
 			nothingHasChangedCheck();
 			throw e;
 		}
 	}
-	
+
 	@Test
-	public void adminCanDelete() throws UnauthorizedAccessException{
+	public void adminCanDelete() throws UnauthorizedAccessException {
 		location.deleteReview(admin, review);
-		
-		//Review has been deleted
+
+		// Review has been deleted
 		assertFalse(location.getReviews().contains(review));
-		
-		//No other review has be affected
+
+		// No other review has be affected
 		assertTrue(location.getReviews().contains(review2));
 		assertTrue(location.getReviews().size() == 1);
 	}
-	
+
 	@Test
-	public void userCanOwnedDelete() throws UnauthorizedAccessException{
+	public void userCanOwnedDelete() throws UnauthorizedAccessException {
 		location.deleteReview(user, review);
-		
-		//Review has been deleted
+
+		// Review has been deleted
 		assertFalse(location.getReviews().contains(review));
-		
-		//No other review has be affected
+
+		// No other review has be affected
 		assertTrue(location.getReviews().contains(review2));
 		assertTrue(location.getReviews().size() == 1);
 	}
