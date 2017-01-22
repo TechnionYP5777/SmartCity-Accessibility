@@ -277,8 +277,8 @@ public class LocationManager {
                 		}
                 		reviews.add(r);
                 	}
-                	DatabaseManager.queryByFields("Location", valuesL, callBackL);
                 }
+                DatabaseManager.queryByFields("Location", valuesL, callBackL);
 			}
 		};
 		DatabaseManager.queryByFields("Review", valuesR, callBackR);
