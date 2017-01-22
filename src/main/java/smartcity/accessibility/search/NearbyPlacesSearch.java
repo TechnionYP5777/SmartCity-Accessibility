@@ -9,7 +9,6 @@ import com.teamdev.jxmaps.PlaceNearbySearchCallback;
 import com.teamdev.jxmaps.PlaceResult;
 import com.teamdev.jxmaps.PlaceSearchPagination;
 import com.teamdev.jxmaps.PlaceSearchRequest;
-import com.teamdev.jxmaps.PlacesService;
 import com.teamdev.jxmaps.PlacesServiceStatus;
 import com.teamdev.jxmaps.swing.MapView;
 
