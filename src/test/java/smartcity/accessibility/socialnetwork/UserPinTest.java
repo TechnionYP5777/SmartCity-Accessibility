@@ -1,6 +1,6 @@
 package smartcity.accessibility.socialnetwork;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,6 @@ public class UserPinTest {
 	Location location;
 	Review review;
 
-
 	@Before
 	public void setUp() throws Exception {
 		DatabaseManager.initialize();
@@ -24,53 +23,53 @@ public class UserPinTest {
 		user = UserImpl.RegularUser("RegularUser", "", "");
 		admin = UserImpl.Admin("Admin", "", "");
 		location = new Location(new LatLng(100, 100));
-		
+
 		review = new Review(location, 5, "Nothing here", user);
-		
+
 		location.addReview(review);
-		//Check successful add
+		// Check successful add
 		assertTrue(location.getReviews().contains(review));
-		
-		//Nothing is pinned yet
+
+		// Nothing is pinned yet
 		assertTrue(location.getPinnedReviews().isEmpty());
-		
+
 	}
 
 	@Test
 	public void testPinUnPin() throws UnauthorizedAccessException {
 		location.pinReview(admin, review);
-		//Review was pinned
+		// Review was pinned
 		assertTrue(location.getPinnedReviews().contains(review));
-		//Review was pinned only once
+		// Review was pinned only once
 		assertTrue(location.getPinnedReviews().size() == 1);
-		//Review was removed from regular reviews
-		assertTrue(location.getNotPinnedReviews().isEmpty());	
-		
-		//Unpin review
+		// Review was removed from regular reviews
+		assertTrue(location.getNotPinnedReviews().isEmpty());
+
+		// Unpin review
 		location.unpinReview(admin, review);
-		//Review was un-pinned
+		// Review was un-pinned
 		assertTrue(location.getNotPinnedReviews().contains(review));
-		//Review was un-pinned only once
+		// Review was un-pinned only once
 		assertTrue(location.getNotPinnedReviews().size() == 1);
-		//Review was removed from regular reviews
+		// Review was removed from regular reviews
 		assertTrue(location.getPinnedReviews().isEmpty());
 	}
-	
+
 	@Test(expected = UnauthorizedAccessException.class)
-	public void userCantPin() throws UnauthorizedAccessException{
-		try{
+	public void userCantPin() throws UnauthorizedAccessException {
+		try {
 			location.pinReview(user, review);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			nothingHasChangedCheck();
 			throw e;
 		}
 	}
-	
+
 	@Test(expected = UnauthorizedAccessException.class)
-	public void defaultuserCantPin() throws UnauthorizedAccessException{
-		try{
+	public void defaultuserCantPin() throws UnauthorizedAccessException {
+		try {
 			location.pinReview(defaultuser, review);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			nothingHasChangedCheck();
 			throw e;
 		}
