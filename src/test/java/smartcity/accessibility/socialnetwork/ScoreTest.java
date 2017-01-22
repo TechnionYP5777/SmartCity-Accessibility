@@ -11,9 +11,7 @@ public class ScoreTest {
 
 	@Test
 	public void testGetScore() {
-		Score s = null;
-		s = new Score(5);
-		assert (s.getScore() == 5);
+		assert ((new Score(5)).getScore() == 5);
 	}
 
 	// @Test

@@ -33,9 +33,7 @@ public class ReviewTest {
 	
 	@Test
 	public void getRetingTest() {
-		Score s = null;
-		s = new Score(Score.getMinScore());
-		assertEquals(r1.getRating(), s);
+		assertEquals(r1.getRating(), (new Score(Score.getMinScore())));
 	}
 	
 	@Test
@@ -50,13 +48,13 @@ public class ReviewTest {
 	
 	@Test
 	public void isPinnedTest() {
-		assertFalse(r1.isPinned());
+		assert !r1.isPinned();
 		try {
 			r1.pin(u2);
 		} catch (UnauthorizedAccessException e) {
 			fail("shouldn't throw an exception");
 		}
-		assertTrue(r1.isPinned());
+		assert r1.isPinned();
 	}
 
 }

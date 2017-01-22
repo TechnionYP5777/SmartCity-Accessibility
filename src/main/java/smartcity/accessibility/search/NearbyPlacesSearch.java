@@ -26,16 +26,14 @@ import smartcity.accessibility.mapmanagement.Location;
  */
 public class NearbyPlacesSearch {
 
-	public static void findNearbyPlaces(MapView mapView, Location initLocation, double radius, List<String> kindsOfLocations, LocationListCallback c) {
-		Map map = mapView.getMap();
+	public static void findNearbyPlaces(MapView v, Location initLocation, double radius, List<String> kindsOfLocations, LocationListCallback c) {
+		Map map = v.getMap();
 		LatLng l = initLocation.getCoordinates();
 		PlaceSearchRequest request = new PlaceSearchRequest();
 		request.setLocation(l);
 		request.setRadius(radius);
-		String[] types = kindsOfLocations.toArray((new String[kindsOfLocations.size()]));
-		request.setTypes(types);
-		MapServices ms = mapView.getServices();
-		PlacesService ps = ms.getPlacesService();
+		request.setTypes(kindsOfLocations.toArray((new String[kindsOfLocations.size()])));
+		PlacesService ps = v.getServices().getPlacesService();
 		System.out.println("doing the nearby search");
 		ps.nearbySearch(request, new PlaceNearbySearchCallback(map) {
             @Override
@@ -60,7 +58,7 @@ public class NearbyPlacesSearch {
 	/*
 	 * Kolikant
 	 */
-	public static void displayResults(String type, int radius, LatLng c, MapView mapView){
+	public static void displayResults(String type, int radius, LatLng c, MapView v){
 //		ArrayList<String> kindsOfLocations = new ArrayList<String>();
 //		kindsOfLocations.add(type);
 //		Location initLocation = new Location(c);

@@ -80,8 +80,8 @@ public class Review {
 		return this.locationID;
 	}
 
-	public void pin(User u) throws UnauthorizedAccessException {
-		if (!isAccessAllowed(u))
+	public void pin(User ¢) throws UnauthorizedAccessException {
+		if (!isAccessAllowed(¢))
 			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
 		this.isPinned = true;
 	}
@@ -99,12 +99,12 @@ public class Review {
 		this.location = l;
 	}
 
-	private boolean isAccessAllowed(User u) {
-		return Privilege.pinPrivilegeLevel(u);
+	private boolean isAccessAllowed(User ¢) {
+		return Privilege.pinPrivilegeLevel(¢);
 	}
 
-	public void unPin(User u) throws UnauthorizedAccessException {
-		if (!isAccessAllowed(u))
+	public void unPin(User ¢) throws UnauthorizedAccessException {
+		if (!isAccessAllowed(¢))
 			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
 		this.isPinned = false;
 	}
@@ -131,16 +131,16 @@ public class Review {
 	 * @author KaplanAlexander
 	 * @throws UnauthorizedAccessException
 	 */
-	public void upvote(User u) throws UnauthorizedAccessException {
-		comment(u, ReviewComment.POSITIVE_RATING);
+	public void upvote(User ¢) throws UnauthorizedAccessException {
+		comment(¢, ReviewComment.POSITIVE_RATING);
 	}
 
 	/**
 	 * @author KaplanAlexander
 	 * @throws UnauthorizedAccessException
 	 */
-	public void downvote(User u) throws UnauthorizedAccessException {
-		comment(u, ReviewComment.NEGATIVE_RATING);
+	public void downvote(User ¢) throws UnauthorizedAccessException {
+		comment(¢, ReviewComment.NEGATIVE_RATING);
 	}
 
 	/**
@@ -175,21 +175,21 @@ public class Review {
 	protected int getComments(int rating) {
 		return ReviewComment.summarizeComments(comments.stream().filter(new Predicate<ReviewComment>() {
 			@Override
-			public boolean test(ReviewComment c) {
-				return (c.getRating() == rating);
+			public boolean test(ReviewComment ¢) {
+				return (¢.getRating() == rating);
 			}
 		}).collect(Collectors.toList()));
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (o == this)
+	public boolean equals(Object ¢) {
+		if (¢ == this)
 			return true;
 
-		if (!(o instanceof Review))
+		if (!(¢ instanceof Review))
 			return false;
 
-		Review $ = (Review) o;
+		Review $ = (Review) ¢;
 
 		return $.location.equals(this.location) && $.user.equals(this.user) && $.rating.equals(this.rating)
 				&& $.content.equals(this.content);

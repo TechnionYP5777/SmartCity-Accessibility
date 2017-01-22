@@ -35,21 +35,19 @@ public class BestReviews {
 	 * if there are pinned reviews, then it includes them in the list.
 	 */
 	public List<Review> getMostRated() {
-		List<Review> pinnedReviews = l.getPinnedReviews();
-		pinnedReviews.sort((Review r1, Review r2) -> r2.getRating().getScore() - r1.getRating().getScore());
+		List<Review> $ = l.getPinnedReviews();
+		$.sort((Review r1, Review r2) -> r2.getRating().getScore() - r1.getRating().getScore());
 		List<Review> unPinnedReviews = l.getNotPinnedReviews();
 		unPinnedReviews.sort((Review r1, Review r2) -> r2.getRating().getScore() - r1.getRating().getScore());
 	
-		if (pinnedReviews.isEmpty()) {
+		if ($.isEmpty())
 			return unPinnedReviews.size() < n ? unPinnedReviews : unPinnedReviews.subList(0, n);
-		}
-		if (pinnedReviews.size() > n ) {
-			return pinnedReviews.size() < n ? pinnedReviews : pinnedReviews.subList(0, n);
-		} 
+		if ($.size() > n )
+			return $.size() < n ? $ : $.subList(0, n); 
 		
 		List<Review> reviews = new ArrayList<Review>();
-		reviews.addAll(pinnedReviews);
-		reviews.addAll(unPinnedReviews.subList(0, n - pinnedReviews.size()));
+		reviews.addAll($);
+		reviews.addAll(unPinnedReviews.subList(0, n - $.size()));
 
 		return reviews;
 	}
@@ -58,15 +56,15 @@ public class BestReviews {
 	 * @return the rating of the location calculated by average of the review's rating
 	 */
 	public int getTotalRatingByAvg() {
-		List<Review> mostRated = getMostRated();
-		return mostRated.stream().collect(Collectors.summingInt(a -> a.getRating().getScore())) / mostRated.size();
+		List<Review> $ = getMostRated();
+		return $.stream().collect(Collectors.summingInt(a -> a.getRating().getScore())) / $.size();
 	}
 	
 	/**
 	 * setting n
 	 */
-	public void setN(int n) {
-		this.n = n;
+	public void setN(int ¢) {
+		this.n = ¢;
 	}
 	
 	public List<Review> getReviews() {

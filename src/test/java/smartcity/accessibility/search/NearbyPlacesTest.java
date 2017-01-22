@@ -26,8 +26,7 @@ public class NearbyPlacesTest {
 		ArrayList<String> kindsOfLocations = new ArrayList<String>();
 		kindsOfLocations.add("restaurant");
 		Location initLocation = new Location(c);
-		MapViewOptions options = new MapViewOptions();
-		options.importPlaces();
+		new MapViewOptions().importPlaces();
 		MapView mapView = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
 		NearbyPlacesSearch.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations,
