@@ -79,8 +79,6 @@ public class ReviewManagerTest {
 		ReviewManager.getReviewByUserAndLocation(u1,L,g);
 		ReviewManager.getReviewByUserAndLocation(u2,L,g);
 		Thread.sleep(7000);
-		Location newLoc = LocationManager.getLocation(k,Location.LocationTypes.Coordinate,Location.LocationSubTypes.Bar);
-		System.out.println(newLoc.getReviews().get(0).getUser());
 		System.out.println(pinned.get(0).getRating().getScore()+"  "+pinned.get(0).getContent());
 		System.out.println(pinned.get(1).getRating().getScore()+"  "+pinned.get(1).getContent());
 	}

@@ -107,8 +107,6 @@ public class LocationManager {
                 		ParseGeoPoint point = (ParseGeoPoint) obj.get("coordinates");
                 		points.add(new LatLng (point.getLatitude(),point.getLongitude()));
                 	}
-                } else {
-                    //TODO: check if this part needed
                 }
             	synchronized (mutex) {
             		mutex.append("done");
