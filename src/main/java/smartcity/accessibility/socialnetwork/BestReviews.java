@@ -42,13 +42,15 @@ public class BestReviews {
 	
 		if ($.isEmpty())
 			return unPinnedReviews.size() < n ? unPinnedReviews : unPinnedReviews.subList(0, n);
-		if ($.size() > n )
-			return $.size() < n ? $ : $.subList(0, n); 
+		if ($.size() >= n )
+			return $.subList(0, n); 
 		
 		List<Review> reviews = new ArrayList<Review>();
 		reviews.addAll($);
-		reviews.addAll(unPinnedReviews.subList(0, n - $.size()));
-
+		int needToAdd = n - $.size();
+		if (needToAdd > unPinnedReviews.size()) 
+			needToAdd = unPinnedReviews.size();
+		reviews.addAll(unPinnedReviews.subList(0,needToAdd));
 		return reviews;
 	}
 	
