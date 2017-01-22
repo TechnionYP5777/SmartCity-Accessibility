@@ -1,6 +1,7 @@
 package smartcity.accessibility.database;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -46,7 +47,7 @@ public class LocationManagerTest {
 	}
 	
 	@Test
-	public void getReviewByUserAndLocationsyncronizedTest() throws InterruptedException{
+	public void getLocationsyncronizedTest() throws InterruptedException{
 		LatLng k = new LatLng(20,20);
 		Location L = new Location(k,Location.LocationTypes.Coordinate,Location.LocationSubTypes.Bar);
 		Review r1 = new Review(L, 5, "secondTestLocation1","assaf");
@@ -59,4 +60,27 @@ public class LocationManagerTest {
 		assert(newLoc.getReviews().get(0).getUser().equals("assaf"));
 	}
 	
+	@Test
+	public void getLocationbackground() throws InterruptedException{
+		LatLng k = new LatLng(20,20);
+		Location L = new Location(k,Location.LocationTypes.Coordinate,Location.LocationSubTypes.Bar);
+		Review r1 = new Review(L, 5, "secondTestLocation1","assaf");
+		Review r2 = new Review(L, 5, "secondTestLocation1","artur");
+		ReviewManager.uploadReview(r1);
+		Thread.sleep(7000);
+		ReviewManager.uploadReview(r2);
+		Thread.sleep(7000);
+		ArrayList<Review> pinned = new ArrayList<Review>();
+		LocationManager.getLocation(k,new LocationListCallback() {
+			
+			@Override
+			public void done(List<Location> ls) {
+				for(Location l:ls){
+					pinned.addAll(l.getReviews());
+				}
+			}
+		});
+		Thread.sleep(7000);
+		assert(pinned.size()==2);
+	}
 }
