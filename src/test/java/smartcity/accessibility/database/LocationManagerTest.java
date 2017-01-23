@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.parse4j.ParseException;
 import org.parse4j.ParseObject;
+import org.parse4j.ParseUser;
 import org.parse4j.callback.GetCallback;
 import org.parse4j.callback.SaveCallback;
 
@@ -21,6 +22,7 @@ public class LocationManagerTest {
 	
 	@BeforeClass
 	public static void init(){
+		ParseUser.currentUser = new ParseUser();
 		DatabaseManager.initialize();
 	}
 	

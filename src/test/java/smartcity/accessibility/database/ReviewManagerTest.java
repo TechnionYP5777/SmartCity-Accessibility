@@ -42,6 +42,7 @@ public class ReviewManagerTest {
 	
 	@BeforeClass
 	public static void init(){
+		ParseUser.currentUser = new ParseUser();
 		DatabaseManager.initialize();
 	}
 	
