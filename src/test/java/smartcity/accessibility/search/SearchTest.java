@@ -1,11 +1,10 @@
 package smartcity.accessibility.search;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
@@ -48,7 +47,6 @@ public class SearchTest{
 		 try {
 			Thread.sleep(300000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
      }
@@ -85,7 +83,7 @@ public class SearchTest{
 	        s1.waitOnSearch();
 	        
 	        if(!sqr1.getLocations().isEmpty()){
-		        LatLng position1 = sqr1.getLocations().get(0).getCoordinates();//.getGeometry().getLocation();  
+		        sqr1.getLocations().get(0).getCoordinates();//.getGeometry().getLocation();  
 		        
 	        }else{
 	        	fail();
