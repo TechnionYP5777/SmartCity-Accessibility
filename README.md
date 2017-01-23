@@ -1,9 +1,7 @@
 # SmartCity-Accessibility
 ## Development Status
 
-![](http://163.172.171.65:8080/buildStatus/icon?job=SmartCity-Accessibility)
-![](http://163.172.171.65:8082/jacoco/coverage?job=http://163.172.171.65:8080/job/SmartCity-Accessibility/)
-[![codebeat badge](https://codebeat.co/badges/979d2a8e-b24b-466d-82e1-3d069d972603)](https://codebeat.co/projects/github-com-technionyp5777-smartcity-accessibility)
+### Jenkins down until next sprint
 
 ## The Project
 
