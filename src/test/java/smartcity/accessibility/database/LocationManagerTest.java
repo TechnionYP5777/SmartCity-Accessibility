@@ -13,10 +13,12 @@ import org.parse4j.callback.SaveCallback;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.UserImpl;
+import smartcity.accessibility.socialnetwork.User.Privilege;
 
 public class LocationManagerTest {
 	
@@ -86,4 +88,50 @@ public class LocationManagerTest {
 		assert(pinned.size()==2);
 	}
 
+	@Test
+	public void updateLocationTest() throws InterruptedException, ParseException{
+		LatLng k = new LatLng(42,42);
+		Location L = new Location(k);
+		UserImpl u2 = new UserImpl("arturL", "132456", Privilege.Admin);
+		Review r1 = new Review(L, 5, "forthtestL1","assafL");
+		Review r2 = new Review(L, 5, "forthtesLt2","arturL");
+		Review r3 = new Review(L, 5, "forthtestL3","userrrrL");
+		L.addReview(r1);
+		L.addReview(r2);
+		L.addReview(r3);
+		Thread.sleep(10000);
+		try {
+			r2.pin(u2);
+		} catch (UnauthorizedAccessException e) {
+		}
+		LocationManager.updateLocation(L);
+		Thread.sleep(15000);
+		ArrayList<Review> pinned = new ArrayList<Review>();
+		GetCallback<ParseObject> g = new GetCallback<ParseObject>() {
+			
+			@Override
+			public void done(ParseObject arg0, ParseException arg1) {
+				if(arg0!=null){
+					pinned.add(new Review(L, arg0.getInt("rating"),arg0.getString("comment"), arg0.getString("user")));
+					if( arg0.getInt("pined")==1){
+						try {
+							pinned.get(0).pin(u2);
+						} catch (UnauthorizedAccessException e) {
+						}
+					}
+				}				
+			}
+		};
+
+		ReviewManager.getReviewByUserAndLocation(u2,L,g);
+		Thread.sleep(6000);
+		if(pinned.isEmpty()){
+			System.out.println("here2");
+			assert(false);
+		}
+		if(!pinned.get(0).isPinned()){
+			System.out.println("here3");
+			assert(false);
+		}
+	}
 }
