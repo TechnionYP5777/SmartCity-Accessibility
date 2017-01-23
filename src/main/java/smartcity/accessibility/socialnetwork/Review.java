@@ -11,7 +11,8 @@ import smartcity.accessibility.socialnetwork.User.Privilege;
 
 /**
  * 
- * @author Koral Chapnik This class represents a review of some location
+ * @author Koral Chapnik 
+ * This class represents a review of some location
  */
 public class Review {
 
@@ -34,11 +35,6 @@ public class Review {
 
 	/**
 	 * implemented for the DB functionality
-	 * 
-	 * @param l
-	 * @param r
-	 * @param c
-	 * @param u
 	 */
 	public Review(Location l, int r, String c, String u) {
 		this.location = l;
@@ -50,11 +46,6 @@ public class Review {
 
 	/**
 	 * implemented for the DB functionality
-	 * 
-	 * @param l
-	 * @param r
-	 * @param c
-	 * @param u
 	 */
 	public Review(String l, int r, String c, String u) {
 		this.locationID = l;
@@ -79,19 +70,38 @@ public class Review {
 	public String getLocationID() {
 		return this.locationID;
 	}
+	
+	
 
+	/**
+	 * This method pins the review.
+	 * Only admin is allowed to use it
+	 * @param ¢ - the user who wants to pin the review
+	 * @throws UnauthorizedAccessException - if the user is not an admin
+	 */
 	public void pin(User ¢) throws UnauthorizedAccessException {
+		checkPermissions(¢);
+		this.isPinned = true;
+	}
+	
+	/**
+	 * This method pins the review.
+	 * Only admin is allowed to use it
+	 * @param ¢ - the user who wants to pin the review
+	 * @throws UnauthorizedAccessException - if the user is not an admin
+	 */
+	public void unPin(User ¢) throws UnauthorizedAccessException {
+		checkPermissions(¢);
+		this.isPinned = false;
+	}
+
+	private void checkPermissions(User ¢) throws UnauthorizedAccessException {
 		if (!isAccessAllowed(¢))
 			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
-		this.isPinned = true;
 	}
 
 	/**
-	 * implemented for the DB, hence only admin can preform
-	 * 
-	 * @param u
-	 * @param l
-	 * @throws UnauthorizedAccessException
+	 * implemented for the DB, hence only administrator can performs
 	 */
 	public void locationSet(User u, Location l) throws UnauthorizedAccessException {
 		if (!isAccessAllowed(u))
@@ -101,12 +111,6 @@ public class Review {
 
 	private boolean isAccessAllowed(User ¢) {
 		return Privilege.pinPrivilegeLevel(¢);
-	}
-
-	public void unPin(User ¢) throws UnauthorizedAccessException {
-		if (!isAccessAllowed(¢))
-			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
-		this.isPinned = false;
 	}
 
 	public boolean isPinned() {

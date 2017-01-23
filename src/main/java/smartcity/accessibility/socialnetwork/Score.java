@@ -2,6 +2,8 @@ package smartcity.accessibility.socialnetwork;
 
 /**
  * @author Koral Chapnik
+ * This class represents a score given by the social network's users to some location
+ * The more low the score is - the less accessible the location is
  */
 public class Score {
 	private int score;

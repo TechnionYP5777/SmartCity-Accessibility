@@ -19,8 +19,18 @@ import smartcity.accessibility.mapmanagement.Location;
  * @author Koral Chapnik
  */
 public class NearbyPlacesSearch {
-
-	public static void findNearbyPlaces(MapView v, Location initLocation, double radius, List<String> kindsOfLocations, LocationListCallback c) {
+	/**
+	 * This method returns the nearby places according to the following parameters:
+	 * @param v - the mapView
+	 * @param initLocation - the location which will be the center of our search
+	 * @param radius - the radius in meters we want to search by
+	 * @param kindsOfLocations - which kinds of nearby places we want to search ? 
+	 * 		  for example cafe, restaurant, pub etc
+	 * @param c - a callback which gets a list of nearby places and does a desired
+	 * 			  operation with it in the "done" method
+	 */
+	public static void findNearbyPlaces(MapView v, Location initLocation, double radius, 
+			List<String> kindsOfLocations, LocationListCallback c) {
 		Map map = v.getMap();
 		LatLng l = initLocation.getCoordinates();
 		PlaceSearchRequest request = new PlaceSearchRequest();

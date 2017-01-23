@@ -31,8 +31,10 @@ public class BestReviews {
 	}
 	
 	/**
-	 * @return the n reviews with the highest rating.
-	 * if there are pinned reviews, then it includes them in the list.
+	 * @return a list containing the following listed by priority such that
+	 * 		   the list's size will be n :
+	 * 		   1. pinned reviews
+	 * 		   2. most rated unPinned reviews
 	 */
 	public List<Review> getMostRated() {
 		List<Review> $ = l.getPinnedReviews();
