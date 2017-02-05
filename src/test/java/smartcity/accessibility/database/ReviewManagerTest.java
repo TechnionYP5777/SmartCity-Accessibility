@@ -45,14 +45,12 @@ public class ReviewManagerTest {
 	public void getReviewByUserAndLocationTest() throws InterruptedException {
 		LatLng k = new LatLng(20, 20);
 		Location L = new Location(k, Location.LocationTypes.Coordinate, Location.LocationSubTypes.Bar);
-		Review r1 = new Review(L, 5, "secondTest1", "assaf");
-		Review r2 = new Review(L, 5, "secondTest2", "artur");
+		Review r1 = new Review(L, 5, "secondTest1", "assaf"), r2 = new Review(L, 5, "secondTest2", "artur");
 		ReviewManager.uploadReview(r1);
 		Thread.sleep(7000);
 		ReviewManager.uploadReview(r2);
 		Thread.sleep(7000);
-		UserImpl u1 = new UserImpl("assaf", "132456", null);
-		UserImpl u2 = new UserImpl("artur", "132456", null);
+		UserImpl u1 = new UserImpl("assaf", "132456", null), u2 = new UserImpl("artur", "132456", null);
 		ArrayList<Review> pinned = new ArrayList<Review>();
 		GetCallback<ParseObject> g = new GetCallback<ParseObject>() {
 
@@ -72,8 +70,7 @@ public class ReviewManagerTest {
 	public void deleteReviewTest() throws InterruptedException {
 		LatLng k = new LatLng(21, 20);
 		Location L = new Location(k);
-		Review r1 = new Review(L, 5, "theardtest1", "assaf");
-		Review r2 = new Review(L, 5, "theardtest2", "artur");
+		Review r1 = new Review(L, 5, "theardtest1", "assaf"), r2 = new Review(L, 5, "theardtest2", "artur");
 		ReviewManager.uploadReview(r1);
 		Thread.sleep(6000);
 		ReviewManager.deleteReview(r1);
@@ -89,8 +86,7 @@ public class ReviewManagerTest {
 					pinned.add(new Review(L, arg0.getInt("rating"), arg0.getString("comment"), arg0.getString("user")));
 			}
 		};
-		UserImpl u1 = new UserImpl("assaf", "132456", null);
-		ReviewManager.getReviewByUserAndLocation(u1, L, g);
+		ReviewManager.getReviewByUserAndLocation(new UserImpl("assaf", "132456", null), L, g);
 		Thread.sleep(9000);
 		if (!pinned.isEmpty())
 			assert (false);
@@ -108,12 +104,11 @@ public class ReviewManagerTest {
 	public void updateReviewTest() throws InterruptedException {
 		LatLng k = new LatLng(21, 21);
 		Location L = new Location(k);
-		UserImpl u1 = new UserImpl("assaf", "132456", Privilege.Admin);
-		UserImpl u2 = new UserImpl("artur", "132456", Privilege.Admin);
-		UserImpl u3 = new UserImpl("userrrr", "132456", Privilege.Admin);
-		Review r1 = new Review(L, 5, "forthtest1", "assaf");
-		Review r2 = new Review(L, 5, "forthtest2", "artur");
-		Review r3 = new Review(L, 5, "forthtest3", "userrrr");
+		UserImpl u1 = new UserImpl("assaf", "132456", Privilege.Admin),
+				u2 = new UserImpl("artur", "132456", Privilege.Admin),
+				u3 = new UserImpl("userrrr", "132456", Privilege.Admin);
+		Review r1 = new Review(L, 5, "forthtest1", "assaf"), r2 = new Review(L, 5, "forthtest2", "artur"),
+				r3 = new Review(L, 5, "forthtest3", "userrrr");
 		ReviewManager.uploadReview(r1);
 		Thread.sleep(6000);
 		ReviewManager.uploadReview(r2);

@@ -41,12 +41,12 @@ public class LocationManager {
 		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(), l.getCoordinates().getLng()));
 		m.put("subtype", (l.getLocationSubType() != null ? l.getLocationSubType() : Location.LocationSubTypes.Default) + "");
 		m.put("type", (l.getLocationType() != null ? l.getLocationType() : Location.LocationTypes.Coordinate) + "");
-		DatabaseManager.getObjectByFields("Location", m, (new GetCallback<ParseObject>() {
+		DatabaseManager.getObjectByFields("Location", m, new GetCallback<ParseObject>() {
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
 				o.done(arg1 == null && arg0 != null ? arg0 : null, null);
 			}
-		}));
+		});
 	}
 
 	/**
@@ -58,14 +58,10 @@ public class LocationManager {
 	 * @return
 	 */
 	private static double distanceBtween(LatLng source, LatLng destination) {
-		double lat1 = source.getLat();
-		double lat2 = destination.getLat();
-		double lon1 = source.getLng();
-		double lon2 = destination.getLng();
-		double dLat = Math.toRadians(lat2 - lat1);
-		double dLon = Math.toRadians(lon2 - lon1);
-		return 12732000 * Math.asin(Math.sqrt((Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2)
-				* Math.sin(dLon / 2) * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)))));
+		double $ = source.getLat(), lat2 = destination.getLat(), lon1 = source.getLng(), lon2 = destination.getLng(),
+				dLat = Math.toRadians(lat2 - $), dLon = Math.toRadians(lon2 - lon1);
+		return 12732000 * Math.asin(Math.sqrt(Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2)
+				* Math.cos(Math.toRadians($)) * Math.cos(Math.toRadians(lat2))));
 	}
 
 	/**
@@ -156,7 +152,7 @@ public class LocationManager {
 	public static Location getLocation(LatLng point, Location.LocationTypes t, Location.LocationSubTypes subtype) {
 		// StringBuilder mutex = new StringBuilder();
 		final AtomicInteger mutI = new AtomicInteger(0);
-		ArrayList<Review> reviews = new ArrayList<Review>();
+		ArrayList<Review> $ = new ArrayList<Review>();
 		Map<String, Object> values = new HashMap<String, Object>();
 		values.put("location", new ParseGeoPoint(point.getLat(), point.getLng()));
 		FindCallback<ParseObject> callBackR = new FindCallback<ParseObject>() {
@@ -164,7 +160,7 @@ public class LocationManager {
 			public void done(List<ParseObject> arg0, ParseException arg1) {
 				if (arg1 == null && arg0 != null)
 					for (ParseObject ¢ : arg0)
-						reviews.add(new Review(new Location(point, t, subtype), ¢.getInt("rating"),
+						$.add(new Review(new Location(point, t, subtype), ¢.getInt("rating"),
 								¢.getString("comment"), ¢.getString("user")));
 				synchronized (mutI) {
 					mutI.set(1);
@@ -181,7 +177,7 @@ public class LocationManager {
 				} catch (InterruptedException e) {
 				}
 		}
-		return new Location(point, t, subtype, reviews);
+		return new Location(point, t, subtype, $);
 	}
 
 	/**
@@ -194,9 +190,7 @@ public class LocationManager {
 	public static void getLocation(LatLng point, LocationListCallback c) {
 		ArrayList<Review> reviews = new ArrayList<Review>();
 		ArrayList<Location> ls = new ArrayList<Location>();
-		Map<String, Object> valuesR = new HashMap<String, Object>();
-		Map<String, Object> valuesL = new HashMap<String, Object>();
-
+		Map<String, Object> valuesR = new HashMap<String, Object>(), valuesL = new HashMap<String, Object>();
 		valuesL.put("coordinates", new ParseGeoPoint(point.getLat(), point.getLng()));
 		valuesR.put("location", new ParseGeoPoint(point.getLat(), point.getLng()));
 
@@ -223,7 +217,7 @@ public class LocationManager {
 			}
 		};
 
-		DatabaseManager.queryByFields("Review", valuesR, (new FindCallback<ParseObject>() {
+		DatabaseManager.queryByFields("Review", valuesR, new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
 				if (arg1 == null && arg0 != null)
@@ -240,7 +234,7 @@ public class LocationManager {
 					}
 				DatabaseManager.queryByFields("Location", valuesL, callBackL);
 			}
-		}));
+		});
 	}
 
 	/**
@@ -277,7 +271,7 @@ public class LocationManager {
 	 * @param l
 	 */
 	public static void updateLocation(Location l) {
-		checkLocationInDB(l, (new GetCallback<ParseObject>() {
+		checkLocationInDB(l, new GetCallback<ParseObject>() {
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
 				Map<String, Object> m = new HashMap<String, Object>();
@@ -294,7 +288,7 @@ public class LocationManager {
 						ReviewManager.updateReview(¢);
 				}
 			}
-		}));
+		});
 
 	}
 
@@ -303,7 +297,7 @@ public class LocationManager {
 	 */
 	public static List<Location> FilterToAllBellow(List<Location> totalLocation, int ReviewsTakenToAccount,
 			int accessibilityLevel) {
-		return totalLocation.stream().filter(p -> p.getRating(ReviewsTakenToAccount).getScore() < accessibilityLevel)
+		return totalLocation.stream().filter(λ -> λ.getRating(ReviewsTakenToAccount).getScore() < accessibilityLevel)
 				.collect(Collectors.toList());
 	}
 
@@ -312,7 +306,7 @@ public class LocationManager {
 	 */
 	public static List<Location> FilterToAllAbove(List<Location> totalLocation, int ReviewsTakenToAccount,
 			int accessibilityLevel) {
-		return totalLocation.stream().filter(p -> p.getRating(ReviewsTakenToAccount).getScore() >= accessibilityLevel)
+		return totalLocation.stream().filter(λ -> λ.getRating(ReviewsTakenToAccount).getScore() >= accessibilityLevel)
 				.collect(Collectors.toList());
 	}
 
@@ -327,7 +321,7 @@ public class LocationManager {
 		ArrayList<Location> ls = new ArrayList<Location>();
 		Map<String, Object> values = new HashMap<String, Object>();
 		values.put("location", new ParseGeoPoint(point.getLat(), point.getLng()));
-		DatabaseManager.queryByLocation("Location", point, radius, "coordinates", (new FindCallback<ParseObject>() {
+		DatabaseManager.queryByLocation("Location", point, radius, "coordinates", new FindCallback<ParseObject>() {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
 				if (arg0 != null)
@@ -336,7 +330,7 @@ public class LocationManager {
 								Location.stringToEnumSubTypes(¢.getString("subtype"))));
 				c.done(ls);
 			}
-		}));
+		});
 	}
 
 }

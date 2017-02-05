@@ -35,7 +35,7 @@ public class ReviewManager {
 		m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),
 				r.getLocation().getCoordinates().getLng()));
 
-		DatabaseManager.getObjectByFields("HiddenReview", m, (new GetCallback<ParseObject>() {
+		DatabaseManager.getObjectByFields("HiddenReview", m, new GetCallback<ParseObject>() {
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
 				if (arg0 != null)
@@ -48,7 +48,7 @@ public class ReviewManager {
 						}
 					});
 			}
-		}));
+		});
 	}
 
 	/**
@@ -79,14 +79,12 @@ public class ReviewManager {
 									public void done(ParseException arg0) {
 									}
 								});
-							else {
-								if (arg0 == null)
-									DatabaseManager.putValue("Review", m, new SaveCallback() {
-										@Override
-										public void done(ParseException arg0) {
-										}
-									});
-							}
+							else if (arg0 == null)
+								DatabaseManager.putValue("Review", m, new SaveCallback() {
+									@Override
+									public void done(ParseException arg0) {
+									}
+								});
 						}
 					});
 				} else
@@ -109,14 +107,12 @@ public class ReviewManager {
 														public void done(ParseException arg0) {
 														}
 													});
-												else {
-													if (arg0 == null)
-														DatabaseManager.putValue("Review", m, new SaveCallback() {
-															@Override
-															public void done(ParseException arg0) {
-															}
-														});
-												}
+												else if (arg0 == null)
+													DatabaseManager.putValue("Review", m, new SaveCallback() {
+														@Override
+														public void done(ParseException arg0) {
+														}
+													});
 											}
 										});
 									}
@@ -138,7 +134,7 @@ public class ReviewManager {
 	 * @param o
 	 */
 	public static void getReviewByUserAndLocation(User u, Location l, GetCallback<ParseObject> o) {
-		LocationManager.checkLocationInDB(l, (new GetCallback<ParseObject>() {
+		LocationManager.checkLocationInDB(l, new GetCallback<ParseObject>() {
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
 				if (arg0 == null)
@@ -155,7 +151,7 @@ public class ReviewManager {
 					});
 				}
 			}
-		}));
+		});
 
 	}
 
@@ -169,7 +165,7 @@ public class ReviewManager {
 		Map<String, Object> m = new HashMap<String, Object>();
 		m.put("user", r.getUser());
 
-		LocationManager.checkLocationInDB(r.getLocation(), (new GetCallback<ParseObject>() {
+		LocationManager.checkLocationInDB(r.getLocation(), new GetCallback<ParseObject>() {
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
 				m.put("locationID", arg0.getObjectId());
@@ -178,7 +174,7 @@ public class ReviewManager {
 					public void done(ParseObject arg0, ParseException arg1) {
 						if (arg1 != null || arg0 == null)
 							return;
-						DatabaseManager.deleteById("Review", (arg0.getObjectId() + ""));
+						DatabaseManager.deleteById("Review", arg0.getObjectId() + "");
 						m.put("location", arg0.getParseGeoPoint("location"));
 						m.put("rating", arg0.getInt("rating"));
 						m.put("comment", arg0.getString("comment"));
@@ -191,7 +187,7 @@ public class ReviewManager {
 					}
 				});
 			}
-		}));
+		});
 	}
 
 	/**
@@ -201,25 +197,23 @@ public class ReviewManager {
 	 * @param r
 	 */
 	public static void updateReview(Review r) {
-		checkReviewInDB(r, (new GetCallback<ParseObject>() {
+		checkReviewInDB(r, new GetCallback<ParseObject>() {
 			@Override
 			public void done(ParseObject arg0, ParseException arg1) {
 				if (arg0 == null)
 					uploadReview(r);
-				else {
-					if (!"HiddenReview".equals(arg0.getClassName())) {
-						Map<String, Object> m = new HashMap<String, Object>();
-						m.put("user", r.getUser());
-						m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),
-								r.getLocation().getCoordinates().getLng()));
-						m.put("rating", r.getRating().getScore());
-						m.put("comment", r.getContent());
-						m.put("pined", r.isPinned() ? 1 : 0);
-						DatabaseManager.update("Review", arg0.getObjectId(), m);
-					}
+				else if (!"HiddenReview".equals(arg0.getClassName())) {
+					Map<String, Object> m = new HashMap<String, Object>();
+					m.put("user", r.getUser());
+					m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),
+							r.getLocation().getCoordinates().getLng()));
+					m.put("rating", r.getRating().getScore());
+					m.put("comment", r.getContent());
+					m.put("pined", r.isPinned() ? 1 : 0);
+					DatabaseManager.update("Review", arg0.getObjectId(), m);
 				}
 			}
-		}));
+		});
 	}
 
 }

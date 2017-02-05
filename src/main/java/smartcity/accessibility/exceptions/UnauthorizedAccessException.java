@@ -1,6 +1,3 @@
-/**
- * 
- */
 package smartcity.accessibility.exceptions;
 
 import smartcity.accessibility.socialnetwork.User.Privilege;

@@ -34,8 +34,8 @@ public class SearchQuery {
 
 		private static SearchStage[] allValues = values();
 
-		public static SearchStage fromOrdinal(int i) {
-			return allValues[i];
+		public static SearchStage fromOrdinal(int ¢) {
+			return allValues[¢];
 		}
 	}
 
@@ -62,8 +62,8 @@ public class SearchQuery {
 		return new SearchQuery(Boolean.toString(false) + isThisAdressSpliter + Type);
 	}
 
-	protected void SetSearchStatus(SearchStage s) {
-		searchStatus.set(s.ordinal());
+	protected void SetSearchStatus(SearchStage ¢) {
+		searchStatus.set(¢.ordinal());
 	}
 
 	public synchronized void waitOnSearch() throws InterruptedException {
@@ -95,23 +95,23 @@ public class SearchQuery {
 				new LocationListCallback() {
 
 					@Override
-					public void done(List<Location> ls) {
-						places = ls;
+					public void done(List<Location> ¢) {
+						places = ¢;
 						SetSearchStatus(SearchStage.Done);
 						wakeTheWaiters();
 					}
 				});
 		try {
 			waitOnSearch();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		} catch (InterruptedException ¢) {
+			¢.printStackTrace();
 		}
 		return new SearchQueryResult(places);
 	}
 
 	private SearchQueryResult adressSearch(GeocoderRequest r, MapView v) {
 		SetSearchStatus(SearchStage.Running);
-		List<Location> results = new ArrayList<Location>();
+		List<Location> $ = new ArrayList<Location>();
 		Geocoder g = v.getServices().getGeocoder();
 		g.geocode(r, new GeocoderCallback(v.getMap()) {
 			@Override
@@ -125,20 +125,20 @@ public class SearchQuery {
 				LatLng l = rs[0].getGeometry().getLocation();
 				Location f = new Location(l);
 				f.setName(rs[0].getFormattedAddress());
-				results.add(f);
+				$.add(f);
 				SetSearchStatus(SearchStage.Done);
 				wakeTheWaiters();
 			}
 
 		});
-		return new SearchQueryResult(results);
+		return new SearchQueryResult($);
 	}
 
 	@SuppressWarnings("deprecation")
-	public SearchQueryResult SearchByAddress(MapView v) {
-		GeocoderRequest request = new GeocoderRequest(v.getMap());
-		request.setAddress(queryString);
-		return Search(request, v);
+	public SearchQueryResult SearchByAddress(MapView ¢) {
+		GeocoderRequest $ = new GeocoderRequest(¢.getMap());
+		$.setAddress(queryString);
+		return Search($, ¢);
 
 	}
 
@@ -147,9 +147,9 @@ public class SearchQuery {
 	 */
 	@SuppressWarnings("deprecation")
 	public SearchQueryResult searchByCoordinates(MapView v, LatLng c) {
-		GeocoderRequest request = new GeocoderRequest(v.getMap());
-		request.setLocation(c);
-		return Search(request, v);
+		GeocoderRequest $ = new GeocoderRequest(v.getMap());
+		$.setLocation(c);
+		return Search($, v);
 	}
 
 	public SearchQueryResult searchByType(Location initLocation, double radius) {
@@ -161,15 +161,15 @@ public class SearchQuery {
 		return Boolean.toString(isAdress) + isThisAdressSpliter + queryString;
 	}
 
-	public static SearchQuery toQuery(String s) {
-		return new SearchQuery(s);
+	public static SearchQuery toQuery(String ¢) {
+		return new SearchQuery(¢);
 	}
 
 	public static String QueriesList2String(List<SearchQuery> qs) {
-		List<String> sl = new ArrayList<String>();
-		for (SearchQuery q : qs)
-			sl.add((q + ""));
-		return sl + "";
+		List<String> $ = new ArrayList<String>();
+		for (SearchQuery ¢ : qs)
+			$.add(¢ + "");
+		return $ + "";
 	}
 
 	public static List<SearchQuery> String2QueriesList(String favouriteQueries) {
@@ -179,8 +179,8 @@ public class SearchQuery {
 		if (p1.isEmpty())
 			return $;
 		split = p1.split(", ");
-		for (String s : split)
-			$.add(SearchQuery.toQuery(s));
+		for (String ¢ : split)
+			$.add(SearchQuery.toQuery(¢));
 		return $;
 	}
 

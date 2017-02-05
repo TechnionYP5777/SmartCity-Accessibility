@@ -38,8 +38,8 @@ public class ReviewComment {
 
 	static int summarizeComments(List<ReviewComment> cs) {
 		int $ = 0;
-		for (ReviewComment rc : cs)
-			$ += rc.getRating();
+		for (ReviewComment ¢ : cs)
+			$ += ¢.getRating();
 		return $;
 	}
 

@@ -27,37 +27,37 @@ public abstract class UserManager {
 		if (ParseUser.currentUser != null)
 			try {
 				ParseUser.currentUser.logout();
-			} catch (ParseException e) {
-				e.printStackTrace();
+			} catch (ParseException ¢) {
+				¢.printStackTrace();
 			}
 	}
 
 	private static boolean UserNameExists(String name) throws ParseException {
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
 		query.whereEqualTo("username", name);
-		List<ParseObject> pol = query.find();
-		return pol != null && !pol.isEmpty();
+		List<ParseObject> $ = query.find();
+		return $ != null && !$.isEmpty();
 	}
 
 	/*
 	 * Users should be created only through here, as this shows if they can be
 	 * added to the database
 	 */
-	public static User SignUpUser(String name, String password, User.Privilege p) throws UsernameAlreadyTakenException {
+	public static User SignUpUser(String $, String password, User.Privilege p) throws UsernameAlreadyTakenException {
 		try {
-			if (UserNameExists(name))
+			if (UserNameExists($))
 				throw new UsernameAlreadyTakenException();
 		} catch (ParseException e1) {
 		}
 		ParseUser user = new ParseUser();
-		user.setUsername(name);
+		user.setUsername($);
 		user.setPassword(password);
 
 		List<String> fqDummy = new ArrayList<String>();
 
 		user.put(PrivilidgeLevel, Integer.toString(p.ordinal()));
 		String dummy = fqDummy + "";
-		user.put(FavouriteQueriesField, (dummy));
+		user.put(FavouriteQueriesField, dummy);
 
 		try {
 			user.signUp();
@@ -68,10 +68,10 @@ public abstract class UserManager {
 		try {
 			user.logout();
 			logoutCurrUser();
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (ParseException ¢) {
+			¢.printStackTrace();
 		}
-		return (new UserImpl(name, password, p, SearchQuery.EmptyList));
+		return (new UserImpl($, password, p, SearchQuery.EmptyList));
 	}
 
 	public static User LoginUser(String name, String password) {
@@ -90,8 +90,8 @@ public abstract class UserManager {
 		try {
 			pu.logout();
 			logoutCurrUser();
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (ParseException ¢) {
+			¢.printStackTrace();
 		}
 		return $;
 	}
@@ -104,8 +104,8 @@ public abstract class UserManager {
 			pu = ParseUser.login(u.getName(), u.getPassword());
 			pu.delete();
 			logoutCurrUser();
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (ParseException ¢) {
+			¢.printStackTrace();
 		}
 	}
 
@@ -135,13 +135,13 @@ public abstract class UserManager {
 		}
 	}
 
-	public static void updateAllUserInformation(User u) throws UserNotFoundException {
-		if (u.getPrivilege() == User.Privilege.DefaultUser)
+	public static void updateAllUserInformation(User ¢) throws UserNotFoundException {
+		if (¢.getPrivilege() == User.Privilege.DefaultUser)
 			return;
-		if (!u.getName().equals(u.getLocalName()))
-			updateUserName(u, u.getLocalName());
+		if (!¢.getName().equals(¢.getLocalName()))
+			updateUserName(¢, ¢.getLocalName());
 
-		updatefavouriteQueries(u, u.getFavouriteSearchQueries());
+		updatefavouriteQueries(¢, ¢.getFavouriteSearchQueries());
 	}
 
 }

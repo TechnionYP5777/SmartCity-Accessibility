@@ -50,8 +50,8 @@ public class LocationManagerTest {
 	public void getLocationsyncronizedTest() throws InterruptedException {
 		LatLng k = new LatLng(40, 40);
 		Location L = new Location(k, Location.LocationTypes.Coordinate, Location.LocationSubTypes.Bar);
-		Review r1 = new Review(L, 5, "secondTestLocation1", "assafL");
-		Review r2 = new Review(L, 5, "secondTestLocation1", "arturL");
+		Review r1 = new Review(L, 5, "secondTestLocation1", "assafL"),
+				r2 = new Review(L, 5, "secondTestLocation1", "arturL");
 		ReviewManager.uploadReview(r1);
 		Thread.sleep(10000);
 		ReviewManager.uploadReview(r2);
@@ -64,8 +64,8 @@ public class LocationManagerTest {
 	public void getLocationbackground() throws InterruptedException {
 		LatLng k = new LatLng(41, 40);
 		Location L = new Location(k, Location.LocationTypes.Coordinate, Location.LocationSubTypes.Bar);
-		Review r1 = new Review(L, 5, "secondTestLocation2", "assafL");
-		Review r2 = new Review(L, 5, "secondTestLocation2", "arturL");
+		Review r1 = new Review(L, 5, "secondTestLocation2", "assafL"),
+				r2 = new Review(L, 5, "secondTestLocation2", "arturL");
 		ReviewManager.uploadReview(r1);
 		Thread.sleep(7000);
 		ReviewManager.uploadReview(r2);
@@ -88,9 +88,8 @@ public class LocationManagerTest {
 		LatLng k = new LatLng(42, 42);
 		Location L = new Location(k);
 		UserImpl u2 = new UserImpl("arturL", "132456", Privilege.Admin);
-		Review r1 = new Review(L, 5, "forthtestL1", "assafL");
-		Review r2 = new Review(L, 5, "forthtesLt2", "arturL");
-		Review r3 = new Review(L, 5, "forthtestL3", "userrrrL");
+		Review r1 = new Review(L, 5, "forthtestL1", "assafL"), r2 = new Review(L, 5, "forthtesLt2", "arturL"),
+				r3 = new Review(L, 5, "forthtestL3", "userrrrL");
 		L.addReview(r1);
 		L.addReview(r2);
 		L.addReview(r3);

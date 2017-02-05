@@ -66,9 +66,6 @@ public abstract class JxMapsFunctionality {
 
 	public static class ExtendedMapView extends MapView {
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 		List<Marker> MarkerList = new ArrayList<Marker>();
 		@SuppressWarnings("unused")
@@ -98,8 +95,8 @@ public abstract class JxMapsFunctionality {
 			// Save file
 		}
 
-		public void setOptionsWindow(OptionsWindow w) {
-			optionsWindow = w;
+		public void setOptionsWindow(OptionsWindow ¢) {
+			optionsWindow = ¢;
 		}
 
 		@Override
@@ -109,8 +106,8 @@ public abstract class JxMapsFunctionality {
 
 	}
 
-	public static void addOptionsMenu(OptionsWindow w) {
-		((ExtendedMapView) mv).setOptionsWindow(w);
+	public static void addOptionsMenu(OptionsWindow ¢) {
+		((ExtendedMapView) mv).setOptionsWindow(¢);
 	}
 
 	public static OptionsWindow createOptionsBar() {
@@ -141,8 +138,8 @@ public abstract class JxMapsFunctionality {
 						SearchQueryResult sqr1 = sq.SearchByAddress(mv);
 						try {
 							sq.waitOnSearch();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
+						} catch (InterruptedException ¢) {
+							¢.printStackTrace();
 						}
 						if (!sqr1.gotResults())
 							JOptionPane.showMessageDialog(Application.frame, "no results were found",
@@ -196,18 +193,18 @@ public abstract class JxMapsFunctionality {
 	}
 
 	private static Location getStreetLocationByAdress(String adress) {
-		String[] Adress = adress.split(" ");
-		String[] StreetRepresenatation = Arrays.copyOfRange(Adress, 0, Math.max(0, Adress.length - 1));
+		String[] Adress = adress.split(" "),
+				StreetRepresenatation = Arrays.copyOfRange(Adress, 0, Math.max(0, Adress.length - 1));
 		String StreetAdress = String.join(" ", StreetRepresenatation);
 		SearchQuery sq = SearchQuery.adressSearch(StreetAdress);
-		SearchQueryResult sqr1 = sq.SearchByAddress(mv);
+		SearchQueryResult $ = sq.SearchByAddress(mv);
 		try {
 			sq.waitOnSearch();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		} catch (InterruptedException ¢) {
+			¢.printStackTrace();
 		}
-		if (sqr1.gotResults())
-			return LocationManager.getLocation(sqr1.get(0).getCoordinates(), Location.LocationTypes.Street,
+		if ($.gotResults())
+			return LocationManager.getLocation($.get(0).getCoordinates(), Location.LocationTypes.Street,
 					Location.LocationSubTypes.Default);
 		JOptionPane.showMessageDialog(Application.frame, "no results were found", "search found nothing :(",
 				JOptionPane.INFORMATION_MESSAGE);
@@ -217,9 +214,9 @@ public abstract class JxMapsFunctionality {
 	}
 
 	public static ExtendedMapView getMapView() {
-		MapViewOptions options = new MapViewOptions();
-		options.importPlaces();
-		return mv != null ? mv : (mv = new ExtendedMapView(options));
+		MapViewOptions $ = new MapViewOptions();
+		$.importPlaces();
+		return mv != null ? mv : (mv = new ExtendedMapView($));
 	}
 
 	public static void DestroyMapView() {
@@ -228,14 +225,14 @@ public abstract class JxMapsFunctionality {
 	}
 
 	public static void ClearMarkers(ExtendedMapView mv) {
-		for (Marker m : mv.MarkerList)
-			m.remove();
+		for (Marker ¢ : mv.MarkerList)
+			¢.remove();
 		JxMapsConvertor.removePrevPolyline();
 	}
 
-	public static MapView getMapView(MapViewOptions o) {
-		o.importPlaces();
-		return mv = new ExtendedMapView(o);
+	public static MapView getMapView(MapViewOptions ¢) {
+		¢.importPlaces();
+		return mv = new ExtendedMapView(¢);
 	}
 
 	public static void putMarker(ExtendedMapView mv, LatLng l, String name) {
@@ -347,17 +344,16 @@ public abstract class JxMapsFunctionality {
 		Application.currLocation.setPosition(l);
 
 		NearbyPlacesSearch.findNearbyPlaces(mv, new Location(l), 1000, Arrays.asList(LocationSubTypes.values()).stream()
-				.map(object -> object + "").collect(Collectors.toList()), new LocationListCallback() {
+				.map(λ -> λ + "").collect(Collectors.toList()), new LocationListCallback() {
 					@Override
 					public void done(List<Location> ls) {
 						ClearMarkers(mv);
 
-						for (Location loc : ls) {
-							System.out.println(loc.getLocationSubType());
-							System.out.println(loc.getCoordinates());
-							if (loc.getLocationType() != null && loc.getLocationType().equals(LocationTypes.Street))
-								continue;
-							JxMapsFunctionality.putExtendedMarker(mv, loc);
+						for (Location ¢ : ls) {
+							System.out.println(¢.getLocationSubType());
+							System.out.println(¢.getCoordinates());
+							if (¢.getLocationType() == null || !¢.getLocationType().equals(LocationTypes.Street))
+								JxMapsFunctionality.putExtendedMarker(mv, ¢);
 						}
 						map.setCenter(l);
 						map.setZoom(17.0);
@@ -366,9 +362,9 @@ public abstract class JxMapsFunctionality {
 							@Override
 							public void done(List<Location> sl) {
 								if (sl != null)
-									for (Location loc : sl)
-										if (!ls.contains(loc) && !loc.getCoordinates().equals(l))
-											JxMapsFunctionality.putExtendedMarker(mv, loc);
+									for (Location ¢ : sl)
+										if (!ls.contains(¢) && !¢.getCoordinates().equals(l))
+											JxMapsFunctionality.putExtendedMarker(mv, ¢);
 							}
 						}, 10);
 					}
@@ -382,8 +378,8 @@ public abstract class JxMapsFunctionality {
 		LocationManager.getLocation(l, new LocationListCallback() {
 
 			@Override
-			public void done(List<Location> ls) {
-				new LocationFrame(!ls.isEmpty() ? ls.get(0) : new Location(l));
+			public void done(List<Location> ¢) {
+				new LocationFrame(!¢.isEmpty() ? ¢.get(0) : new Location(l));
 				wheel.dispose();
 			}
 		});

@@ -48,10 +48,10 @@ public abstract class JxMapsConvertor {
 	}
 
 	public static void addStartLine(MapView v, LatLng src, LatLng dst) {
-		prevStartLine = addLine(v, (new LatLng[] { src, dst }), colorOfExternalLines, thicknessOfLine);
+		prevStartLine = addLine(v, new LatLng[] { src, dst }, colorOfExternalLines, thicknessOfLine);
 	}
 
 	public static void addEndLine(MapView v, LatLng src, LatLng dst) {
-		prevEndLine = addLine(v, (new LatLng[] { src, dst }), colorOfExternalLines, thicknessOfLine);
+		prevEndLine = addLine(v, new LatLng[] { src, dst }, colorOfExternalLines, thicknessOfLine);
 	}
 }

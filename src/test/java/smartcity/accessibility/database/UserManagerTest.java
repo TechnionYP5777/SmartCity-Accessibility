@@ -57,7 +57,7 @@ public class UserManagerTest {
 			fail();
 		}
 		User a = UserManager.LoginUser(UserName, "admin");
-		assertNotNull(a);
+		assert a != null;
 		assertEquals(UserName, a.getName());
 		assertEquals("admin", a.getPassword());
 		assertEquals(new ArrayList<SearchQuery>(), a.getFavouriteSearchQueries());
@@ -69,7 +69,7 @@ public class UserManagerTest {
 		}
 		
 		User b = UserManager.LoginUser("b"+UserName, "admin");
-		assertNotNull(b);
+		assert b != null;
 		
 		List<SearchQuery> l = new ArrayList<SearchQuery>();
 		l.add(SearchQuery.TypeSearch("cafe"));

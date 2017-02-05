@@ -35,18 +35,18 @@ public class DeleteReviewsTest {
 	}
 
 	private void nothingHasChangedCheck() {
-		assertTrue(location.getReviews().contains(review));
-		assertTrue(location.getReviews().contains(review2));
-		assertTrue(location.getReviews().size() == 2);
+		assert location.getReviews().contains(review);
+		assert location.getReviews().contains(review2);
+		assert location.getReviews().size() == 2;
 	}
 
 	@Test(expected = UnauthorizedAccessException.class)
 	public void regularUserCantDelete() throws UnauthorizedAccessException {
 		try {
 			location.deleteReview(user, review2);
-		} catch (UnauthorizedAccessException e) {
+		} catch (UnauthorizedAccessException ¢) {
 			nothingHasChangedCheck();
-			throw e;
+			throw ¢;
 		}
 	}
 
@@ -54,9 +54,9 @@ public class DeleteReviewsTest {
 	public void defaultUserCantDelete() throws UnauthorizedAccessException {
 		try {
 			location.deleteReview(defaultuser, review);
-		} catch (UnauthorizedAccessException e) {
+		} catch (UnauthorizedAccessException ¢) {
 			nothingHasChangedCheck();
-			throw e;
+			throw ¢;
 		}
 	}
 
@@ -64,24 +64,20 @@ public class DeleteReviewsTest {
 	public void adminCanDelete() throws UnauthorizedAccessException {
 		location.deleteReview(admin, review);
 
-		// Review has been deleted
-		assertFalse(location.getReviews().contains(review));
+		assert !location.getReviews().contains(review);
 
-		// No other review has be affected
-		assertTrue(location.getReviews().contains(review2));
-		assertTrue(location.getReviews().size() == 1);
+		assert location.getReviews().contains(review2);
+		assert location.getReviews().size() == 1;
 	}
 
 	@Test
 	public void userCanOwnedDelete() throws UnauthorizedAccessException {
 		location.deleteReview(user, review);
 
-		// Review has been deleted
-		assertFalse(location.getReviews().contains(review));
+		assert !location.getReviews().contains(review);
 
-		// No other review has be affected
-		assertTrue(location.getReviews().contains(review2));
-		assertTrue(location.getReviews().size() == 1);
+		assert location.getReviews().contains(review2);
+		assert location.getReviews().size() == 1;
 	}
 
 }

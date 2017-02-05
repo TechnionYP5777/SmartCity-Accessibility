@@ -54,11 +54,11 @@ public class Location {
 	}
 
 	public List<Review> getPinnedReviews() {
-		return reviews.stream().filter(r -> r.isPinned()).collect(Collectors.toList());
+		return reviews.stream().filter(λ -> λ.isPinned()).collect(Collectors.toList());
 	}
 
 	public List<Review> getNotPinnedReviews() {
-		return reviews.stream().filter(r -> !r.isPinned()).collect(Collectors.toList());
+		return reviews.stream().filter(λ -> !λ.isPinned()).collect(Collectors.toList());
 	}
 
 	public Location() {
@@ -155,7 +155,7 @@ public class Location {
 	 * @throws ParseException
 	 */
 	public void addReview(User u, int rating, String review) throws ParseException {
-		actuallyAddReview((new Review(this, rating, review, u)));
+		actuallyAddReview(new Review(this, rating, review, u));
 	}
 
 	/**
@@ -294,12 +294,12 @@ public class Location {
 	 */
 	public static LocationSubTypes stringToEnumSubTypes(String ¢) {
 		switch (¢) {
-		case "Restaurant":
-			return LocationSubTypes.Restaurant;
-		case "Hotel":
-			return LocationSubTypes.Hotel;
 		case "Bar":
 			return LocationSubTypes.Bar;
+		case "Hotel":
+			return LocationSubTypes.Hotel;
+		case "Restaurant":
+			return LocationSubTypes.Restaurant;
 		}
 		return LocationSubTypes.Default; // default return
 	}

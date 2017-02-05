@@ -42,8 +42,7 @@ public class NavigationTest {
 
 	@Test
 	public void avoidOneSegement() throws CommunicationFailed {
-		Latlng from = new Latlng(31.768762, 34.632052);// abba ahimeir
-		Latlng to = new Latlng(31.770981, 34.620567);// HaYam HaTichon Blvd 1
+		Latlng from = new Latlng(31.768762, 34.632052), to = new Latlng(31.770981, 34.620567);
 		List<MapSegment> segmentsToAvoid = new ArrayList<MapSegment>();
 		segmentsToAvoid.add(Navigation.getMapSegmentOfLatLng(31.76935, 34.626793));// sd
 		Double[] shapePoints = Navigation.getRouteFromMapQuest(from, to, segmentsToAvoid).getShape().getShapePoints();
@@ -54,8 +53,7 @@ public class NavigationTest {
 
 	@Test
 	public void avoidTwoSegement() throws CommunicationFailed {
-		Latlng from = new Latlng(31.768762, 34.632052);// abba ahimeir
-		Latlng to = new Latlng(31.770981, 34.620567);// HaYam HaTichon Blvd 1
+		Latlng from = new Latlng(31.768762, 34.632052), to = new Latlng(31.770981, 34.620567);
 		List<MapSegment> segmentsToAvoid = new ArrayList<MapSegment>();
 		segmentsToAvoid.add(Navigation.getMapSegmentOfLatLng(31.76935, 34.626793));// sd
 																					// tel
@@ -69,8 +67,8 @@ public class NavigationTest {
 
 	@Test
 	public void displayMap() throws CommunicationFailed {
-		Location fromLocation = new Location(new LatLng(31.768762, 34.632052));
-		Location toLocation = new Location(new LatLng(31.770981, 34.620567));
+		Location fromLocation = new Location(new LatLng(31.768762, 34.632052)),
+				toLocation = new Location(new LatLng(31.770981, 34.620567));
 		LatLng[] shapePoints = Navigation.showRoute(fromLocation, toLocation, 0);
 		ExtendedMapView mapview = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady(mapview);

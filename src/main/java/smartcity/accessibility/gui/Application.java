@@ -42,8 +42,8 @@ public class Application {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException
-				| ClassNotFoundException e) {
-			e.printStackTrace();
+				| ClassNotFoundException ¢) {
+			¢.printStackTrace();
 		}
 
 		mapView = JxMapsFunctionality.getMapView();

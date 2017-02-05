@@ -60,10 +60,10 @@ public class DatabaseManagerTest {
 
 			m.put("test1", 65834);
 			DatabaseManager.putValue(testParseClass, m);
-		} catch (ParseException e) {
+		} catch (ParseException ¢) {
 			// failed to communicate with the server to create base for these
 			// tests
-			e.printStackTrace();
+			¢.printStackTrace();
 			Assume.assumeFalse(true);
 		}
 	}
@@ -75,8 +75,8 @@ public class DatabaseManagerTest {
 		test.put("test2", "is good");
 		try {
 			test.save();
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (ParseException ¢) {
+			¢.printStackTrace();
 			fail("could not save test object, means server connection failed");
 		}
 	}
@@ -120,8 +120,8 @@ public class DatabaseManagerTest {
 		ParseObject o = null;
 		try {
 			o = DatabaseManager.putValue(testParseClass, m);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (ParseException ¢) {
+			¢.printStackTrace();
 			fail("failed to put value to server");
 		}
 		assert o != null;

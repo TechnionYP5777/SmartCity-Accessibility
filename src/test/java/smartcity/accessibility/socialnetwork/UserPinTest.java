@@ -27,41 +27,33 @@ public class UserPinTest {
 		review = new Review(location, 5, "Nothing here", user);
 
 		location.addReview(review);
-		// Check successful add
-		assertTrue(location.getReviews().contains(review));
+		assert location.getReviews().contains(review);
 
-		// Nothing is pinned yet
-		assertTrue(location.getPinnedReviews().isEmpty());
+		assert location.getPinnedReviews().isEmpty();
 
 	}
 
 	@Test
 	public void testPinUnPin() throws UnauthorizedAccessException {
 		location.pinReview(admin, review);
-		// Review was pinned
-		assertTrue(location.getPinnedReviews().contains(review));
-		// Review was pinned only once
-		assertTrue(location.getPinnedReviews().size() == 1);
-		// Review was removed from regular reviews
-		assertTrue(location.getNotPinnedReviews().isEmpty());
+		assert location.getPinnedReviews().contains(review);
+		assert location.getPinnedReviews().size() == 1;
+		assert location.getNotPinnedReviews().isEmpty();
 
 		// Unpin review
 		location.unpinReview(admin, review);
-		// Review was un-pinned
-		assertTrue(location.getNotPinnedReviews().contains(review));
-		// Review was un-pinned only once
-		assertTrue(location.getNotPinnedReviews().size() == 1);
-		// Review was removed from regular reviews
-		assertTrue(location.getPinnedReviews().isEmpty());
+		assert location.getNotPinnedReviews().contains(review);
+		assert location.getNotPinnedReviews().size() == 1;
+		assert location.getPinnedReviews().isEmpty();
 	}
 
 	@Test(expected = UnauthorizedAccessException.class)
 	public void userCantPin() throws UnauthorizedAccessException {
 		try {
 			location.pinReview(user, review);
-		} catch (Exception e) {
+		} catch (Exception ¢) {
 			nothingHasChangedCheck();
-			throw e;
+			throw ¢;
 		}
 	}
 
@@ -69,15 +61,15 @@ public class UserPinTest {
 	public void defaultuserCantPin() throws UnauthorizedAccessException {
 		try {
 			location.pinReview(defaultuser, review);
-		} catch (Exception e) {
+		} catch (Exception ¢) {
 			nothingHasChangedCheck();
-			throw e;
+			throw ¢;
 		}
 	}
 
 	private void nothingHasChangedCheck() {
-		assertTrue(location.getNotPinnedReviews().contains(review));
-		assertTrue(location.getPinnedReviews().isEmpty());
+		assert location.getNotPinnedReviews().contains(review);
+		assert location.getPinnedReviews().isEmpty();
 	}
 
 }

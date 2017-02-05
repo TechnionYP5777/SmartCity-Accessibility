@@ -33,7 +33,7 @@ public class ReviewTest {
 	
 	@Test
 	public void getRetingTest() {
-		assertEquals(r1.getRating(), (new Score(Score.getMinScore())));
+		assertEquals(r1.getRating(), new Score(Score.getMinScore()));
 	}
 	
 	@Test

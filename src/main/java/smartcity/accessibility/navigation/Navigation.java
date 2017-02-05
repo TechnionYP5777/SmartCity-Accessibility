@@ -34,20 +34,16 @@ public abstract class Navigation {
 	public static LatLng[] showRoute(Location source, Location destination, Integer accessibilityThreshold)
 			throws CommunicationFailed {
 		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessibilityThreshold);
-		Latlng from = new Latlng(source.getCoordinates().getLat(), source.getCoordinates().getLng());
-		Latlng to = new Latlng(destination.getCoordinates().getLat(), destination.getCoordinates().getLng());
-		Route r = getRouteFromMapQuest(from, to, segmentsToAvoid);
-		Shape s = r.getShape();
-		return arrayToLatLng(s.getShapePoints());
+		Latlng from = new Latlng(source.getCoordinates().getLat(), source.getCoordinates().getLng()),
+				to = new Latlng(destination.getCoordinates().getLat(), destination.getCoordinates().getLng());
+		Route $ = getRouteFromMapQuest(from, to, segmentsToAvoid);
+		return arrayToLatLng($.getShape().getShapePoints());
 	}
 
 	public static LatLng[] arrayToLatLng(Double[] shapePointsArr) {
 		LatLng[] $ = new LatLng[shapePointsArr.length / 2];
-		int k = 0;
-		for (int i = 0; i < shapePointsArr.length - 1; i += 2) {
-			$[k] = (new LatLng(shapePointsArr[i], shapePointsArr[i + 1]));
-			++k;
-		}
+		for (int k = 0, ¢ = 0; ¢ < shapePointsArr.length - 1; ¢ += 2)
+			$[k++] = (new LatLng(shapePointsArr[¢], shapePointsArr[¢ + 1]));
 		return $;
 	}
 
@@ -61,8 +57,8 @@ public abstract class Navigation {
 				.queryParam("shapeFormat", "raw").queryParam("routeType", "pedestrian");
 		Set<String> mustAvoidLinkIds = new HashSet<String>();
 		if (!segmentsToAvoid.isEmpty()) {
-			for (MapSegment m : segmentsToAvoid)
-				mustAvoidLinkIds.add((m.getLinkId() + ""));
+			for (MapSegment ¢ : segmentsToAvoid)
+				mustAvoidLinkIds.add(¢.getLinkId() + "");
 			target = target.queryParam("mustAvoidLinkIds", String.join(",", mustAvoidLinkIds));
 		}
 		Response response;
@@ -73,10 +69,10 @@ public abstract class Navigation {
 		}
 		if (response.getStatus() != 200)
 			throw new CommunicationFailed("");
-		RouteWraper routeWraper = response.readEntity(RouteWraper.class);
-		if (routeWraper.getInfo().getStatuscode() != 0)
-			throw new CommunicationFailed(String.join(",",routeWraper.getInfo().getMessages()));
-		return routeWraper.getRoute();
+		RouteWraper $ = response.readEntity(RouteWraper.class);
+		if ($.getInfo().getStatuscode() != 0)
+			throw new CommunicationFailed(String.join(",",$.getInfo().getMessages()));
+		return $.getRoute();
 	}
 
 	private static List<MapSegment> getSegmentsToAvoid(Location source, Location destination,
@@ -84,22 +80,22 @@ public abstract class Navigation {
 		List<LatLng> locationsToAvoid = LocationManager.getNonAccessibleLocationsInRadius(source, destination,
 				accessibilityThreshold);
 		List<MapSegment> $ = new ArrayList<MapSegment>();
-		for (LatLng l : locationsToAvoid)
-			$.add(getMapSegmentOfLatLng(l.getLat(), l.getLng()));
+		for (LatLng ¢ : locationsToAvoid)
+			$.add(getMapSegmentOfLatLng(¢.getLat(), ¢.getLng()));
 		return $;
 	}
 
 	public static MapSegment getMapSegmentOfLatLng(double lat, double lng) throws CommunicationFailed {
-		Response response;
+		Response $;
 		try {
-			response = ClientBuilder.newClient().target("http://www.mapquestapi.com/directions/v2/findlinkid?")
+			$ = ClientBuilder.newClient().target("http://www.mapquestapi.com/directions/v2/findlinkid?")
 					.queryParam("key", mapquestKey).queryParam("lat", lat).queryParam("lng", lng).request().get();
 		} catch (ProcessingException e) {
 			throw new CommunicationFailed("");
 		}
-		if (response.getStatus() != 200)
+		if ($.getStatus() != 200)
 			throw new CommunicationFailed("");
-		return response.readEntity(MapSegment.class);
+		return $.readEntity(MapSegment.class);
 	}
 
 };

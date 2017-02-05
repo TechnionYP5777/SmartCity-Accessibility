@@ -47,13 +47,13 @@ public class RatingStar extends JPanel implements MouseListener {
 	}
 
 	public void setRate(int rate) {
-		for (int i = 0; i < this.labels.size(); ++i)
-			this.labels.get(i).setIcon((i < rate) ? this.fullStar : this.emptyStar);
+		for (int ¢ = 0; ¢ < this.labels.size(); ++¢)
+			this.labels.get(¢).setIcon((¢ < rate) ? this.fullStar : this.emptyStar);
 		this.repaint();
 	}
 
-	public void setClickable(boolean b) {
-		clickAble = b;
+	public void setClickable(boolean ¢) {
+		clickAble = ¢;
 	}
 
 	@Override

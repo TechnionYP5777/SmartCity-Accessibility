@@ -69,13 +69,13 @@ public class BestReviewsTest {
 		mostRated = br.getMostRated();
 		assertEquals(mostRated.size(), 2);
 		assert mostRated.contains(r1);
-		assertTrue(mostRated.contains(r3));
+		assert mostRated.contains(r3);
 		assertEquals(br.getTotalRatingByAvg(), r1.getRating().getScore() + r3.getRating().getScore() / 2);
 	}
 	
 	@Test
 	public void getTotalRatingTest() {
 		assertEquals((new BestReviews(3, l)).getTotalRatingByAvg(),
-				((r1.getRating().getScore() + r2.getRating().getScore() + r3.getRating().getScore()) / 3));
+				(r1.getRating().getScore() + r2.getRating().getScore() + r3.getRating().getScore()) / 3);
 	}
 }

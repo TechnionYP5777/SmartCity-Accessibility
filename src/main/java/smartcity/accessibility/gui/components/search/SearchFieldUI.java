@@ -17,10 +17,10 @@ public class SearchFieldUI extends BasicTextFieldUI {
     }
 
     @Override
-    protected void paintBackground(Graphics g) {
-        super.paintBackground(g);
+    protected void paintBackground(Graphics ¢) {
+        super.paintBackground(¢);
         if (textField.getToolTipText() != null && textField.getText().isEmpty())
-			paintPlaceholderText(g, textField);
+			paintPlaceholderText(¢, textField);
     }
 
     protected void paintPlaceholderText(Graphics g, JComponent c) {

@@ -25,11 +25,11 @@ public class RouteWraper {
 		return info;
 	}
 
-	public void setInfo(Info i) {
-		this.info = i;
+	public void setInfo(Info ¢) {
+		this.info = ¢;
 	}
 
-	public void setRoute(Route r) {
-		this.route = r;
+	public void setRoute(Route ¢) {
+		this.route = ¢;
 	}
 }

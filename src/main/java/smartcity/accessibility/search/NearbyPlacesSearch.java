@@ -36,7 +36,7 @@ public class NearbyPlacesSearch {
 		PlaceSearchRequest request = new PlaceSearchRequest();
 		request.setLocation(l);
 		request.setRadius(radius);
-		request.setTypes(kindsOfLocations.toArray((new String[kindsOfLocations.size()])));
+		request.setTypes(kindsOfLocations.toArray(new String[kindsOfLocations.size()]));
 		v.getServices().getPlacesService().nearbySearch(request, new PlaceNearbySearchCallback(map) {
 			@Override
 			public void onComplete(PlaceResult[] rs, PlacesServiceStatus s, PlaceSearchPagination __) {

@@ -170,16 +170,16 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 		if (arg0.getSource() == btnDownvote)
 			try {
 				review.downvote(Application.appUser);
-			} catch (UnauthorizedAccessException e) {
-				e.printStackTrace();
+			} catch (UnauthorizedAccessException ¢) {
+				¢.printStackTrace();
 			}
 		lblDownvoteCount.setText(Integer.toString(review.getDownvotes()));
 		lblUpvoteCount.setText(Integer.toString(review.getUpvotes()));
 		if (arg0.getSource() == btnDelete) {
 			try {
 				location.deleteReview(Application.appUser, review);
-			} catch (UnauthorizedAccessException e) {
-				e.printStackTrace();
+			} catch (UnauthorizedAccessException ¢) {
+				¢.printStackTrace();
 			}
 			frame.dispose();
 		}
@@ -214,8 +214,8 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 					review.pin(Application.appUser);
 				else
 					review.unPin(Application.appUser);
-			} catch (UnauthorizedAccessException e) {
-				e.printStackTrace();
+			} catch (UnauthorizedAccessException ¢) {
+				¢.printStackTrace();
 			}
 
 	}

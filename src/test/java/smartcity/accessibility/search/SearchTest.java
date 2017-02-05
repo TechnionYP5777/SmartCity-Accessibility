@@ -23,20 +23,15 @@ public class SearchTest{
      public void test1() throws InterruptedException{ 
      	 MapView mapView = JxMapsFunctionality.getMapView();
 
-         SearchQuery s1 = SearchQuery.adressSearch("Modi'in Yehalom St, 20");
-         SearchQuery s2 = SearchQuery.adressSearch("Modi'in Yehalom 30");
-         
+         SearchQuery s1 = SearchQuery.adressSearch("Modi'in Yehalom St, 20"),
+				s2 = SearchQuery.adressSearch("Modi'in Yehalom 30");
          JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
          
-         SearchQueryResult sqr1= s1.SearchByAddress(mapView);
-         SearchQueryResult sqr2= s2.SearchByAddress(mapView);
-         
+         SearchQueryResult sqr1 = s1.SearchByAddress(mapView), sqr2 = s2.SearchByAddress(mapView);
          s1.waitOnSearch();
          s2.waitOnSearch();
          
-         Location location1 = sqr1.getLocations().get(0);//.getGeometry().getLocation();
-         Location location2 = sqr2.getLocations().get(0);//.getGeometry().getLocation();
-         
+         Location location1 = sqr1.getLocations().get(0), location2 = sqr2.getLocations().get(0);
          JxMapsFunctionality.putMarker((ExtendedMapView) mapView, location1.getCoordinates(), "result1");
          JxMapsFunctionality.putMarker((ExtendedMapView) mapView, location2.getCoordinates(), "result2");
          
@@ -46,8 +41,8 @@ public class SearchTest{
 
 		 try {
 			Thread.sleep(300000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		} catch (InterruptedException ¢) {
+			¢.printStackTrace();
 		}
      }
 	 
@@ -82,12 +77,10 @@ public class SearchTest{
 	        
 	        s1.waitOnSearch();
 	        
-	        if(!sqr1.getLocations().isEmpty()){
-		        sqr1.getLocations().get(0).getCoordinates();//.getGeometry().getLocation();  
-		        
-	        }else{
-	        	fail();
-	        }
+	        if (sqr1.getLocations().isEmpty())
+				fail();
+			else
+				sqr1.getLocations().get(0).getCoordinates();
 	 }
 	 
             

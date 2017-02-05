@@ -90,10 +90,10 @@ public class ElaborateSearchFrame implements MouseListener {
 		frame.getContentPane().add(btnSearch);
 
 		Object[] scores = IntStream.rangeClosed(Score.getMinScore(), Score.getMaxScore())
-				.mapToObj(n -> Integer.valueOf(n)).toArray();
+				.mapToObj(λ -> Integer.valueOf(λ)).toArray();
 		Integer[] acscores = new Integer[scores.length];
-		for (int i = 0; i < scores.length; ++i)
-			acscores[i] = (Integer) scores[i];
+		for (int ¢ = 0; ¢ < scores.length; ++¢)
+			acscores[¢] = (Integer) scores[¢];
 		this.thresholdsBox = new JComboBox<>(acscores);
 		thresholdsBox.setBounds(151, startingLoc + jumps, 198, 25);
 		frame.getContentPane().add(thresholdsBox);
@@ -107,7 +107,7 @@ public class ElaborateSearchFrame implements MouseListener {
 		CurrentPositionField = new JTextField();
 		CurrentPositionField.setBounds(151, startingLoc + 3 * jumps, 198, 25);
 		frame.getContentPane().add(CurrentPositionField);
-		CurrentPositionField.setText((Application.currLocation.getPosition() + ""));
+		CurrentPositionField.setText(Application.currLocation.getPosition() + "");
 
 	}
 
@@ -148,14 +148,14 @@ public class ElaborateSearchFrame implements MouseListener {
 
 		try {
 			esr.convertDummiesToReal();
-		} catch (EmptySearchQuery e) {
-			JOptionPane.showMessageDialog(Application.frame, e.getMessage(), "Bad Input", JOptionPane.ERROR_MESSAGE);
+		} catch (EmptySearchQuery ¢) {
+			JOptionPane.showMessageDialog(Application.frame, ¢.getMessage(), "Bad Input", JOptionPane.ERROR_MESSAGE);
 		}
 
 		try {
 			esr.filterLocations(Threshold);
-		} catch (EmptySearchQuery e) {
-			JOptionPane.showMessageDialog(Application.frame, e.getMessage(), "Bad Input", JOptionPane.ERROR_MESSAGE);
+		} catch (EmptySearchQuery ¢) {
+			JOptionPane.showMessageDialog(Application.frame, ¢.getMessage(), "Bad Input", JOptionPane.ERROR_MESSAGE);
 		}
 
 		JxMapsFunctionality.putAllExtendedMarker(JxMapsFunctionality.getMapView(), esr.getLocations());

@@ -58,18 +58,18 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		if (e.getSource() == ButtonsPanel.LOGIN_BUTTON)
+	public void mouseClicked(MouseEvent ¢) {
+		if (¢.getSource() == ButtonsPanel.LOGIN_BUTTON)
 			new LoginFrame();
-		if (e.getSource() == SIGNUP_BUTTON)
+		if (¢.getSource() == SIGNUP_BUTTON)
 			new SignUpFrame();
-		if (e.getSource() == CLEAR_MARKERS_BUTTON)
+		if (¢.getSource() == CLEAR_MARKERS_BUTTON)
 			JxMapsFunctionality.ClearMarkers(JxMapsFunctionality.getMapView());
-		if (e.getSource() == SEARCH_BY_TYPE)
+		if (¢.getSource() == SEARCH_BY_TYPE)
 			new ElaborateSearchFrame();
-		if (e.getSource() == ButtonsPanel.USER_PROFILE_BUTTON)
+		if (¢.getSource() == ButtonsPanel.USER_PROFILE_BUTTON)
 			new UserProfileFrame();
-		if (e.getSource() == ButtonsPanel.LOGOUT_BUTTON) {
+		if (¢.getSource() == ButtonsPanel.LOGOUT_BUTTON) {
 			UserManager.logoutCurrUser();
 			Application.appUser = UserImpl.DefaultUser();
 			LOGOUT_BUTTON.setVisible(false);
@@ -77,7 +77,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 			USER_PROFILE_BUTTON.setVisible(false);
 			SIGNUP_BUTTON.setVisible(true);
 		}
-		System.out.println("clicked " + e.getSource());
+		System.out.println("clicked " + ¢.getSource());
 
 	}
 

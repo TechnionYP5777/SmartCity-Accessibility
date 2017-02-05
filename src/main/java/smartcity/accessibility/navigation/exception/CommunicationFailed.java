@@ -9,9 +9,6 @@ package smartcity.accessibility.navigation.exception;
  */
 public class CommunicationFailed extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String message;
 

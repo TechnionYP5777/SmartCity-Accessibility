@@ -82,12 +82,12 @@ public class UserImpl implements User {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		return o == this
-				|| (o instanceof UserImpl && this.userName.equals(((UserImpl) o).userName)
-						&& this.password.equals(((UserImpl) o).password)
-						&& this.privilegeLevel == ((UserImpl) o).privilegeLevel)
-				|| (o instanceof String && userName.equals(o));
+	public boolean equals(Object ¢) {
+		return ¢ == this
+				|| (¢ instanceof UserImpl && this.userName.equals(((UserImpl) ¢).userName)
+						&& this.password.equals(((UserImpl) ¢).password)
+						&& this.privilegeLevel == ((UserImpl) ¢).privilegeLevel)
+				|| (¢ instanceof String && userName.equals(¢));
 	}
 
 }

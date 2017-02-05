@@ -16,8 +16,8 @@ public class Route {
 		return shape;
 	}
 
-	public void setShape(Shape s) {
-		this.shape = s;
+	public void setShape(Shape ¢) {
+		this.shape = ¢;
 	}
 
 }

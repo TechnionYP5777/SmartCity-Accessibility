@@ -61,7 +61,7 @@ public class BestReviews {
 	 */
 	public int getTotalRatingByAvg() {
 		List<Review> $ = getMostRated();
-		return $.stream().collect(Collectors.summingInt(a -> a.getRating().getScore())) / $.size();
+		return $.stream().collect(Collectors.summingInt(λ -> λ.getRating().getScore())) / $.size();
 	}
 	
 	/**

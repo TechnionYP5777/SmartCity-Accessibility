@@ -19,24 +19,24 @@ public interface User {
 
 		private static Privilege[] allValues = values();
 
-		public static Privilege fromOrdinal(int i) {
-			return allValues[i];
+		public static Privilege fromOrdinal(int ¢) {
+			return allValues[¢];
 		}
 
-		public static boolean pinPrivilegeLevel(User u) {
-			return u.getPrivilege().compareTo(Admin) <= 0;
+		public static boolean pinPrivilegeLevel(User ¢) {
+			return ¢.getPrivilege().compareTo(Admin) <= 0;
 		}
 
-		public static boolean deletePrivilegeLevel(User u) {
-			return u.getPrivilege().compareTo(Admin) <= 0;
+		public static boolean deletePrivilegeLevel(User ¢) {
+			return ¢.getPrivilege().compareTo(Admin) <= 0;
 		}
 
-		public static boolean addReviewPrivilegeLevel(User u) {
-			return u.getPrivilege().compareTo(RegularUser) <= 0;
+		public static boolean addReviewPrivilegeLevel(User ¢) {
+			return ¢.getPrivilege().compareTo(RegularUser) <= 0;
 		}
 
-		public static boolean commentReviewPrivilegeLevel(User u) {
-			return u.getPrivilege().compareTo(RegularUser) <= 0;
+		public static boolean commentReviewPrivilegeLevel(User ¢) {
+			return ¢.getPrivilege().compareTo(RegularUser) <= 0;
 		}
 
 		public static Privilege minCommentLevel() {

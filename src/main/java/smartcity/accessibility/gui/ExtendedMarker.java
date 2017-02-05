@@ -53,8 +53,8 @@ public class ExtendedMarker extends Marker {
 				LocationManager.getLocation(loc.getCoordinates(),new LocationListCallback() {
 					
 					@Override
-					public void done(List<Location> ls) {
-						new LocationFrame(ls.get(0));
+					public void done(List<Location> ¢) {
+						new LocationFrame(¢.get(0));
 						
 					}
 				});

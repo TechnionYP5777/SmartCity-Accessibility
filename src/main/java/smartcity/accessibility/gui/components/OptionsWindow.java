@@ -16,23 +16,22 @@ public abstract class OptionsWindow {
 
     public OptionsWindow(MapView parentWindow, Dimension size) {
         this.size = size;
-        Container parent = parentWindow.getParent();
-        while (parent != null) {
-            if (parent instanceof JFrame) {
-                parentFrame = (JFrame) parent;
-                break;
-            }
-            parent = parent.getParent();
-        }
+        for (Container parent = parentWindow.getParent(); parent != null;) {
+			if (parent instanceof JFrame) {
+				parentFrame = (JFrame) parent;
+				break;
+			}
+			parent = parent.getParent();
+		}
 
         parentFrame.addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentMoved(ComponentEvent e) {
+            public void componentMoved(ComponentEvent __) {
                 updatePosition();
             }
 
             @Override
-            public void componentResized(ComponentEvent e) {
+            public void componentResized(ComponentEvent __) {
                 updatePosition();
             }
         });
@@ -44,12 +43,12 @@ public abstract class OptionsWindow {
 
         parentFrame.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowIconified(WindowEvent e) {
+            public void windowIconified(WindowEvent __) {
                 contentWindow.setVisible(false);
             }
 
             @Override
-            public void windowDeiconified(WindowEvent e) {
+            public void windowDeiconified(WindowEvent __) {
                 contentWindow.setVisible(true);
             }
         });
@@ -58,7 +57,7 @@ public abstract class OptionsWindow {
         updatePosition();
     }
 
-    abstract public void initContent(JWindow contentWindow);
+    public abstract void initContent(JWindow contentWindow);
 
     protected void updatePosition() {
         Rectangle bounds = new Rectangle();

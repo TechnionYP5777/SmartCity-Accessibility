@@ -166,17 +166,17 @@ public class LocationFrame implements MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		if (e.getSource() == btnAddReview)
+	public void mouseClicked(MouseEvent ¢) {
+		if (¢.getSource() == btnAddReview)
 			new CreateReviewFrame(loc);
-		if (e.getSource() == btnNavigate)
+		if (¢.getSource() == btnNavigate)
 			activateNavigation();
-		if (e.getSource() == btnOnStreet) {
+		if (¢.getSource() == btnOnStreet) {
 			if (streetLoc == null)
 				return;
 			new LocationFrame(streetLoc);
 		}
-		if (e.getSource() != btnRefresh)
+		if (¢.getSource() != btnRefresh)
 			return;
 		frame.dispose();
 		new LocationFrame(loc);
@@ -207,12 +207,11 @@ public class LocationFrame implements MouseListener {
 	 * @author yael
 	 */
 	public void activateNavigation() {
-		Location src = new Location(Application.currLocation.getPosition());
-		Location dst = loc;
+		Location src = new Location(Application.currLocation.getPosition()), dst = loc;
 		Integer accessibilityThreshold = (Integer) JOptionPane.showInputDialog(frame,
 				"Insert the accessibility threshold for the navigation:\n", "choose accessibilityThreshold",
 				JOptionPane.PLAIN_MESSAGE, null, IntStream.rangeClosed(Score.getMinScore(), Score.getMaxScore())
-						.mapToObj(n -> Integer.valueOf(n)).toArray(),
+						.mapToObj(λ -> Integer.valueOf(λ)).toArray(),
 				5);
 		if (accessibilityThreshold == null)
 			return;

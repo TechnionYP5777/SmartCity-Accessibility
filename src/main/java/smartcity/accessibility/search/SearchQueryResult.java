@@ -31,8 +31,8 @@ public class SearchQueryResult {
 		return !locations.isEmpty();
 	}
 
-	public Location get(int i) {
-		return locations.size() < i + 1 ? null : locations.get(i);
+	public Location get(int ¢) {
+		return locations.size() <= ¢ ? null : locations.get(¢);
 	}
 
 	/***
@@ -48,8 +48,8 @@ public class SearchQueryResult {
 			throw new EmptySearchQuery();
 
 		ArrayList<Location> arr = new ArrayList<Location>();
-		for (Location loc : locations)
-			arr.add(LocationManager.getLocation(loc.getCoordinates(), loc.getLocationType(), loc.getLocationSubType()));
+		for (Location ¢ : locations)
+			arr.add(LocationManager.getLocation(¢.getCoordinates(), ¢.getLocationType(), ¢.getLocationSubType()));
 		
 		locations.clear();
 		locations.addAll(arr);
@@ -73,10 +73,10 @@ public class SearchQueryResult {
 			throw new EmptySearchQuery();
 
 		long rating;
-		for (Location loc : clone) {
-			rating = Integer.parseInt(Long.toUnsignedString(loc.getRating(BestReviews.DEFAULT).getScore()));
+		for (Location ¢ : clone) {
+			rating = Integer.parseInt(Long.toUnsignedString(¢.getRating(BestReviews.DEFAULT).getScore()));
 			if (rating < tresh)
-				locations.remove(loc);
+				locations.remove(¢);
 		}
 
 		if (locations.isEmpty())

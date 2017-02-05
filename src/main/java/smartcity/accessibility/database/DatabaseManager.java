@@ -44,8 +44,8 @@ public abstract class DatabaseManager {
 	public static ParseObject getValue(final String $, final String id) {
 		try {
 			return ParseQuery.getQuery($).get(id);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (ParseException ¢) {
+			¢.printStackTrace();
 		}
 		return null;
 	}
