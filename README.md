@@ -1,7 +1,7 @@
 # SmartCity-Accessibility
 ## Development Status
 
-### Jenkins down until next sprint
+[![Build Status](http://kapalex.ddns.net:8080/buildStatus/icon?job=SmartCity-Accessibility)](http://kapalex.ddns.net:8080/job/SmartCity-Accessibility/)
 
 ## The Project
 
