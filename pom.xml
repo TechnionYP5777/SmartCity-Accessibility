@@ -68,20 +68,17 @@
 				<updatePolicy>always</updatePolicy>
 			</snapshots>
 		</repository>
+		<!-- <repository> <id>in-project</id> <name>In Project Repo</name> <url>file://${project.basedir}/libs</url> 
+			<releases> <enabled>true</enabled> <updatePolicy>always</updatePolicy> </releases> 
+			<snapshots> <enabled>true</enabled> <updatePolicy>always</updatePolicy> </snapshots> 
+			</repository> -->
 		<repository>
-			<id>in-project</id>
-			<name>In Project Repo</name>
-			<url>file://${project.basedir}/libs</url>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</snapshots>
+			<id>internal</id>
+			<name>internal</name>
+			<url>http://kapalex.ddns.net:8081/artifactory/smartcity-accessibility</url>
 		</repository>
 	</repositories>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -110,27 +107,27 @@
 		<dependency>
 			<groupId>teamdev</groupId>
 			<artifactId>jxmaps</artifactId>
-			<version>1.2.2</version>
+			<version>1.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>teamdev</groupId>
 			<artifactId>jxmaps-linux32</artifactId>
-			<version>1.2</version>
+			<version>1.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>teamdev</groupId>
 			<artifactId>jxmaps-linux64</artifactId>
-			<version>1.2</version>
+			<version>1.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>teamdev</groupId>
 			<artifactId>jxmaps-mac</artifactId>
-			<version>1.2</version>
+			<version>1.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>teamdev</groupId>
 			<artifactId>jxmaps-win</artifactId>
-			<version>1.2</version>
+			<version>1.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>teamdev</groupId>

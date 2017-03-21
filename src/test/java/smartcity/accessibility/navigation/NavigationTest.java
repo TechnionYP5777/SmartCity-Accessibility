@@ -3,6 +3,7 @@ package smartcity.accessibility.navigation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
@@ -40,6 +41,7 @@ public class NavigationTest {
 		System.out.println(m.getStreet());
 	}
 
+	
 	@Test
 	public void avoidOneSegement() throws CommunicationFailed {
 		Latlng from = new Latlng(31.768762, 34.632052), to = new Latlng(31.770981, 34.620567);
