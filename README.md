@@ -1,7 +1,8 @@
 # SmartCity-Accessibility
 ## Development Status
 
-![](http://kapalex.ddns.net:8080/buildStatus/icon?job=SmartCity-Accessibility)
+![Build Status](http://kapalex.ddns.net:8080/buildStatus/icon?job=SmartCity-Accessibility)
+![Coverage Report](https://img.shields.io/sonar/http/kapalex.ddns.net:9000/SmartCity-Accessibility:SmartCity-Accessibility/coverage.svg)
 
 ## The Project
 
