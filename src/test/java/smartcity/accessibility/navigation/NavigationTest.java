@@ -3,18 +3,17 @@ package smartcity.accessibility.navigation;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 
 import com.teamdev.jxmaps.LatLng;
-import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.navigation.exception.CommunicationFailed;
-import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
+import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.navigation.exception.CommunicationFailed;
+import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 
 /**
  * This class contains test for Navigation. the tests are for the Navigation as

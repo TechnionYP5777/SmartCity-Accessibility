@@ -25,6 +25,10 @@ public abstract class DatabaseManager {
 	public static final String restKey = "2139d-231cb2-738fe";
 	public static final String appId = "smartcityaccessibility";
 	private static boolean init;
+	
+	private DatabaseManager(){
+		
+	}
 
 	public static void initialize() {
 		if (init)

@@ -19,7 +19,6 @@ import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 import smartcity.accessibility.navigation.mapquestcommunication.Route;
 import smartcity.accessibility.navigation.mapquestcommunication.RouteWraper;
-import smartcity.accessibility.navigation.mapquestcommunication.Shape;
 
 /**
  * This class help finds routes in the city. The class able to find segments of
