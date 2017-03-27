@@ -12,6 +12,7 @@ import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.Timeout;
 import org.parse4j.ParseException;
 import org.parse4j.ParseGeoPoint;
@@ -23,6 +24,8 @@ import org.parse4j.callback.GetCallback;
 import org.parse4j.callback.SaveCallback;
 
 import com.teamdev.jxmaps.LatLng;
+
+import smartcity.accessibility.categories.UnitTests;
 
 /**
  * @author KaplanAlexander
@@ -69,6 +72,7 @@ public class DatabaseManagerTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void a() {
 		ParseObject test = new ParseObject(testParseClass);
 		test.put("test1", 123);
