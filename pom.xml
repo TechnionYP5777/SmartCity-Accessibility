@@ -26,7 +26,6 @@
 					<configuration>
 						<reuseForks>true</reuseForks>
 						<argLine>${argLine}</argLine>
-						<groups>smartcity.accessibility.categories.UnitTests,smartcity.accessibility.categories.GuiTests</groups>
 					</configuration>
 				</plugin>
 
