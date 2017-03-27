@@ -26,7 +26,7 @@
 					<configuration>
 						<reuseForks>true</reuseForks>
 						<argLine>${argLine}</argLine>
-						<groups>smartcity.accessibility.categories.UnitTests</groups>
+						<groups>smartcity.accessibility.categories.UnitTests,smartcity.accessibility.categories.GuiTests</groups>
 					</configuration>
 				</plugin>
 
@@ -164,7 +164,6 @@
 	<properties>
 		<jersey.version>2.23.2</jersey.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<sonar.coverage.exclusions>**/*.gui*</sonar.coverage.exclusions>
 		<argLine />
 	</properties>
 </project>

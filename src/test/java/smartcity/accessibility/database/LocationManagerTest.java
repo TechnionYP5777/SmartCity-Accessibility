@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.parse4j.ParseException;
 import org.parse4j.ParseObject;
 import org.parse4j.ParseUser;
@@ -13,6 +14,7 @@ import org.parse4j.callback.SaveCallback;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
@@ -29,6 +31,7 @@ public class LocationManagerTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void saveLocationTest() throws InterruptedException {
 		LatLng k = new LatLng(20, 20);
 		ArrayList<Review> r = new ArrayList<>();
@@ -47,6 +50,7 @@ public class LocationManagerTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void getLocationsyncronizedTest() throws InterruptedException {
 		LatLng k = new LatLng(40, 40);
 		Location L = new Location(k, Location.LocationTypes.Coordinate, Location.LocationSubTypes.Bar);
@@ -61,6 +65,7 @@ public class LocationManagerTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void getLocationbackground() throws InterruptedException {
 		LatLng k = new LatLng(41, 40);
 		Location L = new Location(k, Location.LocationTypes.Coordinate, Location.LocationSubTypes.Bar);
@@ -84,6 +89,7 @@ public class LocationManagerTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void updateLocationTest() throws InterruptedException, ParseException {
 		LatLng k = new LatLng(42, 42);
 		Location L = new Location(k);

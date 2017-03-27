@@ -4,9 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;;
 
@@ -27,26 +29,31 @@ public class ReviewTest {
 	}
 	
 	@Test
+	@Category(UnitTests.class)
 	public void getLocationTest() {
 		assert(r1.getLocation().getCoordinates().equals(new LatLng(39.750307, -104.999472)));
 	}
 	
 	@Test
+	@Category(UnitTests.class)
 	public void getRetingTest() {
 		assertEquals(r1.getRating(), new Score(Score.getMinScore()));
 	}
 	
 	@Test
+	@Category(UnitTests.class)
 	public void getCommentTest() {
 		assertEquals(r1.getContent(), "very unaccessible place!");
 	}
 	
 	@Test
+	@Category(UnitTests.class)
 	public void getUserTest() {
 		assertEquals(r1.getUser(), "Koral");
 	}
 	
 	@Test
+	@Category(UnitTests.class)
 	public void isPinnedTest() {
 		assert !r1.isPinned();
 		try {

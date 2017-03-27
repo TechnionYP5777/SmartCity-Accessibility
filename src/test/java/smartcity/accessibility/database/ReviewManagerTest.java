@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.parse4j.ParseException;
 import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
@@ -14,6 +15,7 @@ import org.parse4j.callback.GetCallback;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
@@ -31,6 +33,7 @@ public class ReviewManagerTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void UploadReviewTest() throws InterruptedException {
 		LatLng k = new LatLng(20, 20);
 		Location L = new Location(k);
@@ -42,6 +45,7 @@ public class ReviewManagerTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void getReviewByUserAndLocationTest() throws InterruptedException {
 		LatLng k = new LatLng(20, 20);
 		Location L = new Location(k, Location.LocationTypes.Coordinate, Location.LocationSubTypes.Bar);
@@ -67,6 +71,7 @@ public class ReviewManagerTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void deleteReviewTest() throws InterruptedException {
 		LatLng k = new LatLng(21, 20);
 		Location L = new Location(k);
@@ -101,6 +106,7 @@ public class ReviewManagerTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void updateReviewTest() throws InterruptedException {
 		LatLng k = new LatLng(21, 21);
 		Location L = new Location(k);

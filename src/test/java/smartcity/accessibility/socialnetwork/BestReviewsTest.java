@@ -8,10 +8,12 @@ import java.util.ArrayList;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.User;
@@ -55,6 +57,7 @@ public class BestReviewsTest {
 	}
 	
 	@Test
+	@Category(UnitTests.class)
 	public void getMostRatedTest() {
 		BestReviews br = new BestReviews(1, l);
 		List<Review> mostRated = br.getMostRated();
@@ -74,6 +77,7 @@ public class BestReviewsTest {
 	}
 	
 	@Test
+	@Category(UnitTests.class)
 	public void getTotalRatingTest() {
 		assertEquals((new BestReviews(3, l)).getTotalRatingByAvg(),
 				(r1.getRating().getScore() + r2.getRating().getScore() + r3.getRating().getScore()) / 3);

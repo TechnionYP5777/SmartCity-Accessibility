@@ -2,9 +2,11 @@ package smartcity.accessibility.socialnetwork;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
@@ -32,6 +34,7 @@ public class UserPinTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void testPinUnPin() throws UnauthorizedAccessException {
 		location.pinReview(admin, review);
 		assert location.getPinnedReviews().contains(review);
@@ -46,6 +49,7 @@ public class UserPinTest {
 	}
 
 	@Test(expected = UnauthorizedAccessException.class)
+	@Category(UnitTests.class)
 	public void userCantPin() throws UnauthorizedAccessException {
 		try {
 			location.pinReview(user, review);
@@ -56,6 +60,7 @@ public class UserPinTest {
 	}
 
 	@Test(expected = UnauthorizedAccessException.class)
+	@Category(UnitTests.class)
 	public void defaultuserCantPin() throws UnauthorizedAccessException {
 		try {
 			location.pinReview(defaultuser, review);

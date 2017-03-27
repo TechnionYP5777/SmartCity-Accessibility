@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.swing.MapView;
 
+import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.LocationListCallback;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
@@ -20,6 +22,7 @@ import smartcity.accessibility.mapmanagement.Location;
 public class NearbyPlacesTest {
 
 	@Test
+	@Category(UnitTests.class)
 	public void nearByPlacesTest() {
 		LatLng c = new LatLng(31.90588, 34.997571); // Modi'in Yehalom St, 20
 		double radius = 1000000;

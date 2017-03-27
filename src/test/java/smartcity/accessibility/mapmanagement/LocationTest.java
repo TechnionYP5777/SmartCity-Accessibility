@@ -4,9 +4,12 @@ import static org.junit.Assert.*;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
+
+import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
@@ -49,26 +52,31 @@ public class LocationTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void getCoordinatesTest() {
 		assert (l.getCoordinates().equals(new LatLng(31.90588, 34.997571)));
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void getReviewsTest() {
 		assertEquals(l.getReviews().size(), 4);
 	}
 	
 	@Test
+	@Category(UnitTests.class)
 	public void getPinnedReviewsTest() {
 		assertEquals(l.getPinnedReviews().size(),1);
 	}
 	
 	@Test
+	@Category(UnitTests.class)
 	public void getUnPinnedReviewsTest() {
 		assertEquals(l.getNotPinnedReviews().size(),3);
 	}
 	
 	@Test
+	@Category(UnitTests.class)
 	public void getRating() {
 		assertEquals(l.getRating(1).getScore(),2);
 		assertEquals(l.getRating(2).getScore(),3);

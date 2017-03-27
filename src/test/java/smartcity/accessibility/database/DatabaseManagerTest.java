@@ -86,6 +86,7 @@ public class DatabaseManagerTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void b() {
 		ParseObject pe = DatabaseManager.getValue(testParseClass, id_result);
 		assert pe != null;
@@ -94,6 +95,7 @@ public class DatabaseManagerTest {
 	}
 
 	@Test(timeout = 20000) // fail after 20 seconds, means callback wasnt called
+	@Category(UnitTests.class)
 	public void c() {
 		final AtomicInteger res = new AtomicInteger();
 
@@ -116,6 +118,7 @@ public class DatabaseManagerTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void d() {
 		Map<String, Object> m = new HashMap<String, Object>();
 		m.put("a", "b");
@@ -137,6 +140,7 @@ public class DatabaseManagerTest {
 	}
 
 	@Test(timeout = 20000)
+	@Category(UnitTests.class)
 	public void e() {
 		final AtomicInteger res = new AtomicInteger();
 
@@ -164,6 +168,7 @@ public class DatabaseManagerTest {
 
 	@Test
 	@SuppressWarnings("serial")
+	@Category(UnitTests.class)
 	public void f() throws ParseException {
 		final AtomicInteger res = new AtomicInteger();
 		HashMap<String, Object> h = new HashMap<String, Object>() {
@@ -207,6 +212,7 @@ public class DatabaseManagerTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void g() {
 		final AtomicInteger res = new AtomicInteger();
 		try {
@@ -248,6 +254,7 @@ public class DatabaseManagerTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void h() {
 		final AtomicInteger res = new AtomicInteger();
 		Map<String, Object> m = new HashMap<String, Object>();

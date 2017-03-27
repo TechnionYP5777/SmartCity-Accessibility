@@ -4,9 +4,11 @@ import static org.junit.Assert.fail;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import com.teamdev.jxmaps.swing.MapView;
 
+import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;;
@@ -20,6 +22,7 @@ public class SearchTest{
 
 	 @Ignore
 	 @Test 
+	 @Category(UnitTests.class)
      public void test1() throws InterruptedException{ 
      	 MapView mapView = JxMapsFunctionality.getMapView();
 
@@ -48,6 +51,7 @@ public class SearchTest{
 	 
 //	 @Ignore
 	 @Test
+	 @Category(UnitTests.class)
 	 public void test2() throws InterruptedException{
 		 MapView mapView = JxMapsFunctionality.getMapView();
 		 SearchQuery s1 = SearchQuery.adressSearch("coffee shops");
@@ -65,6 +69,7 @@ public class SearchTest{
 	 
 	 
 	 @Test 
+	 @Category(UnitTests.class)
 	 public void test3() throws InterruptedException{
 		 MapView mapView1 = JxMapsFunctionality.getMapView();
 

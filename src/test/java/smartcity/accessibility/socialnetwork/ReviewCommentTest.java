@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
+import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 
 /**
@@ -26,6 +28,7 @@ public class ReviewCommentTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void a() throws UnauthorizedAccessException {
 		r1 = new Review(null, 4, "?", u1);
 		r1.upvote(u2);
@@ -33,6 +36,7 @@ public class ReviewCommentTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void b() throws UnauthorizedAccessException {
 		r1 = new Review(null, 4, "?", u1);
 		r1.upvote(u2);
@@ -41,6 +45,7 @@ public class ReviewCommentTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void c() throws UnauthorizedAccessException {
 		r1 = new Review(null, 4, "?", u1);
 		r1.upvote(u2);
@@ -54,6 +59,7 @@ public class ReviewCommentTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void d() throws UnauthorizedAccessException {
 		r1 = new Review(null, 4, "?", u1);
 		r1.upvote(u2);
@@ -62,6 +68,7 @@ public class ReviewCommentTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void e() throws UnauthorizedAccessException {
 		r1 = new Review(null, 4, "?", u1);
 		r1.comment(u1, 123);

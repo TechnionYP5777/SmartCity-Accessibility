@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
+import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
 import smartcity.accessibility.search.SearchQuery;
@@ -32,6 +35,7 @@ public class UserManagerTest {
 	
 	
 	@Test
+	@Category(UnitTests.class)
 	public void test() {
 		String UserName = "uuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
 		try {
@@ -49,6 +53,7 @@ public class UserManagerTest {
 	
 
 	@Test 
+	@Category(UnitTests.class)
 	public void test2(){
 		String UserName = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
 		try {
@@ -87,6 +92,7 @@ public class UserManagerTest {
 	}
 	
 	@Test 
+	@Category(UnitTests.class)
 	public void test3(){
 		String UserName = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
 		User b=null;

@@ -2,9 +2,11 @@ package smartcity.accessibility.socialnetwork;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
@@ -38,6 +40,7 @@ public class DeleteReviewsTest {
 	}
 
 	@Test(expected = UnauthorizedAccessException.class)
+	@Category(UnitTests.class)
 	public void regularUserCantDelete() throws UnauthorizedAccessException {
 		try {
 			location.deleteReview(user, review2);
@@ -48,6 +51,7 @@ public class DeleteReviewsTest {
 	}
 
 	@Test(expected = UnauthorizedAccessException.class)
+	@Category(UnitTests.class)
 	public void defaultUserCantDelete() throws UnauthorizedAccessException {
 		try {
 			location.deleteReview(defaultuser, review);
@@ -58,6 +62,7 @@ public class DeleteReviewsTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void adminCanDelete() throws UnauthorizedAccessException {
 		location.deleteReview(admin, review);
 
@@ -68,6 +73,7 @@ public class DeleteReviewsTest {
 	}
 
 	@Test
+	@Category(UnitTests.class)
 	public void userCanOwnedDelete() throws UnauthorizedAccessException {
 		location.deleteReview(user, review);
 
