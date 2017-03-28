@@ -13,6 +13,8 @@ import org.parse4j.callback.DeleteCallback;
 import org.parse4j.callback.FindCallback;
 import org.parse4j.callback.GetCallback;
 import org.parse4j.callback.SaveCallback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.teamdev.jxmaps.LatLng;
 
@@ -24,6 +26,7 @@ public abstract class DatabaseManager {
 	public static final String serverUrl = "https://smartcityaccessibility.herokuapp.com/parse";
 	public static final String restKey = "2139d-231cb2-738fe";
 	public static final String appId = "smartcityaccessibility";
+	private static Logger logger = LoggerFactory.getLogger( DatabaseManager.class );
 	private static boolean init;
 	
 	private DatabaseManager(){
@@ -31,6 +34,7 @@ public abstract class DatabaseManager {
 	}
 
 	public static void initialize() {
+		logger.info("initializing db");
 		if (init)
 			return;
 		Parse.initialize(appId, restKey, serverUrl);
