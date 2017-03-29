@@ -20,13 +20,15 @@ import smartcity.accessibility.socialnetwork.User;
  *
  */
 public class UserManagerTest {
+	private static final String userName2 = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
+	private static final String userName1 = "uuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
+
 	@BeforeClass
 	public static void init(){
 		DatabaseManager.initialize();
-		String UserName = "uuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
-		User u = UserManager.LoginUser(UserName, "password");
+		User u = UserManager.LoginUser(userName1, "password");
 		UserManager.DeleteUser(u);
-		String UserName2 = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
+		String UserName2 = userName2;
 		u = UserManager.LoginUser(UserName2, "admin");
 		UserManager.DeleteUser(u);
 		u = UserManager.LoginUser("b"+UserName2, "admin");
@@ -34,10 +36,10 @@ public class UserManagerTest {
 	}
 	
 	
-	@Test
 	@Category(UnitTests.class)
+	@Test
 	public void test() {
-		String UserName = "uuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
+		String UserName = userName1;
 		try {
 			UserManager.SignUpUser(UserName, "password", User.Privilege.RegularUser);
 		} catch (UsernameAlreadyTakenException e) {
@@ -52,10 +54,10 @@ public class UserManagerTest {
 	}
 	
 
-	@Test 
-	@Category(UnitTests.class)
+	@Category(UnitTests.class) 
+	@Test
 	public void test2(){
-		String UserName = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
+		String UserName = userName2;
 		try {
 			UserManager.SignUpUser(UserName, "admin", User.Privilege.Admin);
 		} catch (UsernameAlreadyTakenException e1) {
@@ -84,17 +86,16 @@ public class UserManagerTest {
 			fail();
 		}
 		
-		User c = (UserManager.LoginUser("b"+UserName, "admin"));
-		assertEquals(SearchQuery.QueriesList2String(l), SearchQuery.QueriesList2String(c.getFavouriteSearchQueries()));
+		assertEquals(SearchQuery.QueriesList2String(l), SearchQuery.QueriesList2String(UserManager.LoginUser("b" + UserName, "admin").getFavouriteSearchQueries()));
 		
 		
 		UserManager.DeleteUser(b);
 	}
 	
-	@Test 
-	@Category(UnitTests.class)
+	@Category(UnitTests.class) 
+	@Test
 	public void test3(){
-		String UserName = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
+		String UserName = userName2;
 		User b=null;
 		try {
 			 b = UserManager.SignUpUser(UserName, "pass", User.Privilege.RegularUser);
@@ -107,6 +108,19 @@ public class UserManagerTest {
 			fail();
 		} catch (UsernameAlreadyTakenException e) {
 			UserManager.DeleteUser(b);
+		}
+		
+	}
+	
+	@Category(UnitTests.class) 
+	@Test
+	public void test4(){
+		String UserName = userName2;
+		User b=null;
+		try {
+			 b = UserManager.SignUpUser(UserName, "pass", User.Privilege.RegularUser);
+		} catch (UsernameAlreadyTakenException e) {
+			fail();
 		}
 		
 	}

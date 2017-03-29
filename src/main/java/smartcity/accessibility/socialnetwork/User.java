@@ -79,4 +79,9 @@ public interface User {
 
 	String getLocalName();
 
+	public void addSearchQuery(SearchQuery sq);
+	
+	public SearchQuery getSearchQuery(String QueryName);
+
+	public void removeSearchQuery(String QueryName);
 }
