@@ -12,8 +12,8 @@ import smartcity.accessibility.socialnetwork.User.Privilege;
 
 public class UserFunctionalityTest {
 
-	@Test
 	@Category(UnitTests.class)
+	@Test
 	public void userNameFunctionality() throws UnauthorizedAccessException, UserNotFoundException { 
 		User u = UserImpl.RegularUser("RegularUser", "", "");
 		assertEquals("RegularUser", u.getName());
@@ -22,14 +22,14 @@ public class UserFunctionalityTest {
 		assertEquals("Name has chnged", u.getLocalName());
 	}
 	
-	@Test
 	@Category(UnitTests.class)
+	@Test
 	public void passwordFunctionality() throws UnauthorizedAccessException { 
 		assertEquals("123", UserImpl.RegularUser("User", "123", "").getPassword());
 	}
 	
-	@Test
 	@Category(UnitTests.class)
+	@Test
 	public void staticConstructorsCorrectness() {  
 		
 		assertEquals(Privilege.DefaultUser,
@@ -42,8 +42,8 @@ public class UserFunctionalityTest {
 				UserImpl.Admin("Admin", "", "").getPrivilege());
 	}
 	
-	@Test
 	@Category(UnitTests.class)
+	@Test
 	public void privilegeCorrectness() { 
 		assertEquals(Privilege.DefaultUser,
 				UserImpl.DefaultUser().getPrivilege());

@@ -20,9 +20,9 @@ import smartcity.accessibility.mapmanagement.Location;;
 public class SearchTest{
 	
 
-	 @Ignore
-	 @Test 
 	 @Category(UnitTests.class)
+	 @Ignore 
+	 @Test
      public void test1() throws InterruptedException{ 
      	 MapView mapView = JxMapsFunctionality.getMapView();
 
@@ -34,8 +34,8 @@ public class SearchTest{
          s1.waitOnSearch();
          s2.waitOnSearch();
          
-         Location location1 = sqr1.getLocations().get(0), location2 = sqr2.getLocations().get(0);
-         JxMapsFunctionality.putMarker((ExtendedMapView) mapView, location1.getCoordinates(), "result1");
+         Location location2 = sqr2.getLocations().get(0);
+         JxMapsFunctionality.putMarker((ExtendedMapView) mapView, sqr1.getLocations().get(0).getCoordinates(), "result1");
          JxMapsFunctionality.putMarker((ExtendedMapView) mapView, location2.getCoordinates(), "result2");
          
          JxMapsFunctionality.openFrame(mapView, "JxMaps - Hello, World!", 16.0);
@@ -50,8 +50,8 @@ public class SearchTest{
      }
 	 
 //	 @Ignore
-	 @Test
 	 @Category(UnitTests.class)
+	 @Test
 	 public void test2() throws InterruptedException{
 		 MapView mapView = JxMapsFunctionality.getMapView();
 		 SearchQuery s1 = SearchQuery.adressSearch("coffee shops");
@@ -68,8 +68,8 @@ public class SearchTest{
 	 }
 	 
 	 
-	 @Test 
-	 @Category(UnitTests.class)
+	 @Category(UnitTests.class) 
+	 @Test
 	 public void test3() throws InterruptedException{
 		 MapView mapView1 = JxMapsFunctionality.getMapView();
 

@@ -26,9 +26,9 @@ import smartcity.accessibility.mapmanagement.Location;
  * Author Kolikant
  */
 public class SearchQuery {
-
+	private static final String DefaultQueryName = null;
+	
 	private List<Location> places; // the nearby places result
-
 	public enum SearchStage {
 		NotRunning, Running, Done, Failed;
 
@@ -42,11 +42,13 @@ public class SearchQuery {
 	public static final String EmptyList = "[]";
 	protected static final String isThisAdressSpliter = "<-This is Adress: ";
 
+	String QueryName;
 	String queryString;
 	boolean isAdress;
 	final AtomicInteger searchStatus;
 
 	protected SearchQuery(String parsedQuery) {
+		QueryName = DefaultQueryName;
 		String[] a = parsedQuery.split(isThisAdressSpliter);
 		isAdress = Boolean.parseBoolean(a[0]);
 		this.queryString = a[1];
@@ -54,6 +56,11 @@ public class SearchQuery {
 		SetSearchStatus(SearchStage.NotRunning);
 	}
 
+	protected SearchQuery RenameSearchQuery(String QueryName){
+		this.QueryName = QueryName;
+		return this;
+	}
+	
 	public static SearchQuery adressSearch(String adress) {
 		return new SearchQuery(Boolean.toString(true) + isThisAdressSpliter + adress);
 	}
