@@ -33,6 +33,10 @@ public class UserManagerTest {
 		UserManager.DeleteUser(u);
 		u = UserManager.LoginUser("b"+UserName2, "admin");
 		UserManager.DeleteUser(u);
+		u = UserManager.LoginUser(userName1, "pass");
+		UserManager.DeleteUser(u);
+		u = UserManager.LoginUser(userName2, "pass");
+		UserManager.DeleteUser(u);
 	}
 	
 	
@@ -122,6 +126,27 @@ public class UserManagerTest {
 		} catch (UsernameAlreadyTakenException e) {
 			fail();
 		}
+		b.addSearchQuery(SearchQuery.TypeSearch("cafe"), "in case I feel thirsty!");
 		
+		try {
+			UserManager.updatefavouriteQueries(b);
+		} catch (UserNotFoundException e) {
+			fail();
+		}
+		assert(UserManager.LoginUser(UserName, "pass").getFavouriteSearchQueries().get(0).getName().equals("in case I feel thirsty!"));
+		assert(UserManager.LoginUser(UserName, "pass").getFavouriteSearchQueries().get(0).getQuery().equals("cafe"));
+		
+		b.getSearchQuery("in case I feel thirsty!").RenameSearchQuery("vugolo!!!!");
+		try {
+			UserManager.updatefavouriteQueries(b);
+		} catch (UserNotFoundException e) {
+			fail();
+		}
+		User u2 = UserManager.LoginUser(UserName, "pass");
+		SearchQuery sq = u2.getFavouriteSearchQueries().get(0);
+		assert(sq.getName().equals("vugolo!!!!"));
+		assert(sq.getQuery().equals("cafe"));
+		
+		UserManager.DeleteUser(b);
 	}
 }

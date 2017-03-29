@@ -27,7 +27,6 @@ import smartcity.accessibility.mapmanagement.Location;
  */
 public class SearchQuery {
 	private static final String DefaultQueryName = null;
-	private static final String DummySearchQuery = "this is not a real query and should not return anything ever";
 	private List<Location> places; // the nearby places result
 	public enum SearchStage {
 		NotRunning, Running, Done, Failed;
@@ -41,7 +40,7 @@ public class SearchQuery {
 	
 
 	public static final String EmptyList = "[]";
-	protected static final String isThisAdressSpliter = "<-This is Adress: ";
+	protected static final String thisIsTheStringSplitter = "--This is a String Splitter--";
 
 	String QueryName;
 	String queryString;
@@ -49,16 +48,16 @@ public class SearchQuery {
 	final AtomicInteger searchStatus;
 
 	protected SearchQuery(String parsedQuery) {
-		QueryName = DefaultQueryName;
 		setQueryParts(parsedQuery);
 		searchStatus = new AtomicInteger();
 		SetSearchStatus(SearchStage.NotRunning);
 	}
 
 	private void setQueryParts(String parsedQuery) {
-		String[] a = parsedQuery.split(isThisAdressSpliter);
+		String[] a = parsedQuery.split(thisIsTheStringSplitter);
 		isAdress = Boolean.parseBoolean(a[0]);
 		this.queryString = a[1];
+		this.QueryName = a[2] == "null"? null : a[2];
 	}
 
 	public SearchQuery RenameSearchQuery(String QueryName){
@@ -66,17 +65,25 @@ public class SearchQuery {
 		return this;
 	}
 	
+	public String getName(){
+		return this.QueryName;
+	}
+	
 	public void ChangeQuery(String NewQuery){
-		setQueryParts(Boolean.toString(isAdress) + isThisAdressSpliter + NewQuery);
+		setQueryParts(Boolean.toString(isAdress) + thisIsTheStringSplitter + NewQuery);
 		SetSearchStatus(SearchStage.NotRunning);
 	}
 	
+	public String getQuery(){
+		return this.queryString;
+	}
+	
 	public static SearchQuery adressSearch(String adress) {
-		return new SearchQuery(Boolean.toString(true) + isThisAdressSpliter + adress);
+		return new SearchQuery(Boolean.toString(true) + thisIsTheStringSplitter + adress + thisIsTheStringSplitter + DefaultQueryName);
 	}
 
 	public static SearchQuery TypeSearch(String Type) {
-		return new SearchQuery(Boolean.toString(false) + isThisAdressSpliter + Type);
+		return new SearchQuery(Boolean.toString(false) + thisIsTheStringSplitter + Type + thisIsTheStringSplitter + DefaultQueryName);
 	}
 
 	protected void SetSearchStatus(SearchStage ¢) {
@@ -175,7 +182,7 @@ public class SearchQuery {
 
 	@Override
 	public String toString() {
-		return Boolean.toString(isAdress) + isThisAdressSpliter + queryString;
+		return Boolean.toString(isAdress) + thisIsTheStringSplitter + queryString + thisIsTheStringSplitter + this.QueryName;
 	}
 
 	public static SearchQuery toQuery(String ¢) {
@@ -202,7 +209,8 @@ public class SearchQuery {
 	}
 	
 	public static SearchQuery makeDummy(String dummyName){
-		return (new SearchQuery(DummySearchQuery)).RenameSearchQuery(dummyName);
+		String dummyString = Boolean.toString(false) + thisIsTheStringSplitter + "dummdumm" + thisIsTheStringSplitter + "dummdumm";
+		return (new SearchQuery(dummyString)).RenameSearchQuery(dummyName);
 	}
 	
 	@Override

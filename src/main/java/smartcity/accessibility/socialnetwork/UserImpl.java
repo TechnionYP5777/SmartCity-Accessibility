@@ -79,8 +79,8 @@ public class UserImpl implements User {
 		favouriteSearchQueries = favouriteQueries;
 	}
 	
-	public void addSearchQuery(SearchQuery sq){
-		favouriteSearchQueries.add(sq);
+	public void addSearchQuery(SearchQuery sq, String QueryName){
+		favouriteSearchQueries.add(sq.RenameSearchQuery(QueryName));
 	}
 	
 	private int findQueryIndexByName(String QueryName){

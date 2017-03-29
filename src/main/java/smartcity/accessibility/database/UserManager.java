@@ -134,6 +134,19 @@ public abstract class UserManager {
 			throw new UserNotFoundException();
 		}
 	}
+	
+	public static void updatefavouriteQueries(User b) throws UserNotFoundException {
+		ParseUser pu;
+		try {
+			pu = ParseUser.login(b.getName(), b.getPassword());
+			pu.put(FavouriteQueriesField, SearchQuery.QueriesList2String(b.getFavouriteSearchQueries()));
+			pu.save();
+			pu.logout();
+			logoutCurrUser();
+		} catch (ParseException e1) {
+			throw new UserNotFoundException();
+		}
+	}
 
 	public static void updateAllUserInformation(User ¢) throws UserNotFoundException {
 		if (¢.getPrivilege() == User.Privilege.DefaultUser)
