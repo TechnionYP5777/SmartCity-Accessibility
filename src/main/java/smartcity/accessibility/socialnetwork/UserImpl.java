@@ -72,13 +72,27 @@ public class UserImpl implements User {
 	@Override
 	public void setFavouriteSearchQueries(String favouriteQueries) {
 		favouriteSearchQueries = SearchQuery.String2QueriesList(favouriteQueries);
-
 	}
 
 	@Override
 	public void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries) {
 		favouriteSearchQueries = favouriteQueries;
-
+	}
+	
+	public void addSearchQuery(SearchQuery sq){
+		favouriteSearchQueries.add(sq);
+	}
+	
+	private int findQueryIndexByName(String QueryName){
+		return favouriteSearchQueries.indexOf(SearchQuery.makeDummy(QueryName));
+	}
+	
+	public SearchQuery getSearchQuery(String QueryName){
+		return favouriteSearchQueries.get(findQueryIndexByName(QueryName));
+	}
+	
+	public void removeSearchQuery(String QueryName){
+		favouriteSearchQueries.remove(findQueryIndexByName(QueryName));
 	}
 
 	@Override

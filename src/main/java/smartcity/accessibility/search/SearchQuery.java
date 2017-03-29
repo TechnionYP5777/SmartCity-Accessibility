@@ -27,7 +27,7 @@ import smartcity.accessibility.mapmanagement.Location;
  */
 public class SearchQuery {
 	private static final String DefaultQueryName = null;
-	
+	private static final String DummySearchQuery = "this is not a real query and should not return anything ever";
 	private List<Location> places; // the nearby places result
 	public enum SearchStage {
 		NotRunning, Running, Done, Failed;
@@ -38,6 +38,7 @@ public class SearchQuery {
 			return allValues[¢];
 		}
 	}
+	
 
 	public static final String EmptyList = "[]";
 	protected static final String isThisAdressSpliter = "<-This is Adress: ";
@@ -49,16 +50,25 @@ public class SearchQuery {
 
 	protected SearchQuery(String parsedQuery) {
 		QueryName = DefaultQueryName;
-		String[] a = parsedQuery.split(isThisAdressSpliter);
-		isAdress = Boolean.parseBoolean(a[0]);
-		this.queryString = a[1];
+		setQueryParts(parsedQuery);
 		searchStatus = new AtomicInteger();
 		SetSearchStatus(SearchStage.NotRunning);
 	}
 
-	protected SearchQuery RenameSearchQuery(String QueryName){
+	private void setQueryParts(String parsedQuery) {
+		String[] a = parsedQuery.split(isThisAdressSpliter);
+		isAdress = Boolean.parseBoolean(a[0]);
+		this.queryString = a[1];
+	}
+
+	public SearchQuery RenameSearchQuery(String QueryName){
 		this.QueryName = QueryName;
 		return this;
+	}
+	
+	public void ChangeQuery(String NewQuery){
+		setQueryParts(Boolean.toString(isAdress) + isThisAdressSpliter + NewQuery);
+		SetSearchStatus(SearchStage.NotRunning);
 	}
 	
 	public static SearchQuery adressSearch(String adress) {
@@ -189,6 +199,15 @@ public class SearchQuery {
 		for (String ¢ : split)
 			$.add(SearchQuery.toQuery(¢));
 		return $;
+	}
+	
+	public static SearchQuery makeDummy(String dummyName){
+		return (new SearchQuery(DummySearchQuery)).RenameSearchQuery(dummyName);
+	}
+	
+	@Override
+	public boolean equals(final Object o) {
+		return o == this || (o instanceof SearchQuery && this.QueryName.equals(((SearchQuery) o).QueryName));
 	}
 
 }
