@@ -18,6 +18,7 @@ import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.LocationListCallback;
+import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
@@ -78,11 +79,15 @@ public class SearchQuery {
 		return this.queryString;
 	}
 	
-	public static SearchQuery adressSearch(String adress) {
+	public static SearchQuery adressSearch(String adress) throws illigalString {
+		if(adress.contains(thisIsTheStringSplitter))
+			throw new illigalString();
 		return new SearchQuery(Boolean.toString(true) + thisIsTheStringSplitter + adress + thisIsTheStringSplitter + DefaultQueryName);
 	}
 
-	public static SearchQuery TypeSearch(String Type) {
+	public static SearchQuery TypeSearch(String Type) throws illigalString {
+		if(Type.contains(thisIsTheStringSplitter))
+			throw new illigalString();
 		return new SearchQuery(Boolean.toString(false) + thisIsTheStringSplitter + Type + thisIsTheStringSplitter + DefaultQueryName);
 	}
 

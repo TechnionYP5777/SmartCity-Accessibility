@@ -16,6 +16,7 @@ import javax.swing.WindowConstants;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.exceptions.EmptySearchQuery;
+import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.Location;
@@ -116,12 +117,17 @@ public class ElaborateSearchFrame implements MouseListener {
 		if (arg0.getSource() != btnSearch)
 			return;
 		JxMapsFunctionality.ClearMarkers(JxMapsFunctionality.getMapView());
-		createAndSearchQuery();
+		try {
+			createAndSearchQuery();
+		} catch (illigalString e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		frame.dispose();
 	}
 
-	private SearchQuery createAndSearchQuery() {
+	private SearchQuery createAndSearchQuery() throws illigalString {
 		int Threshold, radius;
 		try {
 

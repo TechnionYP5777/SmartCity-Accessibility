@@ -43,6 +43,7 @@ import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.LocationListCallback;
 import smartcity.accessibility.database.LocationManager;
+import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.ExtendedMarker;
 import smartcity.accessibility.gui.components.OptionsWindow;
@@ -134,32 +135,39 @@ public abstract class JxMapsFunctionality {
 					@Override
 					public void run() {
 						System.out.println(searchField.getText());
-						SearchQuery sq = SearchQuery.adressSearch(searchField.getText());
-						SearchQueryResult sqr1 = sq.SearchByAddress(mv);
+						SearchQuery sq;
 						try {
-							sq.waitOnSearch();
-						} catch (InterruptedException ¢) {
-							¢.printStackTrace();
-						}
-						if (!sqr1.gotResults())
-							JOptionPane.showMessageDialog(Application.frame, "no results were found",
-									"search found nothing :(", JOptionPane.INFORMATION_MESSAGE);
-						else {
-							Location exactAddLoc = sqr1.get(0);
-							// LocationManager.getLocation(dummy.getCoordinates(),
-							// Location.LocationTypes.Street,
-							// Location.LocationSubTypes.Default);
+							sq = SearchQuery.adressSearch(searchField.getText());
+							SearchQueryResult sqr1 = sq.SearchByAddress(mv);
 							try {
-								Location StreetLoc = getStreetLocationByAdress(searchField.getText());
-								JxMapsFunctionality.putExtendedMarkerWithStreet((ExtendedMapView) mv, exactAddLoc,
-										StreetLoc, searchField.getText());
-							} catch (Exception e) {
-								JOptionPane.showMessageDialog(Application.frame,
-										"Search Syntax is as follows:\n Country(optional) City(optional) Street StreetNumber",
-										"bad search query", JOptionPane.INFORMATION_MESSAGE);
+								sq.waitOnSearch();
+							} catch (InterruptedException ¢) {
+								¢.printStackTrace();
 							}
+							if (!sqr1.gotResults())
+								JOptionPane.showMessageDialog(Application.frame, "no results were found",
+										"search found nothing :(", JOptionPane.INFORMATION_MESSAGE);
+							else {
+								Location exactAddLoc = sqr1.get(0);
+								// LocationManager.getLocation(dummy.getCoordinates(),
+								// Location.LocationTypes.Street,
+								// Location.LocationSubTypes.Default);
+								try {
+									Location StreetLoc = getStreetLocationByAdress(searchField.getText());
+									JxMapsFunctionality.putExtendedMarkerWithStreet((ExtendedMapView) mv, exactAddLoc,
+											StreetLoc, searchField.getText());
+								} catch (Exception e) {
+									JOptionPane.showMessageDialog(Application.frame,
+											"Search Syntax is as follows:\n Country(optional) City(optional) Street StreetNumber",
+											"bad search query", JOptionPane.INFORMATION_MESSAGE);
+								}
 
+							}
+						} catch (illigalString e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						}
+						
 					}
 				};
 
@@ -192,7 +200,7 @@ public abstract class JxMapsFunctionality {
 		};
 	}
 
-	private static Location getStreetLocationByAdress(String adress) {
+	private static Location getStreetLocationByAdress(String adress) throws illigalString {
 		String[] Adress = adress.split(" "),
 				StreetRepresenatation = Arrays.copyOfRange(Adress, 0, Math.max(0, Adress.length - 1));
 		String StreetAdress = String.join(" ", StreetRepresenatation);
