@@ -34,7 +34,7 @@ public class Application {
 	public static User appUser = UserImpl.DefaultUser();
 	public static Marker currLocation;
 
-	public static void main(String[] args) {
+	public static void not_main(String[] args) {
 		frame = new MapFrame("SmartCity - Accessibility");
 
 		DatabaseManager.initialize();

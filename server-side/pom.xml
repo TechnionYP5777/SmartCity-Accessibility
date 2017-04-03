@@ -4,11 +4,15 @@
 	<groupId>SmartCity-Accessibility</groupId>
 	<artifactId>SmartCity-Accessibility</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.2.RELEASE</version>
+	</parent>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
-		
+
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -52,6 +56,11 @@
 					</executions>
 				</plugin>
 
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+				</plugin>
+
 			</plugins>
 
 		</pluginManagement>
@@ -78,8 +87,17 @@
 			<name>internal</name>
 			<url>http://kapalex.ddns.net:8081/artifactory/smartcity-accessibility</url>
 		</repository>
+		<repository>
+			<id>spring-releases</id>
+			<url>http://repo.spring.io/libs-release</url>
+		</repository>
 	</repositories>
-
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-releases</id>
+			<url>http://repo.spring.io/libs-release</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -92,6 +110,10 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-servlet-core</artifactId>
@@ -164,6 +186,7 @@
 	<properties>
 		<jersey.version>2.23.2</jersey.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<start-class>smartcity.accessibility.services.Application</start-class>
 		<additionalClasspathElement>src/main/resources</additionalClasspathElement>
 		<argLine />
 	</properties>
