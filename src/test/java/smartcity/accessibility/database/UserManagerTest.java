@@ -23,6 +23,7 @@ public class UserManagerTest {
 	private static final String userName2 = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
 	private static final String userName1 = "uuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
 
+	
 	@BeforeClass
 	public static void init(){
 		DatabaseManager.initialize();
