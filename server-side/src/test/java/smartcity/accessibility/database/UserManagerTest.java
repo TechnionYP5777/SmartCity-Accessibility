@@ -12,6 +12,7 @@ import org.junit.experimental.categories.Category;
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
+import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.User;
 
@@ -61,7 +62,7 @@ public class UserManagerTest {
 
 	@Category(UnitTests.class) 
 	@Test
-	public void test2(){
+	public void test2() throws illigalString{
 		String UserName = userName2;
 		try {
 			UserManager.SignUpUser(UserName, "admin", User.Privilege.Admin);
@@ -119,7 +120,7 @@ public class UserManagerTest {
 	
 	@Category(UnitTests.class) 
 	@Test
-	public void test4(){
+	public void test4() throws illigalString{
 		String UserName = userName2;
 		User b=null;
 		try {
