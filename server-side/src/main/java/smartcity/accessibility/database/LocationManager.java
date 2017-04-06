@@ -160,8 +160,8 @@ public class LocationManager {
 			public void done(List<ParseObject> arg0, ParseException arg1) {
 				if (arg1 == null && arg0 != null)
 					for (ParseObject ¢ : arg0)
-						$.add(new Review(new Location(point, t, subtype), ¢.getInt("rating"),
-								¢.getString("comment"), ¢.getString("user")));
+//						$.add(new Review(new Location(point, t, subtype), ¢.getInt("rating"),
+//								¢.getString("comment"), ¢.getString("user")));
 				synchronized (mutI) {
 					mutI.set(1);
 					mutI.notifyAll();
@@ -221,17 +221,17 @@ public class LocationManager {
 			@Override
 			public void done(List<ParseObject> arg0, ParseException arg1) {
 				if (arg1 == null && arg0 != null)
-					for (ParseObject obj : arg0) {
-						Review r = new Review(obj.getString("locationID"), obj.getInt("rating"),
-								obj.getString("comment"), obj.getString("user"));
-						if (obj.getInt("pined") == 1)
-							try {
-								r.pin(new UserImpl("db", "123123", User.Privilege.Admin));
-							} catch (UnauthorizedAccessException e) {
-								System.out.println("someting went worng loading reviews to location");
-							}
-						reviews.add(r);
-					}
+//					for (ParseObject obj : arg0) {
+//						Review r = new Review(obj.getString("locationID"), obj.getInt("rating"), 
+//								obj.getString("comment"), obj.getString("user"));
+//						if (obj.getInt("pined") == 1)
+//							try {
+//								r.pin(new UserImpl("db", "123123", User.Privilege.Admin));
+//							} catch (UnauthorizedAccessException e) {
+//								System.out.println("someting went worng loading reviews to location");
+//							}
+//					reviews.add(r); 
+//					}
 				DatabaseManager.queryByFields("Location", valuesL, callBackL);
 			}
 		});

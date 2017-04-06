@@ -17,7 +17,7 @@ import smartcity.accessibility.socialnetwork.User.Privilege;
 public class Review {
 
 	private Location location;
-	private String user;
+	private User user;
 	private Score rating;
 	private String content;
 	private boolean isPinned;
@@ -29,25 +29,16 @@ public class Review {
 		this.location = l;
 		this.rating = new Score(r);
 		this.content = c;
-		this.user = u.getName();
-		this.isPinned = false;
-	}
-
-	/**
-	 * implemented for the DB functionality
-	 */
-	public Review(Location l, int r, String c, String u) {
-		this.location = l;
-		this.rating = new Score(r);
-		this.content = c;
 		this.user = u;
 		this.isPinned = false;
 	}
 
+
+
 	/**
 	 * implemented for the DB functionality
 	 */
-	public Review(String l, int r, String c, String u) {
+	public Review(String l, int r, String c, User u) {
 		this.locationID = l;
 		this.rating = new Score(r);
 		this.content = c;
@@ -118,9 +109,9 @@ public class Review {
 	}
 
 	/**
-	 * @return the user name
+	 * @return the user
 	 */
-	public String getUser() {
+	public User getUser() {
 		return this.user;
 	}
 
