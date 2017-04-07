@@ -5,11 +5,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import smartcity.accessibility.exceptions.illigalString;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
+import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.search.SearchQuery;
+import smartcity.accessibility.search.SearchQueryResult;
+
 @RestController
 public class SimpleSearchService {
 	@RequestMapping(value="/simpleSearch/{search}")
 	@ResponseBody
-    public String searchService(@PathVariable("search") String search) {
-    	return "a, I see you are searching for " + search + " well....tough luck";
+    public Location searchService(@PathVariable("search") String search) {	
+		
+		try {
+			SearchQuery $ = SearchQuery.adressSearch(search);
+			ExtendedMapView mapView = JxMapsFunctionality.getMapView();
+			
+			JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
+	        SearchQueryResult sqr1 = $.SearchByAddress(mapView);
+	        $.waitOnSearch();
+	        Location location2 = sqr1.getLocations().get(0);
+	        return location2;
+	     
+		} catch (illigalString | InterruptedException e) {
+			return null;
+		}
     }
 }
