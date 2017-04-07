@@ -28,13 +28,15 @@ public class ParseDatabase implements Database {
 
 	}
 
-	public static ParseDatabase get() {
-		if (pd == null)
+	public static synchronized ParseDatabase get() {
+		if (pd == null) {
+			initialize();
 			pd = new ParseDatabase();
+		}
 		return pd;
 	}
 
-	public static synchronized void initialize() {
+	private static synchronized void initialize() {
 		logger.info("initializing db");
 		if (init)
 			return;
@@ -143,9 +145,28 @@ public class ParseDatabase implements Database {
 	public boolean delete(String objectClass, String id) {
 		try {
 			ParseObject po = ParseQuery.getQuery(objectClass).get(id);
+			if (po == null)
+				return false;
 			po.delete();
 		} catch (ParseException e) {
 			logger.error("delete object failed with error " + e.getMessage());
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean update(String objectClass, String id, Map<String, Object> m) {
+		try {
+			ParseObject po = ParseQuery.getQuery(objectClass).get(id);
+			if (po == null)
+				return false;
+			for (Entry<String, Object> e : m.entrySet())
+				po.put(e.getKey(), e.getValue());
+			po.save();
+		} catch (ParseException e) {
+			logger.error("update object failed with error " + e.getMessage());
 			e.printStackTrace();
 			return false;
 		}

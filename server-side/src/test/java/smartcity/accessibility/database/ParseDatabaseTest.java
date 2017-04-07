@@ -34,7 +34,6 @@ public class ParseDatabaseTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		ParseDatabase.initialize();
 		pd = ParseDatabase.get();
 		initTestObjects();
 	}
@@ -98,6 +97,28 @@ public class ParseDatabaseTest {
 		}
 	}
 
+	@Test
+	@Category({ BranchTests.class, NetworkTests.class })
+	public void testUpdate() {
+		Map<String, Object> object1 = testObjects.get(sampleObjectId);
+
+		String id = pd.put(databaseClass, object1);
+		Map<String, Object> m = new HashMap<>();
+		m.put("test1", 6);
+		assertTrue(pd.update(databaseClass, id, m));
+		
+		Map<String, Object> res = pd.get(databaseClass, id);
+		for (Entry<String, Object> e: object1.entrySet()){
+			if(e.getKey().equals("test1"))
+				assertEquals(6, res.get(e.getKey()));
+			else {
+				if(e.getKey().equals("location"))
+					continue;
+				assertEquals(e.getValue(), res.get(e.getKey()));
+			}
+		}
+	}
+	
 	@Test
 	@Category({ BranchTests.class, NetworkTests.class })
 	public void testDelete() {

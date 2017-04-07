@@ -46,4 +46,14 @@ public interface Database {
 	 * @return
 	 */
 	boolean delete(String objectClass, String id);
+	
+	/**
+	 * update the object with id with the fields in m
+	 * if failed to update for any reason return false
+	 * @param objectClass
+	 * @param id
+	 * @param m
+	 * @return
+	 */
+	boolean update(String objectClass, String id, Map<String, Object> m);
 }
