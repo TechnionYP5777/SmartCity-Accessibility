@@ -30,6 +30,7 @@ public class Review {
 		this.content = c;
 		this.user = u;
 		this.isPinned = false;
+		u.getHelpfulness().incNumOfReviews();
 	}
 	
 	public Review(Location l, int r, String c, User u) {

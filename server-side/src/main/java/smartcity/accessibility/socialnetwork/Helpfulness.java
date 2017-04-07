@@ -30,8 +30,15 @@ public class Helpfulness {
 		numOfReviews++;
 	}
 	
-	int getHelpfulness(User u) {
-		
-		return 0;
+	/*
+	 * This method returns the average likes per comment.
+	 * negative value represents dislikes.
+	 */
+	private double getAvgLikes() {
+		return (likes - dislikes) / numOfReviews;
+	}
+	
+	public Double helpfulness() {
+		return getAvgLikes();
 	}
 }
