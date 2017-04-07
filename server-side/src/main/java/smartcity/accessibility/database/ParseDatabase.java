@@ -1,13 +1,14 @@
 package smartcity.accessibility.database;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.parse4j.Parse;
 import org.parse4j.ParseException;
+import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
 import org.parse4j.ParseQuery;
 import org.slf4j.Logger;
@@ -18,7 +19,6 @@ public class ParseDatabase implements Database {
 	public static final String SERVER_URL = "https://smartcityaccessibility.herokuapp.com/parse";
 	public static final String REST_KEY = "2139d-231cb2-738fe";
 	public static final String APP_ID = "smartcityaccessibility";
-	public static final String DEFAULT_LOCATION_FIELD_NAME = "location";
 	public static final String OBJECT_ID_FIELD = "objectId";
 	private static Logger logger = LoggerFactory.getLogger(ParseDatabase.class);
 	private static boolean init = false;
@@ -44,7 +44,7 @@ public class ParseDatabase implements Database {
 
 	private static Map<String, Object> toMap(ParseObject po) {
 		logger.debug("entered toMap");
-		if(po == null)
+		if (po == null)
 			return null;
 		Map<String, Object> map = new HashMap<>();
 		for (String os : po.keySet()) {
@@ -54,13 +54,12 @@ public class ParseDatabase implements Database {
 		map.put(OBJECT_ID_FIELD, po.getObjectId());
 		return map;
 	}
-	
-	private static List<Map<String, Object>> toMap(List<ParseObject> lpo){
-		
+
+	private static List<Map<String, Object>> toMap(List<ParseObject> lpo) {
 		List<Map<String, Object>> lm = new ArrayList<>();
-		if(lpo == null)
+		if (lpo == null)
 			return lm;
-		for(ParseObject po : lpo ){
+		for (ParseObject po : lpo) {
 			lm.add(toMap(po));
 		}
 		return lm;
@@ -68,21 +67,21 @@ public class ParseDatabase implements Database {
 
 	private static ParseObject fromMap(String objectClass, Map<String, Object> m) {
 		logger.debug("entered fromMap");
-		if(m == null || objectClass == null)
+		if (m == null || objectClass == null)
 			return null;
 		ParseObject po = new ParseObject(objectClass);
 		for (Entry<String, Object> e : m.entrySet()) {
 			logger.debug("put key " + e.getKey());
-			if(e.getKey().equals(OBJECT_ID_FIELD))
+			if (e.getKey().equals(OBJECT_ID_FIELD))
 				continue;
 			po.put(e.getKey(), e.getValue());
 		}
 		return po;
 	}
-	
 
 	@Override
 	public Map<String, Object> get(String objectClass, String id) {
+		logger.debug("getting object with id " + id);
 		try {
 			ParseObject po = ParseQuery.getQuery(objectClass).get(id);
 			return toMap(po);
@@ -95,11 +94,11 @@ public class ParseDatabase implements Database {
 
 	@Override
 	public List<Map<String, Object>> get(String objectClass, Map<String, Object> baseObject) {
-		logger.debug("getting object with map " +baseObject);
+		logger.debug("getting object with map " + baseObject);
 		ParseQuery<ParseObject> pq = ParseQuery.getQuery(objectClass);
 		for (Entry<String, Object> e : baseObject.entrySet())
 			pq.whereEqualTo(e.getKey(), e.getValue());
-		
+
 		try {
 			return toMap(pq.find());
 		} catch (ParseException e) {
@@ -110,21 +109,25 @@ public class ParseDatabase implements Database {
 	}
 
 	@Override
-	public List<Map<String, Object>> get(String objectClass, String field, double latitude, double longitude,
+	public List<Map<String, Object>> get(String objectClass, String locationField, double latitude, double longitude,
 			double radius) {
-		// TODO Auto-generated method stub
+		logger.debug("getting object with location " + latitude + "," + longitude + " within radius " + radius);
+		ParseQuery<ParseObject> pq = ParseQuery.getQuery(objectClass);
+		pq.whereWithinKilometers(locationField, new ParseGeoPoint(latitude, longitude), radius);
+
+		try {
+			return toMap(pq.find());
+		} catch (ParseException e) {
+			logger.error("get object failed with message " + e.getMessage());
+			e.printStackTrace();
+		}
 		return new ArrayList<>();
-	}
-	
-	public List<Map<String, Object>> get(String objectClass, double latitude, double longitude,
-			double radius) {
-		return get(objectClass, DEFAULT_LOCATION_FIELD_NAME, latitude, longitude, radius);
 	}
 
 	@Override
 	public String put(String objectClass, Map<String, Object> object) {
 		ParseObject po = fromMap(objectClass, object);
-		if( po == null )
+		if (po == null)
 			return null;
 		try {
 			po.save();

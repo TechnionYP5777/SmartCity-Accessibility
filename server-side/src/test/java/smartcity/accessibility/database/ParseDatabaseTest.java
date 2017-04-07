@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.Timeout;
 import org.parse4j.ParseException;
+import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
 
 import smartcity.accessibility.categories.BranchTests;
@@ -55,6 +56,8 @@ public class ParseDatabaseTest {
 	public void testGet() {
 		Map<String, Object> res = pd.get(databaseClass, sampleObjectId);
 		for (Entry<String, Object> e : testObjects.get(sampleObjectId).entrySet()) {
+			if(e.getKey().equals("location"))
+				continue;
 			assertEquals(e.getValue(), res.get(e.getKey()));
 		}
 	}
@@ -63,6 +66,17 @@ public class ParseDatabaseTest {
 	@Category({ BranchTests.class, NetworkTests.class })
 	public void testGetList() {
 		List<Map<String, Object>> res = pd.get(databaseClass, testObjects.get(sampleObjectId));
+		for (Map<String, Object> m : res) {
+			if(m.get("objectId").equals(sampleObjectId))
+				return;
+		}
+		fail("couldn't find the sample object");
+	}
+	
+	@Test
+	@Category({ BranchTests.class, NetworkTests.class })
+	public void testGetLocation() {
+		List<Map<String, Object>> res = pd.get(databaseClass, "location", 0.1, 0.1, 1.0);
 		for (Map<String, Object> m : res) {
 			if(m.get("objectId").equals(sampleObjectId))
 				return;
@@ -78,6 +92,8 @@ public class ParseDatabaseTest {
 		String id = pd.put(databaseClass, object1);
 		Map<String, Object> res = pd.get(databaseClass, id);
 		for (Entry<String, Object> e : object1.entrySet()) {
+			if(e.getKey().equals("location"))
+				continue;
 			assertEquals(e.getValue(), res.get(e.getKey()));
 		}
 	}
@@ -98,6 +114,7 @@ public class ParseDatabaseTest {
 		object1.put("test1", 1);
 		object1.put("test2", "val2");
 		object1.put("test3", 3);
+		object1.put("location", new ParseGeoPoint(0.1,0.1));
 		final ParseObject po1 = new ParseObject(databaseClass);
 		for (Entry<String, Object> e : object1.entrySet()) {
 			po1.put(e.getKey(), e.getValue());

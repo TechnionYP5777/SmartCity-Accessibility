@@ -26,7 +26,7 @@ public interface Database {
 	 * @param field name of the field in the database that holds the location
 	 * @param latitude
 	 * @param longitude
-	 * @param radius
+	 * @param radius in kilometer
 	 * @return
 	 */
 	List<Map<String, Object>> get(String objectClass, String field, double latitude, double longitude, double radius);
