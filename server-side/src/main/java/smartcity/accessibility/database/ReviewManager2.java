@@ -10,7 +10,7 @@ import smartcity.accessibility.socialnetwork.Review;
 public class ReviewManager2 {
 
 	private static Database db;
-	private static final String DATABASE_CLASS = "DatabaseManagerTestClass";
+	private static final String DATABASE_CLASS = "Review";
 
 	@Inject
 	public ReviewManager2(Database db) {
