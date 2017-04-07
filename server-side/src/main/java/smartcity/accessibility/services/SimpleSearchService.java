@@ -20,9 +20,7 @@ public class SimpleSearchService {
 		
 		try {
 			SearchQuery $ = SearchQuery.adressSearch(search);
-			ExtendedMapView mapView = JxMapsFunctionality.getMapView();
-			
-			JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
+			ExtendedMapView mapView = Application.mapView;
 	        SearchQueryResult sqr1 = $.SearchByAddress(mapView);
 	        $.waitOnSearch();
 	        Location location2 = sqr1.getLocations().get(0);
