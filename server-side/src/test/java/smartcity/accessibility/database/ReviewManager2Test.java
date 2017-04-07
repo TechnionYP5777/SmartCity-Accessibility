@@ -5,12 +5,15 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
+import smartcity.accessibility.categories.BranchTests;
+import smartcity.accessibility.categories.NetworkTests;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 
@@ -38,6 +41,7 @@ public class ReviewManager2Test {
 	}
 
 	@Test
+	@Category({ BranchTests.class, UnitTests.class })
 	public void testUpload() {
 		Review r = new Review(new Location(), 5, "asdfasd", "asdfas");
 		rm.uploadReview(r);
