@@ -84,4 +84,6 @@ public interface User {
 	public SearchQuery getSearchQuery(String QueryName);
 
 	public void removeSearchQuery(String QueryName);
+	
+	public Helpfulness getHelpfulness();
 }
