@@ -1,8 +1,9 @@
 package smartcity.accessibility.database;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -60,17 +61,35 @@ public class ParseDatabaseTest {
 	
 	@Test
 	@Category({ BranchTests.class, NetworkTests.class })
+	public void testGetList() {
+		List<Map<String, Object>> res = pd.get(databaseClass, testObjects.get(sampleObjectId));
+		for (Map<String, Object> m : res) {
+			if(m.get("objectId").equals(sampleObjectId))
+				return;
+		}
+		fail("couldn't find the sample object");
+	}
+
+	@Test
+	@Category({ BranchTests.class, NetworkTests.class })
 	public void testPut() {
-		Map<String, Object> object1 = new HashMap<>();
-		object1.put("test1", 2);
-		object1.put("test2", "val3");
-		object1.put("test3", 5);
-		
+		Map<String, Object> object1 = testObjects.get(sampleObjectId);
+
 		String id = pd.put(databaseClass, object1);
 		Map<String, Object> res = pd.get(databaseClass, id);
-		for (Entry<String, Object> e : object1.entrySet()){
+		for (Entry<String, Object> e : object1.entrySet()) {
 			assertEquals(e.getValue(), res.get(e.getKey()));
 		}
+	}
+
+	@Test
+	@Category({ BranchTests.class, NetworkTests.class })
+	public void testDelete() {
+		Map<String, Object> object1 = testObjects.get(sampleObjectId);
+
+		String id = pd.put(databaseClass, object1);
+		assertTrue(pd.delete(databaseClass, id));
+		assertNull(pd.get(databaseClass, id));
 	}
 
 	public static void initTestObjects() throws ParseException {

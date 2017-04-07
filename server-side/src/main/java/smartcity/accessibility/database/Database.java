@@ -32,17 +32,18 @@ public interface Database {
 	List<Map<String, Object>> get(String objectClass, String field, double latitude, double longitude, double radius);
 	
 	/**
-	 * gets all the objects from object class
-	 * @param objectClass
-	 * @return
-	 */
-	List<Map<String, Object>> getAll(String objectClass);
-	
-	/**
 	 * put object into object class and return newly created objects id
 	 * @param objectClass
 	 * @param object
 	 * @return
 	 */
 	String put(String objectClass, Map<String, Object> object);
+	
+	/**
+	 * delete item with id from objectClass
+	 * @param objectClass
+	 * @param id
+	 * @return
+	 */
+	boolean delete(String objectClass, String id);
 }
