@@ -13,7 +13,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import smartcity.accessibility.categories.BranchTests;
-import smartcity.accessibility.categories.NetworkTests;
+import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 
