@@ -80,3 +80,6 @@ buildNumber.properties
 
 # Exclide logs folder
 logs/
+
+# Exclude spartan
+spartan.xml
