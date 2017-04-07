@@ -57,6 +57,21 @@ public class ParseDatabaseTest {
 			assertEquals(e.getValue(), res.get(e.getKey()));
 		}
 	}
+	
+	@Test
+	@Category({ BranchTests.class, NetworkTests.class })
+	public void testPut() {
+		Map<String, Object> object1 = new HashMap<>();
+		object1.put("test1", 2);
+		object1.put("test2", "val3");
+		object1.put("test3", 5);
+		
+		String id = pd.put(databaseClass, object1);
+		Map<String, Object> res = pd.get(databaseClass, id);
+		for (Entry<String, Object> e : object1.entrySet()){
+			assertEquals(e.getValue(), res.get(e.getKey()));
+		}
+	}
 
 	public static void initTestObjects() throws ParseException {
 		testObjects = new HashMap<>();

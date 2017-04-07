@@ -90,4 +90,17 @@ public class ParseDatabase implements Database {
 		return null;
 	}
 
+	@Override
+	public String put(String objectClass, Map<String, Object> object) {
+		ParseObject po = fromMap(objectClass, object);
+		try {
+			po.save();
+		} catch (ParseException e) {
+			logger.error("put object failed with message " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+		return po.getObjectId();
+	}
+
 }

@@ -37,4 +37,12 @@ public interface Database {
 	 * @return
 	 */
 	List<Map<String, Object>> getAll(String objectClass);
+	
+	/**
+	 * put object into object class and return newly created objects id
+	 * @param objectClass
+	 * @param object
+	 * @return
+	 */
+	String put(String objectClass, Map<String, Object> object);
 }
