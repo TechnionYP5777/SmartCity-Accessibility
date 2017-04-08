@@ -9,12 +9,12 @@ import smartcity.accessibility.socialnetwork.Review;
 
 public class ReviewManager2 {
 
-	private static Database db;
+	private Database db;
 	private static final String DATABASE_CLASS = "Review";
 
 	@Inject
 	public ReviewManager2(Database db) {
-		ReviewManager2.db = db;
+		this.db = db;
 	}
 
 	private static Map<String, Object> toMap(Review r) {
