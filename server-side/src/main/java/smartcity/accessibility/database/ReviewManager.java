@@ -15,6 +15,7 @@ public class ReviewManager {
 	private Database db;
 	private static final String DATABASE_CLASS = "Review";
 	private static ReviewManager instance;
+	private static final String ID_FIELD_NAME = "objectId";
 
 	@Inject
 	public ReviewManager(Database db) {
@@ -31,7 +32,18 @@ public class ReviewManager {
 
 	private static Map<String, Object> toMap(Review r) {
 		Map<String, Object> map = new HashMap<>();
-
+		Location l = r.getLocation();
+		String id = LocationManager.instance().getId(l.getCoordinates());
+		if(id == null){
+			id = LocationManager.instance().uploadLocation(l);
+		}
+		map.put(ID_FIELD_NAME, id);
+		map.put("user",	r.getUser());
+		map.put("rating", r.getRating().getScore());
+		map.put("content", r.getContent());
+		map.put("isPinned", r.isPinned());
+		
+		
 		return map;
 	}
 

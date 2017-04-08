@@ -89,4 +89,9 @@ public class LocationManager {
 		return null;
 	}
 
+	public String getId(LatLng coordinates) {
+		// TODO : Try with db.get with coordinates and radius 0.0
+		return null;
+	}
+
 }
