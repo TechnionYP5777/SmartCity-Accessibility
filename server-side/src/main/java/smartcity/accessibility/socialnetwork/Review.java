@@ -25,12 +25,17 @@ public class Review {
 								// added to the default constractor
 	private List<ReviewComment> comments = new ArrayList<ReviewComment>();
 
-	public Review(Location l, int r, String c, User u) {
-		this.location = l;
+	public Review(int r, String c, User u) {
 		this.rating = new Score(r);
 		this.content = c;
 		this.user = u;
 		this.isPinned = false;
+		u.getHelpfulness().incNumOfReviews();
+	}
+	
+	public Review(Location l, int r, String c, User u) {
+		this(r, c, u);
+		this.location = l;
 	}
 
 
@@ -39,11 +44,8 @@ public class Review {
 	 * implemented for the DB functionality
 	 */
 	public Review(String l, int r, String c, User u) {
+		this(r, c, u);
 		this.locationID = l;
-		this.rating = new Score(r);
-		this.content = c;
-		this.user = u;
-		this.isPinned = false;
 	}
 
 	public Score getRating() {
@@ -126,16 +128,20 @@ public class Review {
 	 * @author KaplanAlexander
 	 * @throws UnauthorizedAccessException
 	 */
-	public void upvote(User ¢) throws UnauthorizedAccessException {
-		comment(¢, ReviewComment.POSITIVE_RATING);
+	public void upvote(User u) throws UnauthorizedAccessException {
+		comment(u, ReviewComment.POSITIVE_RATING);
+		u.getHelpfulness().incLikes();
+		//TODO: update the DB
 	}
 
 	/**
 	 * @author KaplanAlexander
 	 * @throws UnauthorizedAccessException
 	 */
-	public void downvote(User ¢) throws UnauthorizedAccessException {
-		comment(¢, ReviewComment.NEGATIVE_RATING);
+	public void downvote(User u) throws UnauthorizedAccessException {
+		comment(u, ReviewComment.NEGATIVE_RATING);
+		u.getHelpfulness().incDislikes();
+		//TODO: update the DB
 	}
 
 	/**

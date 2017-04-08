@@ -1,8 +1,8 @@
 package smartcity.accessibility.socialnetwork;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import smartcity.accessibility.mapmanagement.Location;
 
@@ -30,6 +30,19 @@ public class BestReviews {
 		this.l = l;
 	}
 	
+	public class HelpfulnessCompare implements Comparator<Review> {
+
+		@Override
+		public int compare(Review o1, Review o2) {
+			if (o2.getUser().getHelpfulness().helpfulness() >  o1.getUser().getHelpfulness().helpfulness())
+				return 1;
+			else if (o2.getUser().getHelpfulness().helpfulness() >  o1.getUser().getHelpfulness().helpfulness())
+				return 0;
+			else return o2.getRating().getScore() - o1.getRating().getScore();
+		}
+		
+	}
+	
 	/**
 	 * @return a list containing the following listed by priority such that
 	 * 		   the list's size will be n :
@@ -38,10 +51,9 @@ public class BestReviews {
 	 */
 	public List<Review> getMostRated() {
 		List<Review> $ = l.getPinnedReviews();
-		$.sort((Review r1, Review r2) -> r2.getRating().getScore() - r1.getRating().getScore());
+		$.sort(new HelpfulnessCompare());
 		List<Review> unPinnedReviews = l.getNotPinnedReviews();
-		unPinnedReviews.sort((Review r1, Review r2) -> r2.getRating().getScore() - r1.getRating().getScore());
-	
+		unPinnedReviews.sort(new HelpfulnessCompare() );
 		if ($.isEmpty())
 			return unPinnedReviews.size() < n ? unPinnedReviews : unPinnedReviews.subList(0, n);
 		if ($.size() >= n )
@@ -57,11 +69,20 @@ public class BestReviews {
 	}
 	
 	/**
-	 * @return the rating of the location calculated by average of the review's rating
+	 * @return the rating of the location calculated by weighted mean of the review's rating
 	 */
 	public int getTotalRatingByAvg() {
 		List<Review> $ = getMostRated();
-		return $.stream().collect(Collectors.summingInt(λ -> λ.getRating().getScore())) / $.size();
+		double sum = 0, totalhelpfulness = 0;
+		for (Review r : $) {
+			double h = r.getUser().getHelpfulness().helpfulness();
+			double rating = r.getRating().getScore();
+			if (h == 0) 
+				h++;
+			sum += h * rating;
+			totalhelpfulness += h;
+		}
+		return  (int) ( sum / totalhelpfulness);
 	}
 	
 	/**
