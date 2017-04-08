@@ -10,7 +10,8 @@ import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
-import smartcity.accessibility.mapmanagement.Location;;
+import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.LocationBuilder;;
 
 /**
  * @author Koral Chapnik
@@ -24,8 +25,10 @@ public class ReviewTest {
 	public static void init(){
 		u1 = UserImpl.RegularUser("Koral","123","");
 		u2 = UserImpl.Admin("KoralAdmin","123","");
-		r1 = new Review(new Location(new LatLng(39.750307, -104.999472)), Score.getMinScore(),
-				"very unaccessible place!", u1);
+		r1 = new Review(new LocationBuilder().setCoordinates(39.750307, -104.999472).build(),
+				Score.getMinScore(),
+				"very unaccessible place!",
+				u1);
 	}
 	
 	@Test

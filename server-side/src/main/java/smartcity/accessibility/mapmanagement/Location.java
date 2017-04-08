@@ -1,6 +1,7 @@
 package smartcity.accessibility.mapmanagement;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,31 +24,25 @@ import smartcity.accessibility.socialnetwork.User.Privilege;
 
 public class Location {
 
-	public enum LocationSubTypes {
-		Restaurant, Hotel, Bar, Default
-	}
-
-	public enum LocationTypes {
-		Coordinate(LocationSubTypes.Default), Facility(LocationSubTypes.Restaurant, LocationSubTypes.Hotel,
-				LocationSubTypes.Bar, LocationSubTypes.Default), Street(LocationSubTypes.Default);
-
-		private List<LocationSubTypes> subTypes = new ArrayList<LocationSubTypes>();
-
-		LocationTypes(LocationSubTypes... s) {
-			for (LocationSubTypes st : s)
-				subTypes.add(st);
-		}
-
-		public List<LocationSubTypes> getSubTypes() {
-			return Collections.unmodifiableList(subTypes);
-		}
-	}
+	
 
 	private ArrayList<Review> reviews;
 	private LatLng coordinates;
 	private String name = "";
 	private LocationTypes locationType;
 	private LocationSubTypes locationSubType;
+
+	public void setCoordinates(LatLng coordinates) {
+		this.coordinates = coordinates;
+	}
+
+	public void setLocationType(LocationTypes locationType) {
+		this.locationType = locationType;
+	}
+
+	public void setLocationSubType(LocationSubTypes locationSubType) {
+		this.locationSubType = locationSubType;
+	}
 
 	public ArrayList<Review> getReviews() {
 		return reviews;
@@ -62,39 +57,8 @@ public class Location {
 	}
 
 	public Location() {
-		initiateArrays();
+		reviews = new ArrayList<>();
 		this.coordinates = null;
-	}
-
-	public Location(LatLng c) {
-		initiateArrays();
-		this.coordinates = c;
-	}
-
-	public Location(LatLng c, LocationTypes lt) {
-		initiateArrays();
-		this.coordinates = c;
-		this.locationType = lt;
-	}
-
-	public Location(LatLng c, LocationTypes lt, LocationSubTypes lst) {
-		this(c, lt);
-		this.locationSubType = lst;
-	}
-
-	/**
-	 * Added in order to create location when loading them from the DB
-	 * 
-	 * @author assaflu
-	 * @param c
-	 * @param lt
-	 * @param lst
-	 * @param r
-	 */
-	public Location(LatLng c, LocationTypes lt, LocationSubTypes lst, ArrayList<Review> r) {
-		this(c, lt);
-		this.reviews.addAll(r);
-		this.locationSubType = lst;
 	}
 
 	public void setName(String ¢) {
@@ -105,21 +69,6 @@ public class Location {
 		return this.name;
 	}
 
-	public Location(ArrayList<Review> r, LatLng c) {
-		this.reviews = r;
-		this.coordinates = c;
-	}
-
-	public Location(ArrayList<Review> pinned, ArrayList<Review> unPinned, LatLng c) {
-		initiateArrays();
-		this.reviews.addAll(pinned);
-		this.reviews.addAll(unPinned);
-		this.coordinates = c;
-	}
-
-	private void initiateArrays() {
-		this.reviews = new ArrayList<Review>();
-	}
 
 	/**
 	 * The calculation of the rating works as follows: if there are no
@@ -148,6 +97,10 @@ public class Location {
 
 	public LatLng getCoordinates() {
 		return this.coordinates;
+	}
+	
+	public void addReviews(Collection<Review> reviews){
+		reviews.addAll(reviews);
 	}
 
 	/**
@@ -302,6 +255,26 @@ public class Location {
 			return LocationSubTypes.Restaurant;
 		}
 		return LocationSubTypes.Default; // default return
+	}
+	
+	public enum LocationSubTypes {
+		Restaurant, Hotel, Bar, Default
+	}
+
+	public enum LocationTypes {
+		Coordinate(LocationSubTypes.Default), Facility(LocationSubTypes.Restaurant, LocationSubTypes.Hotel,
+				LocationSubTypes.Bar, LocationSubTypes.Default), Street(LocationSubTypes.Default);
+
+		private List<LocationSubTypes> subTypes = new ArrayList<LocationSubTypes>();
+
+		LocationTypes(LocationSubTypes... s) {
+			for (LocationSubTypes st : s)
+				subTypes.add(st);
+		}
+
+		public List<LocationSubTypes> getSubTypes() {
+			return Collections.unmodifiableList(subTypes);
+		}
 	}
 
 }

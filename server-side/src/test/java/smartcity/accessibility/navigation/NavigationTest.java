@@ -14,6 +14,7 @@ import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 
@@ -74,8 +75,8 @@ public class NavigationTest {
 	@Test
 	@Category(UnitTests.class)
 	public void displayMap() throws CommunicationFailed {
-		Location fromLocation = new Location(new LatLng(31.768762, 34.632052)),
-				toLocation = new Location(new LatLng(31.770981, 34.620567));
+		Location fromLocation = new LocationBuilder().setCoordinates(31.768762, 34.632052).build(),
+				toLocation = new LocationBuilder().setCoordinates(31.770981, 34.620567).build();//new Location(new LatLng(31.770981, 34.620567));
 		LatLng[] shapePoints = Navigation.showRoute(fromLocation, toLocation, 0);
 		ExtendedMapView mapview = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady(mapview);

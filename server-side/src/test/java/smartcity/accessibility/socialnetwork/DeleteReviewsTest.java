@@ -4,12 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.teamdev.jxmaps.LatLng;
-
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.LocationBuilder;
 
 public class DeleteReviewsTest {
 	User admin, user, defaultuser;
@@ -22,7 +21,7 @@ public class DeleteReviewsTest {
 		defaultuser = UserImpl.DefaultUser();
 		user = UserImpl.RegularUser("RegularUser", "", "");
 		admin = UserImpl.Admin("Admin", "", "");
-		location = new Location(new LatLng(100, 100));
+		location = new LocationBuilder().setCoordinates(100, 100).build();
 
 		review = new Review(location, 5, "Nothing here", user);
 		review2 = new Review(location, 3, "Nothing here either", admin);

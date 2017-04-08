@@ -351,7 +351,7 @@ public abstract class JxMapsFunctionality {
 		Application.currLocation = new Marker(map);
 		Application.currLocation.setPosition(l);
 
-		NearbyPlacesSearch.findNearbyPlaces(mv, new Location(l), 1000, Arrays.asList(LocationSubTypes.values()).stream()
+		NearbyPlacesSearch.findNearbyPlaces(mv, new LocationBuilder().setCoordinates(l.getLat(), l.getLng()).build(), 1000, Arrays.asList(LocationSubTypes.values()).stream()
 				.map(λ -> λ + "").collect(Collectors.toList()), new LocationListCallback() {
 					@Override
 					public void done(List<Location> ls) {
@@ -387,7 +387,7 @@ public abstract class JxMapsFunctionality {
 
 			@Override
 			public void done(List<Location> ¢) {
-				new LocationFrame(!¢.isEmpty() ? ¢.get(0) : new Location(l));
+				new LocationFrame(!¢.isEmpty() ? ¢.get(0) : new LocationBuilder().setCoordinates(l.getLat(), l.getLng()).build());
 				wheel.dispose();
 			}
 		});

@@ -10,6 +10,7 @@ import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.LocationBuilder;
 
 public class UserPinTest {
 	User admin, user, defaultuser;
@@ -22,7 +23,7 @@ public class UserPinTest {
 		defaultuser = UserImpl.DefaultUser();
 		user = UserImpl.RegularUser("RegularUser", "", "");
 		admin = UserImpl.Admin("Admin", "", "");
-		location = new Location(new LatLng(100, 100));
+		location = new LocationBuilder().setCoordinates(100,100).build();
 
 		review = new Review(location, 5, "Nothing here", user);
 

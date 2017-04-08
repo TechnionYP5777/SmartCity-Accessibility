@@ -22,6 +22,7 @@ import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.LocationBuilder;
 
 /**
  * Author Kolikant
@@ -152,7 +153,7 @@ public class SearchQuery {
 					return;
 				}
 				LatLng l = rs[0].getGeometry().getLocation();
-				Location f = new Location(l);
+				Location f = new LocationBuilder().setCoordinates(l).build();
 				f.setName(rs[0].getFormattedAddress());
 				$.add(f);
 				SetSearchStatus(SearchStage.Done);

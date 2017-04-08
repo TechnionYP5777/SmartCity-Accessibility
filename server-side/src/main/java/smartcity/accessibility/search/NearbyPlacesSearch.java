@@ -14,6 +14,7 @@ import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.LocationListCallback;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.LocationBuilder;
 
 /**
  * @author Koral Chapnik
@@ -45,7 +46,7 @@ public class NearbyPlacesSearch {
 					for (int i = 0; i < rs.length; ++i) {
 						PlaceResult result = rs[i];
 						LatLng l = result.getGeometry() == null ? null : result.getGeometry().getLocation();
-						Location f = new Location(l);
+						Location f = new LocationBuilder().setCoordinates(l).build();
 						f.setName(result.getName());
 						$.add(f);
 					}

@@ -18,14 +18,14 @@ import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 
 public class ReviewManager2Test {
-	private static ReviewManager2 rm;
+	private static ReviewManager rm;
 	protected static Database db;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		db = Mockito.mock(Database.class);
 		Injector injector = Guice.createInjector(new DatabaseModule());
-		rm = injector.getInstance(ReviewManager2.class);
+		rm = injector.getInstance(ReviewManager.class);
 	}
 
 	@AfterClass
