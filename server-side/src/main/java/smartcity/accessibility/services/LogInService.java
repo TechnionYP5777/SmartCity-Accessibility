@@ -19,8 +19,7 @@ public class LogInService {
 		return u.hashCode();
 	}
 
-	static boolean isUserLoggedIn(User u) {
-		Integer token = u.hashCode();
+	static boolean isUserLoggedIn(Integer token) {
 		UserInfo userInfo = null;
 		try {
 			userInfo = Application.tokenToSession.get(token);
