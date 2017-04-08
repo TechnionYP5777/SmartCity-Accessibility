@@ -6,13 +6,14 @@ import {LoginPage} from '../pages/login/login';
 import {MapviewPage} from '../pages/mapview/mapview';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import {MapClickMenuPage} from '../pages/mapclickmenu/mapclickmenu';
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
 	LoginPage,
-	MapviewPage
+	MapviewPage,
+	MapClickMenuPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -22,7 +23,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     HomePage,
 	LoginPage,
-	MapviewPage
+	MapviewPage,
+	MapClickMenuPage
   ],
   providers: [
     StatusBar,

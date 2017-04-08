@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController,ModalController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AlertController } from 'ionic-angular';
+import {MapClickMenuPage} from '../mapclickmenu/mapclickmenu';
 
 declare var google;
  
@@ -16,7 +17,7 @@ export class MapviewPage {
   map: any;
   marker:any;
   geolocation: Geolocation
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController) {}
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController) {}
   
   ionViewDidLoad(){
     this.loadMap();
@@ -32,17 +33,17 @@ presentAlert(str) {
 loadMap(){
 	this.geolocation = new Geolocation();
     this.geolocation.getCurrentPosition().then((position) => {
- 
-    let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
- 
-    let mapOptions = {
-        center: latLng,
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-	
-    this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-	google.maps.event.addListener(this.map,'click',(event)=>{ this.presentAlert('hi'+event.latLng); } );
+		let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		let mapOptions = {
+			center: latLng,
+			zoom: 15,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		}		
+		this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+		google.maps.event.addListener(this.map,'click',(event)=>{ 
+			let clickMenu = this.modalCtrl.create(MapClickMenuPage,{latlng : event.latLng});
+			clickMenu.present();
+		} );
     }, (err) => {
       console.log(err);
     });
