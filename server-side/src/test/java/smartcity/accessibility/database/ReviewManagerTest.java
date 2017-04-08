@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
@@ -17,7 +18,7 @@ import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 
-public class ReviewManager2Test {
+public class ReviewManagerTest {
 	private static ReviewManager rm;
 	protected static Database db;
 
@@ -41,6 +42,7 @@ public class ReviewManager2Test {
 	}
 
 	@Test
+	@Ignore
 	@Category({ BranchTests.class, UnitTests.class })
 	public void testUpload() {
 		Review r = new Review(new Location(), 5, "asdfasd", "asdfas");
