@@ -30,9 +30,12 @@
 		<a href="#" class="ui-btn ui-corner-all ui-btn-a">4</a>
 		<a href="#" class="ui-btn ui-corner-all ui-btn-a">5</a>
 	</div>
-	<label class="item item-input item-stacked-label">
-		<input name="Review input" placeholder="Enter your review here..." maxlength="500" type="text"/>
-	</label>
+	<label for="textarea-1" class="ui-hidden-accessible"></label>
+	<textarea name="textarea-1" id="textarea-1" autofocus="true" cols="40" rows="8">Enter your review here....</textarea>
+	<div class="ui-input-btn ui-btn ui-btn-inline ui-corner-all">
+		Submit review
+		<input data-enhanced="true" type="submit" value="Submit review" id="button-1"/>
+	</div>
 </ion-content>
 
 </body>
