@@ -1,6 +1,5 @@
 package smartcity.accessibility.database;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,19 +10,29 @@ import com.google.inject.Inject;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
-import smartcity.accessibility.socialnetwork.Review;
+import smartcity.accessibility.mapmanagement.LocationBuilder;
 
 public class LocationManager {
 
 	private Database db;
 	private static final String DATABASE_CLASS = "Location";
+	private static final String ID_FIELD_NAME = "objectId";
+
+	private static LocationManager instance;
 
 	@Inject
 	public LocationManager(Database db) {
 		this.db = db;
+	}
+
+	public static void initialize(LocationManager m) {
+		instance = m;
+	}
+
+	public static LocationManager instance() {
+		return instance;
 	}
 
 	private static Map<String, Object> toMap(Location l) {
@@ -34,32 +43,34 @@ public class LocationManager {
 		map.put("name", l.getName());
 		return map;
 	}
-	
-	private static Location fromMap(Map<String, Object> m){
+
+	private static Location fromMap(Map<String, Object> m) {
 		LocationBuilder lb = new LocationBuilder();
-		if(m.containsKey("objectId")){
-			// TODO : Get reviews from database using review managers getReviews
+		if (m.containsKey(ID_FIELD_NAME)) {
+			Map<String, Object> fields = new HashMap<>();
+			fields.put(ID_FIELD_NAME, m.get(ID_FIELD_NAME));
+			lb.addReviews(ReviewManager.instance().getReviews(fields));
 		}
 		lb.setName(m.get("name").toString());
 		lb.setType(LocationTypes.valueOf(m.get("type").toString()));
 		lb.setSubType(LocationSubTypes.valueOf(m.get("subType").toString()));
-		ParseGeoPoint pgp = (ParseGeoPoint) m.get("location"); 
-		lb.setCoordinates(pgp.getLatitude(),pgp.getLongitude());
+		ParseGeoPoint pgp = (ParseGeoPoint) m.get("location");
+		lb.setCoordinates(pgp.getLatitude(), pgp.getLongitude());
 		return lb.build();
 	}
-	
-	public String uploadLocation(Location l){
+
+	public String uploadLocation(Location l) {
 		return db.put(DATABASE_CLASS, toMap(l));
 	}
 
 	public static void getLocation(LatLng coordinates, LocationListCallback locationListCallback) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void getLocationsNearPoint(LatLng l, LocationListCallback locationListCallback, int i) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static Location getLocation(LatLng coordinates, LocationTypes street, LocationSubTypes default1) {
@@ -69,7 +80,7 @@ public class LocationManager {
 
 	public static void updateLocation(Location loc) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static List<LatLng> getNonAccessibleLocationsInRadius(Location source, Location destination,
@@ -77,5 +88,5 @@ public class LocationManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

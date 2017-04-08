@@ -14,10 +14,19 @@ public class ReviewManager {
 
 	private Database db;
 	private static final String DATABASE_CLASS = "Review";
+	private static ReviewManager instance;
 
 	@Inject
 	public ReviewManager(Database db) {
 		this.db = db;
+	}
+
+	public static void initialize(ReviewManager m) {
+		instance = m;
+	}
+
+	public static ReviewManager instance() {
+		return instance;
 	}
 
 	private static Map<String, Object> toMap(Review r) {
