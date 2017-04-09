@@ -4,5 +4,16 @@
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-
-<div>hiii {{latlng}}</div>
+<ion-content>
+	<ion-list>
+		<ion-list-header>
+		  you picked lat: {{lat}}, lng: {{lng}}
+		</ion-list-header>
+		<button ion-item (click)="addReview()">
+		  Add Review
+		</button>
+		<button ion-item>
+		  View Reviews
+		</button>
+	</ion-list>
+</ion-content>

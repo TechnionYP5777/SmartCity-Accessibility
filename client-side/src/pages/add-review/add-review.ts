@@ -12,8 +12,12 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'add-review.html'
 })
 export class AddReviewPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  lat : any;
+  lng : any;
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+	this.lat = navParams.get('lat');
+	this.lng = navParams.get('lng');
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddReviewPage');
