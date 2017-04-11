@@ -1,27 +1,34 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import {LoginService} from '../../providers/login-service';
+ 
+import { NavController } from 'ionic-angular';
+import {LoginService} from './LoginService';
+import {UserPagePage} from '../user-page/user-page';
+import {SignupPage} from '../signup/signup';
+ 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
-  providers: [LoginService]
 })
-
 export class LoginPage {
-    str: any;
-	num: any;
-	serve : any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,serve: LoginService) {
-	this.serve = serve;
-  }
-  ionViewDidLoad() {
-	this.serve.callHttp().subscribe(data => {
-      this.str = data.str;
-	  this.num = data.num;
+ 
+	usercreds = {
+		 name: '',
+		 password: ''
+	};
+ 
+    constructor(public navCtrl: NavController, public loginservice: LoginService) {}
+  
+    login(user) {
+        this.loginservice.login(user).then(data => {
+            if(data) {
+                this.navCtrl.setRoot(UserPagePage);
+            }
     });
-  }
+   }
+    signup() {
+        this.navCtrl.push(SignupPage);
+    }
 }
-
 
 
 

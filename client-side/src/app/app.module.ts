@@ -8,6 +8,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {MapClickMenuPage} from '../pages/mapclickmenu/mapclickmenu';
 import { AddReviewPage } from '../pages/add-review/add-review';
+import {SignupPage} from '../pages/signup/signup';
+import {UserPagePage} from '../pages/user-page/user-page';
+import {LoginService} from '../pages/login/LoginService';
+
 
 @NgModule({
   declarations: [
@@ -16,7 +20,9 @@ import { AddReviewPage } from '../pages/add-review/add-review';
 	LoginPage,
 	MapviewPage,
 	MapClickMenuPage,
-	AddReviewPage
+	AddReviewPage,
+	SignupPage,
+	UserPagePage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -28,12 +34,15 @@ import { AddReviewPage } from '../pages/add-review/add-review';
 	LoginPage,
 	MapviewPage,
 	MapClickMenuPage,
-	AddReviewPage
+	AddReviewPage,
+	SignupPage,
+	UserPagePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+	LoginService
   ]
 })
 export class AppModule {}
