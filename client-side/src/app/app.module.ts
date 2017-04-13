@@ -11,7 +11,8 @@ import { AddReviewPage } from '../pages/add-review/add-review';
 import {SignupPage} from '../pages/signup/signup';
 import {UserPagePage} from '../pages/user-page/user-page';
 import {LoginService} from '../pages/login/LoginService';
-
+import {NavigationService} from '../pages/navigation/navigationService';
+import { NavigationPage } from '../pages/navigation/navigation';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {LoginService} from '../pages/login/LoginService';
 	MapClickMenuPage,
 	AddReviewPage,
 	SignupPage,
-	UserPagePage
+	UserPagePage,
+	NavigationPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -36,13 +38,15 @@ import {LoginService} from '../pages/login/LoginService';
 	MapClickMenuPage,
 	AddReviewPage,
 	SignupPage,
-	UserPagePage
+	UserPagePage,
+	NavigationPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-	LoginService
+	LoginService,
+	NavigationService
   ]
 })
 export class AppModule {}

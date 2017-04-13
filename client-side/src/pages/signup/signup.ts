@@ -15,7 +15,7 @@ export class SignupPage {
   constructor(public navCtrl: NavController, public loginService: LoginService, public alertCtrl: AlertController) {}
  
   register(user) {
-        this.loginService.login(user).then(data => {
+        this.loginService.signup(user).then(data => {
             if(data) {
                 var alert = this.alertCtrl.create({
                     title: 'Success',
