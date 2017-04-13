@@ -14,7 +14,7 @@ import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView
 @SpringBootApplication
 public class Application {
 	public static ExtendedMapView mapView;
-	public static LoadingCache<Integer, UserInfo> tokenToSession;
+	public static LoadingCache<String, UserInfo> tokenToSession;
 
 	public static void main(String[] args) {
 		resetSessions();
@@ -29,9 +29,9 @@ public class Application {
 	    .expireAfterWrite(10, TimeUnit.MINUTES)
 	    .expireAfterAccess(10, TimeUnit.MINUTES)
 	    .build(
-	        new CacheLoader<Integer, UserInfo>() {
+	        new CacheLoader<String, UserInfo>() {
 				@Override
-				public UserInfo load(Integer token) throws Exception {
+				public UserInfo load(String token) throws Exception {
 					return new UserInfo();
 				}
 	        });
