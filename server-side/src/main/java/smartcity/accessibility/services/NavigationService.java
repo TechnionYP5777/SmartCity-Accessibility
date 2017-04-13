@@ -13,7 +13,7 @@ import smartcity.accessibility.services.exceptions.UserDoesNotExistException;
 public class NavigationService {
 	@RequestMapping(value = "/navigation", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public Integer login(@RequestParam("token") Integer token) {
+	public Integer login(@RequestParam("token") String token) {
 		if(LogInService.isUserLoggedIn(token)){
 			throw new UserDoesNotExistException();
 		}
