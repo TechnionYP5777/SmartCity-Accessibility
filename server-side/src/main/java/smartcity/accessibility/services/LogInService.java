@@ -35,7 +35,7 @@ public class LogInService {
 			if (u == null)
 				throw new SignUpFailed();
 		} catch (UsernameAlreadyTakenException e) {
-			throw new UserDoesNotExistException();
+			throw new SignUpFailed();
 		}
 		Token t = Token.calcToken(u);
 		Application.tokenToSession.put(t.getToken(), new UserInfo(u));
