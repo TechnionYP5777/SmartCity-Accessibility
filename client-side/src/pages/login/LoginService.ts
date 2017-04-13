@@ -49,6 +49,23 @@ export class LoginService {
             });
         });
     }
+	
+	signup(user) {
+        var creds = "name=" + user.name + "&password=" + user.password;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        
+        return new Promise(resolve => {
+            this.http.post('http://localhost:8080/signup', creds, {headers: headers}).subscribe(data => {
+                if(data.json().success){
+                    this.storeUserCredentials(data.json().token);
+                    resolve(true);
+                }
+                else
+                    resolve(false);
+            });
+        });
+    }
     
     logout() {
         this.destroyUserCredentials();
