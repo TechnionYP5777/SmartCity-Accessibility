@@ -77,12 +77,16 @@ public class BestReviews {
 		for (Review r : $) {
 			double h = r.getUser().getHelpfulness().helpfulness();
 			double rating = r.getRating().getScore();
+			if (h < 0)
+				continue;
 			if (h == 0) 
 				h++;
 			sum += h * rating;
 			totalhelpfulness += h;
 		}
-		return  (int) ( sum / totalhelpfulness);
+		
+		int res = (int) ( sum / totalhelpfulness);	
+		return  res <= 0 ? Score.getMinScore() : res ;
 	}
 	
 	/**

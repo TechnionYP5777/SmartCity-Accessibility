@@ -88,6 +88,24 @@ public class BestReviewsTest {
 	@Test
 	@Category(UnitTests.class)
 	public void checkAllTest() {
+		try {
+			r1.upvote(u2);
+			r1.upvote(u3);
+			r2.downvote(u3);
+		} catch (UnauthorizedAccessException e) {
+			fail("shouldn't fail");
+		}
+		BestReviews br = new BestReviews(2, l);
+		List<Review> mostRated = br.getMostRated();
+		assertEquals(mostRated.get(1).getRating(), r1.getRating());
+		assertEquals(br.getTotalRatingByAvg(), 2);
+		
+		//now u1 has helpfulness of 1
+		Review r4= new Review(l, Score.getMinScore(), "very unaccessible place!", u1);
+		assertEquals(br.getTotalRatingByAvg(), 3);
+		
+		br = new BestReviews(3, l);
+		assertEquals(br.getTotalRatingByAvg(), 3);
 	}
 	
 }
