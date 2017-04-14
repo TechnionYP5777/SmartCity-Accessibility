@@ -35,7 +35,7 @@ public class Helpfulness {
 	 * negative value represents dislikes.
 	 */
 	private double getAvgLikes() {
-		return Math.ceil((likes - dislikes) / numOfReviews);
+		return Math.ceil((double)(likes - dislikes) / numOfReviews);
 	}
 	
 	public Double helpfulness() {
