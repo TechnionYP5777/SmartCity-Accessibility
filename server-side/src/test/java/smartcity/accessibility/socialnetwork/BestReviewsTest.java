@@ -84,4 +84,11 @@ public class BestReviewsTest {
 		assertEquals((new BestReviews(3, l)).getTotalRatingByAvg(),
 				(r1.getRating().getScore() + r2.getRating().getScore() + r3.getRating().getScore()) / 3);
 	}
+	
+	@Test
+	@Category(UnitTests.class)
+	public void checkAllTest() {
+	}
+	
 }
+
