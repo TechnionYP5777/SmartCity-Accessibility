@@ -130,7 +130,7 @@ public class Review {
 	 */
 	public void upvote(User u) throws UnauthorizedAccessException {
 		comment(u, ReviewComment.POSITIVE_RATING);
-		u.getHelpfulness().incLikes();
+		user.getHelpfulness().incLikes();
 		//TODO: update the DB
 	}
 
@@ -140,7 +140,7 @@ public class Review {
 	 */
 	public void downvote(User u) throws UnauthorizedAccessException {
 		comment(u, ReviewComment.NEGATIVE_RATING);
-		u.getHelpfulness().incDislikes();
+		user.getHelpfulness().incDislikes();
 		//TODO: update the DB
 	}
 

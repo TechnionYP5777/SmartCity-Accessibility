@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.socialnetwork.User.Privilege;
 
 /**
  * 
@@ -77,12 +78,19 @@ public class BestReviews {
 		for (Review r : $) {
 			double h = r.getUser().getHelpfulness().helpfulness();
 			double rating = r.getRating().getScore();
+			if (h < 0) {
+				if (!Privilege.pinPrivilegeLevel(r.getUser()))
+					continue;
+				h = 1;
+			}
 			if (h == 0) 
 				h++;
 			sum += h * rating;
 			totalhelpfulness += h;
 		}
-		return  (int) ( sum / totalhelpfulness);
+		
+		int res = (int) ( sum / totalhelpfulness);	
+		return  res <= 0 ? Score.getMinScore() : res ;
 	}
 	
 	/**
