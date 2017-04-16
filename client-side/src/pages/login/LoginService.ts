@@ -40,7 +40,7 @@ export class LoginService {
         
         return new Promise(resolve => {
             this.http.post('http://localhost:8080/login', creds, {headers: headers}).subscribe(data => {
-                if(data.json().success){
+                if(data.status == 200){
                     this.storeUserCredentials(data.json().token);
                     resolve(true);
                 }
@@ -57,7 +57,7 @@ export class LoginService {
         
         return new Promise(resolve => {
             this.http.post('http://localhost:8080/signup', creds, {headers: headers}).subscribe(data => {
-                if(data.json().success){
+                if(data.status == 200){
                     this.storeUserCredentials(data.json().token);
                     resolve(true);
                 }

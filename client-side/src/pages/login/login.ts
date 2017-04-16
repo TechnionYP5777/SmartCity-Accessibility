@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
  
 import { NavController } from 'ionic-angular';
 import {LoginService} from './LoginService';
-import {UserPagePage} from '../user-page/user-page';
+import {HomePage} from '../home/home';
 import {SignupPage} from '../signup/signup';
  
 @Component({
@@ -21,7 +21,7 @@ export class LoginPage {
     login(user) {
         this.loginservice.login(user).then(data => {
             if(data) {
-                this.navCtrl.setRoot(UserPagePage);
+                this.navCtrl.setRoot(HomePage);
             }
     });
    }

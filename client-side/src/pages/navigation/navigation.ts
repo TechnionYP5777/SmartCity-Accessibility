@@ -9,7 +9,8 @@ import { NavigationService } from './navigationService';
 export class NavigationPage {
     isWork : any;
     constructor(public navCtrl: NavController, public navParams: NavParams, public navigationService: NavigationService) {
-	    this.isWork = "false";
+	    var token = window.sessionStorage.getItem('token');
+		this.isWork = token;
 	}
 
     ionViewDidLoad() {

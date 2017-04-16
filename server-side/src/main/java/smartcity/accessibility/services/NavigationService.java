@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public class NavigationService {
 	@RequestMapping(value = "/navigation", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public String login(@RequestHeader("authToken") String token) {
+	public String navigation(@RequestHeader("authToken") String token) {
 		if (LogInService.isUserLoggedIn(token)) {
 			throw new UserIsNotLoggedIn();
 		}
