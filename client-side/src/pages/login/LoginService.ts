@@ -26,6 +26,11 @@ export class LoginService {
         var token = window.sessionStorage.getItem('token');
         this.useCredentials(token);
     }
+	
+	isLoggedIn(){
+		var token = window.sessionStorage.getItem('token');
+		return (token != null);
+	}
     
     destroyUserCredentials() {
         this.isLogin = false;

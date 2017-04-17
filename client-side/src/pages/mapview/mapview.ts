@@ -3,8 +3,10 @@ import { NavController,ModalController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AlertController } from 'ionic-angular';
 import {MapClickMenuPage} from '../mapclickmenu/mapclickmenu';
+import { LoginService } from '../login/LoginService';
+import { UserPagePage } from '../user-page/user-page'; 
 
-declare var google;
+declare var google;  
  
  
 @Component({
@@ -16,8 +18,11 @@ export class MapviewPage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   marker:any;
-  geolocation: Geolocation
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController) {}
+  geolocation: Geolocation;
+  isLoggedin : any;
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService) {
+	    this.isLoggedin = this.loginService.isLoggedIn();
+  }
   
   ionViewDidLoad(){
     this.loadMap();
