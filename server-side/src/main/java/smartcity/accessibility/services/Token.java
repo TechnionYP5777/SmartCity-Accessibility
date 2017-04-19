@@ -1,6 +1,8 @@
 package smartcity.accessibility.services;
 
 import smartcity.accessibility.socialnetwork.User;
+
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -18,7 +20,7 @@ public class Token {
 		} catch (NoSuchAlgorithmException e) {
 		}
 		messageDigest.update(str.getBytes());
-		String hash_str = new String(messageDigest.digest());
+		String hash_str = String.format("%064x", new java.math.BigInteger(1, messageDigest.digest()));
 		return new Token(hash_str);
 	}
 	public String getToken() {

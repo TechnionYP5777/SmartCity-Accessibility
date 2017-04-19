@@ -45,6 +45,18 @@ public abstract class Navigation {
 			$[k++] = (new LatLng(shapePointsArr[¢], shapePointsArr[¢ + 1]));
 		return $;
 	}
+	
+	public static Latlng[] getRoute(Location source, Location destination, Integer accessibilityThreshold) throws CommunicationFailed{
+		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessibilityThreshold);
+		Latlng from = new Latlng(source.getCoordinates().getLat(), source.getCoordinates().getLng()),
+				to = new Latlng(destination.getCoordinates().getLat(), destination.getCoordinates().getLng());
+		Route route = getRouteFromMapQuest(from, to, segmentsToAvoid);
+		Double[] shapePointsArr = route.getShape().getShapePoints();
+		Latlng[] latlng = new Latlng[shapePointsArr.length / 2];
+		for (int k = 0, ¢ = 0; ¢ < shapePointsArr.length - 1; ¢ += 2)
+			latlng[k++] = (new Latlng(shapePointsArr[¢], shapePointsArr[¢ + 1]));
+		return latlng;
+	}
 
 	public static Route getRouteFromMapQuest(Latlng from, Latlng to, List<MapSegment> segmentsToAvoid)
 			throws CommunicationFailed {
