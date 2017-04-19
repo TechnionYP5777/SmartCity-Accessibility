@@ -13,14 +13,12 @@ import smartcity.accessibility.navigation.Navigation;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 @Controller
 public class NavigationService {
 	@RequestMapping(value = "/navigation", method = RequestMethod.POST)
 	@ResponseBody
-	@CrossOrigin(origins = "http://localhost:8100")
 	public Latlng[] navigation(@RequestHeader("authToken") String token, @RequestParam("srcLat") Double srcLat,
 			@RequestParam("srcLng") Double srcLng, @RequestParam("dstLat") Double dstLat,
 			@RequestParam("dstLng") Double dstLng,
