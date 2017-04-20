@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Http, Headers} from "@angular/http";
+import { Constants } from "../constants";
 
 @Injectable()
 export class LoginService {
@@ -44,7 +45,7 @@ export class LoginService {
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         
         return new Promise(resolve => {
-            this.http.post('http://localhost:8080/login', creds, {headers: headers}).subscribe(data => {
+            this.http.post(Constants.serverAddress +'/login', creds, {headers: headers}).subscribe(data => {
                 if(data.status == 200){
                     this.storeUserCredentials(data.json().token);
                     resolve(true);
@@ -61,7 +62,7 @@ export class LoginService {
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         
         return new Promise(resolve => {
-            this.http.post('http://localhost:8080/signup', creds, {headers: headers}).subscribe(data => {
+            this.http.post(Constants.serverAddress +'/signup', creds, {headers: headers}).subscribe(data => {
                 if(data.status == 200){
                     this.storeUserCredentials(data.json().token);
                     resolve(true);

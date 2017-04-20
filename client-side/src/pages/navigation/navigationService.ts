@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
-import {Http, Headers,RequestOptions} from "@angular/http";
+import { Http, Headers,RequestOptions } from "@angular/http";
+import { Constants } from "../constants";
 
 @Injectable()
 export class NavigationService {
@@ -15,7 +16,7 @@ export class NavigationService {
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 		headers.append('authToken',token);
         return new Promise(resolve => {
-            this.http.post('http://localhost:8080/navigation', creds, {headers: headers}).subscribe(data => {
+            this.http.post(Constants.serverAddress +'/navigation', creds, {headers: headers}).subscribe(data => {
                 if(data.status == 200){
                     resolve(true);
                 }
