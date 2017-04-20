@@ -2,6 +2,8 @@
 
 <html>
 <head>
+	<link rel="stylesheet" href="http://code.ionicframework.com/1.0.0/css/ionic.css" />
+	<script src="http://code.ionicframework.com/1.0.0/js/ionic.bundle.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 	<script src="http://code.jquery.com/jquery-2.0.1.min.js"></script>
@@ -23,19 +25,25 @@
 </ion-header>
 
 <ion-content padding>
-	<div data-role="controlgroup" id="buttons-1" data-type="horizontal">
-		<a href="#" class="ui-btn ui-corner-all ui-btn-a">1</a>
-		<a href="#" class="ui-btn ui-corner-all ui-btn-a">2</a>
-		<a href="#" class="ui-btn ui-corner-all ui-btn-a">3</a>
-		<a href="#" class="ui-btn ui-corner-all ui-btn-a">4</a>
-		<a href="#" class="ui-btn ui-corner-all ui-btn-a">5</a>
-	</div>
-	<label for="textarea-1" class="ui-hidden-accessible"></label>
-	<textarea name="textarea-1" id="textarea-1" autofocus="true" cols="40" rows="8">Enter your review here....</textarea>
-	<div class="ui-input-btn ui-btn ui-btn-inline ui-corner-all">
-		Submit review
-		<input data-enhanced="true" type="submit" value="Submit review" id="button-1"/>
-	</div>
+	<ion-list>
+		<ion-item>
+			<ion-label floating>Enter your review here...</ion-label>
+          	<ion-input [(ngModel)] = "reviewinfo.review" type="text"></ion-input>
+		</ion-item>
+		<ion-item>
+			<div class="ui-field-contain">
+				<label for="select-1">Select score:</label>
+				<select name="select-1" id="select-1" data-inline="true">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+				</select>
+			</div>
+		</ion-item>
+	</ion-list>
+	<button ion-button (click)="addreview(reviewinfo)">Submit Review</button>
 </ion-content>
 
 </body>

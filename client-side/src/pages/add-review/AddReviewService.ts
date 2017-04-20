@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import {Http, Headers} from "@angular/http";
 
-/*
-  Generated class for the AddReviewService provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
+
 @Injectable()
 export class AddReviewService {
 
   constructor(public http: Http) {
+  	this.http = http;
     console.log('Hello AddReviewService Provider');
+  }
+  
+  addreview(rev){
+  	var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
   }
 
 }
