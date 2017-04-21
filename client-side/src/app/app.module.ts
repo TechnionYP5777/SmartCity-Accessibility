@@ -13,6 +13,7 @@ import {UserPagePage} from '../pages/user-page/user-page';
 import {LoginService} from '../pages/login/LoginService';
 import {NavigationService} from '../pages/navigation/navigationService';
 import { NavigationPage } from '../pages/navigation/navigation';
+import { AddReviewService } from '../pages/add-review/AddReviewService';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { NavigationPage } from '../pages/navigation/navigation';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
 	LoginService,
-	NavigationService
+	NavigationService,
+	AddReviewService
   ]
 })
 export class AppModule {}
