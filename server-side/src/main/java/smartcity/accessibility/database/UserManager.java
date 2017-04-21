@@ -123,7 +123,7 @@ public abstract class UserManager {
 	}
 
 	public static void updatefavouriteQueries(User b, List<SearchQuery> qs) throws UserNotFoundException {
-		ParseUser pu;
+		ParseUser pu = new ParseUser();
 		try {
 			pu = ParseUser.login(b.getName(), b.getPassword());
 			pu.put(FavouriteQueriesField, SearchQuery.QueriesList2String(qs));

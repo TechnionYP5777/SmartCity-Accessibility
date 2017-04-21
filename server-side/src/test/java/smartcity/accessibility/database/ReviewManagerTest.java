@@ -9,6 +9,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.parse4j.ParseException;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -51,6 +52,12 @@ public class ReviewManagerTest {
 		Review r = new Review(new Location(), 5, "asdfasd", new UserImpl("asdf", "asdf", User.Privilege.DefaultUser));
 		rm.uploadReview(r);
 		Mockito.verify(db).put(Mockito.any(), Mockito.any());
+	}
+	
+	@Test
+	@Category({ BranchTests.class, UnitTests.class })
+	public void a() throws ParseException{
+		
 	}
 
 	public static class DatabaseModule extends AbstractModule {
