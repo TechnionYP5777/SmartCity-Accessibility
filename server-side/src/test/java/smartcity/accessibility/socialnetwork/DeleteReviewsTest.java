@@ -1,6 +1,7 @@
 package smartcity.accessibility.socialnetwork;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -11,6 +12,7 @@ import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 
+@Ignore
 public class DeleteReviewsTest {
 	User admin, user, defaultuser;
 	Location location;
