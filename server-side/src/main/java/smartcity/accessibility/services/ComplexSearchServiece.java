@@ -22,13 +22,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public class ComplexSearchServiece {
 	@RequestMapping(value="/complexSearch")
 	@ResponseBody
-	public List<Location> complexSearch(@RequestHeader("authToken") String token, @RequestParam("type") String type,
+	public List<Location> complexSearch( @RequestParam("type") String type,
 			@RequestParam("radius") Integer radius, @RequestParam("srcLat") Double srcLat,
 			@RequestParam("srcLng") Double srcLng, @RequestParam("threshold") Integer threshold) {
-		if (!LogInService.isUserLoggedIn(token)) {
-			throw new UserIsNotLoggedIn();
-		}
-		
+//		if (!LogInService.isUserLoggedIn(token)) {
+//			throw new UserIsNotLoggedIn();
+//		}
 		LatLng c = new LatLng(srcLat, srcLng);
 		SearchQuery $ = null;
 		try {
@@ -39,7 +38,7 @@ public class ComplexSearchServiece {
 		SearchQueryResult esr = $.searchByType(new Location(c), radius);
 		
 		try {
-			esr.convertDummiesToReal();
+		//	esr.convertDummiesToReal();
 			esr.filterLocations(threshold);
 		} catch (EmptySearchQuery ¢) {
 			throw new SearchFailed("empty search query");

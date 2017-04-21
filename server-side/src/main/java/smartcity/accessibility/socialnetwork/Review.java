@@ -17,7 +17,8 @@ import smartcity.accessibility.socialnetwork.User.Privilege;
 public class Review {
 
 	private Location location;
-	private User user;
+	private User userObj;
+	private String user; //TODO : delete!
 	private Score rating;
 	private String content;
 	private boolean isPinned;
@@ -25,10 +26,28 @@ public class Review {
 								// added to the default constractor
 	private List<ReviewComment> comments = new ArrayList<ReviewComment>();
 
-	public Review(int r, String c, User u) {
+	//TODO : DELETE!!
+	public Review(Location l, int r, String c, String u) {
+		this.location = l;
 		this.rating = new Score(r);
 		this.content = c;
 		this.user = u;
+		this.isPinned = false;
+	}
+	
+	//TODO : DELETE!!
+		public Review(String l, int r, String c, String u) {
+			this.locationID = l;
+			this.rating = new Score(r);
+			this.content = c;
+			this.user = u;
+			this.isPinned = false;
+		}
+	
+	public Review(int r, String c, User u) {
+		this.rating = new Score(r);
+		this.content = c;
+		this.userObj = u;
 		this.isPinned = false;
 		u.getHelpfulness().incNumOfReviews();
 	}
@@ -114,7 +133,7 @@ public class Review {
 	 * @return the user
 	 */
 	public User getUser() {
-		return this.user;
+		return this.userObj;
 	}
 
 	/**
@@ -130,7 +149,7 @@ public class Review {
 	 */
 	public void upvote(User u) throws UnauthorizedAccessException {
 		comment(u, ReviewComment.POSITIVE_RATING);
-		user.getHelpfulness().incLikes();
+		userObj.getHelpfulness().incLikes();
 		//TODO: update the DB
 	}
 
@@ -140,7 +159,7 @@ public class Review {
 	 */
 	public void downvote(User u) throws UnauthorizedAccessException {
 		comment(u, ReviewComment.NEGATIVE_RATING);
-		user.getHelpfulness().incDislikes();
+		userObj.getHelpfulness().incDislikes();
 		//TODO: update the DB
 	}
 

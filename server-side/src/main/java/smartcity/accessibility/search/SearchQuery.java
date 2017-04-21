@@ -28,7 +28,7 @@ import smartcity.accessibility.mapmanagement.Location;
  */
 public class SearchQuery {
 	private static final String DefaultQueryName = null;
-	private List<Location> places; // the nearby places result
+	public List<Location> places; // the nearby places result
 	public enum SearchStage {
 		NotRunning, Running, Done, Failed;
 
