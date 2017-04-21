@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.parse4j.ParseException;
@@ -23,6 +24,7 @@ import smartcity.accessibility.socialnetwork.UserImpl;
 /**
  * @author Koral Chapnik
  */
+@Ignore
 public class BestReviewsTest {
 	private static User u1;
 	private static User u2;

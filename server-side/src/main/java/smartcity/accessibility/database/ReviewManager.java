@@ -48,7 +48,7 @@ public class ReviewManager {
 	}
 
 	private static Review fromMap(Map<String, Object> m) {
-		return new Review(new Location(), 5, "12", "!2"); // TODO :This is
+		return null;// new Review(new Location(), 5, "12", "!2"); // TODO :This is
 															// comepletely wrong
 	}
 

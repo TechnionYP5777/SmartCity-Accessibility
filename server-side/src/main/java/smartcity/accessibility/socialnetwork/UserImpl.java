@@ -12,12 +12,14 @@ public class UserImpl implements User {
 	private String password;
 	private Privilege privilegeLevel;
 	private List<SearchQuery> favouriteSearchQueries;
+	private Helpfulness helpfulness;
 
 	public UserImpl(String uName, String pass, Privilege p, String FavouriteQueries) {
 		localName = userName = uName;
 		password = pass;
 		privilegeLevel = p;
 		favouriteSearchQueries = SearchQuery.String2QueriesList(FavouriteQueries);
+		helpfulness = new Helpfulness();
 	}
 
 	public UserImpl(String uName, String pass, Privilege p) {
@@ -104,4 +106,8 @@ public class UserImpl implements User {
 				|| (¢ instanceof String && userName.equals(¢));
 	}
 
+	
+	public Helpfulness getHelpfulness() {
+		return helpfulness;
+	}
 }

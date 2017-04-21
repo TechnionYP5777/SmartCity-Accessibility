@@ -3,6 +3,7 @@ package smartcity.accessibility.navigation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -72,6 +73,7 @@ public class NavigationTest {
 		JxMapsConvertor.displayRoute(mapview, Navigation.arrayToLatLng(shapePoints));
 	}
 
+	@Ignore
 	@Test
 	@Category(UnitTests.class)
 	public void displayMap() throws CommunicationFailed {

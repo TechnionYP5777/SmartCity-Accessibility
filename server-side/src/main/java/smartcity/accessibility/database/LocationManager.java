@@ -65,7 +65,6 @@ public class LocationManager {
 
 	public static void getLocation(LatLng coordinates, LocationListCallback locationListCallback) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public static void getLocationsNearPoint(LatLng l, LocationListCallback locationListCallback, int i) {
