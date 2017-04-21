@@ -34,22 +34,17 @@ public class ComplexSearchServiece {
 		try {
 			$ = SearchQuery.TypeSearch(type);
 		} catch (illigalString e) {
-			//TODO : throw exception
+			throw new SearchFailed("illegal string");
 		}
 		SearchQueryResult esr = $.searchByType(new Location(c), radius);
 		
 		try {
 			esr.convertDummiesToReal();
-		} catch (EmptySearchQuery ¢) {
-			//TODO : throw exception
-		}
-
-		try {
 			esr.filterLocations(threshold);
 		} catch (EmptySearchQuery ¢) {
-			//TODO : throw exception
+			throw new SearchFailed("empty search query");
 		}
-		
+
 		return esr.getLocations();
 		
 	}
