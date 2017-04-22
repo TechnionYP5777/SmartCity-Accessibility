@@ -5,7 +5,7 @@ import { AlertController } from 'ionic-angular';
 import {MapClickMenuPage} from '../mapclickmenu/mapclickmenu';
 import { LoginService } from '../login/LoginService';
 import { UserPagePage } from '../user-page/user-page'; 
-
+import { LoginPage } from '../login/login';
 declare var google;  
  
  
@@ -20,6 +20,8 @@ export class MapviewPage {
   marker:any;
   geolocation: Geolocation;
   isLoggedin : any;
+  loginPage = LoginPage;
+  userProfile = UserPagePage;
   constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService) {
 	    this.isLoggedin = this.loginService.isLoggedIn();
   }
