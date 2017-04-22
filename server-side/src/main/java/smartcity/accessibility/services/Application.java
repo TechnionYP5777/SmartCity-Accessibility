@@ -20,10 +20,12 @@ import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView
 public class Application {
 	
 	public static LoadingCache<String, UserInfo> tokenToSession;
-
+	public static ExtendedMapView mapView;
+	
 	public static void main(String[] args) {
 		DatabaseManager.initialize();
 		resetSessions();
+		mapView = JxMapsFunctionality.getMapView();
 		SpringApplication.run(Application.class, args);
 	}
 	
