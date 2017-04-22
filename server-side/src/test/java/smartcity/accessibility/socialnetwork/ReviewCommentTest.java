@@ -1,6 +1,6 @@
 package smartcity.accessibility.socialnetwork;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class ReviewCommentTest {
 		u1 = UserBuilder.RegularUser("Alex", "123", "");
 		u2 = UserBuilder.RegularUser("Alex2", "123", "");
 		u3 = UserBuilder.Admin("Simba", "355", "");
-		Location l = new Location();
+		l = new Location();
 	}
 
 	@Test
