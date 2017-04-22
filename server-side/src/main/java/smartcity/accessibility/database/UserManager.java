@@ -13,8 +13,7 @@ import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.User.Privilege;
-import smartcity.accessibility.socialnetwork.UserImpl;
-
+import smartcity.accessibility.socialnetwork.UserBuilder;
 /**
  * @author Kolikant
  *
@@ -71,12 +70,15 @@ public abstract class UserManager {
 		} catch (ParseException ¢) {
 			¢.printStackTrace();
 		}
-		return (new UserImpl($, password, p, SearchQuery.EmptyList));
+		return new UserBuilder().setUsername($)
+				.setPassword(password)
+				.setPrivilege(p)
+				.build();//(new UserImpl($, password, p, SearchQuery.EmptyList));
 	}
 
 	public static User LoginUser(String name, String password) {
 		ParseUser pu = null;
-		UserImpl $ = null;
+		User $ = null;
 		try {
 			pu = ParseUser.login(name, password);
 		} catch (ParseException e) {
@@ -86,7 +88,12 @@ public abstract class UserManager {
 		Privilege pr = Privilege.fromOrdinal(level);
 		String favouriteQueries = pu.getString(FavouriteQueriesField);
 
-		$ = new UserImpl(name, password, pr, favouriteQueries);
+		$ = new UserBuilder().setUsername(name)
+				.setPassword(password)
+				.setPrivilege(pr)
+				.setSearchQueries(favouriteQueries)
+				.build();
+				//new UserImpl(name, password, pr, favouriteQueries);
 		try {
 			pu.logout();
 			logoutCurrUser();
@@ -101,7 +108,7 @@ public abstract class UserManager {
 			return;
 		ParseUser pu;
 		try {
-			pu = ParseUser.login(u.getName(), u.getPassword());
+			pu = ParseUser.login(u.getUsername(), u.getPassword());
 			pu.delete();
 			logoutCurrUser();
 		} catch (ParseException ¢) {
@@ -112,7 +119,7 @@ public abstract class UserManager {
 	public static void updateUserName(User a, String newName) throws UserNotFoundException {
 		ParseUser pu;
 		try {
-			pu = ParseUser.login(a.getName(), a.getPassword());
+			pu = ParseUser.login(a.getUsername(), a.getPassword());
 			pu.setUsername(newName);
 			pu.save();
 			pu.logout();
@@ -125,7 +132,7 @@ public abstract class UserManager {
 	public static void updatefavouriteQueries(User b, List<SearchQuery> qs) throws UserNotFoundException {
 		ParseUser pu = new ParseUser();
 		try {
-			pu = ParseUser.login(b.getName(), b.getPassword());
+			pu = ParseUser.login(b.getUsername(), b.getPassword());
 			pu.put(FavouriteQueriesField, SearchQuery.QueriesList2String(qs));
 			pu.save();
 			pu.logout();
@@ -138,7 +145,7 @@ public abstract class UserManager {
 	public static void updatefavouriteQueries(User b) throws UserNotFoundException {
 		ParseUser pu;
 		try {
-			pu = ParseUser.login(b.getName(), b.getPassword());
+			pu = ParseUser.login(b.getUsername(), b.getPassword());
 			pu.put(FavouriteQueriesField, SearchQuery.QueriesList2String(b.getFavouriteSearchQueries()));
 			pu.save();
 			pu.logout();
@@ -151,8 +158,8 @@ public abstract class UserManager {
 	public static void updateAllUserInformation(User ¢) throws UserNotFoundException {
 		if (¢.getPrivilege() == User.Privilege.DefaultUser)
 			return;
-		if (!¢.getName().equals(¢.getLocalName()))
-			updateUserName(¢, ¢.getLocalName());
+		//if (!¢.getUsername().equals(¢.getLocalName()))
+		//	updateUserName(¢, ¢.getLocalName()); 
 
 		updatefavouriteQueries(¢, ¢.getFavouriteSearchQueries());
 	}

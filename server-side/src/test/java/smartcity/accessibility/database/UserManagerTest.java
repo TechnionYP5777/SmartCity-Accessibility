@@ -52,7 +52,7 @@ public class UserManagerTest {
 			fail();
 		}
 		User u = UserManager.LoginUser(UserName, "password");
-		assertEquals(UserName, u.getName());
+		assertEquals(UserName, u.getUsername());
 		assertEquals("password", u.getPassword());
 		assertEquals(new ArrayList<SearchQuery>(), u.getFavouriteSearchQueries());	
 		assertEquals(User.Privilege.RegularUser, u.getPrivilege());
@@ -71,7 +71,7 @@ public class UserManagerTest {
 		}
 		User a = UserManager.LoginUser(UserName, "admin");
 		assert a != null;
-		assertEquals(UserName, a.getName());
+		assertEquals(UserName, a.getUsername());
 		assertEquals("admin", a.getPassword());
 		assertEquals(new ArrayList<SearchQuery>(), a.getFavouriteSearchQueries());
 		
@@ -128,7 +128,7 @@ public class UserManagerTest {
 		} catch (UsernameAlreadyTakenException e) {
 			fail();
 		}
-		b.addSearchQuery(SearchQuery.TypeSearch("cafe"), "in case I feel thirsty!");
+		b.addQuery(SearchQuery.TypeSearch("cafe"), "in case I feel thirsty!");
 		
 		try {
 			UserManager.updatefavouriteQueries(b);

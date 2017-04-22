@@ -20,7 +20,7 @@ import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.User;
-import smartcity.accessibility.socialnetwork.UserImpl;
+import smartcity.accessibility.socialnetwork.UserBuilder;
 
 public class ReviewManagerTest {
 	private static ReviewManager rm;
@@ -49,7 +49,11 @@ public class ReviewManagerTest {
 	@Ignore
 	@Category({ BranchTests.class, UnitTests.class })
 	public void testUpload() {
-		Review r = new Review(new Location(), 5, "asdfasd", new UserImpl("asdf", "asdf", User.Privilege.DefaultUser));
+		Review r = new Review(new Location(), 5, "asdfasd", new UserBuilder()
+																.setUsername("asdf")
+																.setPassword("asdf")
+																.setPrivilege(User.Privilege.DefaultUser)
+																.build());
 		rm.uploadReview(r);
 		Mockito.verify(db).put(Mockito.any(), Mockito.any());
 	}

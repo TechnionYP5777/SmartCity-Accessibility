@@ -141,7 +141,7 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 
 		}
 
-		if (Application.appUser.getName().equals(review.getUser())
+		if (Application.appUser.getUsername().equals(review.getUser())
 				|| Privilege.deletePrivilegeLevel(Application.appUser)) {
 			btnDelete = new JButton("Delete");
 			btnDelete.setBounds(335, 17, 89, 23);

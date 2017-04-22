@@ -18,9 +18,9 @@ public class DeleteReviewsTest {
 	@Before
 	public void setUp() throws Exception {
 		DatabaseManager.initialize();
-		defaultuser = UserImpl.DefaultUser();
-		user = UserImpl.RegularUser("RegularUser", "", "");
-		admin = UserImpl.Admin("Admin", "", "");
+		defaultuser = UserBuilder.DefaultUser();
+		user = UserBuilder.RegularUser("RegularUser", "", "");
+		admin = UserBuilder.Admin("Admin", "", "");
 		location = new LocationBuilder().setCoordinates(100, 100).build();
 
 		review = new Review(location, 5, "Nothing here", user);

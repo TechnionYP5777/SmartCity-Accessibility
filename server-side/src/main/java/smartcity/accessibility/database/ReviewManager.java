@@ -48,7 +48,7 @@ public class ReviewManager {
 		map.put("isPinned", r.isPinned());
 		
 		Map<String, Object> userMap = new HashMap<>();
-		userMap.put("username", r.getUser().getName());
+		userMap.put("username", r.getUser().getUsername());
 		List<Map<String, Object>> uList = db.get("User", userMap);
 		if(uList.isEmpty()){
 			// TODO : Throw exception

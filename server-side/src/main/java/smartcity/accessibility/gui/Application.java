@@ -21,7 +21,7 @@ import smartcity.accessibility.gui.components.MapFrame;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.socialnetwork.User;
-import smartcity.accessibility.socialnetwork.UserImpl;
+import smartcity.accessibility.socialnetwork.UserBuilder;
 
 public class Application {
 
@@ -31,7 +31,7 @@ public class Application {
 	public static final int FRAME_X_SIZE = 1000;
 	public static final int FRAME_Y_SIZE = 700;
 
-	public static User appUser = UserImpl.DefaultUser();
+	public static User appUser = UserBuilder.DefaultUser();
 	public static Marker currLocation;
 
 	public static void not_main(String[] args) {

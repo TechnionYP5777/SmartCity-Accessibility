@@ -30,7 +30,7 @@ public class Review {
 		this.content = c;
 		this.user = u;
 		this.isPinned = false;
-		u.getHelpfulness().incNumOfReviews();
+		u.getProfile().addReview();
 	}
 	
 	public Review(Location l, int r, String c, User u) {
@@ -130,7 +130,7 @@ public class Review {
 	 */
 	public void upvote(User u) throws UnauthorizedAccessException {
 		comment(u, ReviewComment.POSITIVE_RATING);
-		u.getHelpfulness().incLikes();
+		u.getProfile().upvote();
 		//TODO: update the DB
 	}
 
@@ -140,7 +140,7 @@ public class Review {
 	 */
 	public void downvote(User u) throws UnauthorizedAccessException {
 		comment(u, ReviewComment.NEGATIVE_RATING);
-		u.getHelpfulness().incDislikes();
+		u.getProfile().downvote();
 		//TODO: update the DB
 	}
 

@@ -12,7 +12,7 @@ import smartcity.accessibility.gui.components.user.LoginFrame;
 import smartcity.accessibility.gui.components.user.SignUpFrame;
 import smartcity.accessibility.gui.components.user.UserProfileFrame;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.socialnetwork.UserImpl;
+import smartcity.accessibility.socialnetwork.UserBuilder;
 
 public class ButtonsPanel extends JPanel implements MouseListener {
 
@@ -71,7 +71,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 			new UserProfileFrame();
 		if (¢.getSource() == ButtonsPanel.LOGOUT_BUTTON) {
 			UserManager.logoutCurrUser();
-			Application.appUser = UserImpl.DefaultUser();
+			Application.appUser = UserBuilder.DefaultUser();
 			LOGOUT_BUTTON.setVisible(false);
 			LOGIN_BUTTON.setVisible(true);
 			USER_PROFILE_BUTTON.setVisible(false);

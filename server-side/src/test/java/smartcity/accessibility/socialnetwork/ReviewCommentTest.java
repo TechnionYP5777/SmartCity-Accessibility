@@ -24,9 +24,9 @@ public class ReviewCommentTest {
 
 	@BeforeClass
 	public static void init() {
-		u1 = UserImpl.RegularUser("Alex", "123", "");
-		u2 = UserImpl.RegularUser("Alex2", "123", "");
-		u3 = UserImpl.Admin("Simba", "355", "");
+		u1 = UserBuilder.RegularUser("Alex", "123", "");
+		u2 = UserBuilder.RegularUser("Alex2", "123", "");
+		u3 = UserBuilder.Admin("Simba", "355", "");
 		Location l = new Location();
 	}
 

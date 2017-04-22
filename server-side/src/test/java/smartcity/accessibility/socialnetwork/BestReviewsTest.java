@@ -1,10 +1,10 @@
 package smartcity.accessibility.socialnetwork;
 
-import java.util.List;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -18,8 +18,6 @@ import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
-import smartcity.accessibility.socialnetwork.User;
-import smartcity.accessibility.socialnetwork.UserImpl;
 
 /**
  * @author Koral Chapnik
@@ -37,9 +35,9 @@ public class BestReviewsTest {
 	
 	@BeforeClass
 	public static void init(){
-		u1 = UserImpl.RegularUser("Koral","123","");
-		u2 = UserImpl.RegularUser("Koral2","123","");
-		u3 = UserImpl.Admin("Simba", "355", "");
+		u1 = UserBuilder.RegularUser("Koral","123","");
+		u2 = UserBuilder.RegularUser("Koral2","123","");
+		u3 = UserBuilder.Admin("Simba", "355", "");
 		LatLng c = new LatLng(39.750307, -104.999472);
 		l = new LocationBuilder().setCoordinates(c.getLat(), c.getLng()).build();
 		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1);

@@ -1,19 +1,18 @@
 package smartcity.accessibility.socialnetwork;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.search.SearchQuery;
 
-/**
- * 
- * @author Kolikant
- *
- */
-
-public interface User {
-
-	enum Privilege {
+public class User {
+	
+	private final UserProfile profile;
+	private final String password;
+	private List<SearchQuery> favouriteSearchQueries;
+	private Privilege privilegeLevel;
+	
+	public enum Privilege {
 		GodUser,
 		Admin, RegularUser, DefaultUser;
 
@@ -50,40 +49,78 @@ public interface User {
 		public static Privilege minDeleteLevel() {
 			return Admin;
 		}
-
+	}
+	
+	public User(String username, String password, Privilege p){
+		profile = new UserProfile(username);
+		favouriteSearchQueries = new ArrayList<>();
+		this.password = password;
+		this.privilegeLevel = p;
+	}
+	
+	public UserProfile getProfile(){
+		return profile;
+	}
+	
+	public String getUsername(){
+		return getProfile().getUsername();
+	}
+	
+	public Privilege getPrivilege() {
+		return privilegeLevel;
+	}
+	
+	public void addQuery(SearchQuery query, String queryName){
+		query.RenameSearchQuery(queryName);
+		favouriteSearchQueries.add(query);
 	}
 
-	/**
-	 * make a search using an existing query and show the user the results
-	 * 
-	 * @param q
-	 *            is the query to be used for the search
-	 */
-	static void search(SearchQuery __) {
-		// q.Search();
+	public String getPassword() {
+		return password;
 	}
 
-	String getName();
+	public Privilege getPrivilegeLevel() {
+		return privilegeLevel;
+	}
 
-	void setLocalName(String name) throws UnauthorizedAccessException;
+	public void setPrivilegeLevel(Privilege privilegeLevel) {
+		this.privilegeLevel = privilegeLevel;
+	}
 
-	String getPassword();
-
-	Privilege getPrivilege();
-
-	List<SearchQuery> getFavouriteSearchQueries();
-
-	void setFavouriteSearchQueries(String favouriteQueries);
-
-	void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries);
-
-	String getLocalName();
-
-	public void addSearchQuery(SearchQuery sq, String QueryName);
+	public List<SearchQuery> getFavouriteSearchQueries() {
+		return favouriteSearchQueries;
+	}
 	
-	public SearchQuery getSearchQuery(String QueryName);
-
-	public void removeSearchQuery(String QueryName);
+	private int findQueryIndexByName(String QueryName){
+		return favouriteSearchQueries.indexOf(SearchQuery.makeDummy(QueryName));
+	}
 	
-	public Helpfulness getHelpfulness();
+	public SearchQuery getSearchQuery(String QueryName){
+		return favouriteSearchQueries.get(findQueryIndexByName(QueryName));
+	}
+	
+	public void removeSearchQuery(String QueryName){
+		favouriteSearchQueries.remove(findQueryIndexByName(QueryName));
+	}
+	
+	public void setFavouriteSearchQueries(String favouriteQueries) {
+		favouriteSearchQueries = SearchQuery.String2QueriesList(favouriteQueries);
+	}
+	
+	public void setFavouriteSearchQueries(List<SearchQuery> favouriteQueries) {
+		favouriteSearchQueries = favouriteQueries;
+	}
+	
+	@Override
+	public boolean equals(Object ¢) {
+		if (¢ == this)
+			return true;
+		return (¢ instanceof User && this.profile.getUsername().equals(((User) ¢).profile.getUsername()))
+				|| (¢ instanceof String && profile.getUsername().equals(¢));
+	}
+	
+	@Override
+	public int hashCode() {
+		return profile.getUsername().hashCode();
+	}
 }

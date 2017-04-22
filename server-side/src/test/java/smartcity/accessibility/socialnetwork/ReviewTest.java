@@ -23,8 +23,8 @@ public class ReviewTest {
 	
 	@BeforeClass
 	public static void init(){
-		u1 = UserImpl.RegularUser("Koral","123","");
-		u2 = UserImpl.Admin("KoralAdmin","123","");
+		u1 = UserBuilder.RegularUser("Koral","123","");
+		u2 = UserBuilder.Admin("KoralAdmin","123","");
 		r1 = new Review(new LocationBuilder().setCoordinates(39.750307, -104.999472).build(),
 				Score.getMinScore(),
 				"very unaccessible place!",
