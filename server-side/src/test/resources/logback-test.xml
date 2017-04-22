@@ -15,7 +15,7 @@
         </encoder>
     </appender>
 
-    <root level="info" additivity="false">
+    <root level="debug" additivity="false">
         <appender-ref ref="FILE"/>
     </root>
 	

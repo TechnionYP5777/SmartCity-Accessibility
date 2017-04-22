@@ -26,7 +26,10 @@ import smartcity.accessibility.socialnetwork.UserProfile;
 
 public class UserProfileManagerTest {
 	private static UserProfileManager manager;
+	private static Map<String, Object> m;
+	private static UserProfile user1;
 	protected static Database db;
+	
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -51,21 +54,29 @@ public class UserProfileManagerTest {
 	@Test
 	@Category({ BranchTests.class, UnitTests.class })
 	public void testGet() throws UserNotFoundException, InterruptedException {
-		UserProfile pf = manager.get("alexaxa", null);
+		UserProfile pf = manager.get("alexaxa", null).get();
 		assertEquals(25, pf.getRating());
 		assertEquals(5, pf.getNumOfReviews());
 		assertEquals("alexaxa", pf.getUsername());
 	}
 	
+	@Test
+	@Category({ BranchTests.class, UnitTests.class })
+	public void testPut() {
+		assertEquals(true, manager.put(user1, true).get());
+		Mockito.verify(db).put(UserProfileManager.DATABASE_CLASS, m);
+	}
+	
 	public static void setUpMock(){
 		db = Mockito.mock(Database.class);
-		Map<String, Object> m = new HashMap<>();
+		m = new HashMap<>();
 		m.put(UserProfileManager.USERNAME_FIELD, "alexaxa");
 		m.put(UserProfileManager.RATING_FIELD, 25);
 		m.put(UserProfileManager.NUM_OF_REVIEWS_FIELD, 5);
 		List<Map<String, Object>> l = new ArrayList<>();
 		l.add(m);
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyMap())).thenReturn(l);
+		user1 = UserProfileManager.fromMap(m);
 	}
 	
 	public static class DatabaseTestModule extends AbstractModule {
