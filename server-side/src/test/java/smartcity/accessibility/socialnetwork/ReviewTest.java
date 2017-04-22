@@ -28,7 +28,7 @@ public class ReviewTest {
 		r1 = new Review(new LocationBuilder().setCoordinates(39.750307, -104.999472).build(),
 				Score.getMinScore(),
 				"very unaccessible place!",
-				u1);
+				u1.getProfile());
 	}
 	
 	@Test

@@ -40,9 +40,9 @@ public class BestReviewsTest {
 		u3 = UserBuilder.Admin("Simba", "355", "");
 		LatLng c = new LatLng(39.750307, -104.999472);
 		l = new LocationBuilder().setCoordinates(c.getLat(), c.getLng()).build();
-		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1);
-		r2 = new Review(l, 2, "middle accessibility level", u2);
-		r3 = new Review(l, Score.getMaxScore(), "high accessibility level", u3);
+		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1.getProfile());
+		r2 = new Review(l, 2, "middle accessibility level", u2.getProfile());
+		r3 = new Review(l, Score.getMaxScore(), "high accessibility level", u3.getProfile());
 		try {
 			l.addReview(r1);
 			l.addReview(r2);

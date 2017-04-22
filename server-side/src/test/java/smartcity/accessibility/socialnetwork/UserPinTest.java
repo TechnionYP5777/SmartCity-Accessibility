@@ -23,7 +23,7 @@ public class UserPinTest {
 		admin = UserBuilder.Admin("Admin", "", "");
 		location = new LocationBuilder().setCoordinates(100,100).build();
 
-		review = new Review(location, 5, "Nothing here", user);
+		review = new Review(location, 5, "Nothing here", user.getProfile());
 
 		location.addReview(review);
 		assert location.getReviews().contains(review);

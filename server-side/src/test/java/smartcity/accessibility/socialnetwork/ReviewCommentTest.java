@@ -33,7 +33,7 @@ public class ReviewCommentTest {
 	@Test
 	@Category(UnitTests.class)
 	public void a() throws UnauthorizedAccessException {
-		r1 = new Review(l, 4, "?", u1);
+		r1 = new Review(l, 4, "?", u1.getProfile());
 		r1.upvote(u2);
 		assertEquals(ReviewComment.POSITIVE_RATING, r1.calculateOpinion());
 	}
@@ -41,7 +41,7 @@ public class ReviewCommentTest {
 	@Test
 	@Category(UnitTests.class)
 	public void b() throws UnauthorizedAccessException {
-		r1 = new Review(l, 4, "?", u1);
+		r1 = new Review(l, 4, "?", u1.getProfile());
 		r1.upvote(u2);
 		r1.downvote(u3);
 		assertEquals(ReviewComment.POSITIVE_RATING + ReviewComment.NEGATIVE_RATING, r1.calculateOpinion());
@@ -50,7 +50,7 @@ public class ReviewCommentTest {
 	@Test
 	@Category(UnitTests.class)
 	public void c() throws UnauthorizedAccessException {
-		r1 = new Review(l, 4, "?", u1);
+		r1 = new Review(l, 4, "?", u1.getProfile());
 		r1.upvote(u2);
 		r1.downvote(u3);
 		r1.upvote(u2);
@@ -64,7 +64,7 @@ public class ReviewCommentTest {
 	@Test
 	@Category(UnitTests.class)
 	public void d() throws UnauthorizedAccessException {
-		r1 = new Review(l, 4, "?", u1);
+		r1 = new Review(l, 4, "?", u1.getProfile());
 		r1.upvote(u2);
 		r1.downvote(u2);
 		assertEquals(ReviewComment.NEGATIVE_RATING, r1.calculateOpinion());
@@ -73,7 +73,7 @@ public class ReviewCommentTest {
 	@Test
 	@Category(UnitTests.class)
 	public void e() throws UnauthorizedAccessException {
-		r1 = new Review(l, 4, "?", u1);
+		r1 = new Review(l, 4, "?", u1.getProfile());
 		r1.comment(u1, 123);
 		r1.comment(u2, 3);
 		r1.comment(u1, 3);

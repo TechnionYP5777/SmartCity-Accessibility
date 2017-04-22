@@ -34,9 +34,9 @@ public class BestReviews {
 
 		@Override
 		public int compare(Review o1, Review o2) {
-			if (o2.getUser().getProfile().getAvgRating() >  o1.getUser().getProfile().getAvgRating())
+			if (o2.getUser().getAvgRating() >  o1.getUser().getAvgRating())
 				return 1;
-			else if (o2.getUser().getProfile().getAvgRating() >  o1.getUser().getProfile().getAvgRating())
+			else if (o2.getUser().getAvgRating() >  o1.getUser().getAvgRating())
 				return 0;
 			else return o2.getRating().getScore() - o1.getRating().getScore();
 		}
@@ -75,7 +75,7 @@ public class BestReviews {
 		List<Review> $ = getMostRated();
 		double sum = 0, totalhelpfulness = 0;
 		for (Review r : $) {
-			double h = r.getUser().getProfile().getAvgRating();
+			double h = r.getUser().getAvgRating();
 			double rating = r.getRating().getScore();
 			if (h == 0) 
 				h++;

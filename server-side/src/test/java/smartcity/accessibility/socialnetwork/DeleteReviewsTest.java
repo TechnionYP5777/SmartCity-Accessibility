@@ -23,8 +23,8 @@ public class DeleteReviewsTest {
 		admin = UserBuilder.Admin("Admin", "", "");
 		location = new LocationBuilder().setCoordinates(100, 100).build();
 
-		review = new Review(location, 5, "Nothing here", user);
-		review2 = new Review(location, 3, "Nothing here either", admin);
+		review = new Review(location, 5, "Nothing here", user.getProfile());
+		review2 = new Review(location, 3, "Nothing here either", admin.getProfile());
 
 		location.addReview(review);
 		location.addReview(review2);

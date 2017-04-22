@@ -36,10 +36,10 @@ public class LocationTest {
 				u3 = UserBuilder.RegularUser("Koral3", "123", ""), u4 = UserBuilder.Admin("Koral4", "123", "");
 		LatLng c = new LatLng(31.90588, 34.997571); // Modi'in Yehalom St, 20
 		l = new LocationBuilder().setCoordinates(c).build();
-		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1);
-		r2 = new Review(l, 5, "middle accessibility level", u2);
-		r3 = new Review(l, Score.getMaxScore(), "high accessibility level", u3);
-		r4 = new Review(l,2, "high accessibility level", u3);
+		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1.getProfile());
+		r2 = new Review(l, 5, "middle accessibility level", u2.getProfile());
+		r3 = new Review(l, Score.getMaxScore(), "high accessibility level", u3.getProfile());
+		r4 = new Review(l,2, "high accessibility level", u3.getProfile());
 		try {
 			r4.pin(u4);
 		} catch (UnauthorizedAccessException e) {

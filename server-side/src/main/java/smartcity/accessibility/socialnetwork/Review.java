@@ -17,7 +17,7 @@ import smartcity.accessibility.socialnetwork.User.Privilege;
 public class Review {
 
 	private Location location;
-	private User user;
+	private UserProfile user;
 	private Score rating;
 	private String content;
 	private boolean isPinned;
@@ -25,15 +25,15 @@ public class Review {
 								// added to the default constractor
 	private List<ReviewComment> comments = new ArrayList<ReviewComment>();
 
-	public Review(int r, String c, User u) {
+	public Review(int r, String c, UserProfile u) {
 		this.rating = new Score(r);
 		this.content = c;
 		this.user = u;
 		this.isPinned = false;
-		u.getProfile().addReview();
+		u.addReview();
 	}
 	
-	public Review(Location l, int r, String c, User u) {
+	public Review(Location l, int r, String c, UserProfile u) {
 		this(r, c, u);
 		this.location = l;
 	}
@@ -43,7 +43,7 @@ public class Review {
 	/**
 	 * implemented for the DB functionality
 	 */
-	public Review(String l, int r, String c, User u) {
+	public Review(String l, int r, String c, UserProfile u) {
 		this(r, c, u);
 		this.locationID = l;
 	}
@@ -113,7 +113,7 @@ public class Review {
 	/**
 	 * @return the user
 	 */
-	public User getUser() {
+	public UserProfile getUser() {
 		return this.user;
 	}
 

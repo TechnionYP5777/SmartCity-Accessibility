@@ -17,6 +17,7 @@ import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.User.Privilege;
+import smartcity.accessibility.socialnetwork.UserProfile;
 
 /**
  * @author Koral Chapnik
@@ -107,7 +108,7 @@ public class Location {
 	 * @author Kolikant
 	 * @throws ParseException
 	 */
-	public void addReview(User u, int rating, String review) throws ParseException {
+	public void addReview(UserProfile u, int rating, String review) throws ParseException {
 		actuallyAddReview(new Review(this, rating, review, u));
 	}
 
