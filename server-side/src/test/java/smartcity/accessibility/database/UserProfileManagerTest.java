@@ -1,6 +1,6 @@
 package smartcity.accessibility.database;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,6 @@ import com.google.inject.Injector;
 
 import smartcity.accessibility.categories.BranchTests;
 import smartcity.accessibility.categories.UnitTests;
-import smartcity.accessibility.database.UserProfileManager.UserProfileCallback;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
@@ -61,9 +60,9 @@ public class UserProfileManagerTest {
 	public static void setUpMock(){
 		db = Mockito.mock(Database.class);
 		Map<String, Object> m = new HashMap<>();
-		m.put("username", "alexaxa");
-		m.put("rating", 25);
-		m.put("numOfReviews", 5);
+		m.put(UserProfileManager.USERNAME_FIELD, "alexaxa");
+		m.put(UserProfileManager.RATING_FIELD, 25);
+		m.put(UserProfileManager.NUM_OF_REVIEWS_FIELD, 5);
 		List<Map<String, Object>> l = new ArrayList<>();
 		l.add(m);
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyMap())).thenReturn(l);

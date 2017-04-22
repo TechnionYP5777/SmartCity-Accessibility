@@ -16,10 +16,15 @@ import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
 public class UserProfileManager {
-	private Database db;
+	public static final String NUM_OF_REVIEWS_FIELD = "numOfReviews";
+	public static final String RATING_FIELD = "rating";
+	public static final String USERNAME_FIELD = "username";
 	private static final String DATABASE_CLASS = "UserProfile";
 	private static UserProfileManager instance;
 	private static Logger logger = LoggerFactory.getLogger(UserProfileManager.class);
+	private Database db;
+	
+	
 
 	@Inject
 	public UserProfileManager(Database db) {
@@ -36,17 +41,17 @@ public class UserProfileManager {
 
 	private Map<String, Object> toMap(UserProfile u) {
 		Map<String, Object> m = new HashMap<>();
-		m.put("username", u.getUsername());
-		m.put("rating", u.getRating());
-		m.put("numOfReviews", u.getNumOfReviews());
+		m.put(USERNAME_FIELD, u.getUsername());
+		m.put(RATING_FIELD, u.getRating());
+		m.put(NUM_OF_REVIEWS_FIELD, u.getNumOfReviews());
 		return m;
 	}
 
 	private UserProfile fromMap(Map<String, Object> m) {
-		UserProfile u = new UserProfile(m.get("username").toString());
-		u.setRating((int) m.get("rating"));
-		u.setNumOfReviews((int) m.get("numOfReviews"));
-		logger.info("got review with username {} raintg {} numOfReviews {}" , m.get("username"), m.get("rating"), m.get("numOfReviews"));
+		UserProfile u = new UserProfile(m.get(USERNAME_FIELD).toString());
+		u.setRating((int) m.get(RATING_FIELD));
+		u.setNumOfReviews((int) m.get(NUM_OF_REVIEWS_FIELD));
+		logger.info("got review with username {} raintg {} numOfReviews {}" , m.get(USERNAME_FIELD), m.get(RATING_FIELD), m.get(NUM_OF_REVIEWS_FIELD));
 		return u;
 	}
 
@@ -54,12 +59,11 @@ public class UserProfileManager {
 		logger.debug("get UserProfile {}", username);
 		Flowable<UserProfile> res = Flowable.fromCallable(() -> {
 			Map<String, Object> m = new HashMap<>();
-			m.put("username", username);
+			m.put(USERNAME_FIELD, username);
 			List<Map<String, Object>> l = db.get(DATABASE_CLASS, m);
 			if (l.isEmpty())
 				throw new UserNotFoundException();
-			UserProfile up = fromMap(l.get(0));
-			return up;
+			return fromMap(l.get(0));
 		})
 		.subscribeOn(Schedulers.io())
 		.observeOn(Schedulers.single());
