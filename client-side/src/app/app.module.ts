@@ -25,7 +25,8 @@ import { AddReviewService } from '../pages/add-review/AddReviewService';
 	AddReviewPage,
 	SignupPage,
 	UserPagePage,
-	NavigationPage
+	NavigationPage,
+	ComplexSearchPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -40,7 +41,8 @@ import { AddReviewService } from '../pages/add-review/AddReviewService';
 	AddReviewPage,
 	SignupPage,
 	UserPagePage,
-	NavigationPage
+	NavigationPage,
+	ComplexSearchPage
   ],
   providers: [
     StatusBar,
