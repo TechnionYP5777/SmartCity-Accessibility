@@ -3,12 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import {HomePage} from '../home/home';
 import {AddReviewService} from './AddReviewService';
 
-/*
-  Generated class for the AddReview page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-add-review',
   templateUrl: 'add-review.html'

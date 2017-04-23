@@ -2,20 +2,12 @@
 
 <html>
 <head>
-	<link rel="stylesheet" href="http://code.ionicframework.com/1.0.0/css/ionic.css" />
-	<script src="http://code.ionicframework.com/1.0.0/js/ionic.bundle.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 	<script src="http://code.jquery.com/jquery-2.0.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 </head>
 <body>
-<!--
-  Generated template for the AddReview page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -24,27 +16,20 @@
   
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="add-review">
+
 	<ion-list>
 		<ion-item>
 			<ion-label floating>Enter your review here...</ion-label>
           	<ion-input [(ngModel)] = "reviewinfo.review" type="text"></ion-input>
 		</ion-item>
 		<ion-item>
-			<div class="ui-field-contain">
-				<label for="select-1">Select score:</label>
-				<select name="select-1" id="select-1" data-inline="true">
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-				</select>
-			</div>
+			
 		</ion-item>
 	</ion-list>
-	<button ion-button (click)="addreview(reviewinfo)">Submit Review</button>
-</ion-content>
 
+	<button ion-button round (click)="addreview(reviewinfo)">Submit Review</button>
+
+</ion-content>
 </body>
 </html>
