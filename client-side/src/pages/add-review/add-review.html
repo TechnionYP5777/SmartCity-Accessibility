@@ -24,7 +24,9 @@
           	<ion-input [(ngModel)] = "reviewinfo.review" type="text"></ion-input>
 		</ion-item>
 		<ion-item>
-			
+			<div>Please choose the rating:</div>
+			<rating [(rate)]="rate"></rating>
+			<pre style="margin:15px 0;">Rate: <b>{{rate}}</b></pre>
 		</ion-item>
 	</ion-list>
 
