@@ -6,6 +6,7 @@ import {MapClickMenuPage} from '../mapclickmenu/mapclickmenu';
 import { LoginService } from '../login/LoginService';
 import { UserPagePage } from '../user-page/user-page'; 
 import { LoginPage } from '../login/login';
+import { ComplexSearchPage } from '../complex-search/complex-search'; 
 declare var google;  
  
  
@@ -22,6 +23,7 @@ export class MapviewPage {
   isLoggedin : any;
   loginPage = LoginPage;
   userProfile = UserPagePage;
+  complexSearchPage = ComplexSearchPage;
   constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService) {
 	    this.isLoggedin = this.loginService.isLoggedIn();
   }
