@@ -14,6 +14,7 @@ import {LoginService} from '../pages/login/LoginService';
 import {NavigationService} from '../pages/navigation/navigationService';
 import { NavigationPage } from '../pages/navigation/navigation';
 import { AddReviewService } from '../pages/add-review/AddReviewService';
+import { IonRating } from '../components/ion-rating/ion-rating';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AddReviewService } from '../pages/add-review/AddReviewService';
 	SignupPage,
 	UserPagePage,
 	NavigationPage,
-	ComplexSearchPage
+	ComplexSearchPage,
+	IonRating
   ],
   imports: [
     IonicModule.forRoot(MyApp)

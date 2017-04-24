@@ -1,13 +1,3 @@
-<!DOCTYPE html>
-
-<html>
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-	<script src="http://code.jquery.com/jquery-2.0.1.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-</head>
-<body>
 <ion-header>
 
   <ion-navbar>
@@ -24,14 +14,15 @@
           	<ion-input [(ngModel)] = "reviewinfo.review" type="text"></ion-input>
 		</ion-item>
 		<ion-item>
-			<div>Please choose the rating:</div>
-			<rating [(rate)]="rate"></rating>
-			<pre style="margin:15px 0;">Rate: <b>{{rate}}</b></pre>
+			<ion-rating
+    			[numStars]="5"
+    			[readOnly]="false"
+    			[value]="3.2"
+    			(clicked)="starClicked($event)">
+			</ion-rating>
 		</ion-item>
 	</ion-list>
 
 	<button ion-button round (click)="addreview(reviewinfo)">Submit Review</button>
 
 </ion-content>
-</body>
-</html>
