@@ -1,10 +1,18 @@
 package smartcity.accessibility.services;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -14,15 +22,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
-
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.Arrays;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -52,9 +51,9 @@ public class NavigationServiceTest {
 	}
 
 	@Test
-	public void test() throws IOException, Exception {
-		mockMvc.perform(post("/george/bookmarks/").content(this.json(new Object())).contentType(contentType))
-				.andExpect(status().isNotFound());
+	public void navigationUnauthorized() throws IOException, Exception {
+		mockMvc.perform(post("/navigation"+"?srcLat=0.0&srcLng=0.0&dstLat=0.0&dstLng=0.0&accessibilityThreshold=0").header("authToken", "lalal").contentType(contentType))
+				.andExpect(status().isUnauthorized());
 	}
 
 	protected String json(Object o) throws IOException {
