@@ -16,9 +16,11 @@
 
 <ion-content>
   <ion-list>
-
     <ion-item>
-      <ion-label>Type</ion-label>
+      <ion-label>  
+		<ion-icon ios="ios-restaurant" md="md-restaurant"></ion-icon>
+		Type
+	  </ion-label>
       <ion-select [(ngModel)]="type">
         <ion-option value="restaurant">Restaurant</ion-option>
         <ion-option value="caffe">Caffe</ion-option>
@@ -27,7 +29,10 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Minimum Rating</ion-label>
+      <ion-label>
+		<ion-icon name="star"></ion-icon>
+		Minimum Rating
+	  </ion-label>
       <ion-select [(ngModel)]="minRating">
         <ion-option>1</ion-option>
         <ion-option>2</ion-option>
@@ -43,16 +48,42 @@
 
 
     <ion-item>
-      <ion-label>Start Location</ion-label>
-	  
-      <ion-item>
-		<ion-input [(ngModel)] = "srcLat" type="number" placeholder="source Lat"></ion-input>
-      </ion-item>
-	  
-	  <ion-item>
-		<ion-input [(ngModel)] = "srcLng" type="number" placeholder="source Long"></ion-input>
-      </ion-item>
+		
+	  <div class="row">
+		 <div class="col-1">
+				<ion-icon name="md-globe"></ion-icon>
+		 </div>
+		  <div class="col">
+				<div class="bar bar-header item-input-inset">
+					<label class="item-input-wrapper textbox-search">
+						<i class="icon ion-search placeholder-icon"></i>
+						<input  [(ngModel)] = "srcLat" type="number" placeholder="Source Lat">
+					</label>
+				</div>
+		   </div>
+		   
+		      <div class="col-1">
+				<ion-icon name="md-globe"></ion-icon>
+		 </div>
+		   
+		   <div class="col">
+				<div class="bar bar-header item-input-inset">
+					<label class="item-input-wrapper textbox-search">
+						<i class="icon ion-search placeholder-icon"></i>
+						<input  [(ngModel)] = "srcLng" type="number" placeholder="Source Long">
+					</label>
+				</div>
+		   </div>
+		
+      </div>
 	</ion-item>
+	
+	<ion-item>
+      <ion-label>Use my current location</ion-label>
+      <ion-checkbox color="danger" checked="false"></ion-checkbox>
+    </ion-item>
+	
+	
 	
   </ion-list>
 </ion-content>
