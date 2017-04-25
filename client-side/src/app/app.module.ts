@@ -16,6 +16,7 @@ import { NavigationPage } from '../pages/navigation/navigation';
 import { AddReviewService } from '../pages/add-review/AddReviewService';
 import { IonRating } from '../components/ion-rating/ion-rating';
 import {ComplexSearchPage} from '../pages/complex-search/complex-search';
+import {SearchService} from '../pages/mapview/searchService';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import {ComplexSearchPage} from '../pages/complex-search/complex-search';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
 	LoginService,
 	NavigationService,
-	AddReviewService
+	AddReviewService,
+	SearchService
   ]
 })
 export class AppModule {}

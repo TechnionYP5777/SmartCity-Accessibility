@@ -22,24 +22,14 @@
 
 	</ion-buttons>
   </ion-navbar>
-  <div class="bar bar-footer bar-light footer-buttons">
-    <div class="row">
+		<ion-input [(ngModel)] = "searchQuery" ></ion-input>
         <div class="col">
-			<div class="bar bar-header item-input-inset">
-				<label class="item-input-wrapper textbox-search">
-					<i class="icon ion-search placeholder-icon"></i>
-					<input type="search" placeholder="Search Address">
-				</label>
-			</div>
-        </div>
-        <div class="col">
-        		<button ion-button [navPush]="loginPage">Search</button>
+        		<button ion-button (click)="callSearch(searchQuery)">Search</button>
+				{{output}}
 		</div>
 		 <div class="col">
 			<button ion-button [navPush]="complexSearchPage">Complex Search</button>
 		</div>
-    </div>
-</div>
 </ion-header>
 
 

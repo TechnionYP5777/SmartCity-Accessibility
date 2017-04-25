@@ -7,6 +7,7 @@ import { LoginService } from '../login/LoginService';
 import { UserPagePage } from '../user-page/user-page'; 
 import { LoginPage } from '../login/login';
 import { ComplexSearchPage } from '../complex-search/complex-search'; 
+import { SearchService } from './searchService';
 declare var google;  
  
  
@@ -21,15 +22,24 @@ export class MapviewPage {
   marker:any;
   geolocation: Geolocation;
   isLoggedin : any;
+  searchQuery: any;
   loginPage = LoginPage;
   userProfile = UserPagePage;
   complexSearchPage = ComplexSearchPage;
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService) {
+  output :  any;
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService, public searchService : SearchService) {
 	    this.isLoggedin = this.loginService.isLoggedIn();
+		this.output = "heelo";
   }
   
   ionViewDidLoad(){
     this.loadMap();
+  }
+  
+  callSearch(searchQuery) {
+	  this.searchService.search(searchQuery).subscribe(data => {
+			this.output = data.name;
+    });
   }
 presentAlert(str) {
     let alert = this.alertCtrl.create({
