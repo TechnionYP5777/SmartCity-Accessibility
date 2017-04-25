@@ -17,11 +17,9 @@ import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 import smartcity.accessibility.services.exceptions.SearchFailed;
 
-import org.springframework.web.bind.annotation.RequestHeader;
-
 @Controller
 public class ComplexSearchServiece {
-	@RequestMapping(value="/complexSearch")
+	@RequestMapping("/complexSearch")
 	@ResponseBody
 	public List<Location> complexSearch(@RequestParam("type") String type,
 			@RequestParam("radius") Integer radius, @RequestParam("srcLat") Double srcLat,

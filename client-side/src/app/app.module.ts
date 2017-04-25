@@ -15,6 +15,7 @@ import {NavigationService} from '../pages/navigation/navigationService';
 import { NavigationPage } from '../pages/navigation/navigation';
 import { AddReviewService } from '../pages/add-review/AddReviewService';
 import { IonRating } from '../components/ion-rating/ion-rating';
+import {ComplexSearchPage} from '../pages/complex-search/complex-search';
 
 @NgModule({
   declarations: [
