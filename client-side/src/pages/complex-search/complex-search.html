@@ -1,18 +1,58 @@
 <!--
+<!--
   Generated template for the ComplexSearch page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+
 <ion-header>
-
   <ion-navbar>
-    <ion-title>complexSearch</ion-title>
+    <ion-title>
+      Complex Search
+    </ion-title>
   </ion-navbar>
-
 </ion-header>
 
+<ion-content>
+  <ion-list>
 
-<ion-content padding>
+    <ion-item>
+      <ion-label>Type</ion-label>
+      <ion-select [(ngModel)]="type">
+        <ion-option value="restaurant">Restaurant</ion-option>
+        <ion-option value="caffe">Caffe</ion-option>
+        <ion-option value="hotel">Hotel</ion-option>
+      </ion-select>
+    </ion-item>
 
+    <ion-item>
+      <ion-label>Minimum Rating</ion-label>
+      <ion-select [(ngModel)]="minRating">
+        <ion-option>1</ion-option>
+        <ion-option>2</ion-option>
+		<ion-option>3</ion-option>
+		<ion-option>4</ion-option>
+		<ion-option>5</ion-option>
+      </ion-select>
+    </ion-item>
+	
+	<ion-item>
+		<ion-input [(ngModel)] = "radius" type="number" placeholder="Radius"></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label>Start Location</ion-label>
+	  
+      <ion-item>
+		<ion-input [(ngModel)] = "srcLat" type="number" placeholder="source Lat"></ion-input>
+      </ion-item>
+	  
+	  <ion-item>
+		<ion-input [(ngModel)] = "srcLng" type="number" placeholder="source Long"></ion-input>
+      </ion-item>
+	</ion-item>
+	
+  </ion-list>
 </ion-content>

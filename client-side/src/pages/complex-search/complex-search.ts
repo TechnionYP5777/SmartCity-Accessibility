@@ -12,8 +12,26 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'complex-search.html'
 })
 export class ComplexSearchPage {
+  type: string;
+  gender: string;
+  minRating: number;
+  raduis: number;
+  music: string;
+  srcLat: number;
+  srcLng: number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  musicAlertOpts: { title: string, subTitle: string };
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.musicAlertOpts = {
+      title: '1994 Music',
+      subTitle: 'Select your favorite'
+    };
+  }
+
+  stpSelect() {
+    console.log('STP selected');
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ComplexSearchPage');
