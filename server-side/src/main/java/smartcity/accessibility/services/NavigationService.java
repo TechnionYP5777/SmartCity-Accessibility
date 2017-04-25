@@ -12,6 +12,8 @@ import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.navigation.Navigation;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
+import smartcity.accessibility.services.exceptions.NavigationFailed;
+import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
 
 import org.springframework.web.bind.annotation.RequestHeader;
 

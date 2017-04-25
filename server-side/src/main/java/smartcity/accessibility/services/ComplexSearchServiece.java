@@ -15,6 +15,7 @@ import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
+import smartcity.accessibility.services.exceptions.SearchFailed;
 
 @Controller
 public class ComplexSearchServiece {

@@ -1,4 +1,4 @@
-package smartcity.accessibility.services;
+package smartcity.accessibility.services.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
