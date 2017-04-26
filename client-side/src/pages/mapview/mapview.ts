@@ -29,7 +29,7 @@ export class MapviewPage {
   output :  any;
   constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService, public searchService : SearchService) {
 	    this.isLoggedin = this.loginService.isLoggedIn();
-		this.output = "heelo";
+		this.output = "";
   }
   
   ionViewDidLoad(){
@@ -38,7 +38,7 @@ export class MapviewPage {
   
   callSearch(searchQuery) {
 	  this.searchService.search(searchQuery).subscribe(data => {
-			this.output = "Location is: " + data.name + " \ncoordinates are: " + data.LatLng;
+			this.output = "Location is: " + data.name + " coordinates are: " + data.LatLng;
     });
   }
 presentAlert(str) {

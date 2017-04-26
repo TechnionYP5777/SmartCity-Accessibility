@@ -20,13 +20,21 @@
 	<ion-buttons center>
 		
 
-	</ion-buttons>
+  </ion-buttons>
+  
   </ion-navbar>
-		<ion-input [(ngModel)] = "searchQuery" ></ion-input>
-        <div class="col">
-        		<button ion-button (click)="callSearch(searchQuery)">Search</button>
-				{{output}}
+  <div class="row">
+		<div class="col">
+			<ion-item>
+				<ion-input [(ngModel)] = "searchQuery" type="search" placeholder="Search Adress"></ion-input>
+			</ion-item>
 		</div>
+		<div class="col">
+			<button ion-button (click)="callSearch(searchQuery)">Search</button>
+			{{output}}
+		</div>
+	</div>
+
 		 <div class="col">
 			<button ion-button [navPush]="complexSearchPage">Complex Search</button>
 		</div>
