@@ -42,6 +42,14 @@ export class MapviewPage {
         });
     }
 	
+    addMarker(){
+        var uluru = {lat: 32.779867, lng: 35.016426};
+	    var marker = new google.maps.Marker({
+		    position: uluru,
+            map: this.map
+        });
+    }
+
 	presentAlert(str) {
 		let alert = this.alertCtrl.create({
 		  title: 'Alert',
@@ -50,15 +58,8 @@ export class MapviewPage {
 		});
 		alert.present();
 	}
-	
-    addMarker(){
-        var uluru = {lat: 32.779867, lng: 35.016426};
-	    var marker = new google.maps.Marker({
-		    position: uluru,
-            map: this.map
-        });
-    }
-	
+
+
 loadMap(){
 	this.geolocation = new Geolocation();
     this.geolocation.getCurrentPosition().then((position) => {
