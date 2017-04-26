@@ -42,12 +42,15 @@ export class MapviewPage {
         });
     }
 	
-    addMarker(){
-        var uluru = {lat: 32.779867, lng: 35.016426};
-	    var marker = new google.maps.Marker({
-		    position: uluru,
+    addMarker(LatLngArr){
+	 for (var i = 0; i < LatLngArr.length; i++) {
+          var coords = LatLngArr[i];
+          var latLng = new google.maps.LatLng(coords.lat,coords.lng);
+          var marker = new google.maps.Marker({
+            position: latLng,
             map: this.map
-        });
+          });
+        }
     }
 
 	presentAlert(str) {
@@ -74,7 +77,7 @@ loadMap(){
 			let clickMenu = this.modalCtrl.create(MapClickMenuPage,{latlng : event.latLng});
 			clickMenu.present();
 		} );
-		this.addMarker();
+		this.addMarker([]);
     }, (err) => {
       console.log(err);
     });
