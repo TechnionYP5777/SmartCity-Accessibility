@@ -32,23 +32,33 @@ export class MapviewPage {
 		this.output = "";
   }
   
-  ionViewDidLoad(){
-    this.loadMap();
-  }
+    ionViewDidLoad(){
+        this.loadMap();
+    }
   
-  callSearch(searchQuery) {
-	  this.searchService.search(searchQuery).subscribe(data => {
+    callSearch(searchQuery) {
+	    this.searchService.search(searchQuery).subscribe(data => {
 			this.output = "Location is: " + data.name + " coordinates are: " + data.coordinates.lat + ":" + data.coordinates.lng ;
-    });
-  }
-presentAlert(str) {
-    let alert = this.alertCtrl.create({
-      title: 'Alert',
-      subTitle: str,
-      buttons: ['OK']
-    });
-    alert.present();
-}
+        });
+    }
+	
+    addMarker(){
+        var uluru = {lat: 32.779867, lng: 35.016426};
+	    var marker = new google.maps.Marker({
+		    position: uluru,
+            map: this.map
+        });
+    }
+
+	presentAlert(str) {
+		let alert = this.alertCtrl.create({
+		  title: 'Alert',
+		  subTitle: str,
+		  buttons: ['OK']
+		});
+		alert.present();
+	}
+
 
 loadMap(){
 	this.geolocation = new Geolocation();
@@ -64,9 +74,10 @@ loadMap(){
 			let clickMenu = this.modalCtrl.create(MapClickMenuPage,{latlng : event.latLng});
 			clickMenu.present();
 		} );
+		this.addMarker();
     }, (err) => {
       console.log(err);
     });
- 
+	
   }
 }
