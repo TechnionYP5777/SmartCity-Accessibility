@@ -38,7 +38,7 @@ export class MapviewPage {
   
   callSearch(searchQuery) {
 	  this.searchService.search(searchQuery).subscribe(data => {
-			this.output = data.name;
+			this.output = "Location is: " + data.name + " \ncoordinates are: " + data.LatLng;
     });
   }
 presentAlert(str) {

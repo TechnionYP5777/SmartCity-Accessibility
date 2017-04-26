@@ -10,6 +10,6 @@ export class SearchService {
     }
 
 	search(searchQuery) {
-           return this.http.get(Constants.serverAddress +'/simpleSearch/'+"yehalom 17").map(res=>res.json());
+           return this.http.get(Constants.serverAddress +'/simpleSearch/'+searchQuery).map(res=>res.json());
 	}
 }
