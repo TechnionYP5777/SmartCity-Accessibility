@@ -49,6 +49,7 @@ presentAlert(str) {
     });
     alert.present();
 }
+
 loadMap(){
 	this.geolocation = new Geolocation();
     this.geolocation.getCurrentPosition().then((position) => {
