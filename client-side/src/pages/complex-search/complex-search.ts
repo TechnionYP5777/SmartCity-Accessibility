@@ -19,7 +19,7 @@ export class ComplexSearchPage {
   music: string;
   srcLat: number;
   srcLng: number;
-
+  initLoc: string;
   musicAlertOpts: { title: string, subTitle: string };
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {

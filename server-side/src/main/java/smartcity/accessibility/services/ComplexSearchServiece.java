@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.teamdev.jxmaps.LatLng;
-
 import smartcity.accessibility.exceptions.EmptySearchQuery;
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.Location;
