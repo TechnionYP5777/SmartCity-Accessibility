@@ -54,7 +54,7 @@ public class UserProfileManagerTest {
 	@Test
 	@Category({ BranchTests.class, UnitTests.class })
 	public void testGet() throws UserNotFoundException, InterruptedException {
-		UserProfile pf = manager.get("alexaxa", null).get();
+		UserProfile pf = manager.get("alexaxa", null);
 		assertEquals(25, pf.getRating());
 		assertEquals(5, pf.getNumOfReviews());
 		assertEquals("alexaxa", pf.getUsername());
@@ -63,7 +63,7 @@ public class UserProfileManagerTest {
 	@Test
 	@Category({ BranchTests.class, UnitTests.class })
 	public void testPut() {
-		assertEquals(true, manager.put(user1, true).get());
+		assertEquals(true, manager.put(user1, null));
 		Mockito.verify(db).put(UserProfileManager.DATABASE_CLASS, m);
 	}
 	

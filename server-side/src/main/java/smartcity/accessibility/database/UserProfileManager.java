@@ -56,7 +56,7 @@ public class UserProfileManager {
 		return u;
 	}
 
-	public Optional<UserProfile> get(String username, ICallback<UserProfile> c) throws UserNotFoundException {
+	public UserProfile get(String username, ICallback<UserProfile> c) throws UserNotFoundException {
 		logger.debug("get UserProfile {}", username);
 		Flowable<UserProfile> res = Flowable.fromCallable(() -> {
 			Map<String, Object> m = new HashMap<>();
@@ -69,23 +69,23 @@ public class UserProfileManager {
 		.subscribeOn(Schedulers.io())
 		.observeOn(Schedulers.single());
 		if(c == null)
-			return Optional.of(res.blockingFirst());
+			return res.blockingFirst();
 		res.subscribe(c::onFinish, Throwable::printStackTrace);	
-		return Optional.empty();
+		return null;
 	}
 	
-	public Optional<Boolean> put(UserProfile up, boolean blocking){
-		logger.debug("put UserProfile {} and block={}", up.getUsername(),blocking);
+	public Boolean put(UserProfile up, ICallback<Boolean> callback){
+		logger.debug("put UserProfile {}", up.getUsername());
 		Flowable<Boolean> res = Flowable.fromCallable(() -> {
 			db.put(DATABASE_CLASS, toMap(up));
 			return true;
 		})
 		.subscribeOn(Schedulers.io())
 		.observeOn(Schedulers.single());
-		if(blocking)
-			return Optional.of(res.blockingFirst());
+		if(callback == null)
+			return res.blockingFirst();
 		res.subscribe();
-		return Optional.empty();
+		return null;
 	}
 
 	
