@@ -16,6 +16,7 @@ import { NavigationPage } from '../pages/navigation/navigation';
 import { AddReviewService } from '../pages/add-review/AddReviewService';
 import { IonRating } from '../components/ion-rating/ion-rating';
 import {ComplexSearchPage} from '../pages/complex-search/complex-search';
+import {ComplexSearchService} from '../pages/complex-search/complexSearchService';
 import {SearchService} from '../pages/mapview/searchService';
 
 @NgModule({
@@ -55,7 +56,8 @@ import {SearchService} from '../pages/mapview/searchService';
 	LoginService,
 	NavigationService,
 	AddReviewService,
-	SearchService
+	SearchService,
+	ComplexSearchService
   ]
 })
 export class AppModule {}

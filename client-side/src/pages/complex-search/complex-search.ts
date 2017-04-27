@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-
+import {ComplexSearchService} from './complexSearchService';
 /*
   Generated class for the ComplexSearch page.
 
@@ -17,16 +17,11 @@ export class ComplexSearchPage {
   minRating: number;
   raduis: number;
   music: string;
-  srcLat: number;
-  srcLng: number;
   initLoc: string;
-  musicAlertOpts: { title: string, subTitle: string };
+  output: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.musicAlertOpts = {
-      title: '1994 Music',
-      subTitle: 'Select your favorite'
-    };
+  constructor(public navCtrl: NavController, public navParams: NavParams, public complexSearchService : ComplexSearchService) {
+    
   }
 
   stpSelect() {
@@ -37,4 +32,9 @@ export class ComplexSearchPage {
     console.log('ionViewDidLoad ComplexSearchPage');
   }
 
+  callComplexSearch(type, radius, initLoc, minRating) {
+	    this.complexSearchService.complexSearch(type, radius, initLoc, minRating).subscribe(data => {
+			this.output = data;
+        });
+   }
 }
