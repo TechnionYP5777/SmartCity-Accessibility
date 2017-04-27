@@ -45,6 +45,6 @@ public abstract class AbstractLocationManager {
 	
 	public abstract Boolean updateLocation(Location loc, ICallback<Boolean> callback);
 	
-	public abstract List<LatLng> getNonAccessibleLocationsInRadius(Location source, Location destination,
+	public abstract List<LatLng> getNonAccessibleLocationsInRadius(LatLng source, LatLng destination,
 			Integer accessibilityThreshold, ICallback<List<LatLng>> locationListCallback);
 }

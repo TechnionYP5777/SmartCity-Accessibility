@@ -70,14 +70,14 @@ public abstract class Navigation {
 			throw new CommunicationFailed("");
 		RouteWraper $ = response.readEntity(RouteWraper.class);
 		if ($.getInfo().getStatuscode() != 0)
-			throw new CommunicationFailed(String.join(",",$.getInfo().getMessages()));
+			throw new CommunicationFailed(String.join(",", $.getInfo().getMessages()));
 		return $.getRoute();
 	}
 
 	private static List<MapSegment> getSegmentsToAvoid(Location source, Location destination,
 			Integer accessibilityThreshold) throws CommunicationFailed {
-		List<LatLng> locationsToAvoid = AbstractLocationManager.instance().getNonAccessibleLocationsInRadius(source, destination,
-				accessibilityThreshold, null);
+		List<LatLng> locationsToAvoid = AbstractLocationManager.instance().getNonAccessibleLocationsInRadius(
+				source.getCoordinates(), destination.getCoordinates(), accessibilityThreshold, null);
 		List<MapSegment> $ = new ArrayList<MapSegment>();
 		for (LatLng ¢ : locationsToAvoid)
 			$.add(getMapSegmentOfLatLng(¢.getLat(), ¢.getLng()));

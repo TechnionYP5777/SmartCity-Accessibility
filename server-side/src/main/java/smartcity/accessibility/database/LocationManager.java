@@ -89,7 +89,7 @@ public class LocationManager extends AbstractLocationManager {
 	}
 
 	@Override
-	public List<LatLng> getNonAccessibleLocationsInRadius(Location source, Location destination,
+	public List<LatLng> getNonAccessibleLocationsInRadius(LatLng source, LatLng destination,
 			Integer accessibilityThreshold, ICallback<List<LatLng>> locationListCallback) {
 		// TODO Auto-generated method stub
 		return null;
