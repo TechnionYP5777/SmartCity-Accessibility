@@ -34,7 +34,7 @@ export class ComplexSearchPage {
 
   callComplexSearch(type, radius, initLoc, minRating) {
 	    this.complexSearchService.complexSearch(type, radius, initLoc, minRating).subscribe(data => {
-			this.output = data;
+			this.output = 'The first location is : ' + data[0].name;
         });
    }
 }

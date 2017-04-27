@@ -56,10 +56,10 @@
       <ion-checkbox color="danger" checked="false"></ion-checkbox>
     </ion-item>
 	
-	<button ion-button color="danger" icon-left large full>
+	<button ion-button color="danger" icon-left large full (click)="callComplexSearch(type, radius, initLoc, minRating)">
       <ion-icon name='search'></ion-icon>
       Search
     </button>
-	
+	{{output}}
   </ion-list>
 </ion-content>
