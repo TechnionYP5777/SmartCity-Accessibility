@@ -14,6 +14,8 @@ import org.parse4j.ParseQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import smartcity.accessibility.database.exceptions.ObjectNotFoundException;
+
 public class ParseDatabase implements Database {
 
 	public static final String SERVER_URL = "https://smartcityaccessibility.herokuapp.com/parse";
@@ -82,16 +84,17 @@ public class ParseDatabase implements Database {
 	}
 
 	@Override
-	public Map<String, Object> get(String objectClass, String id) {
+	public Map<String, Object> get(String objectClass, String id) throws ObjectNotFoundException {
 		logger.debug("getting object with id " + id);
 		try {
 			ParseObject po = ParseQuery.getQuery(objectClass).get(id);
+			if (po == null)
+				throw new ObjectNotFoundException();
 			return toMap(po);
 		} catch (ParseException e) {
 			logger.error("get object failed with error " + e.getMessage());
-			e.printStackTrace();
+			throw new ObjectNotFoundException(); 
 		}
-		return null;
 	}
 
 	@Override

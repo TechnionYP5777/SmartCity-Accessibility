@@ -21,6 +21,7 @@ import org.parse4j.ParseObject;
 
 import smartcity.accessibility.categories.BranchTests;
 import smartcity.accessibility.categories.NetworkTests;
+import smartcity.accessibility.database.exceptions.ObjectNotFoundException;
 
 public class ParseDatabaseTest {
 	private static ParseDatabase pd;
@@ -52,7 +53,7 @@ public class ParseDatabaseTest {
 
 	@Test
 	@Category({ BranchTests.class, NetworkTests.class })
-	public void testGet() {
+	public void testGet() throws ObjectNotFoundException {
 		Map<String, Object> res = pd.get(databaseClass, sampleObjectId);
 		for (Entry<String, Object> e : testObjects.get(sampleObjectId).entrySet()) {
 			if(e.getKey().equals("location"))
@@ -85,7 +86,7 @@ public class ParseDatabaseTest {
 
 	@Test
 	@Category({ BranchTests.class, NetworkTests.class })
-	public void testPut() {
+	public void testPut() throws ObjectNotFoundException {
 		Map<String, Object> object1 = testObjects.get(sampleObjectId);
 
 		String id = pd.put(databaseClass, object1);
@@ -99,7 +100,7 @@ public class ParseDatabaseTest {
 
 	@Test
 	@Category({ BranchTests.class, NetworkTests.class })
-	public void testUpdate() {
+	public void testUpdate() throws ObjectNotFoundException {
 		Map<String, Object> object1 = testObjects.get(sampleObjectId);
 
 		String id = pd.put(databaseClass, object1);
@@ -121,7 +122,7 @@ public class ParseDatabaseTest {
 	
 	@Test
 	@Category({ BranchTests.class, NetworkTests.class })
-	public void testDelete() {
+	public void testDelete() throws ObjectNotFoundException {
 		Map<String, Object> object1 = testObjects.get(sampleObjectId);
 
 		String id = pd.put(databaseClass, object1);
