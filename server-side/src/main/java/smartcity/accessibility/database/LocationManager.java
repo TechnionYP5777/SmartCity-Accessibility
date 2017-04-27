@@ -9,30 +9,21 @@ import org.parse4j.ParseGeoPoint;
 import com.google.inject.Inject;
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 
-public class LocationManager {
+public class LocationManager extends AbstractLocationManager {
 
 	private Database db;
 	private static final String DATABASE_CLASS = "Location";
 	private static final String ID_FIELD_NAME = "objectId";
 
-	private static LocationManager instance;
-
 	@Inject
 	public LocationManager(Database db) {
 		this.db = db;
-	}
-
-	public static void initialize(LocationManager m) {
-		instance = m;
-	}
-
-	public static LocationManager instance() {
-		return instance;
 	}
 
 	private static Map<String, Object> toMap(Location l) {
@@ -59,38 +50,51 @@ public class LocationManager {
 		return lb.build();
 	}
 
-	public String uploadLocation(Location l) {
-		return db.put(DATABASE_CLASS, toMap(l));
-	}
-
-	public static void getLocation(LatLng coordinates, LocationListCallback locationListCallback) {
-		// TODO Auto-generated method stub
-	}
-
-	public static void getLocationsNearPoint(LatLng l, LocationListCallback locationListCallback, int i) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public static Location getLocation(LatLng coordinates, LocationTypes street, LocationSubTypes default1) {
+	@Override
+	public String getId(LatLng coordinates, ICallback<String> callback) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public static void updateLocation(Location loc) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public static List<LatLng> getNonAccessibleLocationsInRadius(Location source, Location destination,
-			Integer accessibilityThreshold) {
+	@Override
+	public String uploadLocation(Location l, ICallback<String> callback) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String getId(LatLng coordinates) {
-		// TODO : Try with db.get with coordinates and radius 0.0
+	@Override
+	public List<Location> getLocation(LatLng coordinates, ICallback<List<Location>> locationListCallback) {
+		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Location> getLocationsAround(LatLng l, double distance,
+			ICallback<List<Location>> locationListCallback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Location getLocation(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType,
+			ICallback<Location> callback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean updateLocation(Location loc, ICallback<Boolean> callback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<LatLng> getNonAccessibleLocationsInRadius(Location source, Location destination,
+			Integer accessibilityThreshold, ICallback<List<LatLng>> locationListCallback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }

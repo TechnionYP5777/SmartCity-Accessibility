@@ -11,9 +11,8 @@ import org.slf4j.LoggerFactory;
 import com.google.inject.Inject;
 
 import io.reactivex.Flowable;
-import io.reactivex.Scheduler;
-import io.reactivex.annotations.Nullable;
 import io.reactivex.schedulers.Schedulers;
+import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
@@ -57,7 +56,7 @@ public class UserProfileManager {
 		return u;
 	}
 
-	public Optional<UserProfile> get(String username, UserProfileCallback c) throws UserNotFoundException {
+	public Optional<UserProfile> get(String username, ICallback<UserProfile> c) throws UserNotFoundException {
 		logger.debug("get UserProfile {}", username);
 		Flowable<UserProfile> res = Flowable.fromCallable(() -> {
 			Map<String, Object> m = new HashMap<>();
@@ -75,22 +74,19 @@ public class UserProfileManager {
 		return Optional.empty();
 	}
 	
-	public Optional<Boolean> put(UserProfile up, boolean block){
-		logger.debug("put UserProfile {} and block={}", up.getUsername(),block);
+	public Optional<Boolean> put(UserProfile up, boolean blocking){
+		logger.debug("put UserProfile {} and block={}", up.getUsername(),blocking);
 		Flowable<Boolean> res = Flowable.fromCallable(() -> {
 			db.put(DATABASE_CLASS, toMap(up));
 			return true;
 		})
 		.subscribeOn(Schedulers.io())
 		.observeOn(Schedulers.single());
-		if(block)
+		if(blocking)
 			return Optional.of(res.blockingFirst());
 		res.subscribe();
 		return Optional.empty();
 	}
 
-	public interface UserProfileCallback {
-		void onFinish(UserProfile u);
-	}
-
+	
 }

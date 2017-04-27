@@ -17,7 +17,6 @@ import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.swing.MapView;
 
-import smartcity.accessibility.database.LocationListCallback;
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
@@ -122,14 +121,11 @@ public class SearchQuery {
 		MapView mapView = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
 		NearbyPlacesSearch.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations,
-				new LocationListCallback() {
-
-					@Override
-					public void done(List<Location> ¢) {
+				 ¢-> {
 						places = ¢;
 						SetSearchStatus(SearchStage.Done);
 						wakeTheWaiters();
-					}
+					
 				});
 		try {
 			waitOnSearch();

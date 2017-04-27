@@ -13,11 +13,10 @@ import com.google.inject.Inject;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 
-public class ReviewManager {
+public class ReviewManager extends AbstractReviewManager {
 
 	private Database db;
 	private static final String DATABASE_CLASS = "Review";
-	private static ReviewManager instance;
 	private static final String ID_FIELD_NAME = "objectId";
 	private static Logger logger = LoggerFactory.getLogger(ReviewManager.class);
 
@@ -26,20 +25,12 @@ public class ReviewManager {
 		this.db = db;
 	}
 
-	public static void initialize(ReviewManager m) {
-		instance = m;
-	}
-
-	public static ReviewManager instance() {
-		return instance;
-	}
-
 	private Map<String, Object> toMap(Review r) {
 		Map<String, Object> map = new HashMap<>();
 		Location l = r.getLocation();
-		String id = LocationManager.instance().getId(l.getCoordinates());
+		String id = AbstractLocationManager.instance().getId(l.getCoordinates(), null);
 		if(id == null){
-			id = LocationManager.instance().uploadLocation(l);
+			id = AbstractLocationManager.instance().uploadLocation(l, null);
 		}
 		map.put(ID_FIELD_NAME, id);
 		

@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
 
 import com.teamdev.jxmaps.LatLng;
 
-import smartcity.accessibility.database.LocationManager;
+import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.components.SpinningWheel;
 import smartcity.accessibility.mapmanagement.Location;
@@ -78,7 +78,7 @@ public class LocationFrame implements MouseListener {
 
 			@Override
 			public void windowClosed(WindowEvent arg0) {
-				LocationManager.updateLocation(loc);
+				AbstractLocationManager.instance().updateLocation(loc, null);
 			}
 
 			@Override
