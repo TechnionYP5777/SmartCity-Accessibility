@@ -22,17 +22,21 @@ public class ComplexSearchServiece {
 	@RequestMapping("/complexSearch")
 	@ResponseBody
 	public List<Location> complexSearch(@RequestParam("type") String type,
-			@RequestParam("radius") Integer radius, @RequestParam("srcLat") Double srcLat,
-			@RequestParam("srcLng") Double srcLng, @RequestParam("threshold") Integer threshold) {
+			@RequestParam("radius") Integer radius, @RequestParam("startLocation") String startLoc,
+			@RequestParam("threshold") Integer threshold) {
 
-		LatLng c = new LatLng(srcLat, srcLng);
 		SearchQuery $ = null;
 		try {
 			$ = SearchQuery.TypeSearch(type);
 		} catch (illigalString e) {
 			throw new SearchFailed("illegal string");
 		}
-		SearchQueryResult esr = $.searchByType(new Location(c), radius);
+		SearchQueryResult esr;
+		try {
+			esr = $.searchByType(startLoc, radius);
+		} catch (illigalString | InterruptedException e) {
+			throw new SearchFailed("illegal strings");
+		}
 		
 		try {
 		//	esr.convertDummiesToReal();
