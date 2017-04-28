@@ -15,6 +15,10 @@ import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
+/**
+ * @author KaplanAlexander
+ *
+ */
 public class UserProfileManager extends AbstractUserProfileManager {
 	public static final String NUM_OF_REVIEWS_FIELD = "numOfReviews";
 	public static final String RATING_FIELD = "rating";

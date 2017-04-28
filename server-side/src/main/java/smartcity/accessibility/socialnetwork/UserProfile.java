@@ -1,5 +1,9 @@
 package smartcity.accessibility.socialnetwork;
 
+/**
+ * @author KaplanAlexander
+ *
+ */
 public class UserProfile {
 
 	private final String username;

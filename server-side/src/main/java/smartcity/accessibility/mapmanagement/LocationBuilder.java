@@ -8,6 +8,10 @@ import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
 import smartcity.accessibility.socialnetwork.Review;
 
+/**
+ * @author KaplanAlexander
+ *
+ */
 public class LocationBuilder {
 	
 	private Location l;

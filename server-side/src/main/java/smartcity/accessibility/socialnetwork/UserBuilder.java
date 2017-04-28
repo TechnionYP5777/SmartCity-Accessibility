@@ -6,6 +6,10 @@ import java.util.List;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.User.Privilege;
 
+/**
+ * @author KaplanAlexander
+ *
+ */
 public class UserBuilder {
 
 	private String username = null;

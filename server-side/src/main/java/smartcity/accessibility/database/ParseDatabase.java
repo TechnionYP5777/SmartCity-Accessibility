@@ -16,6 +16,10 @@ import org.slf4j.LoggerFactory;
 
 import smartcity.accessibility.database.exceptions.ObjectNotFoundException;
 
+/**
+ * @author KaplanAlexander
+ *
+ */
 public class ParseDatabase implements Database {
 
 	public static final String SERVER_URL = "https://smartcityaccessibility.herokuapp.com/parse";

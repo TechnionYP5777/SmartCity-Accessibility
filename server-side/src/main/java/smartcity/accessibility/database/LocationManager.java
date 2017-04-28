@@ -15,6 +15,10 @@ import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 
+/**
+ * @author KaplanAlexander
+ *
+ */
 public class LocationManager extends AbstractLocationManager {
 
 	private Database db;

@@ -4,6 +4,13 @@ import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
+/**
+ * All functions can either run in the background and return with a callback method
+ * Or block the operation until complete (not advised) and return the value
+ * Blocking is done when callback method given is null
+ * @author KaplanAlexander
+ *
+ */
 public abstract class AbstractUserProfileManager {
 	protected static AbstractUserProfileManager instance;
 	public static void initialize(AbstractUserProfileManager m) {

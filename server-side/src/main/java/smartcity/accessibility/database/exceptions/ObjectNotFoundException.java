@@ -1,5 +1,9 @@
 package smartcity.accessibility.database.exceptions;
 
+/**
+ * @author KaplanAlexander
+ *
+ */
 public class ObjectNotFoundException extends Exception {
 
 	/**

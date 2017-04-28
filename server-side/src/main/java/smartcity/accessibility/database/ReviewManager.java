@@ -13,6 +13,10 @@ import com.google.inject.Inject;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 
+/**
+ * @author KaplanAlexander
+ *
+ */
 public class ReviewManager extends AbstractReviewManager {
 
 	private Database db;
