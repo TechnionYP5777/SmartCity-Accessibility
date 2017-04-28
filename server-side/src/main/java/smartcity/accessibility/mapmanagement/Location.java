@@ -10,7 +10,7 @@ import org.parse4j.ParseException;
 
 import com.teamdev.jxmaps.LatLng;
 
-import smartcity.accessibility.database.ReviewManager;
+import smartcity.accessibility.database.AbstractReviewManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.socialnetwork.BestReviews;
 import smartcity.accessibility.socialnetwork.Review;
@@ -126,7 +126,7 @@ public class Location {
 	 */
 	private void actuallyAddReview(Review ¢) throws ParseException {
 		reviews.add(¢);
-		ReviewManager.uploadReview(¢);
+		AbstractReviewManager.instance().uploadReview(¢, null);
 	}
 
 	private Review getReview(Review ¢) {
@@ -184,7 +184,7 @@ public class Location {
 			throw (new UnauthorizedAccessException(Privilege.minDeleteLevel()));
 
 		reviews.remove(r);
-		ReviewManager.deleteReview(r);
+		AbstractReviewManager.instance().deleteReview(r, null);
 	}
 
 	/**

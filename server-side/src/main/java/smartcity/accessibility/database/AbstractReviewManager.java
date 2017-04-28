@@ -1,8 +1,8 @@
 package smartcity.accessibility.database;
 
 import java.util.List;
-import java.util.Map;
 
+import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.socialnetwork.Review;
 
 /**
@@ -23,6 +23,19 @@ public abstract class AbstractReviewManager {
 		return instance;
 	}
 	
-	public abstract List<Review> getReviews(Map<String, Object> fields);
-	//public abstract void uploadReview(Review r);
+	/*
+	 * Restores the review with an EMPTY location as to not restore the Location (with all its reveiws) from the db
+	 */
+	public abstract List<Review> getReviews(String locationId, ICallback<List<Review>> callback);
+	
+	/*
+	 * Restores the review with an EMPTY location as to not restore the Location (with all its reveiws) from the db
+	 */
+	public abstract List<Review> getReviewWithLocation(String locationId, ICallback<List<Review>> callback);
+	
+	public abstract Boolean uploadReview(Review r, ICallback<Boolean> callback);
+	
+	public abstract Boolean deleteReview(Review r, ICallback<Boolean> callback);
+	
+	public abstract Boolean updateReview(Review review, ICallback<Boolean> callback);
 }

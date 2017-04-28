@@ -25,27 +25,13 @@ public class Review {
 								// added to the default constractor
 	private List<ReviewComment> comments = new ArrayList<ReviewComment>();
 
-	public Review(int r, String c, UserProfile u) {
+	public Review(Location l, int r, String c, UserProfile u) {
 		this.rating = new Score(r);
 		this.content = c;
 		this.user = u;
 		this.isPinned = false;
 		u.addReview();
-	}
-	
-	public Review(Location l, int r, String c, UserProfile u) {
-		this(r, c, u);
 		this.location = l;
-	}
-
-
-
-	/**
-	 * implemented for the DB functionality
-	 */
-	public Review(String l, int r, String c, UserProfile u) {
-		this(r, c, u);
-		this.locationID = l;
 	}
 
 	public Score getRating() {

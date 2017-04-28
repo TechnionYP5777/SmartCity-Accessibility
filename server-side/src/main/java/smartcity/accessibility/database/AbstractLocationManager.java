@@ -27,7 +27,7 @@ public abstract class AbstractLocationManager {
 		return instance;
 	}
 	
-	public abstract String getId(LatLng coordinates, ICallback<String> callback);
+	public abstract String getId(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType, ICallback<String> callback);
 	
 	public abstract String uploadLocation(Location l, ICallback<String> callback);
 	
@@ -47,4 +47,5 @@ public abstract class AbstractLocationManager {
 	
 	public abstract List<LatLng> getNonAccessibleLocationsInRadius(LatLng source, LatLng destination,
 			Integer accessibilityThreshold, ICallback<List<LatLng>> locationListCallback);
+	
 }

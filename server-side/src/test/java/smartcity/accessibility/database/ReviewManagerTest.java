@@ -54,7 +54,7 @@ public class ReviewManagerTest {
 																.setPassword("asdf")
 																.setPrivilege(User.Privilege.DefaultUser)
 																.build().getProfile());
-		rm.uploadReview(r);
+		rm.uploadReview(r, null);
 		Mockito.verify(db).put(Mockito.any(), Mockito.any());
 	}
 	

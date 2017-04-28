@@ -42,9 +42,7 @@ public class LocationManager extends AbstractLocationManager {
 	private static Location fromMap(Map<String, Object> m) {
 		LocationBuilder lb = new LocationBuilder();
 		if (m.containsKey(ID_FIELD_NAME)) {
-			Map<String, Object> fields = new HashMap<>();
-			fields.put(ID_FIELD_NAME, m.get(ID_FIELD_NAME));
-			lb.addReviews(ReviewManager.instance().getReviews(fields));
+			lb.addReviews(AbstractReviewManager.instance().getReviews(m.get(ID_FIELD_NAME).toString(), null));
 		}
 		lb.setName(m.get("name").toString());
 		lb.setType(LocationTypes.valueOf(m.get("type").toString()));
@@ -55,7 +53,8 @@ public class LocationManager extends AbstractLocationManager {
 	}
 
 	@Override
-	public String getId(LatLng coordinates, ICallback<String> callback) {
+	public String getId(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType,
+			ICallback<String> callback) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -98,7 +97,5 @@ public class LocationManager extends AbstractLocationManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 }

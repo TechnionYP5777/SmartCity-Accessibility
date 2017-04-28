@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import smartcity.accessibility.database.ReviewManager;
+import smartcity.accessibility.database.AbstractReviewManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.components.JMultilineLabel;
@@ -58,7 +58,7 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 
 			@Override
 			public void windowClosed(WindowEvent arg0) {
-				ReviewManager.updateReview(review);
+				AbstractReviewManager.instance().updateReview(review, null);
 			}
 
 			@Override

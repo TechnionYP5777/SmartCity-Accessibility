@@ -3,13 +3,13 @@ package smartcity.accessibility.database;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.inject.Inject;
 
+import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 
@@ -32,7 +32,7 @@ public class ReviewManager extends AbstractReviewManager {
 	private Map<String, Object> toMap(Review r) {
 		Map<String, Object> map = new HashMap<>();
 		Location l = r.getLocation();
-		String id = AbstractLocationManager.instance().getId(l.getCoordinates(), null);
+		String id = AbstractLocationManager.instance().getId(l.getCoordinates(), l.getLocationType(), l.getLocationSubType(), null);
 		if(id == null){
 			id = AbstractLocationManager.instance().uploadLocation(l, null);
 		}
@@ -63,23 +63,39 @@ public class ReviewManager extends AbstractReviewManager {
 		return null;// new Review(new Location(), 5, "12", "!2"); // TODO :This is
 															// comepletely wrong
 	}
-
-	public List<Review> getReviews(Map<String, Object> fields) {
-		return db.get(DATABASE_CLASS, fields).stream().map(m -> fromMap(m)).collect(Collectors.toList());
-	}
-
-	public static void uploadReview(Review r) {
-		// db.put(DATABASE_CLASS, toMap(r));
-	}
-
-	public static void deleteReview(Review r) {
+	
+	@Override
+	public List<Review> getReviews(String locationId, ICallback<List<Review>> callback) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
-	public static void updateReview(Review review) {
+	@Override
+	public List<Review> getReviewWithLocation(String locationId, ICallback<List<Review>> callback) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
+
+
+	@Override
+	public Boolean uploadReview(Review r, ICallback<Boolean> callback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean deleteReview(Review r, ICallback<Boolean> callback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean updateReview(Review review, ICallback<Boolean> callback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 
 }
