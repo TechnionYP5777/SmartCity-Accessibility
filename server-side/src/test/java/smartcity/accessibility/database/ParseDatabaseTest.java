@@ -122,12 +122,17 @@ public class ParseDatabaseTest {
 	
 	@Test
 	@Category({ BranchTests.class, NetworkTests.class })
-	public void testDelete() throws ObjectNotFoundException {
+	public void testDelete() {
 		Map<String, Object> object1 = testObjects.get(sampleObjectId);
 
 		String id = pd.put(databaseClass, object1);
 		assertTrue(pd.delete(databaseClass, id));
-		assertNull(pd.get(databaseClass, id));
+		try {
+			pd.get(databaseClass, id);
+		} catch (ObjectNotFoundException e){
+			return;
+		}
+		fail();
 	}
 
 	public static void initTestObjects() throws ParseException {

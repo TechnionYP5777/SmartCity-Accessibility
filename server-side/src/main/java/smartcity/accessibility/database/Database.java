@@ -5,6 +5,10 @@ import java.util.Map;
 
 import smartcity.accessibility.database.exceptions.ObjectNotFoundException;
 
+/**
+ * @author KaplanAlexander
+ *
+ */
 public interface Database {
 	/**
 	 * gets object with id 
