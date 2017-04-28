@@ -15,12 +15,11 @@ import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
-public class UserProfileManager {
+public class UserProfileManager extends AbstractUserProfileManager {
 	public static final String NUM_OF_REVIEWS_FIELD = "numOfReviews";
 	public static final String RATING_FIELD = "rating";
 	public static final String USERNAME_FIELD = "username";
 	public static final String DATABASE_CLASS = "UserProfile";
-	private static UserProfileManager instance;
 	private static Logger logger = LoggerFactory.getLogger(UserProfileManager.class);
 	private Database db;
 	
@@ -29,14 +28,6 @@ public class UserProfileManager {
 	@Inject
 	public UserProfileManager(Database db) {
 		this.db = db;
-	}
-
-	public static void initialize(UserProfileManager m) {
-		instance = m;
-	}
-
-	public static UserProfileManager instance() {
-		return instance;
 	}
 
 	public static Map<String, Object> toMap(UserProfile u) {
@@ -55,6 +46,7 @@ public class UserProfileManager {
 		return u;
 	}
 
+	@Override
 	public UserProfile get(String username, ICallback<UserProfile> c) throws UserNotFoundException {
 		logger.debug("get UserProfile {}", username);
 		Flowable<UserProfile> res = Flowable.fromCallable(() -> {
@@ -73,6 +65,7 @@ public class UserProfileManager {
 		return null;
 	}
 	
+	@Override
 	public Boolean put(UserProfile up, ICallback<Boolean> callback){
 		logger.debug("put UserProfile {}", up.getUsername());
 		Flowable<Boolean> res = Flowable.fromCallable(() -> {
@@ -84,6 +77,18 @@ public class UserProfileManager {
 		if(callback == null)
 			return res.blockingFirst();
 		res.subscribe();
+		return null;
+	}
+
+	@Override
+	public Boolean update(UserProfile up, ICallback<Boolean> callback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean delete(UserProfile up, ICallback<Boolean> callback) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

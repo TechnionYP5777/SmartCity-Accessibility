@@ -25,7 +25,7 @@ import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
 public class UserProfileManagerTest {
-	private static UserProfileManager manager;
+	private static AbstractUserProfileManager manager;
 	private static Map<String, Object> m;
 	private static UserProfile user1;
 	protected static Database db;
