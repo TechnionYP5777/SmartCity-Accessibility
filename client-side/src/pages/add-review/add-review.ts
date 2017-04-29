@@ -28,6 +28,11 @@ export class AddReviewPage {
   }
   
   addreview(rev) {
+  	 this.addreviewservice.addreview(rev).then(data => {
+  	 	if(data) {
+  	 		this.navCtrl.setRoot(HomePage);
+  	 	}
+  	 });
      console.log(rev.review);
      console.log(rev.score);
    }
