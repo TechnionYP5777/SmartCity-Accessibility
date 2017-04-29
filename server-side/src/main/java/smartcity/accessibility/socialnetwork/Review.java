@@ -21,8 +21,8 @@ public class Review {
 	private Score rating;
 	private String content;
 	private boolean isPinned;
-	private String locationID; // the location id in the db - doesn't have to be
-								// added to the default constractor
+
+	
 	private List<ReviewComment> comments = new ArrayList<ReviewComment>();
 
 	public Review(Location l, int r, String c, UserProfile u) {
@@ -46,11 +46,10 @@ public class Review {
 		return this.content;
 	}
 
-	public String getLocationID() {
-		return this.locationID;
+	
+	public void setPinned(boolean pinned){
+		isPinned = pinned;
 	}
-	
-	
 
 	/**
 	 * This method pins the review.
