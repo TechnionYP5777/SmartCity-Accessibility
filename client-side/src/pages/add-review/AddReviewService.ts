@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import {Http, Headers} from "@angular/http";
+import { Constants } from "../constants";
 
 
 
@@ -13,8 +14,19 @@ export class AddReviewService {
   }
   
   addreview(rev){
+    var creds = '';
   	var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    
+    return new Promise(resolve => {
+            this.http.post(Constants.serverAddress +'/addreview', creds, {headers: headers}).subscribe(data => {
+                if(data.status == 200){
+                    resolve(true);
+                }
+                else
+                    resolve(false);
+            });
+        });
   }
 
 }
