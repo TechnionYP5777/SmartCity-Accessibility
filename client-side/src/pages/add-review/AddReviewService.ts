@@ -21,6 +21,7 @@ export class AddReviewService {
     return new Promise(resolve => {
             this.http.post(Constants.serverAddress +'/addreview', creds, {headers: headers}).subscribe(data => {
                 if(data.status == 200){
+                	console.log('Review added successfully!')
                     resolve(true);
                 }
                 else
