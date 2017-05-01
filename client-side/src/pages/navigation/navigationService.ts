@@ -10,7 +10,7 @@ export class NavigationService {
      
 	navigatee(src,dst) {
 		var token = window.sessionStorage.getItem('token');
-		var params = "srcLat=" + src.lat + "&srcLng=" + src.lng + "&dstLat=" + dst.lat + "&dstLng=" + dst.lng;
+		var params = "srcLat=" + src.lat + "&srcLng=" + src.lng + "&dstLat=" + dst.lat + "&dstLng=" + dst.lng+"&accessibilityThreshold=5";
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 		headers.append('authToken',token);
