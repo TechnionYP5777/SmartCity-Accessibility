@@ -70,7 +70,7 @@ public class ReviewManager extends AbstractReviewManager {
 		try {
 			up = AbstractUserProfileManager.instance().get(m.get(USERNAME_FIELD_NAME).toString(), null);
 		} catch (UserNotFoundException e) {
-			logger.error("User not found for review {}", m.get(ID_FIELD_NAME));
+			logger.error("User not found for review {} with error {}", m.get(ID_FIELD_NAME), e);
 		}
 		Review r = new Review(null, rating, content, up);
 		r.setPinned(isPinned);

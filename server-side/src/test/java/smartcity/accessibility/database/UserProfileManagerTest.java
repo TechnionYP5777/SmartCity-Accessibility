@@ -50,6 +50,15 @@ public class UserProfileManagerTest {
 	@After
 	public void tearDown() throws Exception {
 	}
+	
+	@Test(timeout=500)
+	@Category({ BranchTests.class, UnitTests.class })
+	public void testBackgroundCalls() throws UserNotFoundException {
+		assertEquals(null, manager.get("a", c->{}));
+		assertEquals(null, manager.put(new UserProfile("a"), c->{}));
+		assertEquals(null, manager.update(new UserProfile("a"), c->{}));
+		assertEquals(null, manager.delete(new UserProfile("a"), c->{}));
+	}
 
 	@Test
 	@Category({ BranchTests.class, UnitTests.class })

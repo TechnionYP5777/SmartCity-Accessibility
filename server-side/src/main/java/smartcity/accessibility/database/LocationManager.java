@@ -26,22 +26,24 @@ import smartcity.accessibility.mapmanagement.LocationBuilder;
  */
 public class LocationManager extends AbstractLocationManager {
 
-	private static final String NAME_FIELD_NAME = "name";
-	private static final String SUB_TYPE_FIELD_NAME = "subType";
-	private static final String TYPE_FIELD_NAME = "type";
-	private static final String LOCATION_FIELD_NAME = "location";
-	private Database db;
-	private static final String DATABASE_CLASS = "Location";
-	private static final String ID_FIELD_NAME = "objectId";
 
-	private static Logger logger = LoggerFactory.getLogger(ReviewManager.class);
+	private static final String DATABASE_CLASS = "Location";
+	private Database db;
+	
+	public static final String NAME_FIELD_NAME = "name";
+	public static final String SUB_TYPE_FIELD_NAME = "subType";
+	public static final String TYPE_FIELD_NAME = "type";
+	public static final String LOCATION_FIELD_NAME = "location";
+	public static final String ID_FIELD_NAME = "objectId";
+
+	private static Logger logger = LoggerFactory.getLogger(LocationManager.class);
 
 	@Inject
 	public LocationManager(Database db) {
 		this.db = db;
 	}
 
-	private static Map<String, Object> toMap(Location l) {
+	public static Map<String, Object> toMap(Location l) {
 		Map<String, Object> map = new HashMap<>();
 		map.put(LOCATION_FIELD_NAME, new ParseGeoPoint(l.getCoordinates().getLat(), l.getCoordinates().getLng()));
 		map.put(TYPE_FIELD_NAME, l.getLocationType().toString());
@@ -50,7 +52,7 @@ public class LocationManager extends AbstractLocationManager {
 		return map;
 	}
 
-	private static Location fromMap(Map<String, Object> m) {
+	public static Location fromMap(Map<String, Object> m) {
 		LocationBuilder lb = new LocationBuilder();
 		/*
 		 * if (m.containsKey(ID_FIELD_NAME)) {
