@@ -18,7 +18,7 @@ import { IonRating } from '../components/ion-rating/ion-rating';
 import {ComplexSearchPage} from '../pages/complex-search/complex-search';
 import {ComplexSearchService} from '../pages/complex-search/complexSearchService';
 import {SearchService} from '../pages/mapview/searchService';
-import {AddSearchQueryPage} from '../pages/AddSearchQueryMenu/addsearchquerymenu';
+import {AddSearchQueryPage} from '../pages/addSearchQueryMenu/addsearchquerymenu';
 
 @NgModule({
   declarations: [
