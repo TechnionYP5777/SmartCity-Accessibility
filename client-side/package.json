@@ -34,6 +34,15 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "1.1.4",
+    "angular-cli": "^1.0.0-beta.28.3",
+    "codecov": "^2.1.0",
+    "jasmine-core": "^2.6.1",
+    "jasmine-spec-reporter": "^4.0.0",
+    "karma": "^1.6.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-mocha-reporter": "^2.2.3",
+    "karma-remap-istanbul": "^0.6.0",
     "typescript": "2.0.9"
   },
   "cordovaPlugins": [

@@ -52,7 +52,7 @@ export class MapviewPage {
 			this.output = "Location is: " + data.name + " coordinates are: " + data.coordinates.lat + ":" + data.coordinates.lng ;
 			var longitude = data.coordinates.lng;
 			var latitude = data.coordinates.lat; 
-			this.addMarker([new google.maps.LatLng(latitude, longitude)]);
+			this.addMarker([data.coordinates]);
 		});
     }
 	
