@@ -8,7 +8,7 @@ export class NavigationService {
         this.http = http;
     }
      
-	navigatee() {
+	navigatee(src,dst) {
 		var token = window.sessionStorage.getItem('token');
 		var creds = "name=" + "y" + "&password=" + "a";
 		//var params = "srcLat=" + 0 + "&srcLng=" + 0 + "&dstLat=" + 0 + "&dstLng=" + 0;

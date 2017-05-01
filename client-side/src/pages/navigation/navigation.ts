@@ -18,6 +18,10 @@ export class NavigationPage {
 		lat : '',
 		lng : ''
 	};
+	dstLocation = {
+		lat : '',
+		lng : ''
+	};
     constructor(public navCtrl: NavController, public navParams: NavParams, public navigationService: NavigationService,public loginService : LoginService) {
 	    var token = window.sessionStorage.getItem('token');
 		this.isWork = token;
@@ -27,10 +31,13 @@ export class NavigationPage {
 			this.srcLocation.lat = String(position.coords.latitude);
 			this.srcLocation.lng = String(position.coords.longitude);
 		});
+		let temp = navParams.get('latlng');
+		this.dstLocation.lat = temp.lat();
+		this.dstLocation.lng = temp.lng();
 	}
 
 	startNavigation(){
-		let t = this.navigationService.navigatee();
+		let t = this.navigationService.navigatee(this.srcLocation,this.dstLocation);
 		t.then(data => {
             if(data) {
             }
