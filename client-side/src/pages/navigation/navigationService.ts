@@ -10,19 +10,10 @@ export class NavigationService {
      
 	navigatee(src,dst) {
 		var token = window.sessionStorage.getItem('token');
-		var creds = "name=" + "y" + "&password=" + "a";
-		//var params = "srcLat=" + 0 + "&srcLng=" + 0 + "&dstLat=" + 0 + "&dstLng=" + 0;
+		var params = "srcLat=" + src.lat + "&srcLng=" + src.lng + "&dstLat=" + dst.lat + "&dstLng=" + dst.lng;
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 		headers.append('authToken',token);
-        return new Promise(resolve => {
-            this.http.post(Constants.serverAddress +'/navigation', creds, {headers: headers}).subscribe(data => {
-                if(data.status == 200){
-                    resolve(true);
-                }
-                else
-                    resolve(false);
-            });
-        });
+        return  this.http.post(Constants.serverAddress +'/navigation', params, {headers: headers});
 	}
 }

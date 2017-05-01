@@ -26,21 +26,19 @@ export class NavigationPage {
 	    var token = window.sessionStorage.getItem('token');
 		this.isWork = token;
 		this.isLoggedin = this.loginService.isLoggedIn();
-		this.geolocation = new Geolocation();
+		this.dstLocation.lat = navParams.get('lat');
+		this.dstLocation.lng = navParams.get('lng');
+	}
+	ionViewDidLoad(){
+        this.geolocation = new Geolocation();
 		this.geolocation.getCurrentPosition().then((position) => {
 			this.srcLocation.lat = String(position.coords.latitude);
 			this.srcLocation.lng = String(position.coords.longitude);
 		});
-		let temp = navParams.get('latlng');
-		this.dstLocation.lat = temp.lat();
-		this.dstLocation.lng = temp.lng();
-	}
-
+    }
 	startNavigation(){
-		let t = this.navigationService.navigatee(this.srcLocation,this.dstLocation);
-		t.then(data => {
-            if(data) {
-            }
+		this.navigationService.navigatee(this.srcLocation,this.dstLocation).subscribe(data => {
+            this.isWork = data.json();
 		});
 		
 	}
