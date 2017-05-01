@@ -18,6 +18,7 @@ import { IonRating } from '../components/ion-rating/ion-rating';
 import {ComplexSearchPage} from '../pages/complex-search/complex-search';
 import {ComplexSearchService} from '../pages/complex-search/complexSearchService';
 import {SearchService} from '../pages/mapview/searchService';
+import {AddSearchQueryPage} from '../pages/AddSearchQueryMenu/addsearchquerymenu';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {SearchService} from '../pages/mapview/searchService';
 	UserPagePage,
 	NavigationPage,
 	ComplexSearchPage,
-	IonRating
+	IonRating,
+	AddSearchQueryPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -47,7 +49,8 @@ import {SearchService} from '../pages/mapview/searchService';
 	SignupPage,
 	UserPagePage,
 	NavigationPage,
-	ComplexSearchPage
+	ComplexSearchPage,
+	AddSearchQueryPage
   ],
   providers: [
     StatusBar,
