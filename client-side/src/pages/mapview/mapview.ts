@@ -50,9 +50,8 @@ export class MapviewPage {
     callSearch(searchQuery) {
 	    this.searchService.search(searchQuery).subscribe(data => {
 			this.output = "Location is: " + data.name + " coordinates are: " + data.coordinates.lat + ":" + data.coordinates.lng ;
-			var longitude = data.coordinates.lng;
-			var latitude = data.coordinates.lat; 
 			this.addMarker([data.coordinates]);
+			this.map.setCenter(data.coordinates);
 		});
     }
 	
