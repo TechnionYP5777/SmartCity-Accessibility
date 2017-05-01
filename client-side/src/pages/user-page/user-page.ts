@@ -6,11 +6,11 @@ import {AddSearchQueryPage} from '../addSearchQueryMenu/addsearchquerymenu';
   selector: 'page-user-page',
   templateUrl: 'user-page.html'
 })
-export class UserPagePage {
 
+export class UserPagePage {
   output :  any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-	  this.output = "";
+	  this.output = "bloblobblob";
   }
  
   ionViewDidLoad() {
@@ -19,6 +19,7 @@ export class UserPagePage {
   
   openSearchQuery(){
 	 this.output = "OMG!!!"; 
+	 console.log('this happened');
   }
 
 }
