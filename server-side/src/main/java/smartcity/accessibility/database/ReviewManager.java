@@ -30,25 +30,28 @@ public class ReviewManager extends AbstractReviewManager {
 
 	private static Logger logger = LoggerFactory.getLogger(ReviewManager.class);
 
-	private static final String ID_FIELD_NAME = "objectId";
+	public static final String ID_FIELD_NAME = "objectId";
 	public static final String LOCATION_FIELD_NAME = "locationId";
-	private static final String CONTENT_FIELD_NAME = "content";
-	private static final String IS_PINNED_FIELD_NAME = "isPinned";
-	private static final String RATING_FIELD_NAME = "rating";
-	private static final String USERNAME_FIELD_NAME = "username";
+	public static final String CONTENT_FIELD_NAME = "content";
+	public static final String IS_PINNED_FIELD_NAME = "isPinned";
+	public static final String RATING_FIELD_NAME = "rating";
+	public static final String USERNAME_FIELD_NAME = "username";
 
 	@Inject
 	public ReviewManager(Database db) {
 		this.db = db;
 	}
 
-	private Map<String, Object> toMap(Review r) {
+	public Map<String, Object> toMap(Review r) {
 		Map<String, Object> map = new HashMap<>();
 		Location l = r.getLocation();
-		String id = AbstractLocationManager.instance().getId(l.getCoordinates(), l.getLocationType(),
-				l.getLocationSubType(), null);
-		if (id == null) {
-			id = AbstractLocationManager.instance().uploadLocation(l, null);
+		String id = null;
+		if(l!=null){
+			id = AbstractLocationManager.instance().getId(l.getCoordinates(), l.getLocationType(),
+					l.getLocationSubType(), null);
+			if (id == null) {
+				id = AbstractLocationManager.instance().uploadLocation(l, null);
+			}
 		}
 		map.put(LOCATION_FIELD_NAME, id);
 		map.put(RATING_FIELD_NAME, r.getRating().getScore());
@@ -59,7 +62,7 @@ public class ReviewManager extends AbstractReviewManager {
 		return map;
 	}
 
-	private static Review fromMap(Map<String, Object> m) {
+	public static Review fromMap(Map<String, Object> m) {
 		int rating = (int) m.get(RATING_FIELD_NAME);
 		String content = m.get(CONTENT_FIELD_NAME).toString();
 		boolean isPinned = (boolean) m.get(IS_PINNED_FIELD_NAME);
