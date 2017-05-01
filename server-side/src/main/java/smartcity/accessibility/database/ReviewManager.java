@@ -98,7 +98,7 @@ public class ReviewManager extends AbstractReviewManager {
 	@Override
 	public List<Review> getReviewWithLocation(String locationId, ICallback<List<Review>> callback) {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override

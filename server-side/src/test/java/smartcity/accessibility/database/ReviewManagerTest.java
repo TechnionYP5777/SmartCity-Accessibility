@@ -12,7 +12,6 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
@@ -39,9 +38,8 @@ public class ReviewManagerTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		setUpMock();
-		Injector injector = Guice.createInjector(new DatabaseModule());
-		rm = injector.getInstance(ReviewManager.class);
+		
+		
 	}
 
 	@AfterClass
@@ -50,14 +48,26 @@ public class ReviewManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpMock();
+		Injector injector = Guice.createInjector(new DatabaseModule());
+		rm = injector.getInstance(ReviewManager.class);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
+	
+	@Test(timeout=500)
+	@Category({ BranchTests.class, UnitTests.class })
+	public void testBackgroundCalls() {
+		assertEquals(0, rm.getReviews("a", nlr -> {}).size());
+		assertEquals(0, rm.getReviewWithLocation("a", nlr -> {}).size());
+		assertEquals(null, rm.uploadReview(rev1, b -> {}));
+		assertEquals(null, rm.deleteReview(rev1, b -> {}));
+		assertEquals(null, rm.updateReview(rev1, b -> {}));
+	}
 
 	@Test
-	@Ignore
 	@Category({ BranchTests.class, UnitTests.class })
 	public void testUpload() {
 		Review r = new Review(new Location(), 5, "asdfasd", new UserBuilder()
@@ -66,7 +76,8 @@ public class ReviewManagerTest {
 																.setPrivilege(User.Privilege.DefaultUser)
 																.build().getProfile());
 		rm.uploadReview(r, null);
-		Mockito.verify(db).put(Mockito.any(), Mockito.any());
+		Mockito.verify(db).put(Mockito.anyString(), Mockito.anyMap());
+		
 	}
 	
 	@Test
@@ -105,6 +116,7 @@ public class ReviewManagerTest {
 		List<Map<String, Object>> l = new ArrayList<>();
 		l.add(m);
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyMap())).thenReturn(l);
+		Mockito.when(db.put(Mockito.anyString(), Mockito.anyMap())).thenReturn("b");
 		rev1 = ReviewManager.fromMap(m);
 		
 		
