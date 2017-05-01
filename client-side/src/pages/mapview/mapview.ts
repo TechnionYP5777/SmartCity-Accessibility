@@ -36,13 +36,7 @@ export class MapviewPage {
         this.loadMap();
     }
   
-    callSearch(searchQuery) {
-	    this.searchService.search(searchQuery).subscribe(data => {
-			this.output = "Location is: " + data.name + " coordinates are: " + data.coordinates.lat + ":" + data.coordinates.lng ;
-        });
-    }
-	
-    addMarker(LatLngArr){
+	addMarker(LatLngArr){
 	 for (var i = 0; i < LatLngArr.length; i++) {
           var coords = LatLngArr[i];
           var latLng = new google.maps.LatLng(coords.lat,coords.lng);
@@ -52,6 +46,17 @@ export class MapviewPage {
           });
         }
     }
+	
+    callSearch(searchQuery) {
+	    this.searchService.search(searchQuery).subscribe(data => {
+			this.output = "Location is: " + data.name + " coordinates are: " + data.coordinates.lat + ":" + data.coordinates.lng ;
+			var longitude = data.coordinates.lng;
+			var latitude = data.coordinates.lat; 
+			this.addMarker([new google.maps.LatLng(latitude, longitude)]);
+		});
+    }
+	
+    
 
 	presentAlert(str) {
 		let alert = this.alertCtrl.create({
