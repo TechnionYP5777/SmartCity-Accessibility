@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import smartcity.accessibility.database.AbstractReviewManager;
 import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.User;
@@ -29,10 +30,13 @@ public class AddReviewService {
 			throw new UserIsNotLoggedIn();
 		
 		Review r = new Review(Integer.parseInt(score), review, u);
-		//TODO wait until alex finishes DBs and upload the review
+		
+		AbstractReviewManager.instance().uploadReview(r, null);
+		
 		//TODO pretty pretty finisher    	
     }
 	
+	//TODO null exception?
 	private User getUserFromToken(String token){
 		UserInfo userInfo = null;
 		try {
