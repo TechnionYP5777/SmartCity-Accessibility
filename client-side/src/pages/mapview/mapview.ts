@@ -27,6 +27,7 @@ export class MapviewPage {
   userProfile = UserPagePage;
   complexSearchPage = ComplexSearchPage;
   output :  any;
+  myCallbackFunction : any;
  // complexSearchResults : any = 'default';
   constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService, public searchService : SearchService) {
 	    this.isLoggedin = this.loginService.isLoggedIn();
@@ -57,7 +58,7 @@ export class MapviewPage {
     }
 	
 	callToComplexSearch() {
-			var myCallbackFunction = function(complexSearchResults) {
+			this.myCallbackFunction = function(complexSearchResults) {
 				//for(var i = 0; i < complexSearchResults.length; i++) {
 					this.addMarker([complexSearchResults.coordinates]);
 				//}
@@ -65,7 +66,7 @@ export class MapviewPage {
 					resolve();
 				});
 			}
-			this.navCtrl.push(this.complexSearchPage,{callback: myCallbackFunction});
+			this.navCtrl.push(this.complexSearchPage,{callback: this.myCallbackFunction});
 			
 	}
     
@@ -97,7 +98,6 @@ loadMap(){
 		this.addMarker([]);
     }, (err) => {
       console.log(err);
-    });
-	
+    });	
   }
 }

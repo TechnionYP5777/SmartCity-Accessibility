@@ -15,7 +15,6 @@ import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 import smartcity.accessibility.services.exceptions.NavigationFailed;
 import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
 
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 @Controller
