@@ -35,7 +35,8 @@
 	</div>
 
 		 <div class="col">
-			<button ion-button [navPush]="complexSearchPage">Complex Search</button>
+			<button ion-button (click)="callToComplexSearch()">Complex Search</button>
+			{{ complexSearchResults }}
 		</div>
 </ion-header>
 

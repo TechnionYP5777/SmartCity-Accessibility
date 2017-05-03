@@ -19,6 +19,7 @@ export class ComplexSearchPage {
   music: string;
   initLoc: string;
   output: any;
+  callback: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public complexSearchService : ComplexSearchService) {
     
@@ -34,10 +35,13 @@ export class ComplexSearchPage {
 
   callComplexSearch(type, radius, initLoc, minRating) {
 	    this.complexSearchService.complexSearch(type, radius, initLoc, minRating).subscribe(data => {
-	//		this.output = 'The first location is : ' + data[0].name;
-			this.output = data;
+			this.callback = this.navParams.get("callback")
+
+			this.callback(data[0]).then(()=>{
+				this.navCtrl.pop();
+			});
         });
-	//	return this.output;
-	this.navCtrl.pop();
+
+	
    }
 }
