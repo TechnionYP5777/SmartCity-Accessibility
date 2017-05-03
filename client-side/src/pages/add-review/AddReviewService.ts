@@ -15,8 +15,10 @@ export class AddReviewService {
   
   addreview(rev){
     var creds = '';
+    var token = window.sessionStorage.getItem('token');
   	var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers.append('authToken',token);
     
     return new Promise(resolve => {
             this.http.post(Constants.serverAddress +'/addreview', creds, {headers: headers}).subscribe(data => {
