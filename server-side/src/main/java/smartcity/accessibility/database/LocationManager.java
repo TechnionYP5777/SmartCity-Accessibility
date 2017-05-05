@@ -27,7 +27,7 @@ import smartcity.accessibility.mapmanagement.LocationBuilder;
 public class LocationManager extends AbstractLocationManager {
 
 
-	private static final String DATABASE_CLASS = "Location";
+	public static final String DATABASE_CLASS = "Location";
 	private Database db;
 	
 	public static final String NAME_FIELD_NAME = "name";

@@ -45,7 +45,7 @@ public class Location {
 		this.locationSubType = locationSubType;
 	}
 
-	public ArrayList<Review> getReviews() {
+	public List<Review> getReviews() {
 		return reviews;
 	}
 

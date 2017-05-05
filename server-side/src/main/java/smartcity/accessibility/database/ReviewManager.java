@@ -97,7 +97,22 @@ public class ReviewManager extends AbstractReviewManager {
 
 	@Override
 	public List<Review> getReviewWithLocation(String locationId, ICallback<List<Review>> callback) {
-		// TODO Auto-generated method stub
+		logger.info("get reviews with location for {} ", locationId);
+		Flowable<List<Review>> res = Flowable.fromCallable(() -> {
+			Map<String, Object> m = db.get(LocationManager.DATABASE_CLASS, locationId);
+			Location l = LocationManager.fromMap(m);
+			l = AbstractLocationManager.instance()
+				.getLocation(l.getCoordinates(),
+						l.getLocationType(),
+						l.getLocationSubType(),
+						null);
+			return l.getReviews();
+		})
+		.subscribeOn(Schedulers.io())
+		.observeOn(Schedulers.single());
+		if(callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);	
 		return new ArrayList<>();
 	}
 
