@@ -30,12 +30,14 @@ import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserBuilder;
+import smartcity.accessibility.socialnetwork.UserProfile;
 
 public class LocationManagerTest {
 
 	private static LocationManager lm;
 	protected static Database db;
 	private static Map<String, Object> m;
+	private static AbstractReviewManager rm;
 	private static Location l1;
 
 	@BeforeClass
@@ -84,6 +86,18 @@ public class LocationManagerTest {
 		assertEquals("MY_ID2", res);
 		
 	}
+	
+	@Test
+	@Category({ BranchTests.class, UnitTests.class })
+	public void testGetLocation() {
+		List<Location> res = lm.getLocation(new LatLng(), null);
+		assertEquals(1, res.size());
+		Location lres = res.get(0);
+		assertEquals("name", lres.getName());
+		assertEquals(1, lres.getReviews().size());
+		assertEquals("hey",lres.getReviews().get(0).getContent());
+		
+	}
 
 	public static void setUpMock() {
 		db = Mockito.mock(Database.class);
@@ -98,7 +112,14 @@ public class LocationManagerTest {
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyMap())).thenReturn(l);
 		Mockito.when(db.put(Mockito.anyString(), Mockito.anyMap())).thenReturn("MY_ID2");
 		l1 = LocationManager.fromMap(m);
+		
+		List<Review> lr = new ArrayList<>();
+		lr.add(new Review(l1,4,"hey",new UserProfile("alexa")));
+		rm = Mockito.mock(AbstractReviewManager.class);
+		Mockito.when(rm.getReviews(Mockito.anyString(), Mockito.any())).thenReturn(lr);
+		AbstractReviewManager.initialize(rm);
 	}
+	
 
 	public static class DatabaseModule extends AbstractModule {
 		@Override

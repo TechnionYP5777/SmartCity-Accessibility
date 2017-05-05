@@ -108,11 +108,13 @@ public class LocationManager extends AbstractLocationManager {
 			Map<String, Object> m = new HashMap<>();
 			m.put(LOCATION_FIELD_NAME, new ParseGeoPoint(coordinates.getLat(), coordinates.getLng()));
 			List<Map<String, Object>> locsMap = db.get(DATABASE_CLASS, m);
-
+			logger.debug("db.get returned {}",locsMap.toString());
 			List<Location> locs = new ArrayList<>();
 			Flowable.fromIterable(locsMap).flatMap(m1 -> Flowable.just(m1).subscribeOn(Schedulers.io()).map(m2 -> {
 				Location l = fromMap(m2);
-				l.addReviews(AbstractReviewManager.instance().getReviews(m.get(ID_FIELD_NAME).toString(), null));
+				logger.debug("AbstractReviewManager is null : {}", AbstractReviewManager.instance()==null);
+				logger.debug("getReviews returned : {} ", AbstractReviewManager.instance().getReviews(m2.get(ID_FIELD_NAME).toString(), null).toString());
+				l.addReviews(AbstractReviewManager.instance().getReviews(m2.get(ID_FIELD_NAME).toString(), null));
 				return l;
 			})).blockingSubscribe(l -> locs.add(l));
 			return locs;

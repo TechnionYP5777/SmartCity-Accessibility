@@ -100,8 +100,8 @@ public class Location {
 		return this.coordinates;
 	}
 	
-	public void addReviews(Collection<Review> reviews){
-		reviews.addAll(reviews);
+	public void addReviews(Collection<Review> revs){
+		reviews.addAll(revs);
 	}
 
 	/**
