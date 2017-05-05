@@ -147,7 +147,6 @@ public class SearchQuery {
 		} catch (InterruptedException ¢) {
 			¢.printStackTrace();
 		}
-		places.add(initLocation);
 		return new SearchQueryResult(places);
 	}
 

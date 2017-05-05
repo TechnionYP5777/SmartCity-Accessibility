@@ -59,25 +59,13 @@ export class MapviewPage {
 	
 	callToComplexSearch() {
 			this.navCtrl.push(this.complexSearchPage);
-			this.events.subscribe('complexSearch:pressed', (complexSearchResults) => {
-				//this.complexSearchResultsss = complexSearchResults[0].name;
-				//this.map.setCenter(complexSearchResults[0]);
+			this.events.subscribe('complexSearch:pressed', (complexSearchResults, initLocation) => {
 				for(var i = 1; i < complexSearchResults.length - 1; i++) {
 					this.addMarker([complexSearchResults[i].coordinates]);
 				}	
-				this.map.setCenter(complexSearchResults[i].coordinates);
+				this.map.setCenter(initLocation);
 			});
-			
-			//this.myCallbackFunction = function(complexSearchResults) {
-				//for(var i = 0; i < complexSearchResults.length; i++) {
-			//		this.addMarker([complexSearchResults.coordinates]);
-				//}
-			//	return new Promise((resolve, reject) => {
-			//		resolve();
-			//	});
-			//}
-			//this.navCtrl.push(this.complexSearchPage,{callback: this.myCallbackFunction});
-			
+	
 	}
     
 

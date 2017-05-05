@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams , Events} from 'ionic-angular';
 import {ComplexSearchService} from './complexSearchService';
+import { SearchService } from '../mapview/searchService';
+
 /*
   Generated class for the ComplexSearch page.
 
@@ -20,8 +22,9 @@ export class ComplexSearchPage {
   initLoc: string;
   output: any;
   callback: any;
+  startLocationCoordinates: any;
 
-  constructor(public events: Events, public navCtrl: NavController, public navParams: NavParams, public complexSearchService : ComplexSearchService) {
+  constructor(public events: Events, public searchService: SearchService,public navCtrl: NavController, public navParams: NavParams, public complexSearchService : ComplexSearchService) {
     
   }
 
@@ -34,12 +37,12 @@ export class ComplexSearchPage {
   }
 
   callComplexSearch(type, radius, initLoc, minRating) {
+		this.searchService.search(initLoc).subscribe(data => {
+			this.startLocationCoordinates = data.coordinates;
+		});
 	    this.complexSearchService.complexSearch(type, radius, initLoc, minRating).subscribe(data => {
-			//this.callback = this.navParams.get("callback")
-			this.events.publish('complexSearch:pressed', data);
-			//this.callback(data[0]).then(()=>{
-			//	this.navCtrl.pop();
-			//});
+			
+			this.events.publish('complexSearch:pressed', data, this.startLocationCoordinates);
         });
 		this.navCtrl.pop();
 
