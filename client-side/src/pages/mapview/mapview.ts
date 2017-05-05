@@ -28,7 +28,6 @@ export class MapviewPage {
   complexSearchPage = ComplexSearchPage;
   output :  any;
   myCallbackFunction : any;
-  complexSearchResultsss : any = 'default';
   constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService, public searchService : SearchService, public events: Events) {
 	    this.isLoggedin = this.loginService.isLoggedIn();
 		this.output = "";
