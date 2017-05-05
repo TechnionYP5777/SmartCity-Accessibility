@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController,ModalController } from 'ionic-angular';
+import { NavController,ModalController, Events } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AlertController } from 'ionic-angular';
 import {MapClickMenuPage} from '../mapclickmenu/mapclickmenu';
@@ -29,7 +29,7 @@ export class MapviewPage {
   output :  any;
   myCallbackFunction : any;
  // complexSearchResults : any = 'default';
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService, public searchService : SearchService) {
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService, public searchService : SearchService, public events: Events) {
 	    this.isLoggedin = this.loginService.isLoggedIn();
 		this.output = "";
   }
@@ -58,15 +58,21 @@ export class MapviewPage {
     }
 	
 	callToComplexSearch() {
-			this.myCallbackFunction = function(complexSearchResults) {
+			this.navCtrl.push(this.complexSearchPage);
+			this.events.subscribe('complexSearch:pressed', (complexSearchResults) => {
+				for(var i = 0; i < complexSearchResults.length; i++) {
+					this.addMarker([complexSearchResults[i].coordinates]);
+				}			
+			});
+			//this.myCallbackFunction = function(complexSearchResults) {
 				//for(var i = 0; i < complexSearchResults.length; i++) {
-					this.addMarker([complexSearchResults.coordinates]);
+			//		this.addMarker([complexSearchResults.coordinates]);
 				//}
-				return new Promise((resolve, reject) => {
-					resolve();
-				});
-			}
-			this.navCtrl.push(this.complexSearchPage,{callback: this.myCallbackFunction});
+			//	return new Promise((resolve, reject) => {
+			//		resolve();
+			//	});
+			//}
+			//this.navCtrl.push(this.complexSearchPage,{callback: this.myCallbackFunction});
 			
 	}
     

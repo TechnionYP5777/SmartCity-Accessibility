@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams , Events} from 'ionic-angular';
 import {ComplexSearchService} from './complexSearchService';
 /*
   Generated class for the ComplexSearch page.
@@ -21,7 +21,7 @@ export class ComplexSearchPage {
   output: any;
   callback: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public complexSearchService : ComplexSearchService) {
+  constructor(public events: Events, public navCtrl: NavController, public navParams: NavParams, public complexSearchService : ComplexSearchService) {
     
   }
 
@@ -35,12 +35,13 @@ export class ComplexSearchPage {
 
   callComplexSearch(type, radius, initLoc, minRating) {
 	    this.complexSearchService.complexSearch(type, radius, initLoc, minRating).subscribe(data => {
-			this.callback = this.navParams.get("callback")
-
-			this.callback(data[0]).then(()=>{
-				this.navCtrl.pop();
-			});
+			//this.callback = this.navParams.get("callback")
+			this.events.publish('complexSearch:pressed', data);
+			//this.callback(data[0]).then(()=>{
+			//	this.navCtrl.pop();
+			//});
         });
+		this.navCtrl.pop();
 
 	
    }
