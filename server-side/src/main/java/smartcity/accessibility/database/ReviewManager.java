@@ -119,9 +119,7 @@ public class ReviewManager extends AbstractReviewManager {
 	@Override
 	public Boolean uploadReview(Review r, ICallback<Boolean> callback) {
 		logger.debug("uploadReview for user {}", r.getUser().getUsername());
-		Flowable<Boolean> res = Flowable.fromCallable(() -> {
-			return (db.put(DATABASE_CLASS, toMap(r)) != null);
-		})
+		Flowable<Boolean> res = Flowable.fromCallable(() -> (db.put(DATABASE_CLASS, toMap(r)) != null))
 		.subscribeOn(Schedulers.io())
 		.observeOn(Schedulers.single());
 		if(callback == null)
@@ -132,13 +130,48 @@ public class ReviewManager extends AbstractReviewManager {
 
 	@Override
 	public Boolean deleteReview(Review r, ICallback<Boolean> callback) {
-		// TODO Auto-generated method stub
+		logger.debug("deleteReview for user {}", r.getUser().getUsername());
+		Flowable<Boolean> res = Flowable.fromCallable(() -> {
+			Map<String, Object> m = toMap(r);
+			List<Map<String, Object>> lm = db.get(DATABASE_CLASS, m);
+			if(lm.isEmpty())
+				return false;
+			if(lm.size() > 1){
+				logger.error("Multiple reviews found, not deleting");
+				return false;
+			}
+			return db.delete(DATABASE_CLASS, lm.get(0).get(ID_FIELD_NAME).toString());
+		})
+		.subscribeOn(Schedulers.io())
+		.observeOn(Schedulers.single());
+		if(callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);	
 		return null;
 	}
 
 	@Override
 	public Boolean updateReview(Review review, ICallback<Boolean> callback) {
-		// TODO Auto-generated method stub
+		logger.debug("udpateReview for user {}", review.getUser().getUsername());
+		Flowable<Boolean> res = Flowable.fromCallable(() -> {
+			Map<String, Object> m = toMap(review);
+			Map<String, Object> m2 = new HashMap<>();
+			m2.put(LOCATION_FIELD_NAME, m.get(LOCATION_FIELD_NAME));
+			m2.put(USERNAME_FIELD_NAME, m.get(USERNAME_FIELD_NAME));
+			List<Map<String, Object>> lm = db.get(DATABASE_CLASS, m2);
+			if(lm.isEmpty())
+				return false;
+			if(lm.size() > 1){
+				logger.error("Multiple reviews found, not updating");
+				return false;
+			}
+			return db.update(DATABASE_CLASS, lm.get(0).get(ID_FIELD_NAME).toString(), m);
+		})
+		.subscribeOn(Schedulers.io())
+		.observeOn(Schedulers.single());
+		if(callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);	
 		return null;
 	}
 
