@@ -28,7 +28,7 @@ export class MapviewPage {
   complexSearchPage = ComplexSearchPage;
   output :  any;
   myCallbackFunction : any;
- // complexSearchResults : any = 'default';
+  complexSearchResultsss : any = 'default';
   constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService, public searchService : SearchService, public events: Events) {
 	    this.isLoggedin = this.loginService.isLoggedIn();
 		this.output = "";
@@ -60,10 +60,14 @@ export class MapviewPage {
 	callToComplexSearch() {
 			this.navCtrl.push(this.complexSearchPage);
 			this.events.subscribe('complexSearch:pressed', (complexSearchResults) => {
-				for(var i = 0; i < complexSearchResults.length; i++) {
+				//this.complexSearchResultsss = complexSearchResults[0].name;
+				//this.map.setCenter(complexSearchResults[0]);
+				for(var i = 1; i < complexSearchResults.length - 1; i++) {
 					this.addMarker([complexSearchResults[i].coordinates]);
-				}			
+				}	
+				this.map.setCenter(complexSearchResults[i].coordinates);
 			});
+			
 			//this.myCallbackFunction = function(complexSearchResults) {
 				//for(var i = 0; i < complexSearchResults.length; i++) {
 			//		this.addMarker([complexSearchResults.coordinates]);
