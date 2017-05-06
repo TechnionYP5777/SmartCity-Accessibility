@@ -27,16 +27,14 @@ import smartcity.accessibility.socialnetwork.UserProfile;
 public class UserProfileManagerTest {
 	private static AbstractUserProfileManager manager;
 	private static Map<String, Object> m;
+	private static Map<String, Object> m_noid;
 	private static UserProfile user1;
 	protected static Database db;
 	
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		setUpMock();
-		Injector injector = Guice.createInjector(new DatabaseTestModule());
-		UserProfileManager.initialize(injector.getInstance(UserProfileManager.class));
-		manager = UserProfileManager.instance();
+		
 	}
 
 	@AfterClass
@@ -45,6 +43,10 @@ public class UserProfileManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpMock();
+		Injector injector = Guice.createInjector(new DatabaseTestModule());
+		UserProfileManager.initialize(injector.getInstance(UserProfileManager.class));
+		manager = UserProfileManager.instance();
 	}
 
 	@After
@@ -73,18 +75,37 @@ public class UserProfileManagerTest {
 	@Category({ BranchTests.class, UnitTests.class })
 	public void testPut() {
 		assertEquals(true, manager.put(user1, null));
-		Mockito.verify(db).put(UserProfileManager.DATABASE_CLASS, m);
+		Mockito.verify(db).put(UserProfileManager.DATABASE_CLASS, m_noid);
+	}
+	
+	@Test
+	@Category({ BranchTests.class, UnitTests.class })
+	public void testUpdate() {
+		assertEquals(true, manager.update(user1, null));
+		Mockito.verify(db).update(UserProfileManager.DATABASE_CLASS, "MY_ID", m_noid);
+	}
+	
+	@Test
+	@Category({ BranchTests.class, UnitTests.class })
+	public void testDelete() {
+		assertEquals(true, manager.delete(user1, null));
+		Mockito.verify(db).delete(UserProfileManager.DATABASE_CLASS, "MY_ID");
 	}
 	
 	public static void setUpMock(){
 		db = Mockito.mock(Database.class);
 		m = new HashMap<>();
+		m.put(UserProfileManager.ID_FIELD_NAME, "MY_ID");
 		m.put(UserProfileManager.USERNAME_FIELD, "alexaxa");
 		m.put(UserProfileManager.RATING_FIELD, 25);
 		m.put(UserProfileManager.NUM_OF_REVIEWS_FIELD, 5);
+		m_noid = new HashMap<>(m);
+		m_noid.remove(UserProfileManager.ID_FIELD_NAME);
 		List<Map<String, Object>> l = new ArrayList<>();
 		l.add(m);
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyMap())).thenReturn(l);
+		Mockito.when(db.update(Mockito.anyString(), Mockito.anyString(), Mockito.anyMap())).thenReturn(true);
+		Mockito.when(db.delete(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		user1 = UserProfileManager.fromMap(m);
 	}
 	
