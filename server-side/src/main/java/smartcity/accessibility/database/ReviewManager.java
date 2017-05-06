@@ -17,6 +17,7 @@ import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
+import smartcity.accessibility.socialnetwork.ReviewComment;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
 /**
@@ -36,13 +37,15 @@ public class ReviewManager extends AbstractReviewManager {
 	public static final String IS_PINNED_FIELD_NAME = "isPinned";
 	public static final String RATING_FIELD_NAME = "rating";
 	public static final String USERNAME_FIELD_NAME = "username";
+	public static final String COMMENTS_FIELD_NAME = "comments";
 
 	@Inject
 	public ReviewManager(Database db) {
 		this.db = db;
 	}
 
-	public Map<String, Object> toMap(Review r) {
+	public static Map<String, Object> toMap(Review r) {
+		logger.debug("toMap {} by {}",r.getContent(),r.getUser().getUsername());
 		Map<String, Object> map = new HashMap<>();
 		Location l = r.getLocation();
 		String id = null;
@@ -58,11 +61,23 @@ public class ReviewManager extends AbstractReviewManager {
 		map.put(CONTENT_FIELD_NAME, r.getContent());
 		map.put(IS_PINNED_FIELD_NAME, r.isPinned());
 		map.put(USERNAME_FIELD_NAME, r.getUser().getUsername());
-		// TODO : Add ReviewComments
+
+		List<ReviewComment> lrc = r.getComments();
+		StringBuilder sb = new StringBuilder();
+		for (ReviewComment rc : lrc){
+			logger.debug("serializing reviewcomment {} {}", rc.getCommentator().getUsername(), rc.getRating());
+			sb.append(ReviewComment.serialize(rc));
+			sb.append("$");
+		}
+		if (sb.length()>0)
+			sb.setLength(sb.length() - 1);
+		map.put(COMMENTS_FIELD_NAME, sb.toString());
+		
 		return map;
 	}
 
 	public static Review fromMap(Map<String, Object> m) {
+		logger.debug("fromMap {}", m);
 		int rating = (int) m.get(RATING_FIELD_NAME);
 		String content = m.get(CONTENT_FIELD_NAME).toString();
 		boolean isPinned = (boolean) m.get(IS_PINNED_FIELD_NAME);
@@ -74,7 +89,28 @@ public class ReviewManager extends AbstractReviewManager {
 		}
 		Review r = new Review(null, rating, content, up);
 		r.setPinned(isPinned);
-		// TODO : Add ReviewComments
+
+		if (!m.containsKey(COMMENTS_FIELD_NAME)){
+			logger.debug("m not contains comments field name");
+			return r;
+		}
+		String comments = m.get(COMMENTS_FIELD_NAME).toString();
+		if (comments == null || "".equals(comments)){
+			logger.debug("comments are null or empty");
+			return r;
+		}
+		String[] ls = comments.split("$");
+		List<ReviewComment> lrc = new ArrayList<>();
+		for (String comment : ls){
+			logger.debug("comments split into {}", comment);
+			try {
+				lrc.add(ReviewComment.deserialize(comment));
+			} catch (NumberFormatException | UserNotFoundException e) {
+				logger.error("Couldn't deserialize review comment {}, with exception {}", comment, e);
+			}
+		}
+		r.addComments(lrc);
+		
 		return r;
 	}
 

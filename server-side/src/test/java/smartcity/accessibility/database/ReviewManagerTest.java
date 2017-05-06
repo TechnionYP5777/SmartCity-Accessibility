@@ -15,7 +15,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-import org.parse4j.ParseException;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -29,16 +28,20 @@ import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.socialnetwork.Review;
+import smartcity.accessibility.socialnetwork.ReviewComment;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserBuilder;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
 public class ReviewManagerTest {
 	private static ReviewManager rm;
+	@SuppressWarnings("unused") // It is claimed that lm is unused but that is not true, so suppressed
 	private static AbstractLocationManager lm;
+	private static AbstractUserProfileManager um;
 	protected static Database db;
 	private static Map<String, Object> m;
 	private static Review rev1;
+	private static UserProfile up1;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -89,7 +92,7 @@ public class ReviewManagerTest {
 	public void getReviewsTest() {
 		List<Review> list = rm.getReviews("a", null);
 		assertEquals(1, list.size());
-		Map<String, Object> nm = rm.toMap(list.get(0));
+		Map<String, Object> nm = ReviewManager.toMap(list.get(0));
 		nm.put(ReviewManager.ID_FIELD_NAME, "MY_ID_REV");
 		nm.put(ReviewManager.LOCATION_FIELD_NAME, "a");
 		assertEquals(m, nm);
@@ -100,7 +103,7 @@ public class ReviewManagerTest {
 	public void getReviewWithLocationTest() {
 		List<Review> list = rm.getReviewWithLocation("MY_ID", null);
 		assertEquals(1, list.size());
-		Map<String, Object> nm = rm.toMap(list.get(0));
+		Map<String, Object> nm = ReviewManager.toMap(list.get(0));
 		nm.put(ReviewManager.ID_FIELD_NAME, "MY_ID_REV");
 		nm.put(ReviewManager.LOCATION_FIELD_NAME, "a");
 		assertEquals(m, nm);
@@ -125,18 +128,37 @@ public class ReviewManagerTest {
 		Mockito.verify(db).update(ReviewManager.DATABASE_CLASS, "MY_ID_REV", nm);
 	}
 	
-	public static void setUpMock() throws ObjectNotFoundException{
+	@Test
+	@Category({ BranchTests.class, UnitTests.class })
+	public void updateFromToMap() {
+		Review my_rev = new Review(null, 3, "my_content", up1);
+		List<ReviewComment> lrc = new ArrayList<>();
+		lrc.add(new ReviewComment(2, up1));
+		my_rev.addComments(lrc);
+		Map<String, Object> m = ReviewManager.toMap(my_rev);
+		assertEquals("Simba#2", m.get(ReviewManager.COMMENTS_FIELD_NAME));
+		assertEquals("my_content", m.get(ReviewManager.CONTENT_FIELD_NAME));
+		assertEquals(3, m.get(ReviewManager.RATING_FIELD_NAME));
+		assertEquals("Simba", m.get(ReviewManager.USERNAME_FIELD_NAME));
+		
+		Review map_rev = ReviewManager.fromMap(m);
+		assertEquals("Simba",map_rev.getUser().getUsername());
+		assertEquals(lrc,map_rev.getComments());
+		assertEquals(lrc.get(0).getRating(),map_rev.getComments().get(0).getRating());
+		assertEquals(my_rev.getContent(), map_rev.getContent());
+		
+	}
+	
+	public static void setUpMock() throws ObjectNotFoundException, UserNotFoundException{
 		AbstractLocationManager lm = Mockito.mock(AbstractLocationManager.class);
 		//Mockito.when(lm.getId(coordinates, locType, locSubType, null))
 		AbstractLocationManager.initialize(lm);
 		
-		AbstractUserProfileManager um = Mockito.mock(AbstractUserProfileManager.class);
-		try {
-			Mockito.when(um.get(Mockito.anyString(), Mockito.isNull()))
+		um = Mockito.mock(AbstractUserProfileManager.class);
+		up1 = new UserProfile("Simba");
+		Mockito.when(um.get("Simba", null)).thenReturn(up1);
+		Mockito.when(um.get("victor", null))
 				.thenReturn(new UserProfile("victor"));
-		} catch (UserNotFoundException e) {
-			e.printStackTrace();
-		}
 		AbstractUserProfileManager.initialize(um);
 		
 		db = Mockito.mock(Database.class);
@@ -147,6 +169,7 @@ public class ReviewManagerTest {
 		m.put(ReviewManager.IS_PINNED_FIELD_NAME, true);
 		m.put(ReviewManager.RATING_FIELD_NAME, 3);
 		m.put(ReviewManager.USERNAME_FIELD_NAME, "victor");
+		m.put(ReviewManager.COMMENTS_FIELD_NAME, "");
 		
 
 		List<Map<String, Object>> l = new ArrayList<>();
@@ -172,6 +195,8 @@ public class ReviewManagerTest {
 		lm = Mockito.mock(AbstractLocationManager.class);
 		Mockito.when(lm.getLocation(Mockito.any(LatLng.class), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(sample);
 		AbstractLocationManager.initialize(lm);
+		
+		
 	}
 
 	public static class DatabaseModule extends AbstractModule {

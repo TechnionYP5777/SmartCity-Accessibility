@@ -1,6 +1,7 @@
 package smartcity.accessibility.socialnetwork;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -23,7 +24,7 @@ public class Review {
 	private boolean isPinned;
 
 	
-	private List<ReviewComment> comments = new ArrayList<ReviewComment>();
+	private List<ReviewComment> comments = new ArrayList<>();
 
 	public Review(Location l, int r, String c, UserProfile u) {
 		this.rating = new Score(r);
@@ -136,9 +137,9 @@ public class Review {
 	protected void comment(User u, int rating) throws UnauthorizedAccessException {
 		if (!Privilege.commentReviewPrivilegeLevel(u))
 			throw (new UnauthorizedAccessException(Privilege.minCommentLevel()));
-		if (comments.contains(new ReviewComment(u)))
-			comments.remove(new ReviewComment(u));
-		comments.add(new ReviewComment(rating, u));
+		if (comments.contains(new ReviewComment(u.getProfile())))
+			comments.remove(new ReviewComment(u.getProfile()));
+		comments.add(new ReviewComment(rating, u.getProfile()));
 	}
 
 	/**
@@ -165,6 +166,14 @@ public class Review {
 				return (¢.getRating() == rating);
 			}
 		}).collect(Collectors.toList()));
+	}
+
+	public List<ReviewComment> getComments() {
+		return comments;
+	}
+
+	public void addComments(Collection<ReviewComment> comments) {
+		this.comments.addAll(comments);
 	}
 
 	@Override
