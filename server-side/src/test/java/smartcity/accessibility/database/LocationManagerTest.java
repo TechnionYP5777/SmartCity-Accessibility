@@ -1,6 +1,6 @@
 package smartcity.accessibility.database;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,8 +28,6 @@ import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.socialnetwork.Review;
-import smartcity.accessibility.socialnetwork.User;
-import smartcity.accessibility.socialnetwork.UserBuilder;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
 public class LocationManagerTest {

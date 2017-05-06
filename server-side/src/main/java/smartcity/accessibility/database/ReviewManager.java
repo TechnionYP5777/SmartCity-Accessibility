@@ -26,7 +26,7 @@ import smartcity.accessibility.socialnetwork.UserProfile;
 public class ReviewManager extends AbstractReviewManager {
 
 	private Database db;
-	private static final String DATABASE_CLASS = "Review";
+	public static final String DATABASE_CLASS = "Review";
 
 	private static Logger logger = LoggerFactory.getLogger(ReviewManager.class);
 

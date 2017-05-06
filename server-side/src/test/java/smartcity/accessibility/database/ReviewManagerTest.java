@@ -20,11 +20,14 @@ import org.parse4j.ParseException;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.categories.BranchTests;
 import smartcity.accessibility.categories.UnitTests;
+import smartcity.accessibility.database.exceptions.ObjectNotFoundException;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserBuilder;
@@ -32,6 +35,7 @@ import smartcity.accessibility.socialnetwork.UserProfile;
 
 public class ReviewManagerTest {
 	private static ReviewManager rm;
+	private static AbstractLocationManager lm;
 	protected static Database db;
 	private static Map<String, Object> m;
 	private static Review rev1;
@@ -82,15 +86,46 @@ public class ReviewManagerTest {
 	
 	@Test
 	@Category({ BranchTests.class, UnitTests.class })
-	public void getReviewsTest() throws ParseException{
+	public void getReviewsTest() {
 		List<Review> list = rm.getReviews("a", null);
 		assertEquals(1, list.size());
 		Map<String, Object> nm = rm.toMap(list.get(0));
+		nm.put(ReviewManager.ID_FIELD_NAME, "MY_ID_REV");
 		nm.put(ReviewManager.LOCATION_FIELD_NAME, "a");
 		assertEquals(m, nm);
 	}
 	
-	public static void setUpMock(){
+	@Test
+	@Category({ BranchTests.class, UnitTests.class })
+	public void getReviewWithLocationTest() {
+		List<Review> list = rm.getReviewWithLocation("MY_ID", null);
+		assertEquals(1, list.size());
+		Map<String, Object> nm = rm.toMap(list.get(0));
+		nm.put(ReviewManager.ID_FIELD_NAME, "MY_ID_REV");
+		nm.put(ReviewManager.LOCATION_FIELD_NAME, "a");
+		assertEquals(m, nm);
+	}
+	
+	@Test
+	@Category({ BranchTests.class, UnitTests.class })
+	public void deleteReviewTest() {
+		Boolean res = rm.deleteReview(rev1, null);
+		assertEquals(true, res);
+		Mockito.verify(db).delete(ReviewManager.DATABASE_CLASS, "MY_ID_REV");
+	}
+	
+	@Test
+	@Category({ BranchTests.class, UnitTests.class })
+	public void updateReviewTest() {
+		Boolean res = rm.updateReview(rev1, null);
+		assertEquals(true, res);
+		Map<String, Object> nm = new HashMap<>(m);
+		nm.remove(ReviewManager.ID_FIELD_NAME);
+		nm.put(ReviewManager.LOCATION_FIELD_NAME, null);
+		Mockito.verify(db).update(ReviewManager.DATABASE_CLASS, "MY_ID_REV", nm);
+	}
+	
+	public static void setUpMock() throws ObjectNotFoundException{
 		AbstractLocationManager lm = Mockito.mock(AbstractLocationManager.class);
 		//Mockito.when(lm.getId(coordinates, locType, locSubType, null))
 		AbstractLocationManager.initialize(lm);
@@ -106,6 +141,7 @@ public class ReviewManagerTest {
 		
 		db = Mockito.mock(Database.class);
 		m = new HashMap<>();
+		m.put(ReviewManager.ID_FIELD_NAME, "MY_ID_REV");
 		m.put(ReviewManager.LOCATION_FIELD_NAME, "a");
 		m.put(ReviewManager.CONTENT_FIELD_NAME, "content");
 		m.put(ReviewManager.IS_PINNED_FIELD_NAME, true);
@@ -115,11 +151,27 @@ public class ReviewManagerTest {
 
 		List<Map<String, Object>> l = new ArrayList<>();
 		l.add(m);
-		Mockito.when(db.get(Mockito.anyString(), Mockito.anyMap())).thenReturn(l);
+		Mockito.when(db.get(Mockito.startsWith(ReviewManager.DATABASE_CLASS), Mockito.anyMap())).thenReturn(l);
 		Mockito.when(db.put(Mockito.anyString(), Mockito.anyMap())).thenReturn("b");
+		Mockito.when(db.delete(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
+		Mockito.when(db.update(Mockito.anyString(), Mockito.anyString(), Mockito.anyMap())).thenReturn(true);
 		rev1 = ReviewManager.fromMap(m);
 		
+		List<Review> lr = new ArrayList<>();
+		lr.add(rev1);
+		Location sample = new LocationBuilder()
+				.addReviews(lr)
+				.setCoordinates(new LatLng())
+				.setName("Hello")
+				.build();
 		
+		Map<String, Object> locMap = LocationManager.toMap(sample);
+		locMap.put(LocationManager.ID_FIELD_NAME, "MY_ID_LOC");
+		Mockito.when(db.get(Mockito.anyString(), Mockito.anyString())).thenReturn(locMap);
+		
+		lm = Mockito.mock(AbstractLocationManager.class);
+		Mockito.when(lm.getLocation(Mockito.any(LatLng.class), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(sample);
+		AbstractLocationManager.initialize(lm);
 	}
 
 	public static class DatabaseModule extends AbstractModule {

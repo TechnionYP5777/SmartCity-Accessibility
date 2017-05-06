@@ -18,6 +18,8 @@ public class LocationBuilder {
 
 	public LocationBuilder(){
 		l = new Location();
+		l.setLocationType(LocationTypes.Coordinate);
+		l.setLocationSubType(LocationSubTypes.Default);
 	}
 	
 	public Location build(){
