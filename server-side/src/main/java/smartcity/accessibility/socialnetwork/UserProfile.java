@@ -55,7 +55,7 @@ public class UserProfile {
 	public double getAvgRating(){
 		if(numOfReviews == 0)
 			return 0;
-		return rating/numOfReviews;
+		return rating/(double)numOfReviews;
 	}
 	
 	

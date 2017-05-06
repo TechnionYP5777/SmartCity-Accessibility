@@ -24,6 +24,7 @@ public class UserProfileManager extends AbstractUserProfileManager {
 	public static final String RATING_FIELD = "rating";
 	public static final String USERNAME_FIELD = "username";
 	public static final String DATABASE_CLASS = "UserProfile";
+	public static final String ID_FIELD_NAME = "objectId";
 	private static Logger logger = LoggerFactory.getLogger(UserProfileManager.class);
 	private Database db;
 	
@@ -86,13 +87,43 @@ public class UserProfileManager extends AbstractUserProfileManager {
 
 	@Override
 	public Boolean update(UserProfile up, ICallback<Boolean> callback) {
-		// TODO Auto-generated method stub
+		logger.debug("update UserProfile {}", up.getUsername());
+		Flowable<Boolean> res = Flowable.fromCallable(() -> {
+			Map<String, Object> m = new HashMap<>();
+			m.put(USERNAME_FIELD, up.getUsername());
+			List<Map<String, Object>> lm = db.get(DATABASE_CLASS, m);
+			if (lm.isEmpty()){
+				logger.error("Not found object to update ");
+				return false;
+			}		
+			return db.update(DATABASE_CLASS, lm.get(0).get(ID_FIELD_NAME).toString(), toMap(up));
+		})
+		.subscribeOn(Schedulers.io())
+		.observeOn(Schedulers.single());
+		if(callback == null)
+			return res.blockingFirst();
+		res.subscribe();
 		return null;
 	}
 
 	@Override
 	public Boolean delete(UserProfile up, ICallback<Boolean> callback) {
-		// TODO Auto-generated method stub
+		logger.debug("delete UserProfile {}", up.getUsername());
+		Flowable<Boolean> res = Flowable.fromCallable(() -> {
+			Map<String, Object> m = new HashMap<>();
+			m.put(USERNAME_FIELD, up.getUsername());
+			List<Map<String, Object>> lm = db.get(DATABASE_CLASS, m);
+			if (lm.isEmpty()){
+				logger.error("Not found object to delete ");
+				return false;
+			}		
+			return db.delete(DATABASE_CLASS, lm.get(0).get(ID_FIELD_NAME).toString());
+		})
+		.subscribeOn(Schedulers.io())
+		.observeOn(Schedulers.single());
+		if(callback == null)
+			return res.blockingFirst();
+		res.subscribe();
 		return null;
 	}
 
