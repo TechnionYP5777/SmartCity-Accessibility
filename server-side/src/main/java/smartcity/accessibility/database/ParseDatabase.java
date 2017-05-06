@@ -56,7 +56,7 @@ public class ParseDatabase implements Database {
 			return null;
 		Map<String, Object> map = new HashMap<>();
 		for (String os : po.keySet()) {
-			logger.debug("got key " + os);
+			logger.debug("got key {}", os);
 			map.put(os, po.get(os));
 		}
 		map.put(OBJECT_ID_FIELD, po.getObjectId());
@@ -89,7 +89,7 @@ public class ParseDatabase implements Database {
 
 	@Override
 	public Map<String, Object> get(String objectClass, String id) throws ObjectNotFoundException {
-		logger.debug("getting object with id " + id);
+		logger.debug("getting object with id {}", id);
 		try {
 			ParseObject po = ParseQuery.getQuery(objectClass).get(id);
 			if (po == null)
@@ -103,7 +103,7 @@ public class ParseDatabase implements Database {
 
 	@Override
 	public List<Map<String, Object>> get(String objectClass, Map<String, Object> baseObject) {
-		logger.debug("getting object with map " + baseObject);
+		logger.debug("getting object with map {}", baseObject);
 		ParseQuery<ParseObject> pq = ParseQuery.getQuery(objectClass);
 		for (Entry<String, Object> e : baseObject.entrySet())
 			pq.whereEqualTo(e.getKey(), e.getValue());
@@ -111,8 +111,7 @@ public class ParseDatabase implements Database {
 		try {
 			return toMap(pq.find());
 		} catch (ParseException e) {
-			logger.error("get object failed with message " + e.getMessage());
-			e.printStackTrace();
+			logger.error("get object failed with message {}", e);
 		}
 		return new ArrayList<>();
 	}
@@ -120,15 +119,14 @@ public class ParseDatabase implements Database {
 	@Override
 	public List<Map<String, Object>> get(String objectClass, String locationField, double latitude, double longitude,
 			double radius) {
-		logger.debug("getting object with location " + latitude + "," + longitude + " within radius " + radius);
+		logger.debug("getting object with location {}, {} within radius {}", latitude, longitude, radius);
 		ParseQuery<ParseObject> pq = ParseQuery.getQuery(objectClass);
 		pq.whereWithinKilometers(locationField, new ParseGeoPoint(latitude, longitude), radius);
 
 		try {
 			return toMap(pq.find());
 		} catch (ParseException e) {
-			logger.error("get object failed with message " + e.getMessage());
-			e.printStackTrace();
+			logger.error("get object failed with message {}", e);
 		}
 		return new ArrayList<>();
 	}
@@ -141,8 +139,7 @@ public class ParseDatabase implements Database {
 		try {
 			po.save();
 		} catch (ParseException e) {
-			logger.error("put object failed with message " + e.getMessage());
-			e.printStackTrace();
+			logger.error("put object failed with message ", e);
 			return null;
 		}
 		return po.getObjectId();
@@ -156,8 +153,7 @@ public class ParseDatabase implements Database {
 				return false;
 			po.delete();
 		} catch (ParseException e) {
-			logger.error("delete object failed with error " + e.getMessage());
-			e.printStackTrace();
+			logger.error("delete object failed with error {}", e);
 			return false;
 		}
 		return true;
@@ -173,8 +169,7 @@ public class ParseDatabase implements Database {
 				po.put(e.getKey(), e.getValue());
 			po.save();
 		} catch (ParseException e) {
-			logger.error("update object failed with error " + e.getMessage());
-			e.printStackTrace();
+			logger.error("update object failed with error {}", e);
 			return false;
 		}
 		return true;

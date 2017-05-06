@@ -89,9 +89,7 @@ public class LocationManager extends AbstractLocationManager {
 
 	@Override
 	public String uploadLocation(Location l, ICallback<String> callback) {
-		Flowable<String> res = Flowable.fromCallable(() -> {
-			return db.put(DATABASE_CLASS, toMap(l));
-		})
+		Flowable<String> res = Flowable.fromCallable(() -> db.put(DATABASE_CLASS, toMap(l)))
 		.subscribeOn(Schedulers.io())
 		.observeOn(Schedulers.single());
 		if(callback == null)

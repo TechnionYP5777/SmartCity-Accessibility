@@ -151,7 +151,6 @@ public class ReviewManagerTest {
 	
 	public static void setUpMock() throws ObjectNotFoundException, UserNotFoundException{
 		AbstractLocationManager lm = Mockito.mock(AbstractLocationManager.class);
-		//Mockito.when(lm.getId(coordinates, locType, locSubType, null))
 		AbstractLocationManager.initialize(lm);
 		
 		um = Mockito.mock(AbstractUserProfileManager.class);
