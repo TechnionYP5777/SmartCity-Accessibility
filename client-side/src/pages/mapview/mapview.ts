@@ -70,19 +70,13 @@ export class MapviewPage {
     
 	subscribeToNavigation(){
 		this.events.subscribe('navigation:done', (navigationResults) => {
-			var points = [];
-			if(navigationResults.length == 0)
-				this.presentAlert("hiii");
-			for(var i=0;i < navigationResults.length; i++){
-				var coord = navigationResults[i].coordinates;
-				points[i] = {lat: coord.lat, lng: coord.lng }
-			}
+			this.presentAlert(navigationResults[1].lat);
 			var route = new google.maps.Polyline({
-			  path: points,
-			  geodesic: true,
-			  strokeColor: '#FF0000',
-			  strokeOpacity: 1.0,
-			  strokeWeight: 2
+			    path: navigationResults,
+			    geodesic: true,
+			    strokeColor: '#FF0000',
+			    strokeOpacity: 1.0,
+			    strokeWeight: 2
 			});
 
 			route.setMap(this.map);

@@ -88,8 +88,9 @@ public abstract class Navigation {
 
 	private static List<MapSegment> getSegmentsToAvoid(Location source, Location destination,
 			Integer accessibilityThreshold) throws CommunicationFailed {
-		List<LatLng> locationsToAvoid = LocationManager.getNonAccessibleLocationsInRadius(source, destination,
-				accessibilityThreshold);
+		//List<LatLng> locationsToAvoid = LocationManager.getNonAccessibleLocationsInRadius(source, destination,
+		//		accessibilityThreshold);
+		List<LatLng> locationsToAvoid = new ArrayList<LatLng>();
 		List<MapSegment> $ = new ArrayList<MapSegment>();
 		for (LatLng ¢ : locationsToAvoid)
 			$.add(getMapSegmentOfLatLng(¢.getLat(), ¢.getLng()));
