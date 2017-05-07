@@ -70,7 +70,6 @@ export class MapviewPage {
     
 	subscribeToNavigation(){
 		this.events.subscribe('navigation:done', (navigationResults) => {
-			this.presentAlert(navigationResults[1].lat);
 			var route = new google.maps.Polyline({
 			    path: navigationResults,
 			    geodesic: true,

@@ -38,7 +38,7 @@ export class NavigationPage {
     }
 	startNavigation(){
 		this.navigationService.navigatee(this.srcLocation,this.dstLocation).subscribe(data => {
-            this.events.publish('navigation:done', data);
+            this.events.publish('navigation:done', data.json());
 		});
 		this.navCtrl.pop();
 	}
