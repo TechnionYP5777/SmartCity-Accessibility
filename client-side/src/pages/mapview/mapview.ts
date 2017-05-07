@@ -31,6 +31,7 @@ export class MapviewPage {
   constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService, public searchService : SearchService, public events: Events) {
 	    this.isLoggedin = this.loginService.isLoggedIn();
 		this.output = "";
+		this.subscribeToNavigation();
   }
   
     ionViewDidLoad(){
@@ -67,7 +68,11 @@ export class MapviewPage {
 	
 	}
     
-
+	subscribeToNavigation(){
+		this.events.subscribe('navigation:done', (navigationResults) => {
+			this.presentAlert("hello it's meeee");
+		});
+	}
 	presentAlert(str) {
 		let alert = this.alertCtrl.create({
 		  title: 'Alert',

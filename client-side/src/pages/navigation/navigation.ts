@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Events } from 'ionic-angular';
 import { NavigationService } from './navigationService';
 import {MapviewPage} from '../mapview/mapview';
 import { LoginService } from '../login/LoginService';
@@ -22,7 +22,7 @@ export class NavigationPage {
 		lat : '',
 		lng : ''
 	};
-    constructor(public navCtrl: NavController, public navParams: NavParams, public navigationService: NavigationService,public loginService : LoginService) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public navigationService: NavigationService,public loginService : LoginService,public events: Events) {
 	    var token = window.sessionStorage.getItem('token');
 		this.isWork = token;
 		this.isLoggedin = this.loginService.isLoggedIn();
@@ -38,8 +38,8 @@ export class NavigationPage {
     }
 	startNavigation(){
 		this.navigationService.navigatee(this.srcLocation,this.dstLocation).subscribe(data => {
-            this.isWork = data.json();
+            this.events.publish('navigation:done', data);
 		});
-		
+		this.navCtrl.pop();
 	}
 }
