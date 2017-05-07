@@ -14,6 +14,7 @@ export class NavigationPage {
     isWork : any;
     isLoggedin : any;
 	geolocation: Geolocation;
+	minRating: any;
 	srcLocation = {
 		lat : '',
 		lng : ''
@@ -37,7 +38,7 @@ export class NavigationPage {
 		});
     }
 	startNavigation(){
-		this.navigationService.navigatee(this.srcLocation,this.dstLocation).subscribe(data => {
+		this.navigationService.navigatee(this.srcLocation,this.dstLocation,this.minRating).subscribe(data => {
             this.events.publish('navigation:done', data.json());
 		});
 		this.navCtrl.pop();
