@@ -96,6 +96,15 @@ public class LocationManagerTest {
 		assertEquals("hey",lres.getReviews().get(0).getContent());
 		
 	}
+	
+	@Test
+	@Category({ BranchTests.class, UnitTests.class })
+	public void testGetLocationsAround(){
+		List<Location> res = lm.getLocationsAround(new LatLng(1,1), 1.2, null);
+		assertEquals(1, res.size());
+		Mockito.verify(db).get( LocationManager.DATABASE_CLASS,
+								LocationManager.LOCATION_FIELD_NAME, 1, 1, 1.2);
+	}
 
 	public static void setUpMock() {
 		db = Mockito.mock(Database.class);
@@ -109,6 +118,7 @@ public class LocationManagerTest {
 		l.add(m);
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyMap())).thenReturn(l);
 		Mockito.when(db.put(Mockito.anyString(), Mockito.anyMap())).thenReturn("MY_ID2");
+		Mockito.when(db.get(Mockito.anyString(), Mockito.anyString(), Mockito.anyDouble(), Mockito.anyDouble(), Mockito.anyDouble())).thenReturn(l);
 		l1 = LocationManager.fromMap(m);
 		
 		List<Review> lr = new ArrayList<>();
