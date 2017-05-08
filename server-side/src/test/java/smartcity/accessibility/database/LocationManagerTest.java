@@ -103,6 +103,7 @@ public class LocationManagerTest {
 	public void testGetLocationsAround(){
 		List<Location> res = lm.getLocationsAround(new LatLng(1,1), 1.2, null);
 		assertEquals(1, res.size());
+		assertEquals(1, res.get(0).getReviews().size());
 		Mockito.verify(db).get( LocationManager.DATABASE_CLASS,
 								LocationManager.LOCATION_FIELD_NAME, 1, 1, 1.2);
 	}

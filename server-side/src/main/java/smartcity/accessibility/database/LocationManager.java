@@ -105,17 +105,14 @@ public class LocationManager extends AbstractLocationManager {
 	public List<Location> getLocation(LatLng coordinates, ICallback<List<Location>> locationListCallback) {
 		logger.info("getting locations with coordinates {}", coordinates);
 		Flowable<List<Location>> res = Flowable.fromCallable(() -> {
-
 			Map<String, Object> m = new HashMap<>();
 			m.put(LOCATION_FIELD_NAME, new ParseGeoPoint(coordinates.getLat(), coordinates.getLng()));
+			
 			List<Map<String, Object>> locsMap = db.get(DATABASE_CLASS, m);
 			logger.debug("db.get returned {}", locsMap.toString());
 			List<Location> locs = new ArrayList<>();
 			Flowable.fromIterable(locsMap).flatMap(m1 -> Flowable.just(m1).subscribeOn(Schedulers.io()).map(m2 -> {
 				Location l = fromMap(m2);
-				logger.debug("AbstractReviewManager is null : {}", AbstractReviewManager.instance() == null);
-				logger.debug("getReviews returned : {} ",
-						AbstractReviewManager.instance().getReviews(m2.get(ID_FIELD_NAME).toString(), null).toString());
 				l.addReviews(AbstractReviewManager.instance().getReviews(m2.get(ID_FIELD_NAME).toString(), null));
 				return l;
 			})).blockingSubscribe(l -> locs.add(l));
@@ -133,7 +130,13 @@ public class LocationManager extends AbstractLocationManager {
 		Flowable<List<Location>> res = Flowable.fromCallable(() -> {
 			List<Map<String, Object>> mapList = db.get(DATABASE_CLASS, LOCATION_FIELD_NAME, l.getLat(), l.getLng(),
 					distance);
-			return mapList.stream().map(m -> fromMap(m)).collect(Collectors.toList());
+			return mapList.stream().map(m -> {
+							Location ml = fromMap(m);
+							return getLocation(ml.getCoordinates(),
+												ml.getLocationType(),
+												ml.getLocationSubType(),
+												null);
+						}).collect(Collectors.toList());
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
 			return res.blockingFirst();
@@ -148,7 +151,9 @@ public class LocationManager extends AbstractLocationManager {
 			String id = getId(coordinates, locType, locSubType, null);
 			if (id == null)
 				return null;
-			return fromMap(db.get(DATABASE_CLASS, id));
+			Location l = fromMap(db.get(DATABASE_CLASS, id));
+			l.addReviews(AbstractReviewManager.instance().getReviews(id, null));
+			return l;
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
 			return res.blockingFirst();
