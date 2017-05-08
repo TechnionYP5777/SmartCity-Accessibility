@@ -20,6 +20,7 @@ import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
+import smartcity.accessibility.socialnetwork.BestReviews;
 
 /**
  * @author KaplanAlexander
@@ -72,12 +73,13 @@ public class LocationManager extends AbstractLocationManager {
 			m.put(TYPE_FIELD_NAME, locType);
 			m.put(SUB_TYPE_FIELD_NAME, locSubType);
 			List<Map<String, Object>> locs = db.get(DATABASE_CLASS, m);
-			if (locs.isEmpty()){
-				logger.info("no locations found for {}, {}, {}", coordinates,locType,locSubType);
+			if (locs.isEmpty()) {
+				logger.info("no locations found for {}, {}, {}", coordinates, locType, locSubType);
 				return null;
 			}
 			if (locs.size() > 1)
-				logger.error("Multiple locations found with same id (coord, loctype and loc subtype) for {} , {} , {}", coordinates,locType,locSubType);
+				logger.error("Multiple locations found with same id (coord, loctype and loc subtype) for {} , {} , {}",
+						coordinates, locType, locSubType);
 			return locs.get(0).get(ID_FIELD_NAME).toString();
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
@@ -92,8 +94,7 @@ public class LocationManager extends AbstractLocationManager {
 			if (getId(l.getCoordinates(), l.getLocationType(), l.getLocationSubType(), null) == null)
 				return null;
 			return db.put(DATABASE_CLASS, toMap(l));
-		})
-		.subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
+		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
 			return res.blockingFirst();
 		res.subscribe(callback::onFinish, Throwable::printStackTrace);
@@ -128,13 +129,12 @@ public class LocationManager extends AbstractLocationManager {
 	}
 
 	@Override
-	public List<Location> getLocationsAround(LatLng l, double distance,
-			ICallback<List<Location>> callback) {
+	public List<Location> getLocationsAround(LatLng l, double distance, ICallback<List<Location>> callback) {
 		Flowable<List<Location>> res = Flowable.fromCallable(() -> {
-			List<Map<String, Object>> mapList = db.get(DATABASE_CLASS, LOCATION_FIELD_NAME, l.getLat(), l.getLng(), distance);
+			List<Map<String, Object>> mapList = db.get(DATABASE_CLASS, LOCATION_FIELD_NAME, l.getLat(), l.getLng(),
+					distance);
 			return mapList.stream().map(m -> fromMap(m)).collect(Collectors.toList());
-		}).subscribeOn(Schedulers.io())
-		.observeOn(Schedulers.single());
+		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
 			return res.blockingFirst();
 		res.subscribe(callback::onFinish, Throwable::printStackTrace);
@@ -145,12 +145,11 @@ public class LocationManager extends AbstractLocationManager {
 	public Location getLocation(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType,
 			ICallback<Location> callback) {
 		Flowable<Location> res = Flowable.fromCallable(() -> {
-			String id = getId(coordinates,locType,locSubType, null);
+			String id = getId(coordinates, locType, locSubType, null);
 			if (id == null)
 				return null;
 			return fromMap(db.get(DATABASE_CLASS, id));
-		}).subscribeOn(Schedulers.io())
-		.observeOn(Schedulers.single());
+		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
 			return res.blockingFirst();
 		res.subscribe(callback::onFinish, Throwable::printStackTrace);
@@ -159,15 +158,73 @@ public class LocationManager extends AbstractLocationManager {
 
 	@Override
 	public Boolean updateLocation(Location loc, ICallback<Boolean> callback) {
-		// TODO Auto-generated method stub
+		logger.info("updateLocation for loc {},{},{}", loc.getCoordinates(), loc.getLocationType(),
+				loc.getLocationSubType());
+		Flowable<Boolean> res = Flowable.fromCallable(() -> {
+			String id = getId(loc.getCoordinates(), loc.getLocationType(), loc.getLocationSubType(), null);
+			if (id == null) {
+				logger.error("Location not found {},{},{}", loc.getCoordinates(), loc.getLocationType(),
+						loc.getLocationSubType());
+				return false;
+			}
+			return db.update(DATABASE_CLASS, id, toMap(loc));
+		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
+		if (callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);
 		return null;
 	}
 
 	@Override
 	public List<LatLng> getNonAccessibleLocationsInRadius(LatLng source, LatLng destination,
-			Integer accessibilityThreshold, ICallback<List<LatLng>> locationListCallback) {
-		// TODO Auto-generated method stub
+			Integer accessibilityThreshold, ICallback<List<LatLng>> callback) {
+		Flowable<List<LatLng>> res = Flowable.fromCallable(() -> {
+			List<Location> locList = getLocationsAround(getCenter(source, destination),
+														distance(source, destination),
+														null);
+			
+			return locList.stream()
+							.map(l -> new BestReviews(l))
+							.filter(br -> br.getTotalRatingByAvg() >= accessibilityThreshold)
+							.map(br -> br.getLocation().getCoordinates())
+							.distinct()
+							.collect(Collectors.toList());
+		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
+		if (callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);
 		return null;
+	}
+
+	private LatLng getCenter(LatLng p1, LatLng p2) {
+		double dLon = Math.toRadians(p2.getLng() - p1.getLng());
+
+		double lat1 = Math.toRadians(p1.getLat());
+		double lat2 = Math.toRadians(p2.getLat());
+		double lon1 = Math.toRadians(p1.getLng());
+
+		double Bx = Math.cos(lat2) * Math.cos(dLon);
+		double By = Math.cos(lat2) * Math.sin(dLon);
+		double lat3 = Math.atan2(Math.sin(lat1) + Math.sin(lat2),
+				Math.sqrt((Math.cos(lat1) + Bx) * (Math.cos(lat1) + Bx) + By * By));
+		double lon3 = lon1 + Math.atan2(By, Math.cos(lat1) + Bx);
+
+		return new LatLng(Math.toDegrees(lat3), Math.toDegrees(lon3));
+
+	}
+
+	private double distance(LatLng p1, LatLng p2) {
+		double lat1 = p1.getLat(); 
+		double lat2 = p2.getLat();
+		double lng1 = p1.getLng();
+		double lng2 = p2.getLng();
+		double earthRadius = 6371; // in km
+		double dLat = Math.toRadians(lat2 - lat1);
+		double dLng = Math.toRadians(lng2 - lng1);
+		double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(lat1))
+				* Math.cos(Math.toRadians(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		return earthRadius * c;
 	}
 
 }

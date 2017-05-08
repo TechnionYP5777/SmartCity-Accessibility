@@ -95,4 +95,8 @@ public class BestReviews {
 	public List<Review> getReviews() {
 		return l.getReviews();
 	}
+	
+	public Location getLocation(){
+		return l;
+	}
 }
