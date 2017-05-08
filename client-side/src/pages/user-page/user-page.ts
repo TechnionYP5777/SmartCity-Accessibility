@@ -13,7 +13,7 @@ export class UserPagePage {
   output :  string;
   UserName: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public loginService : LoginService, public userInformationService : UserInformationService) {
-	  this.output = userInformationService.getUserName(loginService.getToken());
+	  this.output = "bwabwa";
 	  this.UserName = "UserName";
   }
  
