@@ -7,7 +7,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      User Page
+      Weclome {{UserName}}
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -15,10 +15,10 @@
 <ion-content>
 <div class="row">
 	<div class="col">
-		<button ion-button (click)="openSearchQuery()">add New Search Query</button>
+		<button ion-button (click)="addNewSearchQuery()">add New Search Query</button>
 	</div>
 	<div class="col">
-		<button ion-button>View My Search Queries</button>
+		<button ion-button (click)="showSearchQueries()">View My Search Queries</button>
 	</div>
 	<div class="col">
 		{{output}}
