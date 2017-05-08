@@ -23,6 +23,7 @@ import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.categories.BranchTests;
 import smartcity.accessibility.categories.UnitTests;
+import smartcity.accessibility.database.exceptions.ObjectNotFoundException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
@@ -105,8 +106,19 @@ public class LocationManagerTest {
 		Mockito.verify(db).get( LocationManager.DATABASE_CLASS,
 								LocationManager.LOCATION_FIELD_NAME, 1, 1, 1.2);
 	}
+	
+	@Test
+	@Category({ BranchTests.class, UnitTests.class })
+	public void testGetLocationSingle() throws ObjectNotFoundException{
+		Location res = lm.getLocation(new LatLng(), LocationTypes.Coordinate, LocationSubTypes.Default, null);
+		Map<String, Object> mres = LocationManager.toMap(res);
+		assertEquals(m.get(LocationManager.NAME_FIELD_NAME), mres.get(LocationManager.NAME_FIELD_NAME));
+		assertEquals(m.get(LocationManager.TYPE_FIELD_NAME), mres.get(LocationManager.TYPE_FIELD_NAME));
+		assertEquals(m.get(LocationManager.SUB_TYPE_FIELD_NAME), mres.get(LocationManager.SUB_TYPE_FIELD_NAME));
+		Mockito.verify(db).get(LocationManager.DATABASE_CLASS, "MY_ID");
+	}
 
-	public static void setUpMock() {
+	public static void setUpMock() throws ObjectNotFoundException {
 		db = Mockito.mock(Database.class);
 		m = new HashMap<>();
 		m.put(LocationManager.NAME_FIELD_NAME, "name");
@@ -117,9 +129,11 @@ public class LocationManagerTest {
 		List<Map<String, Object>> l = new ArrayList<>();
 		l.add(m);
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyMap())).thenReturn(l);
+		Mockito.when(db.get(Mockito.anyString(), Mockito.anyString())).thenReturn(m);
 		Mockito.when(db.put(Mockito.anyString(), Mockito.anyMap())).thenReturn("MY_ID2");
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyString(), Mockito.anyDouble(), Mockito.anyDouble(), Mockito.anyDouble())).thenReturn(l);
 		l1 = LocationManager.fromMap(m);
+		
 		
 		List<Review> lr = new ArrayList<>();
 		lr.add(new Review(l1,4,"hey",new UserProfile("alexa")));

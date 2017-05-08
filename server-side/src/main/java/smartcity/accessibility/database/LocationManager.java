@@ -72,8 +72,12 @@ public class LocationManager extends AbstractLocationManager {
 			m.put(TYPE_FIELD_NAME, locType);
 			m.put(SUB_TYPE_FIELD_NAME, locSubType);
 			List<Map<String, Object>> locs = db.get(DATABASE_CLASS, m);
-			if (locs.isEmpty())
+			if (locs.isEmpty()){
+				logger.info("no locations found for {}, {}, {}", coordinates,locType,locSubType);
 				return null;
+			}
+			if (locs.size() > 1)
+				logger.error("Multiple locations found with same id (coord, loctype and loc subtype) for {} , {} , {}", coordinates,locType,locSubType);
 			return locs.get(0).get(ID_FIELD_NAME).toString();
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
@@ -140,7 +144,16 @@ public class LocationManager extends AbstractLocationManager {
 	@Override
 	public Location getLocation(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType,
 			ICallback<Location> callback) {
-		// TODO Auto-generated method stub
+		Flowable<Location> res = Flowable.fromCallable(() -> {
+			String id = getId(coordinates,locType,locSubType, null);
+			if (id == null)
+				return null;
+			return fromMap(db.get(DATABASE_CLASS, id));
+		}).subscribeOn(Schedulers.io())
+		.observeOn(Schedulers.single());
+		if (callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);
 		return null;
 	}
 
