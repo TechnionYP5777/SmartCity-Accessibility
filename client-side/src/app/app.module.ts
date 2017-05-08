@@ -19,6 +19,7 @@ import {ComplexSearchPage} from '../pages/complex-search/complex-search';
 import {ComplexSearchService} from '../pages/complex-search/complexSearchService';
 import {SearchService} from '../pages/mapview/searchService';
 import {AddSearchQueryPage} from '../pages/addSearchQueryMenu/addsearchquerymenu';
+import {UserInformationService} from '../pages/user-page/userInformationService';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import {AddSearchQueryPage} from '../pages/addSearchQueryMenu/addsearchquerymenu
 	NavigationService,
 	AddReviewService,
 	SearchService,
-	ComplexSearchService
+	ComplexSearchService,
+	UserInformationService
   ]
 })
 export class AppModule {}

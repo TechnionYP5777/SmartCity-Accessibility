@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {AddSearchQueryPage} from '../addSearchQueryMenu/addsearchquerymenu';
 import { LoginService } from '../login/LoginService';
+import { UserInformationService } from './userInformationService';
 
 @Component({
   selector: 'page-user-page',
@@ -11,8 +12,8 @@ import { LoginService } from '../login/LoginService';
 export class UserPagePage {
   output :  string;
   UserName: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loginService : LoginService) {
-	  this.output = loginService.getToken();
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loginService : LoginService, public userInformationService : UserInformationService) {
+	  this.output = userInformationService.getUserName(loginService.getToken());
 	  this.UserName = "UserName";
   }
  
