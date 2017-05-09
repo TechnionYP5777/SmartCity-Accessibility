@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams, Events, AlertController } from 'ionic-angular';
 import { NavigationService } from './navigationService';
-import {MapviewPage} from '../mapview/mapview';
+import { MapviewPage } from '../mapview/mapview';
 import { LoginService } from '../login/LoginService';
 import { UserPagePage } from '../user-page/user-page';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -23,7 +23,7 @@ export class NavigationPage {
 		lat : '',
 		lng : ''
 	};
-    constructor(public navCtrl: NavController, public navParams: NavParams, public navigationService: NavigationService,public loginService : LoginService,public events: Events) {
+    constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController, public navigationService: NavigationService,public loginService : LoginService,public events: Events) {
 	    var token = window.sessionStorage.getItem('token');
 		this.isWork = token;
 		this.isLoggedin = this.loginService.isLoggedIn();
@@ -38,9 +38,27 @@ export class NavigationPage {
 		});
     }
 	startNavigation(){
-		this.navigationService.navigatee(this.srcLocation,this.dstLocation,this.minRating).subscribe(data => {
+		this.navigationService.navigatee(this.srcLocation,this.dstLocation,this.minRating).subscribe(
+		data => {
             this.events.publish('navigation:done', data.json());
-		});
+		}
+		, err => {
+		    this.handleError(err.json());
+		}
+		);
 		this.navCtrl.pop();
 	}
+	
+	presentAlert(str) {
+		let alert = this.alertCtrl.create({
+		  title: 'Alert',
+		  subTitle: str,
+		  buttons: ['OK']
+		});
+		alert.present();
+	}
+	
+	handleError(err) {
+		this.presentAlert("error is: "+err.error+ " message is: "+ err.message);
+    }
 }

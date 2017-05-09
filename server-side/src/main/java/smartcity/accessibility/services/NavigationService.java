@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.navigation.Navigation;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
@@ -25,9 +26,9 @@ public class NavigationService {
 			@RequestParam("srcLng") Double srcLng, @RequestParam("dstLat") Double dstLat,
 			@RequestParam("dstLng") Double dstLng,
 			@RequestParam("accessibilityThreshold") Integer accessibilityThreshold) {
-		if (!LogInService.isUserLoggedIn(token)) {
-			throw new UserIsNotLoggedIn();
-		}
+		
+		UserInfo userInfo = LogInService.getUserInfo(token);
+
 		Location source = new Location(new LatLng(srcLat, srcLng));
 		Location destination = new Location(new LatLng(dstLat, dstLng));
 		Latlng[] l;

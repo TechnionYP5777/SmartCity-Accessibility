@@ -29,8 +29,8 @@ public class AddSearchQueryService {
     public void addQuery(@RequestHeader("authToken") String token,
     		@RequestParam("query") String query, @RequestParam("queryName") String queryName, @RequestParam("querytype") String querytype){
 		
-		if (!LogInService.isUserLoggedIn(token))
-			throw new UserIsNotLoggedIn();
+		UserInfo userInfo = LogInService.getUserInfo(token);
+
 		
 		User u = getUserFromToken(token);
 		if (u == null)
