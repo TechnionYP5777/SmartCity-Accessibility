@@ -22,8 +22,8 @@ public class AddReviewService {
     		@RequestParam("review") String review,
     		@RequestParam("score") String score) {
 		
-		if (!LogInService.isUserLoggedIn(token))
-			throw new UserIsNotLoggedIn();
+		UserInfo userInfo = LogInService.getUserInfo(token);
+
 		
 		User u = getUserFromToken(token);
 		if (u == null)

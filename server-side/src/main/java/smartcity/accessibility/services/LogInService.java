@@ -9,6 +9,7 @@ import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
 import smartcity.accessibility.services.exceptions.SignUpFailed;
 import smartcity.accessibility.services.exceptions.UserDoesNotExistException;
+import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
 import smartcity.accessibility.socialnetwork.User;
 
 @Controller
@@ -42,7 +43,7 @@ public class LogInService {
 		return t;
 	}
 
-	static boolean isUserLoggedIn(String token) {
+	static UserInfo getUserInfo(String token) {
 		UserInfo userInfo = null;
 		try {
 			userInfo = Application.tokenToSession.get(token);
@@ -50,8 +51,8 @@ public class LogInService {
 			e.printStackTrace();
 		}
 		if (userInfo.getUser() == null) {
-			return false;
+			throw new UserIsNotLoggedIn();
 		}
-		return true;
+		return userInfo;
 	}
 }
