@@ -41,4 +41,18 @@ public class Helpfulness {
 	public Double helpfulness() {
 		return getAvgLikes();
 	}
+	
+	/*
+	 * these methods are added becuase without them serializing users is impossible
+	 */
+	
+	public int getlikes(){
+		return likes;
+	}
+	public int getdislikes(){
+		return dislikes;
+	}
+	public int getnumOfReviews(){
+		return numOfReviews;
+	}
 }

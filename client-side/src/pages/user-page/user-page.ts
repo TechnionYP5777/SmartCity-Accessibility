@@ -10,11 +10,14 @@ import { UserInformationService } from './userInformationService';
 })
 
 export class UserPagePage {
-  output :  string;
+  output :  any;
   UserName: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public loginService : LoginService, public userInformationService : UserInformationService) {
-	  this.output = "bwabwa";
-	  this.UserName = "UserName";
+	    this.userInformationService.getUserName().subscribe(data => {
+		this.output = data.name;
+	    this.UserName = data.name;
+		});
+	  
   }
  
   ionViewDidLoad() {
