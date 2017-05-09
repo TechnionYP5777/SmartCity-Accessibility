@@ -14,7 +14,7 @@ export class UserPagePage {
   UserName: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public loginService : LoginService, public userInformationService : UserInformationService) {
 	    this.userInformationService.getUserName().subscribe(data => {
-		this.output = data.name;
+		this.output = data.favouriteSearchQueries;
 	    this.UserName = data.name;
 		});
 	  
@@ -25,8 +25,10 @@ export class UserPagePage {
   }
   
   addNewSearchQuery(){
-	 this.output = "OMG!!!"; 
-	 console.log('this happened');
+	    this.userInformationService.getUserName().subscribe(data => {
+		this.output = data.favouriteSearchQueries;
+	    this.UserName = data.name;
+		});
   }
   
   showSearchQueries(){
