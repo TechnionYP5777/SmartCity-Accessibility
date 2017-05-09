@@ -59,6 +59,6 @@ export class NavigationPage {
 	}
 	
 	handleError(err) {
-        this.presentAlert("something went wrong :(");
+		this.presentAlert("error is: "+err.error+ " message is: "+ err.message);
     }
 }
