@@ -136,6 +136,18 @@ public class LocationManagerTest {
 		assertEquals(m.get(LocationManager.TYPE_FIELD_NAME), m1.get(LocationManager.TYPE_FIELD_NAME));
 		assertEquals(m.get(LocationManager.SUB_TYPE_FIELD_NAME), m1.get(LocationManager.SUB_TYPE_FIELD_NAME));
 	}
+	
+	@Test
+	@Category({ BranchTests.class, UnitTests.class})
+	public void testGetNonAccessibleLocationsInRadius(){
+		List<LatLng> ll = lm.getNonAccessibleLocationsInRadius(new LatLng(), new LatLng(), 3, null);
+		assertEquals(1, ll.size());
+		LatLng loc = ll.get(0);
+		assertEquals(1, (int)loc.getLat());
+		assertEquals(1, (int)loc.getLng());
+		ll = lm.getNonAccessibleLocationsInRadius(new LatLng(), new LatLng(), 5, null);
+		assertEquals(0, ll.size());
+	}
 
 	public static void setUpMock() throws ObjectNotFoundException {
 		db = Mockito.mock(Database.class);
@@ -143,7 +155,7 @@ public class LocationManagerTest {
 		m.put(LocationManager.NAME_FIELD_NAME, "name");
 		m.put(LocationManager.SUB_TYPE_FIELD_NAME, "Default");
 		m.put(LocationManager.TYPE_FIELD_NAME, "Coordinate");
-		m.put(LocationManager.LOCATION_FIELD_NAME, new ParseGeoPoint(0,0));
+		m.put(LocationManager.LOCATION_FIELD_NAME, new ParseGeoPoint(1,1));
 		m.put(LocationManager.ID_FIELD_NAME, "MY_ID");
 		List<Map<String, Object>> l = new ArrayList<>();
 		l.add(m);

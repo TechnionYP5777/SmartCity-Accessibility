@@ -28,6 +28,7 @@ public class BestReviews {
 	
 	public BestReviews(Location l) {
 		this.l = l;
+		this.n = DEFAULT;
 	}
 	
 	public class HelpfulnessCompare implements Comparator<Review> {
