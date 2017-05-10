@@ -217,46 +217,6 @@ public class Location {
 	public LocationSubTypes getLocationSubType() {
 		return locationSubType;
 	}
-
-	/**
-	 * turns string to enum LocationTypes
-	 * 
-	 * @author assaflu
-	 * @param ¢
-	 * @return
-	 */
-	public static LocationTypes stringToEnumTypes(String ¢) {
-		if (¢ == null)
-			return LocationTypes.Street;
-		switch (¢) {
-		case "Coordinate":
-			return LocationTypes.Coordinate;
-		case "Facility":
-			return LocationTypes.Facility;
-		case "Street":
-			return LocationTypes.Street;
-		}
-		return LocationTypes.Street; // default return
-	}
-
-	/**
-	 * trun string to enum LocationSubTypes
-	 * 
-	 * @author assaflu
-	 * @param ¢
-	 * @return
-	 */
-	public static LocationSubTypes stringToEnumSubTypes(String ¢) {
-		switch (¢) {
-		case "Bar":
-			return LocationSubTypes.Bar;
-		case "Hotel":
-			return LocationSubTypes.Hotel;
-		case "Restaurant":
-			return LocationSubTypes.Restaurant;
-		}
-		return LocationSubTypes.Default; // default return
-	}
 	
 	public enum LocationSubTypes {
 		Restaurant, Hotel, Bar, Default

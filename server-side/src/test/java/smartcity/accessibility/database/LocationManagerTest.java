@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.parse4j.ParseGeoPoint;
 
@@ -118,6 +119,23 @@ public class LocationManagerTest {
 		assertEquals(m.get(LocationManager.SUB_TYPE_FIELD_NAME), mres.get(LocationManager.SUB_TYPE_FIELD_NAME));
 		Mockito.verify(db).get(LocationManager.DATABASE_CLASS, "MY_ID");
 	}
+	
+	@Test
+	@Category({ BranchTests.class, UnitTests.class })
+	public void testUpdateLocation() {
+		Boolean res = lm.updateLocation(l1, null);
+		assertEquals(true, res);
+		@SuppressWarnings("unchecked")
+		ArgumentCaptor<Map<String,Object>> cp =  ArgumentCaptor.forClass(Map.class);
+		Mockito.verify(db).update(Mockito.eq(LocationManager.DATABASE_CLASS),
+												Mockito.eq("MY_ID"),
+												cp.capture());
+		Map<String, Object> m = cp.getValue();
+		Map<String, Object> m1 = LocationManager.toMap(l1);
+		assertEquals(m.get(LocationManager.NAME_FIELD_NAME), m1.get(LocationManager.NAME_FIELD_NAME));
+		assertEquals(m.get(LocationManager.TYPE_FIELD_NAME), m1.get(LocationManager.TYPE_FIELD_NAME));
+		assertEquals(m.get(LocationManager.SUB_TYPE_FIELD_NAME), m1.get(LocationManager.SUB_TYPE_FIELD_NAME));
+	}
 
 	public static void setUpMock() throws ObjectNotFoundException {
 		db = Mockito.mock(Database.class);
@@ -134,7 +152,8 @@ public class LocationManagerTest {
 		Mockito.when(db.put(Mockito.anyString(), Mockito.anyMap())).thenReturn("MY_ID2");
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyString(), Mockito.anyDouble(), Mockito.anyDouble(), Mockito.anyDouble())).thenReturn(l);
 		l1 = LocationManager.fromMap(m);
-		
+		Mockito.when(db.update(Mockito.anyString(), Mockito.anyString(), Mockito.anyMap())).thenReturn(true);
+		//Mockito.when(db.update(LocationManager.DATABASE_CLASS, "MY_ID", LocationManager.toMap(l1))).thenReturn(true);
 		
 		List<Review> lr = new ArrayList<>();
 		lr.add(new Review(l1,4,"hey",new UserProfile("alexa")));

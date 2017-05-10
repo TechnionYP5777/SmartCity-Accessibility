@@ -187,7 +187,6 @@ public class LocationManager extends AbstractLocationManager {
 			List<Location> locList = getLocationsAround(getCenter(source, destination),
 														distance(source, destination),
 														null);
-			
 			return locList.stream()
 							.map(l -> new BestReviews(l))
 							.filter(br -> br.getTotalRatingByAvg() >= accessibilityThreshold)
@@ -198,7 +197,7 @@ public class LocationManager extends AbstractLocationManager {
 		if (callback == null)
 			return res.blockingFirst();
 		res.subscribe(callback::onFinish, Throwable::printStackTrace);
-		return null;
+		return new ArrayList<>();
 	}
 
 	private LatLng getCenter(LatLng p1, LatLng p2) {
