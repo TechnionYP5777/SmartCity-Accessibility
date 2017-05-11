@@ -38,13 +38,17 @@ export class MapviewPage {
     }
   
 	addMarker(LatLngArr){
-	 for (var i = 0; i < LatLngArr.length; i++) {
-          var coords = LatLngArr[i];
-          var latLng = new google.maps.LatLng(coords.lat,coords.lng);
-          var marker = new google.maps.Marker({
-            position: latLng,
-            map: this.map
-          });
+	    for (var i = 0; i < LatLngArr.length; i++) {
+            var coords = LatLngArr[i];
+            var latLng = new google.maps.LatLng(coords.lat,coords.lng);
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: this.map
+            });
+		    google.maps.event.addListener(marker,'click',(event)=>{ 
+			    let clickMenu = this.modalCtrl.create(MapClickMenuPage,{latlng : event.latLng});
+			    clickMenu.present();
+		    });
         }
     }
 	
