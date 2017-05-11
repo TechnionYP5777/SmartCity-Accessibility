@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Events, AlertController } from 'ionic-angular';
 import { NavigationService } from './navigationService';
-import { MapviewPage } from '../mapview/mapview';
 import { LoginService } from '../login/LoginService';
 import { UserPagePage } from '../user-page/user-page';
 import { Geolocation } from '@ionic-native/geolocation';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-navigation',
@@ -15,6 +15,8 @@ export class NavigationPage {
     isLoggedin : any;
 	geolocation: Geolocation;
 	minRating: any;
+	userProfile = UserPagePage;
+	loginPage = LoginPage;
 	srcLocation = {
 		lat : '',
 		lng : ''

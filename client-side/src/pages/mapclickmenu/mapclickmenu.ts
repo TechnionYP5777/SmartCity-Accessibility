@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
-import { App, ViewController } from 'ionic-angular';
+import { NavParams, ModalController,App, ViewController } from 'ionic-angular';
 import { AddReviewPage } from '../add-review/add-review';
 import { NavigationPage } from '../navigation/navigation';
 import { LocationListPage } from '../location-list/location-list';

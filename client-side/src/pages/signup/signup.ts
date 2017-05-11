@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams,AlertController } from 'ionic-angular';
-import {LoginService} from '../login/LoginService'; 
+import { NavController, AlertController } from 'ionic-angular';
+import { LoginService } from '../login/LoginService'; 
  
 
 @Component({
