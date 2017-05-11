@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { App, ViewController } from 'ionic-angular';
 import { AddReviewPage } from '../add-review/add-review';
 import { NavigationPage } from '../navigation/navigation';
+import { LocationListPage } from '../location-list/location-list';
 
 @Component({
   selector: 'page-mapclickmenu',
@@ -12,7 +13,7 @@ import { NavigationPage } from '../navigation/navigation';
 export class MapClickMenuPage {
   lat : any;
   lng : any;
-  constructor(public viewCtrl: ViewController,public appCtrl: App, public navParams: NavParams) {
+  constructor(public viewCtrl: ViewController,public appCtrl: App, public navParams: NavParams,public modalCtrl: ModalController) {
 	let temp = navParams.get('latlng');
 	this.lat = temp.lat();
 	this.lng = temp.lng();
@@ -25,6 +26,12 @@ export class MapClickMenuPage {
   addReview(){
 	this.viewCtrl.dismiss();
     this.appCtrl.getRootNav().push(AddReviewPage,{lat:this.lat,lng:this.lng});
+  }
+  
+  nearbyLocations() {
+	this.viewCtrl.dismiss();
+	let clickMenu = this.modalCtrl.create(LocationListPage,{lat:this.lat,lng:this.lng});
+	clickMenu.present();
   }
   
   navigateToLocation(){

@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController,ModalController, Events,AlertController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import {MapClickMenuPage} from '../mapclickmenu/mapclickmenu';
+import { MapClickMenuPage } from '../mapclickmenu/mapclickmenu';
 import { LoginService } from '../login/LoginService';
 import { UserPagePage } from '../user-page/user-page'; 
 import { LoginPage } from '../login/login';
