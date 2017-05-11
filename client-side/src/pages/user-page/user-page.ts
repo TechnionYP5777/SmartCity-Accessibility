@@ -10,11 +10,14 @@ import { UserInformationService } from './userInformationService';
 })
 
 export class UserPagePage {
-  output :  string;
+  output :  any;
   UserName: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public loginService : LoginService, public userInformationService : UserInformationService) {
-	  this.output = "bwabwa";
-	  this.UserName = "UserName";
+	    this.userInformationService.getUserName().subscribe(data => {
+		this.output = data.favouriteSearchQueries;
+	    this.UserName = data.name;
+		});
+	  
   }
  
   ionViewDidLoad() {
@@ -22,8 +25,10 @@ export class UserPagePage {
   }
   
   addNewSearchQuery(){
-	 this.output = "OMG!!!"; 
-	 console.log('this happened');
+	    this.userInformationService.getUserName().subscribe(data => {
+		this.output = data.favouriteSearchQueries;
+	    this.UserName = data.name;
+		});
   }
   
   showSearchQueries(){

@@ -9,7 +9,11 @@ export class UserInformationService {
         this.http = http;
     }
 
-	getUserName(token) {
-           return this.http.get(Constants.serverAddress +'/userInfo/name/'+token).map(res=>res.json());
+	getUserName() {
+		var token = window.sessionStorage.getItem('token');
+		var headers = new Headers();
+		headers.append('Content-Type', 'application/x-www-form-urlencoded');
+		headers.append('authToken',token);
+		return this.http.get(Constants.serverAddress +'/userInfo/name', {headers: headers}).map(res=>res.json());
 	}
 }
