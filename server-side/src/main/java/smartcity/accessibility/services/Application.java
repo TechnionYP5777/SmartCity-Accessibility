@@ -15,7 +15,9 @@ import jersey.repackaged.com.google.common.cache.LoadingCache;
 import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
-
+/**
+ * @author yael
+ */
 @SpringBootApplication
 public class Application {
 	

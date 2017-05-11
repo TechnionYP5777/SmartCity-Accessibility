@@ -2,11 +2,12 @@ package smartcity.accessibility.services;
 
 import smartcity.accessibility.socialnetwork.User;
 
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
+/**
+ * @author yael
+ */
 public class Token {
 	private String token;
 	private Token(String token) {

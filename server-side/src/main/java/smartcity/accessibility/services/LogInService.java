@@ -11,7 +11,9 @@ import smartcity.accessibility.services.exceptions.SignUpFailed;
 import smartcity.accessibility.services.exceptions.UserDoesNotExistException;
 import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
 import smartcity.accessibility.socialnetwork.User;
-
+/**
+ * @author yael
+ */
 @Controller
 public class LogInService {
 
