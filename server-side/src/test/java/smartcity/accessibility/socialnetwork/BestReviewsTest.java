@@ -13,13 +13,13 @@ import org.junit.experimental.categories.Category;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
+import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 
 /**
  * @author Koral Chapnik
  */
-
 public class BestReviewsTest {
 	private static User u1;
 	private static User u2;
@@ -64,15 +64,33 @@ public class BestReviewsTest {
 		br.setN(2);
 		mostRated = br.getMostRated();
 		assertEquals(mostRated.size(), 2);
-		assert mostRated.contains(r1);
-		assert mostRated.contains(r3);
+		assert mostRated.get(0).getUser().getUsername().equals("Koral");
+		assert mostRated.get(1).getUser().getUsername().equals("Simba");
 		assertEquals(br.getTotalRatingByAvg(), r1.getRating().getScore() + r3.getRating().getScore() / 2);
 	}
 
 	@Test
 	@Category(UnitTests.class)
-	public void getTotalRatingTest() {
-		assertEquals((new BestReviews(3, l)).getTotalRatingByAvg(),
-				(r1.getRating().getScore() + r2.getRating().getScore() + r3.getRating().getScore()) / 3);
+	public void checkAllTest() {
+		try {
+			r1.upvote(u2);
+			r1.upvote(u3);
+			r2.downvote(u3);
+		} catch (UnauthorizedAccessException e) {
+			fail("shouldn't fail");
+		}
+		BestReviews br = new BestReviews(2, l);
+		List<Review> mostRated = br.getMostRated();
+		assertEquals(mostRated.get(0).getRating().getScore(), r1.getRating().getScore());
+		assertEquals(br.getTotalRatingByAvg(), 2);
+		
+		//now u1 has helpfulness of 1
+		Review r4 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1.getProfile());
+		assertEquals(br.getTotalRatingByAvg(), 3);
+		
+		br = new BestReviews(3, l);
+		assertEquals(br.getTotalRatingByAvg(), 3);
 	}
+	
 }
+

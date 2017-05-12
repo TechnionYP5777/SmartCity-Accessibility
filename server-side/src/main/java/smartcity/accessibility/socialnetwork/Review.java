@@ -23,6 +23,7 @@ public class Review {
 	private String content;
 	private boolean isPinned;
 
+
 	
 	private List<ReviewComment> comments = new ArrayList<>();
 

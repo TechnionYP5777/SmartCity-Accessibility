@@ -78,12 +78,23 @@ public class BestReviews {
 		for (Review r : $) {
 			double h = r.getUser().getAvgRating();
 			double rating = r.getRating().getScore();
+			if (h < 0) {
+				// TODO : Koral, review not long holds the user, instead the UserProfile
+				// I've commented out the previous code, why is the privilege level of the user who wrote the review important?
+				// Did you mean to check whether the r is pinned or not?
+				// -- Alex
+				if (!r.isPinned())//(!Privilege.pinPrivilegeLevel(r.getUser()))
+					continue;
+				h = 1;
+			}
 			if (h == 0) 
 				h++;
 			sum += h * rating;
 			totalhelpfulness += h;
 		}
-		return  (int) ( sum / totalhelpfulness);
+		
+		int res = (int) ( sum / totalhelpfulness);	
+		return  res <= 0 ? Score.getMinScore() : res ;
 	}
 	
 	/**

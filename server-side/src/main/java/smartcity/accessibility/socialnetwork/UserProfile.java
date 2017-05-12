@@ -7,13 +7,11 @@ package smartcity.accessibility.socialnetwork;
 public class UserProfile {
 
 	private final String username;
-	private int rating;
-	private int numOfReviews;
+	private Helpfulness hlp;
 	
 	public UserProfile(String username){
 		this.username = username;
-		this.rating = 0;
-		this.numOfReviews = 0;
+		hlp = new Helpfulness();
 	}
 
 	public String getUsername() {
@@ -21,46 +19,44 @@ public class UserProfile {
 	}
 
 	public int getRating() {
-		return rating;
+		return hlp.getRating();
 	}
 
-	public void setRating(int rating) {
-		this.rating = rating;
+	public void setHelpfulness(Helpfulness h) {
+		this.hlp = h;
 	}
 
 	public int getNumOfReviews() {
-		return numOfReviews;
-	}
-
-	public void setNumOfReviews(int numOfReviews) {
-		this.numOfReviews = numOfReviews;
+		return hlp.getNumOfReviews();
 	}
 	
 	public void upvote(){
-		rating++;
+		hlp.upvote();
 	}
 	
 	public void downvote(){
-		rating--;
+		hlp.downvote();
 	}
 	
 	public void addReview(){
-		numOfReviews++;
+		hlp.addReview();
 	}
 	
 	public void removeReview(){
-		numOfReviews--;
+		hlp.removeReview();
 	}
 	
 	public double getAvgRating(){
-		if(numOfReviews == 0)
-			return 0;
-		return rating/(double)numOfReviews;
+		return hlp.helpfulness();
 	}
 
 	@Override
 	public String toString() {
 		return "UserProfile [username=" + username + "]";
+	}
+
+	public Helpfulness getHelpfulness() {
+		return hlp;
 	}
 	
 	

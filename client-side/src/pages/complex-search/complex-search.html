@@ -1,0 +1,67 @@
+<!--
+<!--
+  Generated template for the ComplexSearch page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-header>
+  <ion-navbar color=color4>
+    <ion-title>
+      Complex Search
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content class="try">
+  <ion-list>
+    <ion-item>
+      <ion-label>  
+		<ion-icon ios="ios-restaurant" md="md-restaurant"></ion-icon>
+		Type
+	  </ion-label>
+      <ion-select [(ngModel)]="type">
+        <ion-option value="restaurant">Restaurant</ion-option>
+        <ion-option value="caffe">Caffe</ion-option>
+        <ion-option value="hotel">Hotel</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+		<ion-icon name="star"></ion-icon>
+		Minimum Rating
+	  </ion-label>
+      <ion-select [(ngModel)]="minRating">
+        <ion-option>1</ion-option>
+        <ion-option>2</ion-option>
+		<ion-option>3</ion-option>
+		<ion-option>4</ion-option>
+		<ion-option>5</ion-option>
+      </ion-select>
+    </ion-item>
+	
+	<ion-item>
+		<ion-input [(ngModel)] = "radius" type="number" placeholder="Radius"></ion-input>
+    </ion-item>
+
+	<ion-item>
+		<ion-input [(ngModel)] = "initLoc"  type="search" placeholder="Initial Location"></ion-input>
+	</ion-item>
+
+	
+	<ion-item>
+      <ion-label>Use my current location</ion-label>
+      <ion-checkbox color="danger" checked="false"></ion-checkbox>
+    </ion-item>
+	
+	<button ion-button color="brown" icon-left large full (click)="callComplexSearch(type, radius, initLoc, minRating)">
+      <ion-icon name='search'></ion-icon>
+      Search
+    </button>
+	{{output}}
+  </ion-list>
+</ion-content>

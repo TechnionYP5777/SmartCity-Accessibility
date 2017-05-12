@@ -1,3 +1,4 @@
+
 package smartcity.accessibility.database;
 
 import static org.junit.Assert.assertEquals;

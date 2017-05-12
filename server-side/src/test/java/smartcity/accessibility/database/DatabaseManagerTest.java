@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assume;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -31,6 +32,7 @@ import smartcity.accessibility.categories.UnitTests;
  * @author KaplanAlexander
  *
  */
+@Ignore
 public class DatabaseManagerTest {
 
 	public static String testParseClass = "DatabaseManagerTestClass";

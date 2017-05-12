@@ -1,0 +1,38 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>navigation</ion-title>
+	<ion-buttons end>
+		<button ion-button *ngIf="!isLoggedin" [navPush]="loginPage">
+			Login
+		</button>
+		<button ion-button *ngIf="isLoggedin" [navPush]="userProfile">
+			User profile
+		</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding  class="navigation">
+	<ion-list>
+		<ion-list-header>
+		  {{isWork}},{{ll}}
+		</ion-list-header>
+    </ion-list>
+	 <ion-item>
+      <ion-label>
+		<ion-icon name="star"></ion-icon>
+		Minimum Rating
+	  </ion-label>
+      <ion-select [(ngModel)]="minRating">
+        <ion-option>1</ion-option>
+        <ion-option>2</ion-option>
+		<ion-option>3</ion-option>
+		<ion-option>4</ion-option>
+		<ion-option>5</ion-option>
+      </ion-select>
+    </ion-item>
+	<button ion-button (click)="startNavigation()">startNavigation</button>
+</ion-content>

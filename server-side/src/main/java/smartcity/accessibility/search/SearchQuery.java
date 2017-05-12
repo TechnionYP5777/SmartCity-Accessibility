@@ -28,7 +28,7 @@ import smartcity.accessibility.mapmanagement.LocationBuilder;
  */
 public class SearchQuery {
 	private static final String DefaultQueryName = null;
-	private List<Location> places; // the nearby places result
+	public List<Location> places; // the nearby places result
 	public enum SearchStage {
 		NotRunning, Running, Done, Failed;
 
@@ -112,6 +112,16 @@ public class SearchQuery {
 		return isAdress ? null : typeSearch(initLocation, radius);
 	}
 
+	protected SearchQueryResult Search(String initLocation, double radius) throws illigalString, InterruptedException {
+		MapView mapView1 = JxMapsFunctionality.getMapView();
+        SearchQuery s1 = adressSearch(initLocation);        
+        JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView1);        
+        SearchQueryResult sqr1= s1.SearchByAddress(mapView1);        
+		s1.waitOnSearch();     
+		return isAdress ? null : typeSearch(sqr1.getLocations().get(0), radius);
+	}
+	
+	
 	private SearchQueryResult typeSearch(Location initLocation, double radius) {
 		SetSearchStatus(SearchStage.Running);
 		List<String> kindsOfLocations = new ArrayList<String>();
@@ -182,6 +192,10 @@ public class SearchQuery {
 		return Search(initLocation, radius);
 	}
 
+	public SearchQueryResult searchByType(String initLocation, double radius) throws illigalString, InterruptedException {
+		return Search(initLocation, radius);
+	}
+	
 	@Override
 	public String toString() {
 		return Boolean.toString(isAdress) + thisIsTheStringSplitter + queryString + thisIsTheStringSplitter + this.QueryName;

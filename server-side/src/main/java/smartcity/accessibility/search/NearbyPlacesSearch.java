@@ -20,6 +20,7 @@ import smartcity.accessibility.mapmanagement.LocationBuilder;
  * @author Koral Chapnik
  */
 public class NearbyPlacesSearch {
+	
 	/**
 	 * This method returns the nearby places according to the following parameters:
 	 * @param v - the mapView
@@ -56,7 +57,5 @@ public class NearbyPlacesSearch {
 		});
 	
 	}
-	
-
 	
 }

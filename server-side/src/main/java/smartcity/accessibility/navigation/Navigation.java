@@ -13,7 +13,6 @@ import javax.ws.rs.core.Response;
 
 import com.teamdev.jxmaps.LatLng;
 
-import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
@@ -44,6 +43,18 @@ public abstract class Navigation {
 		for (int k = 0, ¢ = 0; ¢ < shapePointsArr.length - 1; ¢ += 2)
 			$[k++] = (new LatLng(shapePointsArr[¢], shapePointsArr[¢ + 1]));
 		return $;
+	}
+	
+	public static Latlng[] getRoute(Location source, Location destination, Integer accessibilityThreshold) throws CommunicationFailed{
+		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessibilityThreshold);
+		Latlng from = new Latlng(source.getCoordinates().getLat(), source.getCoordinates().getLng()),
+				to = new Latlng(destination.getCoordinates().getLat(), destination.getCoordinates().getLng());
+		Route route = getRouteFromMapQuest(from, to, segmentsToAvoid);
+		Double[] shapePointsArr = route.getShape().getShapePoints();
+		Latlng[] latlng = new Latlng[shapePointsArr.length / 2];
+		for (int k = 0, ¢ = 0; ¢ < shapePointsArr.length - 1; ¢ += 2)
+			latlng[k++] = (new Latlng(shapePointsArr[¢], shapePointsArr[¢ + 1]));
+		return latlng;
 	}
 
 	public static Route getRouteFromMapQuest(Latlng from, Latlng to, List<MapSegment> segmentsToAvoid)
@@ -76,9 +87,12 @@ public abstract class Navigation {
 
 	private static List<MapSegment> getSegmentsToAvoid(Location source, Location destination,
 			Integer accessibilityThreshold) throws CommunicationFailed {
-		List<LatLng> locationsToAvoid = AbstractLocationManager.instance().getNonAccessibleLocationsInRadius(
-				source.getCoordinates(), destination.getCoordinates(), accessibilityThreshold, null);
-		List<MapSegment> $ = new ArrayList<MapSegment>();
+		// TODO : Yael, is this what is supposed to be here?  -- Alex
+		//List<LatLng> locationsToAvoid = AbstractLocationManager.instance().getNonAccessibleLocationsInRadius(
+		//		source.getCoordinates(), destination.getCoordinates(), accessibilityThreshold, null);
+
+		List<LatLng> locationsToAvoid = new ArrayList<>();
+		List<MapSegment> $ = new ArrayList<>();
 		for (LatLng ¢ : locationsToAvoid)
 			$.add(getMapSegmentOfLatLng(¢.getLat(), ¢.getLng()));
 		return $;

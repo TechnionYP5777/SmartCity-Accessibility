@@ -3,6 +3,7 @@ package smartcity.accessibility.socialnetwork;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -10,6 +11,7 @@ import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 
+@Ignore
 public class DeleteReviewsTest {
 	User admin, user, defaultuser;
 	Location location;

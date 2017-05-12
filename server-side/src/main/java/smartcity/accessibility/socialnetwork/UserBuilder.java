@@ -95,14 +95,13 @@ public class UserBuilder {
 			return null;
 		User u = new User(username, password, privilege);
 		for(SearchQuery sq : queries){
-			u.addQuery(sq, sq.getName());
+			u.addSearchQuery(sq, sq.getName());
 		}
 		if (userProfile != null){
-			u.getProfile().setNumOfReviews(userProfile.getNumOfReviews());
-			u.getProfile().setRating(userProfile.getRating());
+			u.getProfile().setHelpfulness(userProfile.getHelpfulness());
 		} else {
-			u.getProfile().setNumOfReviews(numReviews);
-			u.getProfile().setRating(rating);
+			u.getProfile().getHelpfulness().setNumOfReviews(numReviews);
+			u.getProfile().getHelpfulness().setRating(rating);
 		}
 		u.setPrivilegeLevel(privilege);
 		return u;

@@ -70,9 +70,8 @@ public class User {
 		return privilegeLevel;
 	}
 	
-	public void addQuery(SearchQuery query, String queryName){
-		query.RenameSearchQuery(queryName);
-		favouriteSearchQueries.add(query);
+	public void addSearchQuery(SearchQuery sq, String QueryName){
+		favouriteSearchQueries.add(sq.RenameSearchQuery(QueryName));
 	}
 
 	public String getPassword() {

@@ -45,8 +45,8 @@ public class UserProfileManager extends AbstractUserProfileManager {
 
 	public static UserProfile fromMap(Map<String, Object> m) {
 		UserProfile u = new UserProfile(m.get(USERNAME_FIELD).toString());
-		u.setRating((int) m.get(RATING_FIELD));
-		u.setNumOfReviews((int) m.get(NUM_OF_REVIEWS_FIELD));
+		u.getHelpfulness().setRating((int) m.get(RATING_FIELD));
+		u.getHelpfulness().setNumOfReviews((int) m.get(NUM_OF_REVIEWS_FIELD));
 		logger.info("got review with username {} raintg {} numOfReviews {}" , m.get(USERNAME_FIELD), m.get(RATING_FIELD), m.get(NUM_OF_REVIEWS_FIELD));
 		return u;
 	}
