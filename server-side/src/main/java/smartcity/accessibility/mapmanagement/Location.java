@@ -7,17 +7,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.parse4j.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.teamdev.jxmaps.LatLng;
 
-import smartcity.accessibility.database.AbstractReviewManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.socialnetwork.BestReviews;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
-import smartcity.accessibility.socialnetwork.User.Privilege;
-import smartcity.accessibility.socialnetwork.UserProfile;
 
 /**
  * @author Koral Chapnik
@@ -25,7 +24,7 @@ import smartcity.accessibility.socialnetwork.UserProfile;
 
 public class Location {
 
-	
+	private static Logger logger = LoggerFactory.getLogger(Location.class);
 
 	private ArrayList<Review> reviews;
 	private LatLng coordinates;
@@ -105,28 +104,11 @@ public class Location {
 	}
 
 	/**
-	 * @author Kolikant
-	 * @throws ParseException
-	 */
-	public void addReview(UserProfile u, int rating, String review) throws ParseException {
-		actuallyAddReview(new Review(this, rating, review, u));
-	}
-
-	/**
 	 * @author ArthurSap
 	 * @throws ParseException
 	 */
 	public void addReview(Review ¢) throws ParseException {
-		actuallyAddReview(¢);
-	}
-
-	/**
-	 * @author ArthurSap
-	 * @throws ParseException
-	 */
-	private void actuallyAddReview(Review ¢) throws ParseException {
 		reviews.add(¢);
-		AbstractReviewManager.instance().uploadReview(¢, null);
 	}
 
 	private Review getReview(Review ¢) {
@@ -176,15 +158,10 @@ public class Location {
 	 * @throws UnauthorizedAccessException
 	 *             - if the user isn't an admin or higher
 	 */
-	public void deleteReview(User u, Review r) throws UnauthorizedAccessException {
+	public void deleteReview(Review r) {
 		if (checkExistence(r) == null)
 			return;
-
-		if (!Privilege.deletePrivilegeLevel(u) && !u.equals(r.getUser()))
-			throw (new UnauthorizedAccessException(Privilege.minDeleteLevel()));
-
 		reviews.remove(r);
-		AbstractReviewManager.instance().deleteReview(r, null);
 	}
 
 	/**
@@ -198,8 +175,7 @@ public class Location {
 		Review $ = getReview(¢);
 		if ($ != null)
 			return $;
-		System.out.print("ERROR! This review doesn't exist in current location!");
-		System.out.println("\tCurrent Location: " + this.coordinates);
+		logger.error("This review doesn't exist in current location! {}", this.coordinates);
 		return null;
 	}
 

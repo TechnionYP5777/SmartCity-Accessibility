@@ -111,6 +111,12 @@ public class User {
 		favouriteSearchQueries = favouriteQueries;
 	}
 	
+	public boolean canDeleteReview(Review r){
+		if (r.getUser().getUsername().equals(getUsername()))
+			return true;
+		return Privilege.deletePrivilegeLevel(this) ? true : false;
+	}
+	
 	@Override
 	public boolean equals(Object ¢) {
 		if (¢ == this)

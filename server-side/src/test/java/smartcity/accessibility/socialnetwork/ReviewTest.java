@@ -52,7 +52,7 @@ public class ReviewTest {
 	@Test
 	@Category(UnitTests.class)
 	public void getUserTest() {
-		assertEquals(r1.getUser(), "Koral");
+		assertEquals(r1.getUser().getUsername(), "Koral");
 	}
 	
 	@Test
