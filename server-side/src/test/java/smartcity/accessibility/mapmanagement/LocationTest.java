@@ -12,7 +12,6 @@ import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.DatabaseManager;
-import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
@@ -40,11 +39,10 @@ public class LocationTest {
 		r2 = new Review(l, 5, "middle accessibility level", u2.getProfile());
 		r3 = new Review(l, Score.getMaxScore(), "high accessibility level", u3.getProfile());
 		r4 = new Review(l,2, "high accessibility level", u3.getProfile());
-		try {
-			r4.pin(u4);
-		} catch (UnauthorizedAccessException e) {
-			fail("shouldnt fail");
-		}
+		if (u4.canPinReview())
+			r4.setPinned(true);
+		else
+			fail("shouldn't fail");
 		l.addReview(r1);
 		l.addReview(r2);
 		l.addReview(r3);

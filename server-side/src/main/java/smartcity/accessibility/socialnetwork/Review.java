@@ -52,46 +52,6 @@ public class Review {
 		isPinned = pinned;
 	}
 
-	/**
-	 * This method pins the review.
-	 * Only admin is allowed to use it
-	 * @param ¢ - the user who wants to pin the review
-	 * @throws UnauthorizedAccessException - if the user is not an admin
-	 */
-	public void pin(User ¢) throws UnauthorizedAccessException {
-		checkPermissions(¢);
-		this.isPinned = true;
-	}
-	
-	/**
-	 * This method pins the review.
-	 * Only admin is allowed to use it
-	 * @param ¢ - the user who wants to pin the review
-	 * @throws UnauthorizedAccessException - if the user is not an admin
-	 */
-	public void unPin(User ¢) throws UnauthorizedAccessException {
-		checkPermissions(¢);
-		this.isPinned = false;
-	}
-
-	private void checkPermissions(User ¢) throws UnauthorizedAccessException {
-		if (!isAccessAllowed(¢))
-			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
-	}
-
-	/**
-	 * implemented for the DB, hence only administrator can performs
-	 */
-	public void locationSet(User u, Location l) throws UnauthorizedAccessException {
-		if (!isAccessAllowed(u))
-			throw (new UnauthorizedAccessException(Privilege.minPinLevel()));
-		this.location = l;
-	}
-
-	private boolean isAccessAllowed(User ¢) {
-		return Privilege.pinPrivilegeLevel(¢);
-	}
-
 	public boolean isPinned() {
 		return this.isPinned;
 	}
@@ -117,7 +77,6 @@ public class Review {
 	public void upvote(User u) throws UnauthorizedAccessException {
 		comment(u, ReviewComment.POSITIVE_RATING);
 		u.getProfile().upvote();
-		//TODO: update the DB
 	}
 
 	/**
@@ -127,7 +86,6 @@ public class Review {
 	public void downvote(User u) throws UnauthorizedAccessException {
 		comment(u, ReviewComment.NEGATIVE_RATING);
 		u.getProfile().downvote();
-		//TODO: update the DB
 	}
 
 	/**

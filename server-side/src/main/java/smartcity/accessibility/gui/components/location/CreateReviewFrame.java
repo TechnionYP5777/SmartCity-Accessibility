@@ -12,8 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import org.parse4j.ParseException;
-
+import smartcity.accessibility.database.AbstractReviewManager;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.components.RatingStar;
 import smartcity.accessibility.mapmanagement.Location;
@@ -86,11 +85,10 @@ public class CreateReviewFrame implements MouseListener {
 	public void mouseClicked(MouseEvent arg0) {
 		if (arg0.getSource() != btnCreate)
 			return;
-		try {
-			location.addReview(new Review(location, rs.getRate(), textArea.getText(), Application.appUser.getProfile()));
-		} catch (ParseException ¢) {
-			¢.printStackTrace();
-		}
+		Review r = new Review(location, rs.getRate(), textArea.getText(), Application.appUser.getProfile());
+		AbstractReviewManager.instance().uploadReview(r, null);
+		location.addReview(r);
+
 		frame.dispose();
 
 	}

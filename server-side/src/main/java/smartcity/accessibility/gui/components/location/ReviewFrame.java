@@ -209,14 +209,9 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
 		if (arg0.getSource() == chckbxPinned)
-			try {
-				if (chckbxPinned.isSelected())
-					review.pin(Application.appUser);
-				else
-					review.unPin(Application.appUser);
-			} catch (UnauthorizedAccessException ¢) {
-				¢.printStackTrace();
-			}
+			if (Application.appUser.canPinReview())
+				review.setPinned(chckbxPinned.isSelected());
+
 
 	}
 }

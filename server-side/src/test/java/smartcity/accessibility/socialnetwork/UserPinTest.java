@@ -1,12 +1,12 @@
 package smartcity.accessibility.socialnetwork;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import smartcity.accessibility.categories.UnitTests;
-import smartcity.accessibility.database.DatabaseManager;
-import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 
@@ -17,7 +17,6 @@ public class UserPinTest {
 
 	@Before
 	public void setUp() throws Exception {
-		DatabaseManager.initialize();
 		defaultuser = UserBuilder.DefaultUser();
 		user = UserBuilder.RegularUser("RegularUser", "", "");
 		admin = UserBuilder.Admin("Admin", "", "");
@@ -34,44 +33,31 @@ public class UserPinTest {
 
 	@Test
 	@Category(UnitTests.class)
-	public void testPinUnPin() throws UnauthorizedAccessException {
-		location.pinReview(admin, review);
+	public void testPinUnPin() {
+		if(admin.canPinReview())
+			review.setPinned(true);
 		assert location.getPinnedReviews().contains(review);
 		assert location.getPinnedReviews().size() == 1;
 		assert location.getNotPinnedReviews().isEmpty();
 
-		// Unpin review
-		location.unpinReview(admin, review);
+		if(admin.canPinReview())
+			review.setPinned(false);
 		assert location.getNotPinnedReviews().contains(review);
 		assert location.getNotPinnedReviews().size() == 1;
 		assert location.getPinnedReviews().isEmpty();
 	}
 
-	@Test(expected = UnauthorizedAccessException.class)
+	@Test
 	@Category(UnitTests.class)
-	public void userCantPin() throws UnauthorizedAccessException {
-		try {
-			location.pinReview(user, review);
-		} catch (Exception ¢) {
-			nothingHasChangedCheck();
-			throw ¢;
-		}
+	public void userCantPin() {
+		assertEquals(false, user.canPinReview());
 	}
 
-	@Test(expected = UnauthorizedAccessException.class)
+	@Test
 	@Category(UnitTests.class)
-	public void defaultuserCantPin() throws UnauthorizedAccessException {
-		try {
-			location.pinReview(defaultuser, review);
-		} catch (Exception ¢) {
-			nothingHasChangedCheck();
-			throw ¢;
-		}
+	public void defaultuserCantPin() {
+		assertEquals(false, defaultuser.canPinReview());
 	}
 
-	private void nothingHasChangedCheck() {
-		assert location.getNotPinnedReviews().contains(review);
-		assert location.getPinnedReviews().isEmpty();
-	}
 
 }

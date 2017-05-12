@@ -10,7 +10,6 @@ import org.junit.experimental.categories.Category;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
-import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.LocationBuilder;;
 
 /**
@@ -59,11 +58,10 @@ public class ReviewTest {
 	@Category(UnitTests.class)
 	public void isPinnedTest() {
 		assert !r1.isPinned();
-		try {
-			r1.pin(u2);
-		} catch (UnauthorizedAccessException e) {
-			fail("shouldn't throw an exception");
-		}
+		if (u2.canPinReview())
+			r1.setPinned(true);
+		else
+			fail("shouldn't fail");
 		assert r1.isPinned();
 	}
 

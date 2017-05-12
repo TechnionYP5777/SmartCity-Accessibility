@@ -117,6 +117,10 @@ public class User {
 		return Privilege.deletePrivilegeLevel(this) ? true : false;
 	}
 	
+	public boolean canPinReview(){
+		return Privilege.pinPrivilegeLevel(this);
+	}
+	
 	@Override
 	public boolean equals(Object ¢) {
 		if (¢ == this)

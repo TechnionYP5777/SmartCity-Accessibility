@@ -16,7 +16,6 @@ import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.socialnetwork.BestReviews;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
-import smartcity.accessibility.socialnetwork.User;
 
 /**
  * @author Koral Chapnik
@@ -86,15 +85,6 @@ public class Location {
 		return new Score($);
 	}
 
-	/**
-	 * use for adding reviews in from the db
-	 * 
-	 * @param ¢
-	 */
-	public void addReviewNoSave(Review ¢) {
-		reviews.add(¢);
-	}
-
 	public LatLng getCoordinates() {
 		return this.coordinates;
 	}
@@ -107,7 +97,7 @@ public class Location {
 	 * @author ArthurSap
 	 * @throws ParseException
 	 */
-	public void addReview(Review ¢) throws ParseException {
+	public void addReview(Review ¢) {
 		reviews.add(¢);
 	}
 
@@ -116,36 +106,6 @@ public class Location {
 			if ($.equals(¢))
 				return $;
 		return null;
-	}
-
-	/**
-	 * Marks a review as important - whilst calculating the location's
-	 * accessibility level always takes this review in the calculation. Also,
-	 * always show this review in the top reviews.
-	 * 
-	 * @throws UnauthorizedAccessException
-	 **/
-	public void pinReview(User u, Review r) throws UnauthorizedAccessException {
-		Review review = checkExistence(r);
-		if (review != null)
-			if (!getPinnedReviews().contains(r))
-				review.pin(u);
-			else
-				System.out.println("Review is already pinned.");
-	}
-
-	/**
-	 * Reverts the effects of pinReview.
-	 * 
-	 * @throws UnauthorizedAccessException
-	 */
-	public void unpinReview(User u, Review r) throws UnauthorizedAccessException {
-		Review review = checkExistence(r);
-		if (review != null)
-			if (review.isPinned())
-				review.unPin(u);
-			else
-				System.out.println("Review is already un-pinned.");
 	}
 
 	/**
@@ -202,7 +162,7 @@ public class Location {
 		Coordinate(LocationSubTypes.Default), Facility(LocationSubTypes.Restaurant, LocationSubTypes.Hotel,
 				LocationSubTypes.Bar, LocationSubTypes.Default), Street(LocationSubTypes.Default);
 
-		private List<LocationSubTypes> subTypes = new ArrayList<LocationSubTypes>();
+		private List<LocationSubTypes> subTypes = new ArrayList<>();
 
 		LocationTypes(LocationSubTypes... s) {
 			for (LocationSubTypes st : s)
