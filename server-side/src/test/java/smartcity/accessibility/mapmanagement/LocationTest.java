@@ -11,7 +11,6 @@ import org.parse4j.ParseException;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
-import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
@@ -30,7 +29,7 @@ public class LocationTest {
 
 	@BeforeClass
 	public static void init() throws ParseException {
-		DatabaseManager.initialize();
+		//DatabaseManager.initialize();
 		User u1 = UserBuilder.RegularUser("Koral", "123", ""), u2 = UserBuilder.RegularUser("Koral2", "123", ""),
 				u3 = UserBuilder.RegularUser("Koral3", "123", ""), u4 = UserBuilder.Admin("Koral4", "123", "");
 		LatLng c = new LatLng(31.90588, 34.997571); // Modi'in Yehalom St, 20

@@ -1,6 +1,6 @@
 package smartcity.accessibility.socialnetwork;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -52,6 +52,6 @@ public class HelpfulnessTest {
 			fail("shouldn't fail");
 		}
 		
-		assert u1.getProfile().getHelpfulness().helpfulness() ==  2;
+		assertEquals(2, u1.getProfile().getHelpfulness().helpfulness().intValue());
 	}
 }

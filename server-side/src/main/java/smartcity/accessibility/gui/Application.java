@@ -13,7 +13,6 @@ import com.teamdev.jxmaps.MapMouseEvent;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.MouseEvent;
 
-import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.gui.components.ButtonsPanel;
 import smartcity.accessibility.gui.components.MapFrame;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
@@ -35,7 +34,7 @@ public class Application {
 	public static void not_main(String[] args) {
 		frame = new MapFrame("SmartCity - Accessibility");
 
-		DatabaseManager.initialize();
+		//DatabaseManager.initialize();
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

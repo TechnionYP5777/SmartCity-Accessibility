@@ -42,7 +42,7 @@ public class ParseDatabase implements Database {
 		return pd;
 	}
 
-	private static synchronized void initialize() {
+	public static synchronized void initialize() {
 		logger.info("initializing db");
 		if (init)
 			return;

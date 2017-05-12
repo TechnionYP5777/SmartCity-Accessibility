@@ -11,7 +11,7 @@ import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 
-@Ignore
+
 public class DeleteReviewsTest {
 	User admin, user, defaultuser;
 	Location location;

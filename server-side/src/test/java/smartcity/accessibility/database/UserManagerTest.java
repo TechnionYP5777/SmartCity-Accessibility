@@ -1,13 +1,13 @@
 package smartcity.accessibility.database;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
@@ -24,7 +24,7 @@ import smartcity.accessibility.socialnetwork.UserProfile;
  * @author Kolikant
  *
  */
-@Ignore
+
 public class UserManagerTest {
 	private static final String userName2 = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
 	private static final String userName1 = "uuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
@@ -34,7 +34,7 @@ public class UserManagerTest {
 	@BeforeClass
 	public static void init() throws UserNotFoundException{
 		initAllMock();
-		DatabaseManager.initialize();
+		ParseDatabase.initialize();
 		User u = UserManager.LoginUser(userName1, "password");
 		UserManager.DeleteUser(u);
 		String UserName2 = userName2;
