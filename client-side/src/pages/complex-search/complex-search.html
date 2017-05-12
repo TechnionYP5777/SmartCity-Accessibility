@@ -7,7 +7,7 @@
 -->
 
 <ion-header>
-  <ion-navbar color=color4>
+  <ion-navbar color=brown>
     <ion-title>
       Complex Search
     </ion-title>
@@ -18,7 +18,7 @@
 
 <ion-content class="try">
   <ion-list>
-    <ion-item>
+    <ion-item class="inputs">
       <ion-label>  
 		<ion-icon ios="ios-restaurant" md="md-restaurant"></ion-icon>
 		Type
@@ -30,7 +30,7 @@
       </ion-select>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="inputs">
       <ion-label>
 		<ion-icon name="star"></ion-icon>
 		Minimum Rating
@@ -44,16 +44,16 @@
       </ion-select>
     </ion-item>
 	
-	<ion-item>
-		<ion-input [(ngModel)] = "radius" type="number" placeholder="Radius"></ion-input>
+	<ion-item class="inputs">
+		<ion-input [(ngModel)] = "radius" type="number" placeholder="Radius" class="text"></ion-input>
     </ion-item>
 
-	<ion-item>
+	<ion-item class="inputs">
 		<ion-input [(ngModel)] = "initLoc"  type="search" placeholder="Initial Location"></ion-input>
 	</ion-item>
 
 	
-	<ion-item>
+	<ion-item class="inputs">
       <ion-label>Use my current location</ion-label>
       <ion-checkbox color="danger" checked="false"></ion-checkbox>
     </ion-item>
