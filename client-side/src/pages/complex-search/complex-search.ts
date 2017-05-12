@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams , Events} from 'ionic-angular';
+import { NavController, NavParams , Events, AlertController} from 'ionic-angular';
 import {ComplexSearchService} from './complexSearchService';
 import { SearchService } from '../mapview/searchService';
 
@@ -24,7 +24,7 @@ export class ComplexSearchPage {
   callback: any;
   startLocationCoordinates: any;
 
-  constructor(public events: Events, public searchService: SearchService,public navCtrl: NavController, public navParams: NavParams, public complexSearchService : ComplexSearchService) {
+  constructor(public events: Events, public searchService: SearchService,public navCtrl: NavController, public navParams: NavParams, public complexSearchService : ComplexSearchService, public alertCtrl: AlertController) {
     
   }
 
@@ -37,9 +37,14 @@ export class ComplexSearchPage {
   }
 
   callComplexSearch(type, radius, initLoc, minRating) {
-		this.searchService.search(initLoc).subscribe(data => {
-			this.startLocationCoordinates = data.coordinates;
-		});
+		this.searchService.search(initLoc).subscribe(
+			data => {
+				this.startLocationCoordinates = data.coordinates;
+			}
+			, err => {
+				this.handleError(err.json());
+			}
+		);
 	    this.complexSearchService.complexSearch(type, radius, initLoc, minRating).subscribe(data => {
 			
 			this.events.publish('complexSearch:pressed', data, this.startLocationCoordinates);
@@ -48,4 +53,17 @@ export class ComplexSearchPage {
 
 	
    }
+   
+   presentAlert(str) {
+		let alert = this.alertCtrl.create({
+		  title: 'Alert',
+		  subTitle: str,
+		  buttons: ['OK']
+		});
+		alert.present();
+	}
+	
+	handleError(err) {
+		this.presentAlert("error is: " + err.error + " message is: " + err.message);
+    }
 }

@@ -24,13 +24,9 @@ public class ComplexSearchServiece {
 			@RequestParam("threshold") Integer threshold) {
 
 		SearchQuery $ = null;
-		try {
-			$ = SearchQuery.TypeSearch(type);
-		} catch (illigalString e) {
-			throw new SearchFailed("illegal string");
-		}
 		SearchQueryResult esr;
 		try {
+			$ = SearchQuery.TypeSearch(type);
 			esr = $.searchByType(startLoc, radius);
 		} catch (illigalString | InterruptedException e) {
 			throw new SearchFailed("illegal strings");
