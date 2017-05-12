@@ -14,7 +14,7 @@ public class Token {
 		this.setToken(token);
 	}
 	static public Token calcToken(User u){
-		String str = u.getName()+u.getPassword();
+		String str = u.getUsername()+u.getPassword();
 		MessageDigest messageDigest = null;
 		try {
 			messageDigest = MessageDigest.getInstance("SHA-256");

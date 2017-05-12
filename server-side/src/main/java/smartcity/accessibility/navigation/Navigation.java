@@ -13,7 +13,6 @@ import javax.ws.rs.core.Response;
 
 import com.teamdev.jxmaps.LatLng;
 
-import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
@@ -82,16 +81,18 @@ public abstract class Navigation {
 			throw new CommunicationFailed("");
 		RouteWraper $ = response.readEntity(RouteWraper.class);
 		if ($.getInfo().getStatuscode() != 0)
-			throw new CommunicationFailed(String.join(",",$.getInfo().getMessages()));
+			throw new CommunicationFailed(String.join(",", $.getInfo().getMessages()));
 		return $.getRoute();
 	}
 
 	private static List<MapSegment> getSegmentsToAvoid(Location source, Location destination,
 			Integer accessibilityThreshold) throws CommunicationFailed {
-		//List<LatLng> locationsToAvoid = LocationManager.getNonAccessibleLocationsInRadius(source, destination,
-		//		accessibilityThreshold);
-		List<LatLng> locationsToAvoid = new ArrayList<LatLng>();
-		List<MapSegment> $ = new ArrayList<MapSegment>();
+		// TODO : Yael, is this what is supposed to be here?  -- Alex
+		//List<LatLng> locationsToAvoid = AbstractLocationManager.instance().getNonAccessibleLocationsInRadius(
+		//		source.getCoordinates(), destination.getCoordinates(), accessibilityThreshold, null);
+
+		List<LatLng> locationsToAvoid = new ArrayList<>();
+		List<MapSegment> $ = new ArrayList<>();
 		for (LatLng ¢ : locationsToAvoid)
 			$.add(getMapSegmentOfLatLng(¢.getLat(), ¢.getLng()));
 		return $;

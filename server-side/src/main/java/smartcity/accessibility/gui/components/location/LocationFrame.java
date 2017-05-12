@@ -20,10 +20,11 @@ import javax.swing.SwingConstants;
 
 import com.teamdev.jxmaps.LatLng;
 
-import smartcity.accessibility.database.LocationManager;
+import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.components.SpinningWheel;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.navigation.JxMapsConvertor;
 import smartcity.accessibility.navigation.Navigation;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
@@ -77,7 +78,7 @@ public class LocationFrame implements MouseListener {
 
 			@Override
 			public void windowClosed(WindowEvent arg0) {
-				LocationManager.updateLocation(loc);
+				AbstractLocationManager.instance().updateLocation(loc, null);
 			}
 
 			@Override
@@ -207,7 +208,8 @@ public class LocationFrame implements MouseListener {
 	 * @author yael
 	 */
 	public void activateNavigation() {
-		Location src = new Location(Application.currLocation.getPosition()), dst = loc;
+		
+		Location src = new LocationBuilder().setCoordinates(Application.currLocation.getPosition()).build(), dst = loc;
 		Integer accessibilityThreshold = (Integer) JOptionPane.showInputDialog(frame,
 				"Insert the accessibility threshold for the navigation:\n", "choose accessibilityThreshold",
 				JOptionPane.PLAIN_MESSAGE, null, IntStream.rangeClosed(Score.getMinScore(), Score.getMaxScore())

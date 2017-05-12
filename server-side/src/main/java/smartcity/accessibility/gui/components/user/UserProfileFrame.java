@@ -27,7 +27,7 @@ public class UserProfileFrame {
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridLayout(0, 1));
 
-		JLabel lblUsername = new JLabel("Username: " + Application.appUser.getName());
+		JLabel lblUsername = new JLabel("Username: " + Application.appUser.getUsername());
 		lblUsername.setFont(new Font("Dialog", Font.PLAIN, 12));
 		frame.getContentPane().add(lblUsername);
 

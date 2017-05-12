@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import smartcity.accessibility.database.AbstractReviewManager;
+import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.User;
@@ -29,7 +30,12 @@ public class AddReviewService {
 		if (u == null)
 			throw new UserIsNotLoggedIn();
 		
-		Review r = new Review(Integer.parseInt(score), review, u);
+		// TODO : Who ever it may concern (please add author), 
+		// This review is created without a location, which makes no sense since a review has to belong to a location
+		// The constructor that uses no location was removed, again because such functionality shouldn't exist
+		// Please set a location that makes sense, I've put an empty one for now
+		// -- Alex
+		Review r = new Review(new Location(), Integer.parseInt(score), review, u.getProfile());
 		
 		AbstractReviewManager.instance().uploadReview(r, null);
 		
