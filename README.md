@@ -1,7 +1,7 @@
 # SmartCity-Accessibility
 ## Development Status
 
-![Build Status](http://kapalex.ddns.net:8080/buildStatus/icon?job=SmartCity-Accessibility%20Server%20Side%20Database%20Branch)
+![Build Status](http://kapalex.ddns.net:8080/buildStatus/icon?job=SmartCity-Accessibility%20Server%20Side)
 ![Coverage Report](https://img.shields.io/sonar/http/kapalex.ddns.net:9000/SmartCity-Accessibility:SmartCity-Accessibility/coverage.svg)
 
 ## The Project
