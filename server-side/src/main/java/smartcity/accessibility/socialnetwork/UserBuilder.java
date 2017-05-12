@@ -18,6 +18,7 @@ public class UserBuilder {
 	private int rating = 0;
 	private Privilege privilege = Privilege.RegularUser;
 	private int numReviews = 0;
+	private UserProfile userProfile = null;
 	
 	public UserBuilder(){
 		queries = new ArrayList<>();
@@ -80,6 +81,11 @@ public class UserBuilder {
 		return this;
 	}
 	
+	public UserBuilder setProfile(UserProfile up){
+		userProfile = up;
+		return this;
+	}
+	
 	/**
 	 * if username or password not set then returns null
 	 * @return new User2
@@ -91,8 +97,13 @@ public class UserBuilder {
 		for(SearchQuery sq : queries){
 			u.addQuery(sq, sq.getName());
 		}
-		u.getProfile().setNumOfReviews(numReviews);
-		u.getProfile().setRating(rating);
+		if (userProfile != null){
+			u.getProfile().setNumOfReviews(userProfile.getNumOfReviews());
+			u.getProfile().setRating(userProfile.getRating());
+		} else {
+			u.getProfile().setNumOfReviews(numReviews);
+			u.getProfile().setRating(rating);
+		}
 		u.setPrivilegeLevel(privilege);
 		return u;
 	}

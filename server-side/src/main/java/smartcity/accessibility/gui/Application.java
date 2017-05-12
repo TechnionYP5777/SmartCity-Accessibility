@@ -105,11 +105,7 @@ public class Application {
 
 			@Override
 			public void windowClosing(WindowEvent __) {
-				try {
-					UserManager.updateAllUserInformation(appUser);
-				} catch (UserNotFoundException e1) {
-
-				}
+			
 			}
 
 			@Override

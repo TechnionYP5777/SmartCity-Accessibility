@@ -57,6 +57,11 @@ public class UserProfile {
 			return 0;
 		return rating/(double)numOfReviews;
 	}
+
+	@Override
+	public String toString() {
+		return "UserProfile [username=" + username + "]";
+	}
 	
 	
 }
