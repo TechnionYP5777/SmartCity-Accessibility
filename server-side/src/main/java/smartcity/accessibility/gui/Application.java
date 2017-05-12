@@ -14,8 +14,6 @@ import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.MouseEvent;
 
 import smartcity.accessibility.database.DatabaseManager;
-import smartcity.accessibility.database.UserManager;
-import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.gui.components.ButtonsPanel;
 import smartcity.accessibility.gui.components.MapFrame;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
