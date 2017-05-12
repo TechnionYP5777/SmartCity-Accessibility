@@ -20,7 +20,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.teamdev.jxmaps.LatLng;
 
-import smartcity.accessibility.categories.BranchTests;
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.exceptions.ObjectNotFoundException;
 import smartcity.accessibility.exceptions.UserNotFoundException;
@@ -64,7 +63,7 @@ public class ReviewManagerTest {
 	}
 	
 	@Test(timeout=500)
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void testBackgroundCalls() {
 		assertEquals(0, rm.getReviews("a", nlr -> {}).size());
 		assertEquals(0, rm.getReviewWithLocation("a", nlr -> {}).size());
@@ -74,7 +73,7 @@ public class ReviewManagerTest {
 	}
 
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void testUpload() {
 		Review r = new Review(new Location(), 5, "asdfasd", new UserBuilder()
 																.setUsername("asdf")
@@ -87,7 +86,7 @@ public class ReviewManagerTest {
 	}
 	
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void getReviewsTest() {
 		List<Review> list = rm.getReviews("a", null);
 		assertEquals(1, list.size());
@@ -98,7 +97,7 @@ public class ReviewManagerTest {
 	}
 	
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void getReviewWithLocationTest() {
 		List<Review> list = rm.getReviewWithLocation("MY_ID", null);
 		assertEquals(1, list.size());
@@ -109,7 +108,7 @@ public class ReviewManagerTest {
 	}
 	
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void deleteReviewTest() {
 		Boolean res = rm.deleteReview(rev1, null);
 		assertEquals(true, res);
@@ -117,7 +116,7 @@ public class ReviewManagerTest {
 	}
 	
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void updateReviewTest() {
 		Boolean res = rm.updateReview(rev1, null);
 		assertEquals(true, res);
@@ -128,7 +127,7 @@ public class ReviewManagerTest {
 	}
 	
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void updateFromToMap() {
 		Review my_rev = new Review(null, 3, "my_content", up1);
 		List<ReviewComment> lrc = new ArrayList<>();

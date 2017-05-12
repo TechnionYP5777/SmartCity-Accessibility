@@ -23,7 +23,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.teamdev.jxmaps.LatLng;
 
-import smartcity.accessibility.categories.BranchTests;
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.exceptions.ObjectNotFoundException;
 import smartcity.accessibility.mapmanagement.Location;
@@ -62,20 +61,20 @@ public class LocationManagerTest {
 	}
 
 	@Test(timeout = 500)
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void testBackgroundCalls() {
 		
 	}
 
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void testGetId() {
 		String id = lm.getId(new LatLng(), LocationTypes.Coordinate, LocationSubTypes.Default, null);
 		assertEquals("MY_ID", id);
 	}
 	
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void testUpload() {
 		Location ml = new LocationBuilder().setCoordinates(new LatLng())
 				.setName("asd")
@@ -89,7 +88,7 @@ public class LocationManagerTest {
 	}
 	
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void testGetLocation() {
 		List<Location> res = lm.getLocation(new LatLng(), null);
 		assertEquals(1, res.size());
@@ -101,7 +100,7 @@ public class LocationManagerTest {
 	}
 	
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void testGetLocationsAround(){
 		List<Location> res = lm.getLocationsAround(new LatLng(1,1), 1.2, null);
 		assertEquals(1, res.size());
@@ -111,7 +110,7 @@ public class LocationManagerTest {
 	}
 	
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void testGetLocationSingle() throws ObjectNotFoundException{
 		Location res = lm.getLocation(new LatLng(), LocationTypes.Coordinate, LocationSubTypes.Default, null);
 		Map<String, Object> mres = LocationManager.toMap(res);
@@ -122,7 +121,7 @@ public class LocationManagerTest {
 	}
 	
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void testUpdateLocation() {
 		Boolean res = lm.updateLocation(l1, null);
 		assertEquals(true, res);
@@ -139,7 +138,7 @@ public class LocationManagerTest {
 	}
 	
 	@Test
-	@Category({ BranchTests.class, UnitTests.class})
+	@Category(UnitTests.class)
 	public void testGetNonAccessibleLocationsInRadius(){
 		List<LatLng> ll = lm.getNonAccessibleLocationsInRadius(new LatLng(), new LatLng(), 3, null);
 		assertEquals(1, ll.size());

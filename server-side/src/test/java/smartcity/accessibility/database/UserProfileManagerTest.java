@@ -19,7 +19,6 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import smartcity.accessibility.categories.BranchTests;
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.socialnetwork.UserProfile;
@@ -54,7 +53,7 @@ public class UserProfileManagerTest {
 	}
 	
 	@Test(timeout=500)
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void testBackgroundCalls() throws UserNotFoundException {
 		assertEquals(null, manager.get("a", c->{}));
 		assertEquals(null, manager.put(new UserProfile("a"), c->{}));
@@ -63,7 +62,7 @@ public class UserProfileManagerTest {
 	}
 
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void testGet() throws UserNotFoundException, InterruptedException {
 		UserProfile pf = manager.get("alexaxa", null);
 		assertEquals(25, pf.getRating());
@@ -72,21 +71,21 @@ public class UserProfileManagerTest {
 	}
 	
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void testPut() {
 		assertEquals(true, manager.put(user1, null));
 		Mockito.verify(db).put(UserProfileManager.DATABASE_CLASS, m_noid);
 	}
 	
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void testUpdate() {
 		assertEquals(true, manager.update(user1, null));
 		Mockito.verify(db).update(UserProfileManager.DATABASE_CLASS, "MY_ID", m_noid);
 	}
 	
 	@Test
-	@Category({ BranchTests.class, UnitTests.class })
+	@Category(UnitTests.class)
 	public void testDelete() {
 		assertEquals(true, manager.delete(user1, null));
 		Mockito.verify(db).delete(UserProfileManager.DATABASE_CLASS, "MY_ID");

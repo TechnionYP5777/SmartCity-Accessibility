@@ -1,6 +1,8 @@
 package smartcity.accessibility.database;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +21,6 @@ import org.parse4j.ParseException;
 import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
 
-import smartcity.accessibility.categories.BranchTests;
 import smartcity.accessibility.categories.NetworkTests;
 import smartcity.accessibility.database.exceptions.ObjectNotFoundException;
 
@@ -52,7 +53,7 @@ public class ParseDatabaseTest {
 	}
 
 	@Test
-	@Category({ BranchTests.class, NetworkTests.class })
+	@Category(NetworkTests.class)
 	public void testGet() throws ObjectNotFoundException {
 		Map<String, Object> res = pd.get(databaseClass, sampleObjectId);
 		for (Entry<String, Object> e : testObjects.get(sampleObjectId).entrySet()) {
@@ -63,7 +64,7 @@ public class ParseDatabaseTest {
 	}
 	
 	@Test
-	@Category({ BranchTests.class, NetworkTests.class })
+	@Category(NetworkTests.class)
 	public void testGetList() {
 		List<Map<String, Object>> res = pd.get(databaseClass, testObjects.get(sampleObjectId));
 		for (Map<String, Object> m : res) {
@@ -74,7 +75,7 @@ public class ParseDatabaseTest {
 	}
 	
 	@Test
-	@Category({ BranchTests.class, NetworkTests.class })
+	@Category(NetworkTests.class)
 	public void testGetLocation() {
 		List<Map<String, Object>> res = pd.get(databaseClass, "location", 0.1, 0.1, 1.0);
 		for (Map<String, Object> m : res) {
@@ -85,7 +86,7 @@ public class ParseDatabaseTest {
 	}
 
 	@Test
-	@Category({ BranchTests.class, NetworkTests.class })
+	@Category(NetworkTests.class)
 	public void testPut() throws ObjectNotFoundException {
 		Map<String, Object> object1 = testObjects.get(sampleObjectId);
 
@@ -99,7 +100,7 @@ public class ParseDatabaseTest {
 	}
 
 	@Test
-	@Category({ BranchTests.class, NetworkTests.class })
+	@Category(NetworkTests.class)
 	public void testUpdate() throws ObjectNotFoundException {
 		Map<String, Object> object1 = testObjects.get(sampleObjectId);
 
@@ -121,7 +122,7 @@ public class ParseDatabaseTest {
 	}
 	
 	@Test
-	@Category({ BranchTests.class, NetworkTests.class })
+	@Category(NetworkTests.class)
 	public void testDelete() {
 		Map<String, Object> object1 = testObjects.get(sampleObjectId);
 
