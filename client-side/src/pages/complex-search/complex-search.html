@@ -19,10 +19,10 @@
 <ion-content class="try">
   <ion-list>
     <ion-item class="inputs">
-      <ion-label>  
+      <ion-label class="text">  
 		<ion-icon ios="ios-restaurant" md="md-restaurant"></ion-icon>
 		Type
-	  </ion-label>
+	  </ion-label >
       <ion-select [(ngModel)]="type">
         <ion-option value="restaurant">Restaurant</ion-option>
         <ion-option value="caffe">Caffe</ion-option>
@@ -31,7 +31,7 @@
     </ion-item>
 
     <ion-item class="inputs">
-      <ion-label>
+      <ion-label class="text">
 		<ion-icon name="star"></ion-icon>
 		Minimum Rating
 	  </ion-label>
@@ -49,13 +49,13 @@
     </ion-item>
 
 	<ion-item class="inputs">
-		<ion-input [(ngModel)] = "initLoc"  type="search" placeholder="Initial Location"></ion-input>
+		<ion-input [(ngModel)] = "initLoc"  type="search" placeholder="Initial Location" class="text"></ion-input>
 	</ion-item>
 
 	
 	<ion-item class="inputs">
       <ion-label>Use my current location</ion-label>
-      <ion-checkbox color="danger" checked="false"></ion-checkbox>
+      <ion-checkbox color="danger" checked="false" class="text"></ion-checkbox>
     </ion-item>
 	
 	<button ion-button color="brown" icon-left large full (click)="callComplexSearch(type, radius, initLoc, minRating)">
