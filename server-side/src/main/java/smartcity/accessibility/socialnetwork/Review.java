@@ -77,7 +77,7 @@ public class Review {
 	 */
 	public void upvote(User u) throws UnauthorizedAccessException {
 		comment(u, ReviewComment.POSITIVE_RATING);
-		u.getProfile().upvote();
+		user.upvote();
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class Review {
 	 */
 	public void downvote(User u) throws UnauthorizedAccessException {
 		comment(u, ReviewComment.NEGATIVE_RATING);
-		u.getProfile().downvote();
+		user.downvote();
 	}
 
 	/**

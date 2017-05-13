@@ -13,6 +13,11 @@ import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 
+/**
+ * 
+ * @author Koral Chapnik
+ *
+ */
 public class HelpfulnessTest {
 	private static User u1;
 	private static User u2;
