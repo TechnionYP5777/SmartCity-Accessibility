@@ -85,6 +85,7 @@ public class BestReviewsTest {
 		assertEquals(br.getTotalRatingByAvg(), 2);
 		
 		//now u1 has helpfulness of 1
+		@SuppressWarnings("unused")
 		Review r4 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1.getProfile());
 		assertEquals(br.getTotalRatingByAvg(), 3);
 		
