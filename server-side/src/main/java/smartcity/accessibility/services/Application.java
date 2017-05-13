@@ -17,6 +17,7 @@ import com.google.inject.Injector;
 import smartcity.accessibility.database.DatabaseModule;
 import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.database.ReviewManager;
+import smartcity.accessibility.database.UserProfileManager;
 import jersey.repackaged.com.google.common.cache.CacheBuilder;
 import jersey.repackaged.com.google.common.cache.CacheLoader;
 import jersey.repackaged.com.google.common.cache.LoadingCache;
@@ -39,6 +40,7 @@ public class Application {
 		Injector injector = Guice.createInjector(new DatabaseModule());
 		ReviewManager.initialize(injector.getInstance(ReviewManager.class));
 		LocationManager.initialize(injector.getInstance(LocationManager.class));
+		UserProfileManager.initialize(injector.getInstance(UserProfileManager.class));
 		mapView = JxMapsFunctionality.getMapView();
 		SpringApplication.run(Application.class, args);
 	}

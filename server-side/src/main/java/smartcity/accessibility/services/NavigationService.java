@@ -26,7 +26,9 @@ public class NavigationService {
 			@RequestParam("dstLng") Double dstLng,
 			@RequestParam("accessibilityThreshold") Integer accessibilityThreshold) {
 
-		UserInfo userInfo = LogInService.getUserInfo(token);
+		// example to get userInformation with the token. no need to check for
+		// null, an exception will rise if needed
+		// 		UserInfo userInfo = LogInService.getUserInfo(token);
 
 		Location source = new LocationBuilder().setCoordinates(srcLat, srcLng).build();
 		Location destination = new LocationBuilder().setCoordinates(dstLat, dstLng).build();
