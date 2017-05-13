@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
@@ -44,8 +45,9 @@ public abstract class Navigation {
 			$[k++] = (new LatLng(shapePointsArr[¢], shapePointsArr[¢ + 1]));
 		return $;
 	}
-	
-	public static Latlng[] getRoute(Location source, Location destination, Integer accessibilityThreshold) throws CommunicationFailed{
+
+	public static Latlng[] getRoute(Location source, Location destination, Integer accessibilityThreshold)
+			throws CommunicationFailed {
 		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessibilityThreshold);
 		Latlng from = new Latlng(source.getCoordinates().getLat(), source.getCoordinates().getLng()),
 				to = new Latlng(destination.getCoordinates().getLat(), destination.getCoordinates().getLng());
@@ -87,11 +89,8 @@ public abstract class Navigation {
 
 	private static List<MapSegment> getSegmentsToAvoid(Location source, Location destination,
 			Integer accessibilityThreshold) throws CommunicationFailed {
-		// TODO : Yael, is this what is supposed to be here?  -- Alex
-		//List<LatLng> locationsToAvoid = AbstractLocationManager.instance().getNonAccessibleLocationsInRadius(
-		//		source.getCoordinates(), destination.getCoordinates(), accessibilityThreshold, null);
-
-		List<LatLng> locationsToAvoid = new ArrayList<>();
+		List<LatLng> locationsToAvoid = AbstractLocationManager.instance().getNonAccessibleLocationsInRadius(
+				source.getCoordinates(), destination.getCoordinates(), accessibilityThreshold, null);
 		List<MapSegment> $ = new ArrayList<>();
 		for (LatLng ¢ : locationsToAvoid)
 			$.add(getMapSegmentOfLatLng(¢.getLat(), ¢.getLng()));

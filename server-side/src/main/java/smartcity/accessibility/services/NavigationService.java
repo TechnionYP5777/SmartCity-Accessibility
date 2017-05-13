@@ -13,6 +13,7 @@ import smartcity.accessibility.navigation.Navigation;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 import smartcity.accessibility.services.exceptions.NavigationFailed;
+
 /**
  * @author yael
  */
@@ -24,19 +25,11 @@ public class NavigationService {
 			@RequestParam("srcLng") Double srcLng, @RequestParam("dstLat") Double dstLat,
 			@RequestParam("dstLng") Double dstLng,
 			@RequestParam("accessibilityThreshold") Integer accessibilityThreshold) {
-		
+
 		UserInfo userInfo = LogInService.getUserInfo(token);
 
-		// TODO : Yael,
-		// I've switched the creation of these location object to use the new builder
-		// Make sure everything here makes sense
-		// -- Alex
-		Location source = new LocationBuilder()
-				.setCoordinates(srcLat, srcLng)
-				.build();
-		Location destination = new LocationBuilder()
-				.setCoordinates(dstLat, dstLng)
-				.build();
+		Location source = new LocationBuilder().setCoordinates(srcLat, srcLng).build();
+		Location destination = new LocationBuilder().setCoordinates(dstLat, dstLng).build();
 		Latlng[] l;
 		try {
 			l = Navigation.getRoute(source, destination, accessibilityThreshold);
