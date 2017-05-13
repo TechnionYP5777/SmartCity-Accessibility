@@ -9,6 +9,7 @@ import com.google.inject.AbstractModule;
 public class DatabaseModule extends AbstractModule {
 	@Override
 	protected void configure() {
-		bind(Database.class).toInstance(ParseDatabase.get());
+		ParseDatabase pd = ParseDatabase.get();
+		bind(Database.class).toInstance(pd);
 	}
 }
