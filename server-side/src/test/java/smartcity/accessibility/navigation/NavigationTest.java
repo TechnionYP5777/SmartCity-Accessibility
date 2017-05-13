@@ -3,15 +3,18 @@ package smartcity.accessibility.navigation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.Timeout;
+import org.mockito.Mockito;
 
 import com.teamdev.jxmaps.LatLng;
 
-import smartcity.accessibility.categories.UnitTests;
+import smartcity.accessibility.categories.NetworkTests;
+import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
@@ -33,8 +36,14 @@ public class NavigationTest {
 	@Rule
 	public Timeout globalTimeout = Timeout.seconds(10000);
 
+	@Before
+	public void setup() throws Exception {
+		AbstractLocationManager mock_LocationManagerProfile = Mockito.mock(AbstractLocationManager.class);
+		AbstractLocationManager.initialize(mock_LocationManagerProfile);
+	}
+	
 	@Test
-	@Category(UnitTests.class)
+	@Category(NetworkTests.class)
 	public void getMapSegmentFromLatLng() {
 		MapSegment m = null;
 		try {
@@ -47,7 +56,7 @@ public class NavigationTest {
 
 	
 	@Test
-	@Category(UnitTests.class)
+	@Category(NetworkTests.class)
 	public void avoidOneSegement() throws CommunicationFailed {
 		Latlng from = new Latlng(31.768762, 34.632052), to = new Latlng(31.770981, 34.620567);
 		List<MapSegment> segmentsToAvoid = new ArrayList<MapSegment>();
@@ -59,7 +68,7 @@ public class NavigationTest {
 	}
 
 	@Test
-	@Category(UnitTests.class)
+	@Category(NetworkTests.class)
 	public void avoidTwoSegement() throws CommunicationFailed {
 		Latlng from = new Latlng(31.768762, 34.632052), to = new Latlng(31.770981, 34.620567);
 		List<MapSegment> segmentsToAvoid = new ArrayList<MapSegment>();
@@ -75,7 +84,7 @@ public class NavigationTest {
 
 	@Ignore
 	@Test
-	@Category(UnitTests.class)
+	@Category(NetworkTests.class)
 	public void displayMap() throws CommunicationFailed {
 		Location fromLocation = new LocationBuilder().setCoordinates(31.768762, 34.632052).build(),
 				toLocation = new LocationBuilder().setCoordinates(31.770981, 34.620567).build();//new Location(new LatLng(31.770981, 34.620567));
