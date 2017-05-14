@@ -13,7 +13,7 @@ export class AddReviewService {
     console.log('Hello AddReviewService Provider');
   }
   
-  addreview(rev){
+  addreview(rev, lat, lng){
     var creds = '';
     var token = window.sessionStorage.getItem('token');
   	var headers = new Headers();

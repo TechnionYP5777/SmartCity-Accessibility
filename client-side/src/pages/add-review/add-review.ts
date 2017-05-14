@@ -32,7 +32,7 @@ export class AddReviewPage {
   }
   
   addreview(rev) {
-  	 this.addreviewservice.addreview(rev).then(data => {
+  	 this.addreviewservice.addreview(rev, lat, lng).then(data => {
   	 	if(data) {
   	 		this.navCtrl.setRoot(HomePage);
   	 	}
