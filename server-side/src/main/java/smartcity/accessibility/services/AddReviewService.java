@@ -24,8 +24,8 @@ public class AddReviewService {
     public void addreview(@RequestHeader("authToken") String token,
     		@RequestParam("review") String review,
     		@RequestParam("score") String score,
-    		@RequestParam("lat") String lat,
-    		@RequestParam("lng") String lng) {
+    		@RequestParam("lat") Double lat,
+    		@RequestParam("lng") Double lng) {
 		
 		
 		User u = getUserFromToken(token);
@@ -34,7 +34,7 @@ public class AddReviewService {
 		
 		
 		Location l = new Location();
-		l.setCoordinates(new LatLng(Double.parseDouble(lat), Double.parseDouble(lng)));
+		l.setCoordinates(new LatLng(lat, lng));
 		
 		Review r = new Review(l, Integer.parseInt(score), review, u.getProfile());
 		
