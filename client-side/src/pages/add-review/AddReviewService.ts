@@ -14,18 +14,14 @@ export class AddReviewService {
   }
   
   addreview(rev, lat, lng){
-    var creds = '';
     var token = window.sessionStorage.getItem('token');
+    var params = "lat=" + lat + "&lng=" + lng + "&review=" + rev.review + "&score=" + rev.score;
   	var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('authToken',token);
-    headers.append('lat',lat);
-    headers.append('lng',lng);
-    headers.append('rev.review',review);
-    headers.append('rev.score',score);
     
     return new Promise(resolve => {
-            this.http.post(Constants.serverAddress +'/addreview', creds, {headers: headers}).subscribe(data => {
+            this.http.post(Constants.serverAddress +'/addreview', params, {headers: headers}).subscribe(data => {
                 if(data.status == 200){
                 	console.log('Review added successfully!')
                     resolve(true);
