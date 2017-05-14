@@ -68,8 +68,10 @@ export class NavigationPage {
     }
 	
 	presentLoadingCustom() {
-        this.loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
+            this.loading = this.loadingCtrl.create({
+            spinner: 'bubbles',
+		    showBackdrop: false,
+		    cssClass: 'loader'
         });
         this.loading.present();
     }
