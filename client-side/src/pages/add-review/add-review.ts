@@ -28,11 +28,12 @@ export class AddReviewPage {
   }
   
   starClicked(value){
+   reviewinfo.score = value;
    console.log("Avaliaram em :", value);
   }
   
   addreview(rev) {
-  	 this.addreviewservice.addreview(rev).then(data => {
+  	 this.addreviewservice.addreview(rev, this.lat, this.lng).then(data => {
   	 	if(data) {
   	 		this.navCtrl.setRoot(HomePage);
   	 	}
