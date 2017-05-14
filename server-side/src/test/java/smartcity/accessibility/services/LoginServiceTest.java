@@ -13,6 +13,8 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.AbstractUserProfileManager;
@@ -20,7 +22,6 @@ import smartcity.accessibility.database.ParseDatabase;
 import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserBuilder;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 /**
  * @author yael
@@ -49,12 +50,13 @@ public class LoginServiceTest extends ServiceTest {
 	}
 
 	@Test
-	@Ignore
 	public void signupSuccess() throws Exception {
 		String name = "Dr.Awesome";
 		String password = "T4RRR76ppp";
 		Token t = Token.calcToken(new UserBuilder().setUsername(name).setPassword(password).build());
-		mockMvc.perform(post("/signup" + "?name=" + name + "&password=" + password).contentType(contentType))
-				.andExpect(status().is2xxSuccessful()).andExpect(jsonPath("$.token").value(t.getToken()));
+		mockMvc.perform(post("/signup" + "?name=" + name + "&password=" + password))
+				.andExpect(status().is2xxSuccessful())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.token").value(t.getToken()))
+				.andDo(MockMvcResultHandlers.print());
 	}
 }
