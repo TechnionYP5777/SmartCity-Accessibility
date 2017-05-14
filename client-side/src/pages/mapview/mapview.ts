@@ -5,7 +5,8 @@ import { MapClickMenuPage } from '../mapclickmenu/mapclickmenu';
 import { LoginService } from '../login/LoginService';
 import { UserPagePage } from '../user-page/user-page'; 
 import { LoginPage } from '../login/login';
-import { ComplexSearchPage } from '../complex-search/complex-search'; 
+import { ComplexSearchPage } from '../complex-search/complex-search';
+import { AdminPage } from '../admin/admin'; 
 import { SearchService } from './searchService';
 declare var google;  
  
@@ -24,6 +25,7 @@ export class MapviewPage {
   searchQuery: any;
   loginPage = LoginPage;
   userProfile = UserPagePage;
+  adminPage = AdminPage;
   complexSearchPage = ComplexSearchPage;
   output :  any;
   myCallbackFunction : any;
@@ -70,7 +72,8 @@ export class MapviewPage {
 			});
 	
 	}
-    
+		
+
 	subscribeToNavigation(){
 		this.events.subscribe('navigation:done', (navigationResults) => {
 			var route = new google.maps.Polyline({
