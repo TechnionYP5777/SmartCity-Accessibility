@@ -7,4 +7,9 @@ page-navigation {
         border-color: rgba(0,0,0,0) !important;
         outline: none !important;
     }
+	.spinner svg{
+		height: 30px !important;
+		width: 30px !important;
+		zoom: 5;
+	}
 }
