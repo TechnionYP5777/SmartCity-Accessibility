@@ -28,7 +28,7 @@ export class AddReviewPage {
   }
   
   starClicked(value){
-   reviewinfo.score = value;
+   this.reviewinfo.score = value;
    console.log("Avaliaram em :", value);
   }
   
