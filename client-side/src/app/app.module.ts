@@ -60,7 +60,7 @@ import { Reviews } from '../pages/reviews/reviews';
 	ComplexSearchPage,
 	AddSearchQueryPage,
 	LocationListPage,
-	AdminPage
+	AdminPage,
 	Reviews
   ],
   providers: [
@@ -73,7 +73,8 @@ import { Reviews } from '../pages/reviews/reviews';
 	SearchService,
 	ComplexSearchService,
 	UserInformationService,
-	AdminService
+	AdminService,
+	ReviewsService
   ]
 })
 export class AppModule {}
