@@ -3,6 +3,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import {LoginPage} from '../pages/login/login';
+import {AdminPage} from '../pages/admin/admin';
 import {MapviewPage} from '../pages/mapview/mapview';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -11,6 +12,7 @@ import { AddReviewPage } from '../pages/add-review/add-review';
 import {SignupPage} from '../pages/signup/signup';
 import {UserPagePage} from '../pages/user-page/user-page';
 import {LoginService} from '../pages/login/LoginService';
+import {AdminService} from '../pages/admin/adminService';
 import {NavigationService} from '../pages/navigation/navigationService';
 import { NavigationPage } from '../pages/navigation/navigation';
 import { AddReviewService } from '../pages/add-review/AddReviewService';
@@ -36,7 +38,8 @@ import { LocationListPage } from '../pages/location-list/location-list';
 	ComplexSearchPage,
 	IonRating,
 	AddSearchQueryPage,
-	LocationListPage
+	LocationListPage,
+	AdminPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -54,7 +57,8 @@ import { LocationListPage } from '../pages/location-list/location-list';
 	NavigationPage,
 	ComplexSearchPage,
 	AddSearchQueryPage,
-	LocationListPage
+	LocationListPage,
+	AdminPage
   ],
   providers: [
     StatusBar,
@@ -65,7 +69,8 @@ import { LocationListPage } from '../pages/location-list/location-list';
 	AddReviewService,
 	SearchService,
 	ComplexSearchService,
-	UserInformationService
+	UserInformationService,
+	AdminService
   ]
 })
 export class AppModule {}
