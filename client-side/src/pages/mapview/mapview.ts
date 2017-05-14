@@ -75,7 +75,7 @@ export class MapviewPage {
 		
 
 	subscribeToNavigation(){
-		this.events.subscribe('navigation:done', (navigationResults) => {
+		this.events.subscribe('navigation:done', (navigationResults,loading) => {
 			var route = new google.maps.Polyline({
 			    path: navigationResults,
 			    geodesic: true,
@@ -85,6 +85,7 @@ export class MapviewPage {
 			});
 
 			route.setMap(this.map);
+			loading.dismiss();
 		});
 	}
 	presentAlert(str) {

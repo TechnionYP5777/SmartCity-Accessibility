@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events, AlertController } from 'ionic-angular';
+import { NavController, NavParams, Events, AlertController,LoadingController } from 'ionic-angular';
 import { NavigationService } from './navigationService';
 import { LoginService } from '../login/LoginService';
 import { UserPagePage } from '../user-page/user-page';
@@ -25,7 +25,8 @@ export class NavigationPage {
 		lat : '',
 		lng : ''
 	};
-    constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController, public navigationService: NavigationService,public loginService : LoginService,public events: Events) {
+	loading : any;
+    constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl: LoadingController,public alertCtrl: AlertController, public navigationService: NavigationService,public loginService : LoginService,public events: Events) {
 	    var token = window.sessionStorage.getItem('token');
 		this.isWork = token;
 		this.isLoggedin = this.loginService.isLoggedIn();
@@ -40,9 +41,10 @@ export class NavigationPage {
 		});
     }
 	startNavigation(){
+	    this.presentLoadingCustom();
 		this.navigationService.navigatee(this.srcLocation,this.dstLocation,this.minRating).subscribe(
 		data => {
-            this.events.publish('navigation:done', data.json());
+            this.events.publish('navigation:done', data.json(),this.loading);
 		}
 		, err => {
 		    this.handleError(err.json());
@@ -62,5 +64,13 @@ export class NavigationPage {
 	
 	handleError(err) {
 		this.presentAlert("error is: "+err.error+ " message is: "+ err.message);
+		this.events.publish('navigation:done', [],this.loading);
+    }
+	
+	presentLoadingCustom() {
+        this.loading = this.loadingCtrl.create({
+        spinner: 'bubbles',
+        });
+        this.loading.present();
     }
 }
