@@ -21,9 +21,9 @@ export class LoginPage {
         this.loginservice.login(user).then(data => {
             if(data) {
                 this.navCtrl.setRoot(HomePage);
-            }
-    });
-   }
+            } 
+		});
+    }
     signup() {
         this.navCtrl.push(SignupPage);
     }
