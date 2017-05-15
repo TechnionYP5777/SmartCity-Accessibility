@@ -23,6 +23,7 @@ import {SearchService} from '../pages/mapview/searchService';
 import {AddSearchQueryPage} from '../pages/addSearchQueryMenu/addsearchquerymenu';
 import {UserInformationService} from '../pages/user-page/userInformationService';
 import { LocationListPage } from '../pages/location-list/location-list';
+import { ViewSearchQueryPage } from '../pages/viewSearchQuery/viewsearchquery';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { LocationListPage } from '../pages/location-list/location-list';
 	IonRating,
 	AddSearchQueryPage,
 	LocationListPage,
-	AdminPage
+	AdminPage,
+	ViewSearchQueryPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -59,6 +61,7 @@ import { LocationListPage } from '../pages/location-list/location-list';
 	AddSearchQueryPage,
 	LocationListPage,
 	AdminPage,
+	ViewSearchQueryPage,
   ],
   providers: [
     StatusBar,
