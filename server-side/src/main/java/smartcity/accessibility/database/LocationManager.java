@@ -4,333 +4,231 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-//import org.eclipse.persistence.internal.sessions.remote.SequencingFunctionCall.GetNextValue;
-import org.parse4j.ParseException;
 import org.parse4j.ParseGeoPoint;
-import org.parse4j.ParseObject;
-import org.parse4j.callback.FindCallback;
-import org.parse4j.callback.GetCallback;
-import org.parse4j.callback.SaveCallback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.google.inject.Inject;
 import com.teamdev.jxmaps.LatLng;
 
-import smartcity.accessibility.exceptions.UnauthorizedAccessException;
+import io.reactivex.Flowable;
+import io.reactivex.schedulers.Schedulers;
+import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.socialnetwork.Review;
-import smartcity.accessibility.socialnetwork.User;
-import smartcity.accessibility.socialnetwork.UserImpl;
+import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
+import smartcity.accessibility.mapmanagement.Location.LocationTypes;
+import smartcity.accessibility.mapmanagement.LocationBuilder;
+import smartcity.accessibility.socialnetwork.BestReviews;
 
 /**
- * @author assaflu
+ * @author KaplanAlexander
  *
  */
-public class LocationManager {
+public class LocationManager extends AbstractLocationManager {
 
-	/**
-	 * If the location saved return it to the callback function If it's not
-	 * saved notify the callback function
-	 * 
-	 * @param l
-	 * @param o
-	 */
-	static void checkLocationInDB(Location l, GetCallback<ParseObject> o) {
-		Map<String, Object> m = new HashMap<String, Object>();
-		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(), l.getCoordinates().getLng()));
-		m.put("subtype", (l.getLocationSubType() != null ? l.getLocationSubType() : Location.LocationSubTypes.Default) + "");
-		m.put("type", (l.getLocationType() != null ? l.getLocationType() : Location.LocationTypes.Coordinate) + "");
-		DatabaseManager.getObjectByFields("Location", m, new GetCallback<ParseObject>() {
-			@Override
-			public void done(ParseObject arg0, ParseException arg1) {
-				o.done(arg1 == null && arg0 != null ? arg0 : null, null);
-			}
-		});
+	public static final String DATABASE_CLASS = "Location";
+	private Database db;
+
+	public static final String NAME_FIELD_NAME = "name";
+	public static final String SUB_TYPE_FIELD_NAME = "subType";
+	public static final String TYPE_FIELD_NAME = "type";
+	public static final String LOCATION_FIELD_NAME = "location";
+	public static final String ID_FIELD_NAME = "objectId";
+
+	private static Logger logger = LoggerFactory.getLogger(LocationManager.class);
+
+	@Inject
+	public LocationManager(Database db) {
+		this.db = db;
 	}
 
-	/**
-	 * calculate the distance between the source point and destination point in
-	 * meters
-	 * 
-	 * @param source
-	 * @param destination
-	 * @return
-	 */
-	private static double distanceBtween(LatLng source, LatLng destination) {
-		double $ = source.getLat(), lat2 = destination.getLat(), lon1 = source.getLng(), lon2 = destination.getLng(),
-				dLat = Math.toRadians(lat2 - $), dLon = Math.toRadians(lon2 - lon1);
-		return 12732000 * Math.asin(Math.sqrt(Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2)
-				* Math.cos(Math.toRadians($)) * Math.cos(Math.toRadians(lat2))));
+	public static Map<String, Object> toMap(Location l) {
+		Map<String, Object> map = new HashMap<>();
+		map.put(LOCATION_FIELD_NAME, new ParseGeoPoint(l.getCoordinates().getLat(), l.getCoordinates().getLng()));
+		map.put(TYPE_FIELD_NAME, l.getLocationType().toString());
+		map.put(SUB_TYPE_FIELD_NAME, l.getLocationSubType().toString());
+		map.put(NAME_FIELD_NAME, l.getName());
+		return map;
 	}
 
-	/**
-	 * return list of LatLng that qualify the radius and threshold (not yet know
-	 * if to implement in background or not - opened issue on it)
-	 * 
-	 * @param source
-	 * @param destination
-	 * @param accessibilityThreshold
-	 * @return
-	 */
-	public static List<LatLng> getNonAccessibleLocationsInRadius(Location source, Location destination,
-			Integer accessibilityThreshold) {
-		StringBuilder mutex = new StringBuilder();
-		final AtomicInteger secondM = new AtomicInteger(0);
-		double radius = distanceBtween(source.getCoordinates(), destination.getCoordinates());
-		LatLng center = new LatLng((source.getCoordinates().getLat() + destination.getCoordinates().getLat()) / 2,
-				(source.getCoordinates().getLng() + destination.getCoordinates().getLng()) / 2);
-		ArrayList<LatLng> $ = new ArrayList<LatLng>();
-		FindCallback<ParseObject> callBack = new FindCallback<ParseObject>() {
-			@Override
-			public void done(List<ParseObject> arg0, ParseException arg1) {
-				if (arg1 == null && arg0 != null)
-					for (ParseObject obj : arg0) {
-						ParseGeoPoint point = (ParseGeoPoint) obj.get("coordinates");
-						$.add(new LatLng(point.getLatitude(), point.getLongitude()));
-					}
-				synchronized (mutex) {
-					mutex.append("done");
-					mutex.notifyAll();
-				}
-
-			}
-		};
-		DatabaseManager.queryByLocation("Location", center, radius / 1000, "coordinates", callBack);
-		synchronized (mutex) {
-			if (!"done".equals(mutex))
-				try {
-					mutex.wait();
-				} catch (InterruptedException e) {
-				}
-		}
-		final List<Location> loc = new ArrayList<Location>();
-		LocationListCallback list = new LocationListCallback() {
-
-			@Override
-			public void done(List<Location> ls) {
-				for (Location ¢ : ls)
-					loc.add(¢);
-				synchronized (secondM) {
-					secondM.set(1);
-					secondM.notifyAll();
-				}
-			}
-		};
-
-		for (LatLng l : $) {
-			getLocation(l, list);
-			synchronized (secondM) {
-				if (secondM.get() == 0)
-					try {
-						secondM.wait();
-					} catch (InterruptedException e) {
-					}
-				secondM.set(0);
-			}
-		}
-
-		List<Location> returnMe = FilterToAllAbove(loc, 1, accessibilityThreshold); // '1' will be changed in the future
-
-		for (Location ¢ : returnMe)
-			$.remove(¢.getCoordinates());
-
-		$.remove(destination.getCoordinates());
-		$.remove(source.getCoordinates());
-		return $;
+	public static Location fromMap(Map<String, Object> m) {
+		LocationBuilder lb = new LocationBuilder();
+		lb.setName(m.get(NAME_FIELD_NAME).toString());
+		lb.setType(LocationTypes.valueOf(m.get(TYPE_FIELD_NAME).toString()));
+		lb.setSubType(LocationSubTypes.valueOf(m.get(SUB_TYPE_FIELD_NAME).toString()));
+		ParseGeoPoint pgp = (ParseGeoPoint) m.get(LOCATION_FIELD_NAME);
+		lb.setCoordinates(pgp.getLatitude(), pgp.getLongitude());
+		return lb.build();
 	}
 
-	/**
-	 * this function will return a specific location, not happened in the
-	 * background
-	 * 
-	 * @param point
-	 * @param t
-	 * @param subtype
-	 * @return
-	 */
-	public static Location getLocation(LatLng point, Location.LocationTypes t, Location.LocationSubTypes subtype) {
-		// StringBuilder mutex = new StringBuilder();
-		final AtomicInteger mutI = new AtomicInteger(0);
-		ArrayList<Review> $ = new ArrayList<Review>();
-		Map<String, Object> values = new HashMap<String, Object>();
-		values.put("location", new ParseGeoPoint(point.getLat(), point.getLng()));
-		FindCallback<ParseObject> callBackR = new FindCallback<ParseObject>() {
-			@Override
-			public void done(List<ParseObject> arg0, ParseException arg1) {
-				if (arg1 == null && arg0 != null)
-					for (ParseObject ¢ : arg0)
-						$.add(new Review(new Location(point, t, subtype), ¢.getInt("rating"),
-								¢.getString("comment"), ¢.getString("user")));
-				synchronized (mutI) {
-					mutI.set(1);
-					mutI.notifyAll();
-				}
+	@Override
+	public String getId(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType,
+			ICallback<String> callback) {
+		logger.info("getting id of location {} {} {}", coordinates, locType, locSubType);
+		Flowable<String> res = Flowable.fromCallable(() -> {
+			Map<String, Object> m = new HashMap<>();
+			m.put(LOCATION_FIELD_NAME, new ParseGeoPoint(coordinates.getLat(), coordinates.getLng()));
+			m.put(TYPE_FIELD_NAME, locType);
+			m.put(SUB_TYPE_FIELD_NAME, locSubType);
+			List<Map<String, Object>> locs = db.get(DATABASE_CLASS, m);
+			if (locs.isEmpty()) {
+				logger.info("no locations found for {}, {}, {}", coordinates, locType, locSubType);
+				return null;
 			}
-		};
-
-		DatabaseManager.queryByFields("Review", values, callBackR);
-		synchronized (mutI) {
-			if ((mutI.get() == 0))
-				try {
-					mutI.wait();
-				} catch (InterruptedException e) {
-				}
-		}
-		return new Location(point, t, subtype, $);
+			if (locs.size() > 1)
+				logger.error("Multiple locations found with same id (coord, loctype and loc subtype) for {} , {} , {}",
+						coordinates, locType, locSubType);
+			return locs.get(0).get(ID_FIELD_NAME).toString();
+		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
+		if (callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);
+		return null;
 	}
 
-	/**
-	 * return list of location that belong to the point, each location with it's
-	 * own reviews
-	 * 
-	 * @param point
-	 * @param c
-	 */
-	public static void getLocation(LatLng point, LocationListCallback c) {
-		ArrayList<Review> reviews = new ArrayList<Review>();
-		ArrayList<Location> ls = new ArrayList<Location>();
-		Map<String, Object> valuesR = new HashMap<String, Object>(), valuesL = new HashMap<String, Object>();
-		valuesL.put("coordinates", new ParseGeoPoint(point.getLat(), point.getLng()));
-		valuesR.put("location", new ParseGeoPoint(point.getLat(), point.getLng()));
-
-		FindCallback<ParseObject> callBackL = new FindCallback<ParseObject>() {
-			@Override
-			public void done(List<ParseObject> arg0, ParseException arg1) {
-				if (arg0 != null) {
-					int index = 0;
-					for (ParseObject obj : arg0) { // get all the locations  belong to the latlng and their id's
-						ls.add(new Location(point, Location.stringToEnumTypes(obj.getString("type")),
-								Location.stringToEnumSubTypes(obj.getString("subtype"))));
-						for (Review r : reviews)
-							if (r.getLocationID().equals(obj.getObjectId())) {
-								try {
-									r.locationSet(new UserImpl("db", "123123", User.Privilege.Admin), ls.get(index));
-								} catch (UnauthorizedAccessException e) {
-									System.out.println("someting went worng loading reviews to location");
-								}
-								ls.get(index).addReviewNoSave(r);
-							}
-					}
-				}
-				c.done(ls);
-			}
-		};
-
-		DatabaseManager.queryByFields("Review", valuesR, new FindCallback<ParseObject>() {
-			@Override
-			public void done(List<ParseObject> arg0, ParseException arg1) {
-				if (arg1 == null && arg0 != null)
-					for (ParseObject obj : arg0) {
-						Review r = new Review(obj.getString("locationID"), obj.getInt("rating"), 
-								obj.getString("comment"), obj.getString("user"));
-						if (obj.getInt("pined") == 1)
-							try {
-								r.pin(new UserImpl("db", "123123", User.Privilege.Admin));
-							} catch (UnauthorizedAccessException e) {
-								System.out.println("someting went worng loading reviews to location");
-							}
-					reviews.add(r); 
-					}
-				DatabaseManager.queryByFields("Location", valuesL, callBackL);
-			}
-		});
+	@Override
+	public String uploadLocation(Location l, ICallback<String> callback) {
+		Flowable<String> res = Flowable.fromCallable(() -> {
+			if (getId(l.getCoordinates(), l.getLocationType(), l.getLocationSubType(), null) == null)
+				return null;
+			return db.put(DATABASE_CLASS, toMap(l));
+		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
+		if (callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);
+		return null;
 	}
 
-	/**
-	 * Save the location in the DB happen in the background
-	 * 
-	 * @param l
-	 */
-	public static void saveLocation(Location l, SaveCallback o) {
-		Map<String, Object> m = new HashMap<String, Object>();
-		m.put("subtype", (l.getLocationSubType() != null ? l.getLocationSubType() : Location.LocationSubTypes.Default) + "");
-		m.put("type", (l.getLocationType() != null ? l.getLocationType() : Location.LocationTypes.Coordinate) + "");
-		m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(), l.getCoordinates().getLng()));
-		checkLocationInDB(l, new GetCallback<ParseObject>() {
+	@Override
+	public List<Location> getLocation(LatLng coordinates, ICallback<List<Location>> locationListCallback) {
+		logger.info("getting locations with coordinates {}", coordinates);
+		Flowable<List<Location>> res = Flowable.fromCallable(() -> {
+			Map<String, Object> m = new HashMap<>();
+			m.put(LOCATION_FIELD_NAME, new ParseGeoPoint(coordinates.getLat(), coordinates.getLng()));
+			
+			List<Map<String, Object>> locsMap = db.get(DATABASE_CLASS, m);
+			logger.debug("db.get returned {}", locsMap.toString());
+			List<Location> locs = new ArrayList<>();
+			Flowable.fromIterable(locsMap).flatMap(m1 -> Flowable.just(m1).subscribeOn(Schedulers.io()).map(m2 -> {
+				Location l = fromMap(m2);
+				l.addReviews(AbstractReviewManager.instance().getReviews(m2.get(ID_FIELD_NAME).toString(), null));
+				return l;
+			})).blockingSubscribe(l -> locs.add(l));
+			return locs;
+		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 
-			@Override
-			public void done(ParseObject arg0, ParseException arg1) {
-				if (arg0 == null)
-					DatabaseManager.putValue("Location", m, new SaveCallback() {
-						@Override
-						public void done(ParseException arg0) {
-							o.done(arg0);
-							for (Review ¢ : l.getReviews())
-								ReviewManager.updateReview(¢);
-						}
-					});
-			}
-		});
+		if (locationListCallback == null)
+			return res.blockingFirst();
+		res.subscribe(locationListCallback::onFinish, Throwable::printStackTrace);
+		return new ArrayList<>();
 	}
 
-	/**
-	 * If the location is not in the DB save it else update it (include updating
-	 * the reviews belong to this location)
-	 * 
-	 * @param l
-	 */
-	public static void updateLocation(Location l) {
-		checkLocationInDB(l, new GetCallback<ParseObject>() {
-			@Override
-			public void done(ParseObject arg0, ParseException arg1) {
-				Map<String, Object> m = new HashMap<String, Object>();
-				m.put("coordinates", new ParseGeoPoint(l.getCoordinates().getLat(), l.getCoordinates().getLng()));
-				if (arg0 == null)
-					saveLocation(l, new SaveCallback() {
-						@Override
-						public void done(ParseException arg0) {
-						}
-					});
-				else {
-					DatabaseManager.update("Location", arg0.getObjectId(), m);
-					for (Review ¢ : l.getReviews())
-						ReviewManager.updateReview(¢);
-				}
+	@Override
+	public List<Location> getLocationsAround(LatLng l, double distance, ICallback<List<Location>> callback) {
+		Flowable<List<Location>> res = Flowable.fromCallable(() -> {
+			List<Map<String, Object>> mapList = db.get(DATABASE_CLASS, LOCATION_FIELD_NAME, l.getLat(), l.getLng(),
+					distance);
+			return mapList.stream().map(m -> {
+							Location ml = fromMap(m);
+							return getLocation(ml.getCoordinates(),
+												ml.getLocationType(),
+												ml.getLocationSubType(),
+												null);
+						}).collect(Collectors.toList());
+		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
+		if (callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);
+		return null;
+	}
+
+	@Override
+	public Location getLocation(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType,
+			ICallback<Location> callback) {
+		Flowable<Location> res = Flowable.fromCallable(() -> {
+			String id = getId(coordinates, locType, locSubType, null);
+			if (id == null)
+				return null;
+			Location l = fromMap(db.get(DATABASE_CLASS, id));
+			l.addReviews(AbstractReviewManager.instance().getReviews(id, null));
+			return l;
+		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
+		if (callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);
+		return null;
+	}
+
+	@Override
+	public Boolean updateLocation(Location loc, ICallback<Boolean> callback) {
+		logger.info("updateLocation for loc {},{},{}", loc.getCoordinates(), loc.getLocationType(),
+				loc.getLocationSubType());
+		Flowable<Boolean> res = Flowable.fromCallable(() -> {
+			String id = getId(loc.getCoordinates(), loc.getLocationType(), loc.getLocationSubType(), null);
+			if (id == null) {
+				logger.error("Location not found {},{},{}", loc.getCoordinates(), loc.getLocationType(),
+						loc.getLocationSubType());
+				return false;
 			}
-		});
+			return db.update(DATABASE_CLASS, id, toMap(loc));
+		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
+		if (callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);
+		return null;
+	}
+
+	@Override
+	public List<LatLng> getNonAccessibleLocationsInRadius(LatLng source, LatLng destination,
+			Integer accessibilityThreshold, ICallback<List<LatLng>> callback) {
+		Flowable<List<LatLng>> res = Flowable.fromCallable(() -> {
+			List<Location> locList = getLocationsAround(getCenter(source, destination),
+														distance(source, destination),
+														null);
+			return locList.stream()
+							.map(l -> new BestReviews(l))
+							.filter(br -> br.getTotalRatingByAvg() >= accessibilityThreshold)
+							.map(br -> br.getLocation().getCoordinates())
+							.distinct()
+							.collect(Collectors.toList());
+		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
+		if (callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);
+		return new ArrayList<>();
+	}
+
+	private LatLng getCenter(LatLng p1, LatLng p2) {
+		double dLon = Math.toRadians(p2.getLng() - p1.getLng());
+
+		double lat1 = Math.toRadians(p1.getLat());
+		double lat2 = Math.toRadians(p2.getLat());
+		double lon1 = Math.toRadians(p1.getLng());
+
+		double Bx = Math.cos(lat2) * Math.cos(dLon);
+		double By = Math.cos(lat2) * Math.sin(dLon);
+		double lat3 = Math.atan2(Math.sin(lat1) + Math.sin(lat2),
+				Math.sqrt((Math.cos(lat1) + Bx) * (Math.cos(lat1) + Bx) + By * By));
+		double lon3 = lon1 + Math.atan2(By, Math.cos(lat1) + Bx);
+
+		return new LatLng(Math.toDegrees(lat3), Math.toDegrees(lon3));
 
 	}
 
-	/*
-	 * @Author Kolikant
-	 */
-	public static List<Location> FilterToAllBellow(List<Location> totalLocation, int ReviewsTakenToAccount,
-			int accessibilityLevel) {
-		return totalLocation.stream().filter(λ -> λ.getRating(ReviewsTakenToAccount).getScore() < accessibilityLevel)
-				.collect(Collectors.toList());
-	}
-
-	/*
-	 * @Author Kolikant
-	 */
-	public static List<Location> FilterToAllAbove(List<Location> totalLocation, int ReviewsTakenToAccount,
-			int accessibilityLevel) {
-		return totalLocation.stream().filter(λ -> λ.getRating(ReviewsTakenToAccount).getScore() >= accessibilityLevel)
-				.collect(Collectors.toList());
-	}
-
-	/**
-	 * return the location into the call back (without their reviews)
-	 * 
-	 * @param point
-	 * @param c
-	 * @param radius
-	 */
-	public static void getLocationsNearPoint(LatLng point, LocationListCallback c, double radius) {
-		ArrayList<Location> ls = new ArrayList<Location>();
-		Map<String, Object> values = new HashMap<String, Object>();
-		values.put("location", new ParseGeoPoint(point.getLat(), point.getLng()));
-		DatabaseManager.queryByLocation("Location", point, radius, "coordinates", new FindCallback<ParseObject>() {
-			@Override
-			public void done(List<ParseObject> arg0, ParseException arg1) {
-				if (arg0 != null)
-					for (ParseObject ¢ : arg0)
-						ls.add(new Location(point, Location.stringToEnumTypes(¢.getString("type")),
-								Location.stringToEnumSubTypes(¢.getString("subtype"))));
-				c.done(ls);
-			}
-		});
+	private double distance(LatLng p1, LatLng p2) {
+		double lat1 = p1.getLat(); 
+		double lat2 = p2.getLat();
+		double lng1 = p1.getLng();
+		double lng2 = p2.getLng();
+		double earthRadius = 6371; // in km
+		double dLat = Math.toRadians(lat2 - lat1);
+		double dLng = Math.toRadians(lng2 - lng1);
+		double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(Math.toRadians(lat1))
+				* Math.cos(Math.toRadians(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		return earthRadius * c;
 	}
 
 }

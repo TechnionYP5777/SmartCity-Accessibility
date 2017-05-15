@@ -1,11 +1,12 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController,ModalController, Events,AlertController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import {MapClickMenuPage} from '../mapclickmenu/mapclickmenu';
+import { MapClickMenuPage } from '../mapclickmenu/mapclickmenu';
 import { LoginService } from '../login/LoginService';
 import { UserPagePage } from '../user-page/user-page'; 
 import { LoginPage } from '../login/login';
-import { ComplexSearchPage } from '../complex-search/complex-search'; 
+import { ComplexSearchPage } from '../complex-search/complex-search';
+import { AdminPage } from '../admin/admin'; 
 import { SearchService } from './searchService';
 declare var google;  
  
@@ -24,6 +25,7 @@ export class MapviewPage {
   searchQuery: any;
   loginPage = LoginPage;
   userProfile = UserPagePage;
+  adminPage = AdminPage;
   complexSearchPage = ComplexSearchPage;
   output :  any;
   myCallbackFunction : any;
@@ -38,13 +40,17 @@ export class MapviewPage {
     }
   
 	addMarker(LatLngArr){
-	 for (var i = 0; i < LatLngArr.length; i++) {
-          var coords = LatLngArr[i];
-          var latLng = new google.maps.LatLng(coords.lat,coords.lng);
-          var marker = new google.maps.Marker({
-            position: latLng,
-            map: this.map
-          });
+	    for (var i = 0; i < LatLngArr.length; i++) {
+            var coords = LatLngArr[i];
+            var latLng = new google.maps.LatLng(coords.lat,coords.lng);
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: this.map
+            });
+		    google.maps.event.addListener(marker,'click',(event)=>{ 
+			    let clickMenu = this.modalCtrl.create(MapClickMenuPage,{latlng : event.latLng});
+			    clickMenu.present();
+		    });
         }
     }
 	
@@ -66,9 +72,10 @@ export class MapviewPage {
 			});
 	
 	}
-    
+		
+
 	subscribeToNavigation(){
-		this.events.subscribe('navigation:done', (navigationResults) => {
+		this.events.subscribe('navigation:done', (navigationResults,loading) => {
 			var route = new google.maps.Polyline({
 			    path: navigationResults,
 			    geodesic: true,
@@ -78,6 +85,7 @@ export class MapviewPage {
 			});
 
 			route.setMap(this.map);
+			loading.dismiss();
 		});
 	}
 	presentAlert(str) {

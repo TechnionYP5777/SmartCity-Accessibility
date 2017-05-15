@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.socialnetwork.User.Privilege;
 
 /**
  * 
@@ -29,15 +28,16 @@ public class BestReviews {
 	
 	public BestReviews(Location l) {
 		this.l = l;
+		this.n = DEFAULT;
 	}
 	
 	public class HelpfulnessCompare implements Comparator<Review> {
 
 		@Override
 		public int compare(Review o1, Review o2) {
-			if (o2.getUser().getHelpfulness().helpfulness() >  o1.getUser().getHelpfulness().helpfulness())
+			if (o2.getUser().getAvgRating() >  o1.getUser().getAvgRating())
 				return 1;
-			else if (o2.getUser().getHelpfulness().helpfulness() >  o1.getUser().getHelpfulness().helpfulness())
+			else if (o2.getUser().getAvgRating() >  o1.getUser().getAvgRating())
 				return 0;
 			else return o2.getRating().getScore() - o1.getRating().getScore();
 		}
@@ -76,10 +76,14 @@ public class BestReviews {
 		List<Review> $ = getMostRated();
 		double sum = 0, totalhelpfulness = 0;
 		for (Review r : $) {
-			double h = r.getUser().getHelpfulness().helpfulness();
+			double h = r.getUser().getAvgRating();
 			double rating = r.getRating().getScore();
 			if (h < 0) {
-				if (!Privilege.pinPrivilegeLevel(r.getUser()))
+				// TODO : Koral, review not long holds the user, instead the UserProfile
+				// I've commented out the previous code, why is the privilege level of the user who wrote the review important?
+				// Did you mean to check whether the r is pinned or not?
+				// -- Alex
+				if (!r.isPinned())//(!Privilege.pinPrivilegeLevel(r.getUser()))
 					continue;
 				h = 1;
 			}
@@ -102,5 +106,9 @@ public class BestReviews {
 	
 	public List<Review> getReviews() {
 		return l.getReviews();
+	}
+	
+	public Location getLocation(){
+		return l;
 	}
 }

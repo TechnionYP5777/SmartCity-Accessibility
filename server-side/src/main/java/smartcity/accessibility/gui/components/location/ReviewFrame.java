@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import smartcity.accessibility.database.ReviewManager;
+import smartcity.accessibility.database.AbstractReviewManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.components.JMultilineLabel;
@@ -58,7 +58,7 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 
 			@Override
 			public void windowClosed(WindowEvent arg0) {
-				ReviewManager.updateReview(review);
+				AbstractReviewManager.instance().updateReview(review, null);
 			}
 
 			@Override
@@ -141,7 +141,7 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 
 		}
 
-		if (Application.appUser.getName().equals(review.getUser())
+		if (Application.appUser.getUsername().equals(review.getUser())
 				|| Privilege.deletePrivilegeLevel(Application.appUser)) {
 			btnDelete = new JButton("Delete");
 			btnDelete.setBounds(335, 17, 89, 23);
@@ -176,10 +176,10 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 		lblDownvoteCount.setText(Integer.toString(review.getDownvotes()));
 		lblUpvoteCount.setText(Integer.toString(review.getUpvotes()));
 		if (arg0.getSource() == btnDelete) {
-			try {
-				location.deleteReview(Application.appUser, review);
-			} catch (UnauthorizedAccessException ¢) {
-				¢.printStackTrace();
+
+			if (Application.appUser.canDeleteReview(review)) {
+				AbstractReviewManager.instance().deleteReview(review, b -> { });
+				location.deleteReview(review);
 			}
 			frame.dispose();
 		}
@@ -209,14 +209,9 @@ public class ReviewFrame implements MouseListener, ChangeListener {
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
 		if (arg0.getSource() == chckbxPinned)
-			try {
-				if (chckbxPinned.isSelected())
-					review.pin(Application.appUser);
-				else
-					review.unPin(Application.appUser);
-			} catch (UnauthorizedAccessException ¢) {
-				¢.printStackTrace();
-			}
+			if (Application.appUser.canPinReview())
+				review.setPinned(chckbxPinned.isSelected());
+
 
 	}
 }

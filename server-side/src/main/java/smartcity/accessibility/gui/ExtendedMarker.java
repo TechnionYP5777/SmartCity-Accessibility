@@ -1,7 +1,6 @@
 package smartcity.accessibility.gui;
 
 import java.util.HashMap;
-import java.util.List;
 
 import com.teamdev.jxmaps.Icon;
 import com.teamdev.jxmaps.Map;
@@ -9,8 +8,7 @@ import com.teamdev.jxmaps.MapMouseEvent;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.MouseEvent;
 
-import smartcity.accessibility.database.LocationListCallback;
-import smartcity.accessibility.database.LocationManager;
+import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.gui.components.location.LocationFrame;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.Location;
@@ -50,15 +48,8 @@ public class ExtendedMarker extends Marker {
 
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				LocationManager.getLocation(loc.getCoordinates(),new LocationListCallback() {
-					
-					@Override
-					public void done(List<Location> ¢) {
-						new LocationFrame(¢.get(0));
-						
-					}
-				});
-				
+				AbstractLocationManager.instance().getLocation(loc.getCoordinates(),
+						l -> new LocationFrame(l.get(0)));
 
 			}
 

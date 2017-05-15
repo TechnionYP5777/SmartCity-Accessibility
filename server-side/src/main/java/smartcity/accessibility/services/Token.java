@@ -2,18 +2,19 @@ package smartcity.accessibility.services;
 
 import smartcity.accessibility.socialnetwork.User;
 
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-
+/**
+ * @author yael
+ */
 public class Token {
 	private String token;
 	private Token(String token) {
 		this.setToken(token);
 	}
 	static public Token calcToken(User u){
-		String str = u.getName()+u.getPassword();
+		String str = u.getUsername()+u.getPassword();
 		MessageDigest messageDigest = null;
 		try {
 			messageDigest = MessageDigest.getInstance("SHA-256");

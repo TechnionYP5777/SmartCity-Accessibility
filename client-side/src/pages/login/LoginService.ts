@@ -1,13 +1,14 @@
 import {Injectable} from "@angular/core";
 import {Http, Headers} from "@angular/http";
 import { Constants } from "../constants";
+import { AlertController } from 'ionic-angular';
 
 @Injectable()
 export class LoginService {
     isLogin: boolean;
     token : any;
     
-    constructor(public http: Http) {
+    constructor(public http: Http,public alertCtrl: AlertController) {
         this.http = http;
         this.isLogin = false;
         this.token = null;
@@ -50,7 +51,8 @@ export class LoginService {
                     this.storeUserCredentials(data.json().token);
                     resolve(true);
                 }
-                else
+			}, err => {
+					this.presentAlert("<p>error: " + err.json().error  + "</p> <p> message: " + err.json().message + "</p>");
                     resolve(false);
             });
         });
@@ -76,4 +78,13 @@ export class LoginService {
     logout() {
         this.destroyUserCredentials();
     }
+	
+	presentAlert(str) {
+		let alert = this.alertCtrl.create({
+		  title: 'Alert',
+		  subTitle: str,
+		  buttons: ['OK']
+		});
+		alert.present();
+	}
 }

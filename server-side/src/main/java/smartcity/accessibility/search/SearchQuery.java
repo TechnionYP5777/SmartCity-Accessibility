@@ -1,7 +1,5 @@
 package smartcity.accessibility.search;
 
-import static org.junit.Assert.fail;
-
 /**
  * @author Kolikant
  *
@@ -19,11 +17,11 @@ import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.swing.MapView;
 
-import smartcity.accessibility.database.LocationListCallback;
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.LocationBuilder;
 
 /**
  * Author Kolikant
@@ -133,14 +131,11 @@ public class SearchQuery {
 		MapView mapView = JxMapsFunctionality.getMapView();
 		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
 		NearbyPlacesSearch.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations,
-				new LocationListCallback() {
-
-					@Override
-					public void done(List<Location> ¢) {
+				 ¢-> {
 						places = ¢;
 						SetSearchStatus(SearchStage.Done);
 						wakeTheWaiters();
-					}
+					
 				});
 		try {
 			waitOnSearch();
@@ -164,7 +159,7 @@ public class SearchQuery {
 					return;
 				}
 				LatLng l = rs[0].getGeometry().getLocation();
-				Location f = new Location(l);
+				Location f = new LocationBuilder().setCoordinates(l).build();
 				f.setName(rs[0].getFormattedAddress());
 				$.add(f);
 				SetSearchStatus(SearchStage.Done);

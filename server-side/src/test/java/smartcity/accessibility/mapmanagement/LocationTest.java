@@ -1,6 +1,7 @@
 package smartcity.accessibility.mapmanagement;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -10,13 +11,10 @@ import org.parse4j.ParseException;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
-import smartcity.accessibility.database.DatabaseManager;
-import smartcity.accessibility.exceptions.UnauthorizedAccessException;
-import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
 import smartcity.accessibility.socialnetwork.User;
-import smartcity.accessibility.socialnetwork.UserImpl;
+import smartcity.accessibility.socialnetwork.UserBuilder;
 
 /**
  * @author Koral Chapnik
@@ -31,20 +29,19 @@ public class LocationTest {
 
 	@BeforeClass
 	public static void init() throws ParseException {
-		DatabaseManager.initialize();
-		User u1 = UserImpl.RegularUser("Koral", "123", ""), u2 = UserImpl.RegularUser("Koral2", "123", ""),
-				u3 = UserImpl.RegularUser("Koral3", "123", ""), u4 = UserImpl.Admin("Koral4", "123", "");
+		//DatabaseManager.initialize();
+		User u1 = UserBuilder.RegularUser("Koral", "123", ""), u2 = UserBuilder.RegularUser("Koral2", "123", ""),
+				u3 = UserBuilder.RegularUser("Koral3", "123", ""), u4 = UserBuilder.Admin("Koral4", "123", "");
 		LatLng c = new LatLng(31.90588, 34.997571); // Modi'in Yehalom St, 20
-		l = new Location(c);
-		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1);
-		r2 = new Review(l, 5, "middle accessibility level", u2);
-		r3 = new Review(l, Score.getMaxScore(), "high accessibility level", u3);
-		r4 = new Review(l,2, "high accessibility level", u3);
-		try {
-			r4.pin(u4);
-		} catch (UnauthorizedAccessException e) {
-			fail("shouldnt fail");
-		}
+		l = new LocationBuilder().setCoordinates(c).build();
+		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1.getProfile());
+		r2 = new Review(l, 5, "middle accessibility level", u2.getProfile());
+		r3 = new Review(l, Score.getMaxScore(), "high accessibility level", u3.getProfile());
+		r4 = new Review(l,2, "high accessibility level", u3.getProfile());
+		if (u4.canPinReview())
+			r4.setPinned(true);
+		else
+			fail("shouldn't fail");
 		l.addReview(r1);
 		l.addReview(r2);
 		l.addReview(r3);

@@ -14,9 +14,12 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="background"	>
   <ion-card-content>
   Hello Users!<br />
-   <button [navPush]="mapviewPage">Go To mapviewPage</button>
+   <button ion-button [navPush]="mapviewPage" class="buttons">Go To mapviewPage</button>
+   <button ion-button [navPush]="adminPage" class="buttons">Admin Page</button>
+
 </ion-card-content>
 </ion-content>
+

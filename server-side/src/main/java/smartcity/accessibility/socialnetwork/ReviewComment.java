@@ -2,6 +2,9 @@ package smartcity.accessibility.socialnetwork;
 
 import java.util.List;
 
+import smartcity.accessibility.database.AbstractUserProfileManager;
+import smartcity.accessibility.exceptions.UserNotFoundException;
+
 /**
  * 
  * @author KaplanAlexander
@@ -12,14 +15,14 @@ public class ReviewComment {
 	public static final int NEGATIVE_RATING = -1;
 
 	private int rating;
-	private final User commentator;
+	private final UserProfile commentator;
 
-	public ReviewComment(User commentator) {
+	public ReviewComment(UserProfile commentator) {
 		rating = 0;
 		this.commentator = commentator;
 	}
 
-	public ReviewComment(int rating, User commentator) {
+	public ReviewComment(int rating, UserProfile commentator) {
 		this.rating = rating;
 		this.commentator = commentator;
 	}
@@ -32,7 +35,7 @@ public class ReviewComment {
 		this.rating = rating;
 	}
 
-	public User getCommentator() {
+	public UserProfile getCommentator() {
 		return commentator;
 	}
 
@@ -57,5 +60,18 @@ public class ReviewComment {
 			return false;
 		return true;
 	}
+	
+	public static String serialize(ReviewComment rc){
+		return rc.commentator.getUsername()+"#"+rc.rating;
+	}
 
+	public static ReviewComment deserialize(String s) throws UserNotFoundException, NumberFormatException{
+		if (s.contains("#")){
+			String[] ls = s.split("#");
+			if (ls.length >= 2)
+				return new ReviewComment(Integer.parseInt(ls[1]), AbstractUserProfileManager.instance().get(ls[0], null));
+		}
+		return new ReviewComment(AbstractUserProfileManager.instance().get(s.replace("#", ""), null));
+		
+	}
 }

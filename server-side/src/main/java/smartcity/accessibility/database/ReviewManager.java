@@ -1,219 +1,214 @@
 package smartcity.accessibility.database;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import org.parse4j.ParseException;
-import org.parse4j.ParseGeoPoint;
-import org.parse4j.ParseObject;
-import org.parse4j.callback.FindCallback;
-import org.parse4j.callback.GetCallback;
-import org.parse4j.callback.SaveCallback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.google.inject.Inject;
+
+import io.reactivex.Flowable;
+import io.reactivex.schedulers.Schedulers;
+import smartcity.accessibility.database.callbacks.ICallback;
+import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
-import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.ReviewComment;
+import smartcity.accessibility.socialnetwork.UserProfile;
 
 /**
- * @author assaflu
+ * @author KaplanAlexander
  *
  */
-public class ReviewManager {
+public class ReviewManager extends AbstractReviewManager {
 
-	/**
-	 * If the review saved in the DB as hidden review - return the review If the
-	 * review saved as review return it to the callback function If it's not
-	 * saved notify the callback function
-	 * 
-	 * @param r
-	 * @param o
-	 */
-	public static void checkReviewInDB(Review r, GetCallback<ParseObject> o) {
-		Map<String, Object> m = new HashMap<String, Object>();
-		m.put("user", r.getUser());
-		m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),
-				r.getLocation().getCoordinates().getLng()));
+	private Database db;
+	public static final String DATABASE_CLASS = "Review";
 
-		DatabaseManager.getObjectByFields("HiddenReview", m, new GetCallback<ParseObject>() {
-			@Override
-			public void done(ParseObject arg0, ParseException arg1) {
-				if (arg0 != null)
-					o.done(arg0, null);
-				else
-					DatabaseManager.getObjectByFields("Review", m, new GetCallback<ParseObject>() {
-						@Override
-						public void done(ParseObject arg0, ParseException arg1) {
-							o.done(arg0 != null ? arg0 : null, null);
-						}
-					});
-			}
-		});
+	private static Logger logger = LoggerFactory.getLogger(ReviewManager.class);
+
+	public static final String ID_FIELD_NAME = "objectId";
+	public static final String LOCATION_FIELD_NAME = "locationId";
+	public static final String CONTENT_FIELD_NAME = "content";
+	public static final String IS_PINNED_FIELD_NAME = "isPinned";
+	public static final String RATING_FIELD_NAME = "rating";
+	public static final String USERNAME_FIELD_NAME = "username";
+	public static final String COMMENTS_FIELD_NAME = "comments";
+
+	@Inject
+	public ReviewManager(Database db) {
+		this.db = db;
 	}
 
-	/**
-	 * saves the review in the DB - happen in the background
-	 * 
-	 * @param r
-	 * @throws ParseException
-	 */
-	public static void uploadReview(Review r) {
-		Map<String, Object> m = new HashMap<String, Object>();
-		m.put("user", r.getUser());
-		m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),
-				r.getLocation().getCoordinates().getLng()));
-		m.put("rating", r.getRating().getScore());
-		m.put("comment", r.getContent());
-		m.put("pined", r.isPinned() ? 1 : 0);
-		LocationManager.checkLocationInDB(r.getLocation(), new GetCallback<ParseObject>() {
-			@Override
-			public void done(ParseObject arg0, ParseException arg1) {
-				if (arg0 != null) {
-					m.put("locationID", arg0.getObjectId());
-					checkReviewInDB(r, new GetCallback<ParseObject>() {
-						@Override
-						public void done(ParseObject arg0, ParseException arg1) {
-							if (arg0 != null && "HiddenReview".equals(arg0.getClassName()))
-								DatabaseManager.putValue("Review", m, new SaveCallback() {
-									@Override
-									public void done(ParseException arg0) {
-									}
-								});
-							else if (arg0 == null)
-								DatabaseManager.putValue("Review", m, new SaveCallback() {
-									@Override
-									public void done(ParseException arg0) {
-									}
-								});
-						}
-					});
-				} else
-					LocationManager.saveLocation(r.getLocation(), new SaveCallback() {
-						@Override
-						public void done(ParseException arg0) {
-							LocationManager.checkLocationInDB(r.getLocation(), new GetCallback<ParseObject>() {
-								@Override
-								public void done(ParseObject arg0, ParseException arg1) {
-									if (arg0 == null)
-										System.out.println("something went worng");
-									else {
-										m.put("locationID", arg0.getObjectId());
-										checkReviewInDB(r, new GetCallback<ParseObject>() {
-											@Override
-											public void done(ParseObject arg0, ParseException arg1) {
-												if (arg0 != null && "HiddenReview".equals(arg0.getClassName()))
-													DatabaseManager.putValue("Review", m, new SaveCallback() {
-														@Override
-														public void done(ParseException arg0) {
-														}
-													});
-												else if (arg0 == null)
-													DatabaseManager.putValue("Review", m, new SaveCallback() {
-														@Override
-														public void done(ParseException arg0) {
-														}
-													});
-											}
-										});
-									}
-								}
-							});
-						}
-					});
+	public static Map<String, Object> toMap(Review r) {
+		logger.debug("toMap {} by {}",r.getContent(),r.getUser().getUsername());
+		Map<String, Object> map = new HashMap<>();
+		Location l = r.getLocation();
+		String id = null;
+		if(l!=null){
+			id = AbstractLocationManager.instance().getId(l.getCoordinates(), l.getLocationType(),
+					l.getLocationSubType(), null);
+			if (id == null) {
+				id = AbstractLocationManager.instance().uploadLocation(l, null);
 			}
-		});
+		}
+		map.put(LOCATION_FIELD_NAME, id);
+		map.put(RATING_FIELD_NAME, r.getRating().getScore());
+		map.put(CONTENT_FIELD_NAME, r.getContent());
+		map.put(IS_PINNED_FIELD_NAME, r.isPinned());
+		map.put(USERNAME_FIELD_NAME, r.getUser().getUsername());
 
+		List<ReviewComment> lrc = r.getComments();
+		StringBuilder sb = new StringBuilder();
+		for (ReviewComment rc : lrc){
+			logger.debug("serializing reviewcomment {} {}", rc.getCommentator().getUsername(), rc.getRating());
+			sb.append(ReviewComment.serialize(rc));
+			sb.append("$");
+		}
+		if (sb.length()>0)
+			sb.setLength(sb.length() - 1);
+		map.put(COMMENTS_FIELD_NAME, sb.toString());
+		
+		return map;
 	}
 
-	/**
-	 * Return the review that belong to the user and location given. The
-	 * function get CallBack function to which it returns the review
-	 * 
-	 * @param u
-	 * @param l
-	 * @param o
-	 */
-	public static void getReviewByUserAndLocation(User u, Location l, GetCallback<ParseObject> o) {
-		LocationManager.checkLocationInDB(l, new GetCallback<ParseObject>() {
-			@Override
-			public void done(ParseObject arg0, ParseException arg1) {
-				if (arg0 == null)
-					o.done(null, arg1);
-				else {
-					Map<String, Object> m = new HashMap<String, Object>();
-					m.put("user", u.getName());
-					m.put("locationID", arg0.getObjectId());
-					DatabaseManager.queryByFields("Review", m, new FindCallback<ParseObject>() {
-						@Override
-						public void done(List<ParseObject> arg0, ParseException arg1) {
-							o.done(arg0 == null ? null : arg0.get(0), arg1);
-						}
-					});
-				}
-			}
-		});
+	public static Review fromMap(Map<String, Object> m) {
+		logger.debug("fromMap {}", m);
+		int rating = (int) m.get(RATING_FIELD_NAME);
+		String content = m.get(CONTENT_FIELD_NAME).toString();
+		boolean isPinned = (boolean) m.get(IS_PINNED_FIELD_NAME);
+		UserProfile up = null;
+		try {
+			up = AbstractUserProfileManager.instance().get(m.get(USERNAME_FIELD_NAME).toString(), null);
+		} catch (UserNotFoundException e) {
+			logger.error("User not found for review {} with error {}", m.get(ID_FIELD_NAME), e);
+		}
+		Review r = new Review(null, rating, content, up);
+		r.setPinned(isPinned);
 
+		if (!m.containsKey(COMMENTS_FIELD_NAME)){
+			logger.debug("m not contains comments field name");
+			return r;
+		}
+		String comments = m.get(COMMENTS_FIELD_NAME).toString();
+		if (comments == null || "".equals(comments)){
+			logger.debug("comments are null or empty");
+			return r;
+		}
+		String[] ls = comments.split("$");
+		List<ReviewComment> lrc = new ArrayList<>();
+		for (String comment : ls){
+			logger.debug("comments split into {}", comment);
+			try {
+				lrc.add(ReviewComment.deserialize(comment));
+			} catch (NumberFormatException | UserNotFoundException e) {
+				logger.error("Couldn't deserialize review comment {}, with exception {}", comment, e);
+			}
+		}
+		r.addComments(lrc);
+		
+		return r;
 	}
 
-	/**
-	 * Remove the review from the "Review" object class and put it back in the
-	 * HiddenReview object class HiddenReview are deleted every 24h
-	 * 
-	 * @param r
-	 */
-	public static void deleteReview(Review r) {
-		Map<String, Object> m = new HashMap<String, Object>();
-		m.put("user", r.getUser());
-
-		LocationManager.checkLocationInDB(r.getLocation(), new GetCallback<ParseObject>() {
-			@Override
-			public void done(ParseObject arg0, ParseException arg1) {
-				m.put("locationID", arg0.getObjectId());
-				DatabaseManager.getObjectByFields("Review", m, new GetCallback<ParseObject>() {
-					@Override
-					public void done(ParseObject arg0, ParseException arg1) {
-						if (arg1 != null || arg0 == null)
-							return;
-						DatabaseManager.deleteById("Review", arg0.getObjectId() + "");
-						m.put("location", arg0.getParseGeoPoint("location"));
-						m.put("rating", arg0.getInt("rating"));
-						m.put("comment", arg0.getString("comment"));
-						m.put("pined", arg0.getInt("pined"));
-						DatabaseManager.putValue("HiddenReview", m, new SaveCallback() {
-							@Override
-							public void done(ParseException arg0) {
-							}
-						});
-					}
-				});
-			}
-		});
+	@Override
+	public List<Review> getReviews(String locationId, ICallback<List<Review>> callback) {
+		logger.debug("getReviews for location {}", locationId);
+		Flowable<List<Review>> res = Flowable.fromCallable(() -> {
+			Map<String, Object> map = new HashMap<>();
+			map.put(LOCATION_FIELD_NAME, locationId);
+			List<Map<String, Object>> reviews = db.get(DATABASE_CLASS, map);
+			return reviews.stream().map(m -> fromMap(m)).collect(Collectors.toList());
+		})
+		.subscribeOn(Schedulers.io())
+		.observeOn(Schedulers.single());
+		if(callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);	
+		return new ArrayList<>();
 	}
 
-	/**
-	 * If the review is in the DB as review update it If the review is in the DB
-	 * as HiddenReview ignore else add the review
-	 * 
-	 * @param r
-	 */
-	public static void updateReview(Review r) {
-		checkReviewInDB(r, new GetCallback<ParseObject>() {
-			@Override
-			public void done(ParseObject arg0, ParseException arg1) {
-				if (arg0 == null)
-					uploadReview(r);
-				else if (!"HiddenReview".equals(arg0.getClassName())) {
-					Map<String, Object> m = new HashMap<String, Object>();
-					m.put("user", r.getUser());
-					m.put("location", new ParseGeoPoint(r.getLocation().getCoordinates().getLat(),
-							r.getLocation().getCoordinates().getLng()));
-					m.put("rating", r.getRating().getScore());
-					m.put("comment", r.getContent());
-					m.put("pined", r.isPinned() ? 1 : 0);
-					DatabaseManager.update("Review", arg0.getObjectId(), m);
-				}
+	@Override
+	public List<Review> getReviewWithLocation(String locationId, ICallback<List<Review>> callback) {
+		logger.info("get reviews with location for {} ", locationId);
+		Flowable<List<Review>> res = Flowable.fromCallable(() -> {
+			Map<String, Object> m = db.get(LocationManager.DATABASE_CLASS, locationId);
+			Location l = LocationManager.fromMap(m);
+			l = AbstractLocationManager.instance()
+				.getLocation(l.getCoordinates(),
+						l.getLocationType(),
+						l.getLocationSubType(),
+						null);
+			return l.getReviews();
+		})
+		.subscribeOn(Schedulers.io())
+		.observeOn(Schedulers.single());
+		if(callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);	
+		return new ArrayList<>();
+	}
+
+	@Override
+	public Boolean uploadReview(Review r, ICallback<Boolean> callback) {
+		logger.debug("uploadReview for user {}", r.getUser().getUsername());
+		Flowable<Boolean> res = Flowable.fromCallable(() -> (db.put(DATABASE_CLASS, toMap(r)) != null))
+		.subscribeOn(Schedulers.io())
+		.observeOn(Schedulers.single());
+		if(callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);	
+		return null;
+	}
+
+	@Override
+	public Boolean deleteReview(Review r, ICallback<Boolean> callback) {
+		logger.debug("deleteReview for user {}", r.getUser().getUsername());
+		Flowable<Boolean> res = Flowable.fromCallable(() -> {
+			Map<String, Object> m = toMap(r);
+			List<Map<String, Object>> lm = db.get(DATABASE_CLASS, m);
+			if(lm.isEmpty())
+				return false;
+			if(lm.size() > 1){
+				logger.error("Multiple reviews found, not deleting");
+				return false;
 			}
-		});
+			return db.delete(DATABASE_CLASS, lm.get(0).get(ID_FIELD_NAME).toString());
+		})
+		.subscribeOn(Schedulers.io())
+		.observeOn(Schedulers.single());
+		if(callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);	
+		return null;
+	}
+
+	@Override
+	public Boolean updateReview(Review review, ICallback<Boolean> callback) {
+		logger.debug("udpateReview for user {}", review.getUser().getUsername());
+		Flowable<Boolean> res = Flowable.fromCallable(() -> {
+			Map<String, Object> m = toMap(review);
+			Map<String, Object> m2 = new HashMap<>();
+			m2.put(LOCATION_FIELD_NAME, m.get(LOCATION_FIELD_NAME));
+			m2.put(USERNAME_FIELD_NAME, m.get(USERNAME_FIELD_NAME));
+			List<Map<String, Object>> lm = db.get(DATABASE_CLASS, m2);
+			if(lm.isEmpty())
+				return false;
+			if(lm.size() > 1){
+				logger.error("Multiple reviews found, not updating");
+				return false;
+			}
+			return db.update(DATABASE_CLASS, lm.get(0).get(ID_FIELD_NAME).toString(), m);
+		})
+		.subscribeOn(Schedulers.io())
+		.observeOn(Schedulers.single());
+		if(callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);	
+		return null;
 	}
 
 }

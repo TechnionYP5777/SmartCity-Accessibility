@@ -1,6 +1,18 @@
 page-complex-search {
 	.try {
-		background-image: url('../assets/img/search.jpg');
+		background-image: url('../assets/img/background.jpg');
 	}
+	.inputs {
+		background: transparent;
+		color: danger;
+	}
+	.text {
+		font-weight: bold;
+		font-size: 20px;
+		text-align: justify;
+		font-style: italic;
+		text-color: danger;
+	}
+	
 }
  

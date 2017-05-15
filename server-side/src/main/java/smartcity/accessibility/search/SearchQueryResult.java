@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.teamdev.jxmaps.Map;
 
-import smartcity.accessibility.database.LocationManager;
+import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.exceptions.EmptySearchQuery;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.BestReviews;
@@ -49,7 +49,7 @@ public class SearchQueryResult {
 
 		ArrayList<Location> arr = new ArrayList<Location>();
 		for (Location ¢ : locations)
-			arr.add(LocationManager.getLocation(¢.getCoordinates(), ¢.getLocationType(), ¢.getLocationSubType()));
+			arr.add(AbstractLocationManager.instance().getLocation(¢.getCoordinates(), ¢.getLocationType(), ¢.getLocationSubType(), null));
 		
 		locations.clear();
 		locations.addAll(arr);

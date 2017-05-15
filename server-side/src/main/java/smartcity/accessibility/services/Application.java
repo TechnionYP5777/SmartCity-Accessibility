@@ -9,13 +9,23 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import smartcity.accessibility.database.DatabaseModule;
+import smartcity.accessibility.database.LocationManager;
+import smartcity.accessibility.database.ReviewManager;
+import smartcity.accessibility.database.UserProfileManager;
 import jersey.repackaged.com.google.common.cache.CacheBuilder;
 import jersey.repackaged.com.google.common.cache.CacheLoader;
 import jersey.repackaged.com.google.common.cache.LoadingCache;
-import smartcity.accessibility.database.DatabaseManager;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
-
+/**
+ * @author yael
+ */
 @SpringBootApplication
 public class Application {
 	
@@ -23,11 +33,15 @@ public class Application {
 	public static ExtendedMapView mapView = JxMapsFunctionality.getMapView();;
 	
 	public Application(){
-		DatabaseManager.initialize();
 		resetSessions(); 
 	}
 	
 	public static void main(String[] args) {
+		Injector injector = Guice.createInjector(new DatabaseModule());
+		ReviewManager.initialize(injector.getInstance(ReviewManager.class));
+		LocationManager.initialize(injector.getInstance(LocationManager.class));
+		UserProfileManager.initialize(injector.getInstance(UserProfileManager.class));
+		mapView = JxMapsFunctionality.getMapView();
 		SpringApplication.run(Application.class, args);
 	}
 	

@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.teamdev.jxmaps.LatLng;
+
 import smartcity.accessibility.database.AbstractReviewManager;
+import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.User;
@@ -20,16 +23,20 @@ public class AddReviewService {
 	@ResponseBody
     public void addreview(@RequestHeader("authToken") String token,
     		@RequestParam("review") String review,
-    		@RequestParam("score") String score) {
+    		@RequestParam("score") String score,
+    		@RequestParam("lat") Double lat,
+    		@RequestParam("lng") Double lng) {
 		
-		UserInfo userInfo = LogInService.getUserInfo(token);
-
 		
 		User u = getUserFromToken(token);
 		if (u == null)
 			throw new UserIsNotLoggedIn();
 		
-		Review r = new Review(Integer.parseInt(score), review, u);
+		
+		Location l = new Location();
+		l.setCoordinates(new LatLng(lat, lng));
+		
+		Review r = new Review(l, Integer.parseInt(score), review, u.getProfile());
 		
 		AbstractReviewManager.instance().uploadReview(r, null);
 		

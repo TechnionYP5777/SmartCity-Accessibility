@@ -13,15 +13,12 @@ import com.teamdev.jxmaps.MapMouseEvent;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.MouseEvent;
 
-import smartcity.accessibility.database.DatabaseManager;
-import smartcity.accessibility.database.UserManager;
-import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.gui.components.ButtonsPanel;
 import smartcity.accessibility.gui.components.MapFrame;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.socialnetwork.User;
-import smartcity.accessibility.socialnetwork.UserImpl;
+import smartcity.accessibility.socialnetwork.UserBuilder;
 
 public class Application {
 
@@ -31,13 +28,13 @@ public class Application {
 	public static final int FRAME_X_SIZE = 1000;
 	public static final int FRAME_Y_SIZE = 700;
 
-	public static User appUser = UserImpl.DefaultUser();
+	public static User appUser = UserBuilder.DefaultUser();
 	public static Marker currLocation;
 
 	public static void not_main(String[] args) {
 		frame = new MapFrame("SmartCity - Accessibility");
 
-		DatabaseManager.initialize();
+		//DatabaseManager.initialize();
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -105,11 +102,7 @@ public class Application {
 
 			@Override
 			public void windowClosing(WindowEvent __) {
-				try {
-					UserManager.updateAllUserInformation(appUser);
-				} catch (UserNotFoundException e1) {
-
-				}
+			
 			}
 
 			@Override

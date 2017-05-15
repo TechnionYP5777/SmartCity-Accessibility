@@ -1,6 +1,7 @@
 package smartcity.accessibility.socialnetwork;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -9,8 +10,7 @@ import org.junit.experimental.categories.Category;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
-import smartcity.accessibility.exceptions.UnauthorizedAccessException;
-import smartcity.accessibility.mapmanagement.Location;;
+import smartcity.accessibility.mapmanagement.LocationBuilder;;
 
 /**
  * @author Koral Chapnik
@@ -22,10 +22,12 @@ public class ReviewTest {
 	
 	@BeforeClass
 	public static void init(){
-		u1 = UserImpl.RegularUser("Koral","123","");
-		u2 = UserImpl.Admin("KoralAdmin","123","");
-		r1 = new Review(new Location(new LatLng(39.750307, -104.999472)), Score.getMinScore(),
-				"very unaccessible place!", u1);
+		u1 = UserBuilder.RegularUser("Koral","123","");
+		u2 = UserBuilder.Admin("KoralAdmin","123","");
+		r1 = new Review(new LocationBuilder().setCoordinates(39.750307, -104.999472).build(),
+				Score.getMinScore(),
+				"very unaccessible place!",
+				u1.getProfile());
 	}
 	
 	@Test
@@ -49,18 +51,17 @@ public class ReviewTest {
 	@Test
 	@Category(UnitTests.class)
 	public void getUserTest() {
-		assertEquals(r1.getUser(), "Koral");
+		assertEquals(r1.getUser().getUsername(), "Koral");
 	}
 	
 	@Test
 	@Category(UnitTests.class)
 	public void isPinnedTest() {
 		assert !r1.isPinned();
-		try {
-			r1.pin(u2);
-		} catch (UnauthorizedAccessException e) {
-			fail("shouldn't throw an exception");
-		}
+		if (u2.canPinReview())
+			r1.setPinned(true);
+		else
+			fail("shouldn't fail");
 		assert r1.isPinned();
 	}
 

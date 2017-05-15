@@ -19,7 +19,7 @@ import smartcity.accessibility.exceptions.EmptySearchQuery;
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 import smartcity.accessibility.socialnetwork.Score;
@@ -150,7 +150,7 @@ public class ElaborateSearchFrame implements MouseListener {
 		}
 
 		SearchQuery $ = SearchQuery.TypeSearch(locationTypeField.getText());
-		SearchQueryResult esr = $.searchByType(new Location(c), radius);
+		SearchQueryResult esr = $.searchByType(new LocationBuilder().setCoordinates(c.getLat(), c.getLng()).build(), radius);
 
 		try {
 			esr.convertDummiesToReal();

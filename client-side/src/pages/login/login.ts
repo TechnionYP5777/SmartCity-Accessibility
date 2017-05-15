@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {LoginService} from './LoginService';
-import {HomePage} from '../home/home';
-import {SignupPage} from '../signup/signup';
+import { LoginService } from './LoginService';
+import { HomePage } from '../home/home';
+import { SignupPage } from '../signup/signup';
  
 @Component({
   selector: 'page-login',
@@ -21,9 +21,9 @@ export class LoginPage {
         this.loginservice.login(user).then(data => {
             if(data) {
                 this.navCtrl.setRoot(HomePage);
-            }
-    });
-   }
+            } 
+		});
+    }
     signup() {
         this.navCtrl.push(SignupPage);
     }

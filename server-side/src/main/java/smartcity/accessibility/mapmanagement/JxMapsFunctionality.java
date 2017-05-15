@@ -41,8 +41,7 @@ import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.swing.MapView;
 
-import smartcity.accessibility.database.LocationListCallback;
-import smartcity.accessibility.database.LocationManager;
+import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.gui.Application;
 import smartcity.accessibility.gui.ExtendedMarker;
@@ -167,7 +166,7 @@ public abstract class JxMapsFunctionality {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						
+
 					}
 				};
 
@@ -212,12 +211,12 @@ public abstract class JxMapsFunctionality {
 			¢.printStackTrace();
 		}
 		if ($.gotResults())
-			return LocationManager.getLocation($.get(0).getCoordinates(), Location.LocationTypes.Street,
-					Location.LocationSubTypes.Default);
+			return AbstractLocationManager.instance().getLocation($.get(0).getCoordinates(),
+					Location.LocationTypes.Street, Location.LocationSubTypes.Default, null);
 		JOptionPane.showMessageDialog(Application.frame, "no results were found", "search found nothing :(",
 				JOptionPane.INFORMATION_MESSAGE);
-			// JxMapsFunctionality.putExtendedMarker((ExtendedMapView) mv,
-			// dummy, searchField.getText());
+		// JxMapsFunctionality.putExtendedMarker((ExtendedMapView) mv,
+		// dummy, searchField.getText());
 		return null;
 	}
 
@@ -351,45 +350,36 @@ public abstract class JxMapsFunctionality {
 		Application.currLocation = new Marker(map);
 		Application.currLocation.setPosition(l);
 
-		NearbyPlacesSearch.findNearbyPlaces(mv, new Location(l), 1000, Arrays.asList(LocationSubTypes.values()).stream()
-				.map(λ -> λ + "").collect(Collectors.toList()), new LocationListCallback() {
-					@Override
-					public void done(List<Location> ls) {
-						ClearMarkers(mv);
+		NearbyPlacesSearch.findNearbyPlaces(mv, new LocationBuilder().setCoordinates(l.getLat(), l.getLng()).build(),
+				1000, Arrays.asList(LocationSubTypes.values()).stream().map(λ -> λ + "").collect(Collectors.toList()),
+				ls -> {
+					ClearMarkers(mv);
 
-						for (Location ¢ : ls) {
-							System.out.println(¢.getLocationSubType());
-							System.out.println(¢.getCoordinates());
-							if (¢.getLocationType() == null || !¢.getLocationType().equals(LocationTypes.Street))
-								JxMapsFunctionality.putExtendedMarker(mv, ¢);
-						}
-						map.setCenter(l);
-						map.setZoom(17.0);
-						LocationManager.getLocationsNearPoint(l, new LocationListCallback() {
-
-							@Override
-							public void done(List<Location> sl) {
-								if (sl != null)
-									for (Location ¢ : sl)
-										if (!ls.contains(¢) && !¢.getCoordinates().equals(l))
-											JxMapsFunctionality.putExtendedMarker(mv, ¢);
-							}
-						}, 10);
+					for (Location ¢ : ls) {
+						System.out.println(¢.getLocationSubType());
+						System.out.println(¢.getCoordinates());
+						if (¢.getLocationType() == null || !¢.getLocationType().equals(LocationTypes.Street))
+							JxMapsFunctionality.putExtendedMarker(mv, ¢);
 					}
+					map.setCenter(l);
+					map.setZoom(17.0);
+					AbstractLocationManager.instance().getLocationsAround(l, 10.0, sl -> {
+						if (sl != null)
+							for (Location ¢ : sl)
+								if (!ls.contains(¢) && !¢.getCoordinates().equals(l))
+									JxMapsFunctionality.putExtendedMarker(mv, ¢);
+
+					});
 				});
-		
-		
+
 	}
 
 	public static void onClick(LatLng l) {
 		SpinningWheel wheel = new SpinningWheel();
-		LocationManager.getLocation(l, new LocationListCallback() {
-
-			@Override
-			public void done(List<Location> ¢) {
-				new LocationFrame(!¢.isEmpty() ? ¢.get(0) : new Location(l));
-				wheel.dispose();
-			}
+		AbstractLocationManager.instance().getLocation(l, ¢ -> {
+			new LocationFrame(
+					!¢.isEmpty() ? ¢.get(0) : new LocationBuilder().setCoordinates(l.getLat(), l.getLng()).build());
+			wheel.dispose();
 		});
 	}
 }

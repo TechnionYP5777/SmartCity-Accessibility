@@ -8,51 +8,55 @@ package smartcity.accessibility.socialnetwork;
  *
  */
 public class Helpfulness {
-	private int likes;
-	private int dislikes;
+	private int rating;
 	private int numOfReviews;
 	
 	public Helpfulness() {
-		likes = 0;
-		dislikes = 0;
+		rating = 0;
 		numOfReviews = 0;
 	}
 	
-	public void incLikes() {
-		likes++;
+	public void upvote(){
+		rating++;
 	}
 	
-	public void incDislikes() {
-		dislikes++;
+	public void downvote(){
+		rating--;
 	}
 	
-	public void incNumOfReviews() {
+	public void addReview() {
 		numOfReviews++;
 	}
 	
+	public void removeReview() {
+		numOfReviews--;
+	}
+	
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public int getNumOfReviews() {
+		return numOfReviews;
+	}
+
+	public void setNumOfReviews(int numOfReviews) {
+		this.numOfReviews = numOfReviews;
+	}
+
 	/*
 	 * This method returns the average likes per comment.
 	 * negative value represents dislikes.
 	 */
 	private double getAvgLikes() {
-		return Math.ceil((double)(likes - dislikes) / numOfReviews);
+		return Math.ceil((double)(rating) / numOfReviews);
 	}
 	
 	public Double helpfulness() {
 		return getAvgLikes();
-	}
-	
-	/*
-	 * these methods are added becuase without them serializing users is impossible
-	 */
-	
-	public int getlikes(){
-		return likes;
-	}
-	public int getdislikes(){
-		return dislikes;
-	}
-	public int getnumOfReviews(){
-		return numOfReviews;
 	}
 }

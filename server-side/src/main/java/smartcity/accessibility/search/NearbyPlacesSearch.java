@@ -12,8 +12,9 @@ import com.teamdev.jxmaps.PlaceSearchRequest;
 import com.teamdev.jxmaps.PlacesServiceStatus;
 import com.teamdev.jxmaps.swing.MapView;
 
-import smartcity.accessibility.database.LocationListCallback;
+import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.LocationBuilder;
 
 /**
  * @author Koral Chapnik
@@ -31,7 +32,7 @@ public class NearbyPlacesSearch {
 	 * 			  operation with it in the "done" method
 	 */
 	public static void findNearbyPlaces(MapView v, Location initLocation, double radius, 
-			List<String> kindsOfLocations, LocationListCallback c) {
+			List<String> kindsOfLocations, ICallback<List<Location>> c) {
 		Map map = v.getMap();
 		LatLng l = initLocation.getCoordinates();
 		PlaceSearchRequest request = new PlaceSearchRequest();
@@ -46,12 +47,12 @@ public class NearbyPlacesSearch {
 					for (int i = 0; i < rs.length; ++i) {
 						PlaceResult result = rs[i];
 						LatLng l = result.getGeometry() == null ? null : result.getGeometry().getLocation();
-						Location f = new Location(l);
+						Location f = new LocationBuilder().setCoordinates(l).build();
 						f.setName(result.getName());
 						$.add(f);
 					}
 				System.out.println("called to callback done");
-				c.done($);
+				c.onFinish($);
 			}
 		});
 	

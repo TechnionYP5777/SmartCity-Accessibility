@@ -1,14 +1,16 @@
 package smartcity.accessibility.database;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
 
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.UserNotFoundException;
@@ -16,20 +18,23 @@ import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.UserProfile;
 
 /**
  * @author Kolikant
  *
  */
-@Ignore
+
 public class UserManagerTest {
 	private static final String userName2 = "ttuuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
 	private static final String userName1 = "uuuuuuuuuuuuuuuuasdsadsadasdasdasdasdsadsadkljsadkljsakldjssssssssserrr123123123555123";
-
+	private static AbstractUserProfileManager upm;
+	private static UserProfile up;
 	
 	@BeforeClass
-	public static void init(){
-		DatabaseManager.initialize();
+	public static void init() throws UserNotFoundException{
+		initAllMock();
+		ParseDatabase.initialize();
 		User u = UserManager.LoginUser(userName1, "password");
 		UserManager.DeleteUser(u);
 		String UserName2 = userName2;
@@ -41,6 +46,14 @@ public class UserManagerTest {
 		UserManager.DeleteUser(u);
 		u = UserManager.LoginUser(userName2, "pass");
 		UserManager.DeleteUser(u);
+		
+		
+		
+	}
+	
+	@Before
+	public void initMock() throws UserNotFoundException{
+		initAllMock();
 	}
 	
 	
@@ -54,7 +67,7 @@ public class UserManagerTest {
 			fail();
 		}
 		User u = UserManager.LoginUser(UserName, "password");
-		assertEquals(UserName, u.getName());
+		assertEquals(UserName, u.getUsername());
 		assertEquals("password", u.getPassword());
 		assertEquals(new ArrayList<SearchQuery>(), u.getFavouriteSearchQueries());	
 		assertEquals(User.Privilege.RegularUser, u.getPrivilege());
@@ -73,7 +86,7 @@ public class UserManagerTest {
 		}
 		User a = UserManager.LoginUser(UserName, "admin");
 		assert a != null;
-		assertEquals(UserName, a.getName());
+		assertEquals(UserName, a.getUsername());
 		assertEquals("admin", a.getPassword());
 		assertEquals(new ArrayList<SearchQuery>(), a.getFavouriteSearchQueries());
 		
@@ -152,5 +165,15 @@ public class UserManagerTest {
 		assert(sq.getQuery().equals("cafe"));
 		
 		UserManager.DeleteUser(b);
+	}
+	
+	public static void initAllMock() throws UserNotFoundException{
+		up = new UserProfile("Chimichanga");
+		upm = Mockito.mock(AbstractUserProfileManager.class);
+		Mockito.when(upm.get(Mockito.anyString(), Mockito.any())).thenReturn(up);
+		Mockito.when(upm.put(Mockito.any(UserProfile.class), Mockito.any())).thenReturn(true);
+		Mockito.when(upm.update(Mockito.any(UserProfile.class), Mockito.any())).thenReturn(true);
+		Mockito.when(upm.delete(Mockito.any(UserProfile.class), Mockito.any())).thenReturn(true);
+		AbstractUserProfileManager.initialize(upm);
 	}
 }

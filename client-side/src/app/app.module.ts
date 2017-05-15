@@ -3,6 +3,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import {LoginPage} from '../pages/login/login';
+import {AdminPage} from '../pages/admin/admin';
 import {MapviewPage} from '../pages/mapview/mapview';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -11,6 +12,7 @@ import { AddReviewPage } from '../pages/add-review/add-review';
 import {SignupPage} from '../pages/signup/signup';
 import {UserPagePage} from '../pages/user-page/user-page';
 import {LoginService} from '../pages/login/LoginService';
+import {AdminService} from '../pages/admin/adminService';
 import {NavigationService} from '../pages/navigation/navigationService';
 import { NavigationPage } from '../pages/navigation/navigation';
 import { AddReviewService } from '../pages/add-review/AddReviewService';
@@ -20,6 +22,7 @@ import {ComplexSearchService} from '../pages/complex-search/complexSearchService
 import {SearchService} from '../pages/mapview/searchService';
 import {AddSearchQueryPage} from '../pages/addSearchQueryMenu/addsearchquerymenu';
 import {UserInformationService} from '../pages/user-page/userInformationService';
+import { LocationListPage } from '../pages/location-list/location-list';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import {UserInformationService} from '../pages/user-page/userInformationService'
 	NavigationPage,
 	ComplexSearchPage,
 	IonRating,
-	AddSearchQueryPage
+	AddSearchQueryPage,
+	LocationListPage,
+	AdminPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -51,7 +56,9 @@ import {UserInformationService} from '../pages/user-page/userInformationService'
 	UserPagePage,
 	NavigationPage,
 	ComplexSearchPage,
-	AddSearchQueryPage
+	AddSearchQueryPage,
+	LocationListPage,
+	AdminPage,
   ],
   providers: [
     StatusBar,
@@ -62,7 +69,8 @@ import {UserInformationService} from '../pages/user-page/userInformationService'
 	AddReviewService,
 	SearchService,
 	ComplexSearchService,
-	UserInformationService
+	UserInformationService,
+	AdminService,
   ]
 })
 export class AppModule {}
