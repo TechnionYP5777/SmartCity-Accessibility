@@ -115,7 +115,7 @@ public class LocationManager extends AbstractLocationManager {
 				Location l = fromMap(m2);
 				l.addReviews(AbstractReviewManager.instance().getReviews(m2.get(ID_FIELD_NAME).toString(), null));
 				return l;
-			})).blockingSubscribe(l -> locs.add(l));
+			})).blockingSubscribe(locs::add);
 			return locs;
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 
@@ -188,7 +188,7 @@ public class LocationManager extends AbstractLocationManager {
 														distance(source, destination),
 														null);
 			return locList.stream()
-							.map(l -> new BestReviews(l))
+							.map(BestReviews::new)
 							.filter(br -> br.getTotalRatingByAvg() >= accessibilityThreshold)
 							.map(br -> br.getLocation().getCoordinates())
 							.distinct()
@@ -207,11 +207,11 @@ public class LocationManager extends AbstractLocationManager {
 		double lat2 = Math.toRadians(p2.getLat());
 		double lon1 = Math.toRadians(p1.getLng());
 
-		double Bx = Math.cos(lat2) * Math.cos(dLon);
-		double By = Math.cos(lat2) * Math.sin(dLon);
+		double bx = Math.cos(lat2) * Math.cos(dLon);
+		double by = Math.cos(lat2) * Math.sin(dLon);
 		double lat3 = Math.atan2(Math.sin(lat1) + Math.sin(lat2),
-				Math.sqrt((Math.cos(lat1) + Bx) * (Math.cos(lat1) + Bx) + By * By));
-		double lon3 = lon1 + Math.atan2(By, Math.cos(lat1) + Bx);
+				Math.sqrt((Math.cos(lat1) + bx) * (Math.cos(lat1) + bx) + by * by));
+		double lon3 = lon1 + Math.atan2(by, Math.cos(lat1) + bx);
 
 		return new LatLng(Math.toDegrees(lat3), Math.toDegrees(lon3));
 
