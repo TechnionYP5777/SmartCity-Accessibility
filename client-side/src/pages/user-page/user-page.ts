@@ -12,28 +12,27 @@ import { UserInformationService } from './userInformationService';
 export class UserPagePage {
   output :  any;
   UserName: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loginService : LoginService, public userInformationService : UserInformationService) {
-	    this.userInformationService.getUserName().subscribe(data => {
-		this.output = data.favouriteSearchQueries;
-	    this.UserName = data.name;
-		});
-	  
-  }
+	constructor(public navCtrl: NavController, public navParams: NavParams, public loginService : LoginService, public userInformationService : UserInformationService) {
+		this.UserName = "WUT";
+		this.output = "WUT";
+	}
  
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserPagePage');
   }
   
   addNewSearchQuery(){
-	    this.userInformationService.getUserName().subscribe(data => {
-		this.output = data.favouriteSearchQueries;
-	    this.UserName = data.name;
+	    this.userInformationService.getUserProfile().subscribe(data => {
+			this.output = data.username;
+			
 		});
   }
   
   showSearchQueries(){
-	 this.output = "!!!GMO"; 
-	 console.log('this happened'); 
+		this.userInformationService.getEasyJsonExample().subscribe(data => {
+			this.output = data.username;
+			this.UserName = data.username;;
+		}); 
   }
 
 }
