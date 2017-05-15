@@ -15,8 +15,8 @@ export class AdminPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
 			  public loginService : LoginService, public adminService : AdminService,
               public userInformationService : UserInformationService) {
-		this.userInformationService.getUserName().subscribe(data => {
-			this.name = data.profile.username;
+		this.userInformationService.getUserProfile().subscribe(data => {
+			this.name = data.username;
 		});
   }
  
