@@ -121,7 +121,7 @@ public class ReviewManager extends AbstractReviewManager {
 			Map<String, Object> map = new HashMap<>();
 			map.put(LOCATION_FIELD_NAME, locationId);
 			List<Map<String, Object>> reviews = db.get(DATABASE_CLASS, map);
-			return reviews.stream().map(m -> fromMap(m)).collect(Collectors.toList());
+			return reviews.stream().map(ReviewManager::fromMap).collect(Collectors.toList());
 		})
 		.subscribeOn(Schedulers.io())
 		.observeOn(Schedulers.single());
@@ -155,7 +155,7 @@ public class ReviewManager extends AbstractReviewManager {
 	@Override
 	public Boolean uploadReview(Review r, ICallback<Boolean> callback) {
 		logger.debug("uploadReview for user {}", r.getUser().getUsername());
-		Flowable<Boolean> res = Flowable.fromCallable(() -> (db.put(DATABASE_CLASS, toMap(r)) != null))
+		Flowable<Boolean> res = Flowable.fromCallable(() -> db.put(DATABASE_CLASS, toMap(r)) != null)
 		.subscribeOn(Schedulers.io())
 		.observeOn(Schedulers.single());
 		if(callback == null)

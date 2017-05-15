@@ -141,7 +141,7 @@ public class LocationManager extends AbstractLocationManager {
 		if (callback == null)
 			return res.blockingFirst();
 		res.subscribe(callback::onFinish, Throwable::printStackTrace);
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override

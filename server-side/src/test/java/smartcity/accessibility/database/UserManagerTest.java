@@ -35,17 +35,17 @@ public class UserManagerTest {
 	public static void init() throws UserNotFoundException{
 		initAllMock();
 		ParseDatabase.initialize();
-		User u = UserManager.LoginUser(userName1, "password");
-		UserManager.DeleteUser(u);
+		User u = UserManager.loginUser(userName1, "password");
+		UserManager.deleteUser(u);
 		String UserName2 = userName2;
-		u = UserManager.LoginUser(UserName2, "admin");
-		UserManager.DeleteUser(u);
-		u = UserManager.LoginUser("b"+UserName2, "admin");
-		UserManager.DeleteUser(u);
-		u = UserManager.LoginUser(userName1, "pass");
-		UserManager.DeleteUser(u);
-		u = UserManager.LoginUser(userName2, "pass");
-		UserManager.DeleteUser(u);
+		u = UserManager.loginUser(UserName2, "admin");
+		UserManager.deleteUser(u);
+		u = UserManager.loginUser("b"+UserName2, "admin");
+		UserManager.deleteUser(u);
+		u = UserManager.loginUser(userName1, "pass");
+		UserManager.deleteUser(u);
+		u = UserManager.loginUser(userName2, "pass");
+		UserManager.deleteUser(u);
 		
 		
 		
@@ -62,16 +62,16 @@ public class UserManagerTest {
 	public void test() {
 		String UserName = userName1;
 		try {
-			UserManager.SignUpUser(UserName, "password", User.Privilege.RegularUser);
+			UserManager.signUpUser(UserName, "password", User.Privilege.RegularUser);
 		} catch (UsernameAlreadyTakenException e) {
 			fail();
 		}
-		User u = UserManager.LoginUser(UserName, "password");
+		User u = UserManager.loginUser(UserName, "password");
 		assertEquals(UserName, u.getUsername());
 		assertEquals("password", u.getPassword());
 		assertEquals(new ArrayList<SearchQuery>(), u.getFavouriteSearchQueries());	
 		assertEquals(User.Privilege.RegularUser, u.getPrivilege());
-		UserManager.DeleteUser(u);
+		UserManager.deleteUser(u);
 	}
 	
 
@@ -80,11 +80,11 @@ public class UserManagerTest {
 	public void test2() throws illigalString{
 		String UserName = userName2;
 		try {
-			UserManager.SignUpUser(UserName, "admin", User.Privilege.Admin);
+			UserManager.signUpUser(UserName, "admin", User.Privilege.Admin);
 		} catch (UsernameAlreadyTakenException e1) {
 			fail();
 		}
-		User a = UserManager.LoginUser(UserName, "admin");
+		User a = UserManager.loginUser(UserName, "admin");
 		assert a != null;
 		assertEquals(UserName, a.getUsername());
 		assertEquals("admin", a.getPassword());
@@ -96,7 +96,7 @@ public class UserManagerTest {
 			fail();
 		}
 		
-		User b = UserManager.LoginUser("b"+UserName, "admin");
+		User b = UserManager.loginUser("b"+UserName, "admin");
 		assert b != null;
 		
 		List<SearchQuery> l = new ArrayList<SearchQuery>();
@@ -107,10 +107,10 @@ public class UserManagerTest {
 			fail();
 		}
 		
-		assertEquals(SearchQuery.QueriesList2String(l), SearchQuery.QueriesList2String(UserManager.LoginUser("b" + UserName, "admin").getFavouriteSearchQueries()));
+		assertEquals(SearchQuery.QueriesList2String(l), SearchQuery.QueriesList2String(UserManager.loginUser("b" + UserName, "admin").getFavouriteSearchQueries()));
 		
 		
-		UserManager.DeleteUser(b);
+		UserManager.deleteUser(b);
 	}
 	
 	@Category(UnitTests.class) 
@@ -119,16 +119,16 @@ public class UserManagerTest {
 		String UserName = userName2;
 		User b=null;
 		try {
-			 b = UserManager.SignUpUser(UserName, "pass", User.Privilege.RegularUser);
+			 b = UserManager.signUpUser(UserName, "pass", User.Privilege.RegularUser);
 		} catch (UsernameAlreadyTakenException e) {
 			fail();
 		}
 		try {
-			UserManager.SignUpUser(UserName, "password", User.Privilege.RegularUser);
-			UserManager.DeleteUser(b);
+			UserManager.signUpUser(UserName, "password", User.Privilege.RegularUser);
+			UserManager.deleteUser(b);
 			fail();
 		} catch (UsernameAlreadyTakenException e) {
-			UserManager.DeleteUser(b);
+			UserManager.deleteUser(b);
 		}
 		
 	}
@@ -139,7 +139,7 @@ public class UserManagerTest {
 		String UserName = userName2;
 		User b=null;
 		try {
-			 b = UserManager.SignUpUser(UserName, "pass", User.Privilege.RegularUser);
+			 b = UserManager.signUpUser(UserName, "pass", User.Privilege.RegularUser);
 		} catch (UsernameAlreadyTakenException e) {
 			fail();
 		}
@@ -150,8 +150,8 @@ public class UserManagerTest {
 		} catch (UserNotFoundException e) {
 			fail();
 		}
-		assert(UserManager.LoginUser(UserName, "pass").getFavouriteSearchQueries().get(0).getName().equals("in case I feel thirsty!"));
-		assert(UserManager.LoginUser(UserName, "pass").getFavouriteSearchQueries().get(0).getQuery().equals("cafe"));
+		assert(UserManager.loginUser(UserName, "pass").getFavouriteSearchQueries().get(0).getName().equals("in case I feel thirsty!"));
+		assert(UserManager.loginUser(UserName, "pass").getFavouriteSearchQueries().get(0).getQuery().equals("cafe"));
 		
 		b.getSearchQuery("in case I feel thirsty!").RenameSearchQuery("vugolo!!!!");
 		try {
@@ -159,12 +159,12 @@ public class UserManagerTest {
 		} catch (UserNotFoundException e) {
 			fail();
 		}
-		User u2 = UserManager.LoginUser(UserName, "pass");
+		User u2 = UserManager.loginUser(UserName, "pass");
 		SearchQuery sq = u2.getFavouriteSearchQueries().get(0);
 		assert(sq.getName().equals("vugolo!!!!"));
 		assert(sq.getQuery().equals("cafe"));
 		
-		UserManager.DeleteUser(b);
+		UserManager.deleteUser(b);
 	}
 	
 	public static void initAllMock() throws UserNotFoundException{

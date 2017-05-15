@@ -9,19 +9,20 @@ import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserBuilder;
+import smartcity.accessibility.socialnetwork.UserProfile;
 
 @RestController
 public class UserInformationService {
 	@RequestMapping(value="/userInfo/name")
-	@ResponseBody public User getUserInfoName(@RequestHeader("authToken") String token) {	
+	@ResponseBody public UserProfile getUserInfoName(@RequestHeader("authToken") String token) {	
 		
 		UserInfo userInfo = LogInService.getUserInfo(token);
-		return userInfo.getUser();
+		return userInfo.getUser().getProfile();
 		
 	}
 	
 	@RequestMapping(value="/userInfo/JSONEXAMPLE")
-	@ResponseBody public User getUserInfoName() {	
+	@ResponseBody public UserProfile getUserInfoName() {	
 		
 		User ui = new UserBuilder()
 				.setUsername("NAME")
@@ -35,6 +36,6 @@ public class UserInformationService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return ui;
+		return ui.getProfile();
 	}
 }

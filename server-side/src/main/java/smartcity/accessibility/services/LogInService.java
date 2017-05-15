@@ -20,7 +20,7 @@ public class LogInService {
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public Token login(@RequestParam("name") String name, @RequestParam("password") String password) {
-		User u = UserManager.LoginUser(name, password);
+		User u = UserManager.loginUser(name, password);
 		if (u == null) {
 			throw new UserDoesNotExistException();
 		}
@@ -34,7 +34,7 @@ public class LogInService {
 	public Token signup(@RequestParam("name") String name, @RequestParam("password") String password) {
 		User u;
 		try {
-			u = UserManager.SignUpUser(name, password, User.Privilege.RegularUser);
+			u = UserManager.signUpUser(name, password, User.Privilege.RegularUser);
 			if (u == null)
 				throw new SignUpFailed();
 		} catch (UsernameAlreadyTakenException e) {
