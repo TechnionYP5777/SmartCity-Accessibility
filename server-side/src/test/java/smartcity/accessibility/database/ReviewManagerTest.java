@@ -67,9 +67,9 @@ public class ReviewManagerTest {
 	public void testBackgroundCalls() {
 		assertEquals(0, rm.getReviews("a", nlr -> {}).size());
 		assertEquals(0, rm.getReviewWithLocation("a", nlr -> {}).size());
-		assertEquals(null, rm.uploadReview(rev1, b -> {}));
-		assertEquals(null, rm.deleteReview(rev1, b -> {}));
-		assertEquals(null, rm.updateReview(rev1, b -> {}));
+		assertEquals(false, rm.uploadReview(rev1, b -> {}));
+		assertEquals(false, rm.deleteReview(rev1, b -> {}));
+		assertEquals(false, rm.updateReview(rev1, b -> {}));
 	}
 
 	@Test

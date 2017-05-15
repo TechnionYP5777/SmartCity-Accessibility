@@ -15,13 +15,9 @@ export class AdminPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
 			  public loginService : LoginService, public adminService : AdminService,
               public userInformationService : UserInformationService) {
-		this.userInformationService.getUserProfile().subscribe(data => {
+		this.adminService.getUserProfile().subscribe(data => {
 			this.name = data.username;
 		});
-  }
- 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad UserPagePage');
   }
   
 
