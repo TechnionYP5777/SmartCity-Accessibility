@@ -14,8 +14,9 @@ export class UserPagePage {
   UserName: any;
   addSearchQueryPage = AddSearchQueryPage;
 	constructor(public navCtrl: NavController, public navParams: NavParams, public loginService : LoginService, public userInformationService : UserInformationService) {
-		this.UserName = "WUT";
-		this.output = "WUT";
+		this.userInformationService.getUserProfile().subscribe(data => {
+			this.UserName = data.username;
+		});
 	}
  
   ionViewDidLoad() {
