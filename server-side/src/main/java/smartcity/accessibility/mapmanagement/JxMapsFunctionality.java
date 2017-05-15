@@ -63,6 +63,16 @@ public abstract class JxMapsFunctionality {
 		}
 
 	}
+	public static ExtendedMapView getMapView() {
+		MapViewOptions $ = new MapViewOptions();
+		$.importPlaces();
+		return mv != null ? mv : (mv = new ExtendedMapView($));
+	}
+
+	public static void DestroyMapView() {
+		mv.dispose();
+		mv = null;
+	}
 
 	public static void waitForMapReady(ExtendedMapView mv) {
 		mv.waitReady();
