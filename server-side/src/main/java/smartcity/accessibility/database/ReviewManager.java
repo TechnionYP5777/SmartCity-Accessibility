@@ -208,7 +208,7 @@ public class ReviewManager extends AbstractReviewManager {
 		if(callback == null)
 			return res.blockingFirst();
 		res.subscribe(callback::onFinish, Throwable::printStackTrace);	
-		return null;
+		return false;
 	}
 
 }

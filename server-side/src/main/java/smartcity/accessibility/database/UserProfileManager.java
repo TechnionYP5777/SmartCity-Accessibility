@@ -82,7 +82,7 @@ public class UserProfileManager extends AbstractUserProfileManager {
 		if(callback == null)
 			return res.blockingFirst();
 		res.subscribe();
-		return null;
+		return false;
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class UserProfileManager extends AbstractUserProfileManager {
 		if(callback == null)
 			return res.blockingFirst();
 		res.subscribe();
-		return null;
+		return false;
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class UserProfileManager extends AbstractUserProfileManager {
 		if(callback == null)
 			return res.blockingFirst();
 		res.subscribe();
-		return null;
+		return false;
 	}
 
 	
