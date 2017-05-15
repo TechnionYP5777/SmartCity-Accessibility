@@ -55,7 +55,7 @@ public class UserProfileManagerTest {
 	@Test(timeout=500)
 	@Category(UnitTests.class)
 	public void testBackgroundCalls() throws UserNotFoundException {
-		assertEquals(false, manager.get("a", c->{}));
+		assertEquals(null, manager.get("a", c->{}));
 		assertEquals(false, manager.put(new UserProfile("a"), c->{}));
 		assertEquals(false, manager.update(new UserProfile("a"), c->{}));
 		assertEquals(false, manager.delete(new UserProfile("a"), c->{}));
