@@ -17,8 +17,8 @@ public class UserInformationService {
 		
 		UserInfo userInfo = LogInService.getUserInfo(token);
 		return userInfo.getUser();
+		
 	}
-	
 	
 	@RequestMapping(value="/userInfo/JSONEXAMPLE")
 	@ResponseBody public User getUserInfoName() {	

@@ -29,7 +29,7 @@ public class ExtendedMarker extends Marker {
 
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				JxMapsFunctionality.onClick(arg0.latLng());
+				//OMGDEPRECATION!JxMapsFunctionality.onClick(arg0.latLng());
 
 			}
 

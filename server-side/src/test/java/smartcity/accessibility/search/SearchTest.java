@@ -36,10 +36,10 @@ public class SearchTest{
          s2.waitOnSearch();
          
          Location location2 = sqr2.getLocations().get(0);
-         JxMapsFunctionality.putMarker((ExtendedMapView) mapView, sqr1.getLocations().get(0).getCoordinates(), "result1");
-         JxMapsFunctionality.putMarker((ExtendedMapView) mapView, location2.getCoordinates(), "result2");
+       //OMGDEPRECATION!JxMapsFunctionality.putMarker((ExtendedMapView) mapView, sqr1.getLocations().get(0).getCoordinates(), "result1");
+       //OMGDEPRECATION!JxMapsFunctionality.putMarker((ExtendedMapView) mapView, location2.getCoordinates(), "result2");
          
-         JxMapsFunctionality.openFrame(mapView, "JxMaps - Hello, World!", 16.0);
+       //OMGDEPRECATION!JxMapsFunctionality.openFrame(mapView, "JxMaps - Hello, World!", 16.0);
         
         // JxMapsFunctionality.ClearMarkers((extendedMapView) mapView);
 

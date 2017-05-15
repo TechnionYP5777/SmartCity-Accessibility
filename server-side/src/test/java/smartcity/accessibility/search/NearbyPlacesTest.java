@@ -36,9 +36,9 @@ public class NearbyPlacesTest {
 			for (Location l : ls) {
 				LatLng a = l.getCoordinates();
 				System.out.println("lat is : " + a.getLat() + " lng is : " + a.getLng());
-				JxMapsFunctionality.putMarker((ExtendedMapView) mapView, a, l.getName());
+				//OMGDEPRECATION!JxMapsFunctionality.putMarker((ExtendedMapView) mapView, a, l.getName());
 			}
-			JxMapsFunctionality.openFrame(mapView, "JxMaps - Hello, World!", 16.0);
+			//OMGDEPRECATION!JxMapsFunctionality.openFrame(mapView, "JxMaps - Hello, World!", 16.0);
 		});
 
 		try {

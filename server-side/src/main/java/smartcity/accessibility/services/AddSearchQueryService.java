@@ -31,11 +31,6 @@ public class AddSearchQueryService {
 		
 		UserInfo userInfo = LogInService.getUserInfo(token);
 
-		
-		User u = getUserFromToken(token);
-		if (u == null)
-			throw new UserIsNotLoggedIn();
-		
 		SearchQuery sq = null;
 		try {
 			switch(Integer.parseInt(querytype)){
@@ -52,9 +47,9 @@ public class AddSearchQueryService {
 			e.printStackTrace();
 		}
 		
-		u.addSearchQuery(sq, queryName);
+		userInfo.getUser().addSearchQuery(sq, queryName);
 		try {
-			UserManager.updatefavouriteQueries(u);
+			UserManager.updatefavouriteQueries(userInfo.getUser());
 		} catch (UserNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
