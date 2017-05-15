@@ -15,3 +15,15 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+.buttons {
+	background:url('../assets/img/buttons.png');
+    font-weight: bold;
+	font-size: 20px;
+	text-align: justify;
+	font-style: italic;
+	text-color: light;
+}
+
+.background {
+	background-image: url('../assets/img/background.jpg');
+}
