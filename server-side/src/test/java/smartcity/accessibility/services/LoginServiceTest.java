@@ -52,10 +52,10 @@ public class LoginServiceTest extends ServiceTest {
 
 	@Before
 	public void resetUsers() {
-		User u = UserManager.LoginUser(name, password);
+		User u = UserManager.loginUser(name, password);
 		if (u == null)
 			return;
-		UserManager.DeleteUser(u);
+		UserManager.deleteUser(u);
 	}
 
 	@Test
