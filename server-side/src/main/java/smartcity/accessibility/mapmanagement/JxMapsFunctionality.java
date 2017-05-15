@@ -12,8 +12,6 @@ import com.teamdev.jxmaps.MapViewOptions;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.swing.MapView;
 
-import smartcity.accessibility.gui.components.OptionsWindow;
-
 /*
  * Author Kolikant
  */
@@ -27,7 +25,6 @@ public abstract class JxMapsFunctionality {
 		private static final long serialVersionUID = 1L;
 		List<Marker> MarkerList = new ArrayList<Marker>();
 		@SuppressWarnings("unused")
-		private OptionsWindow optionsWindow;
 
 		public ExtendedMapView(MapViewOptions options) {
 			super(options);
@@ -51,10 +48,6 @@ public abstract class JxMapsFunctionality {
 
 			System.out.println("Stage is closing");
 			// Save file
-		}
-
-		public void setOptionsWindow(OptionsWindow ¢) {
-			optionsWindow = ¢;
 		}
 
 		@Override

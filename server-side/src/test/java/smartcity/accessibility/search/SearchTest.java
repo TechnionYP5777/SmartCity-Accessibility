@@ -12,7 +12,7 @@ import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
-import smartcity.accessibility.mapmanagement.Location;;
+//import smartcity.accessibility.mapmanagement.Location;;
 
 /**
  * @author Kolikant
@@ -31,11 +31,11 @@ public class SearchTest{
 				s2 = SearchQuery.adressSearch("Modi'in Yehalom 30");
          JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
          
-         SearchQueryResult sqr1 = s1.SearchByAddress(mapView), sqr2 = s2.SearchByAddress(mapView);
+     //    SearchQueryResult sqr1 = s1.SearchByAddress(mapView), sqr2 = s2.SearchByAddress(mapView);
          s1.waitOnSearch();
          s2.waitOnSearch();
          
-         Location location2 = sqr2.getLocations().get(0);
+       //  Location location2 = sqr2.getLocations().get(0);
        //OMGDEPRECATION!JxMapsFunctionality.putMarker((ExtendedMapView) mapView, sqr1.getLocations().get(0).getCoordinates(), "result1");
        //OMGDEPRECATION!JxMapsFunctionality.putMarker((ExtendedMapView) mapView, location2.getCoordinates(), "result2");
          

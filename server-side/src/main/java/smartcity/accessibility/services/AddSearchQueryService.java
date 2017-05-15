@@ -1,6 +1,6 @@
 package smartcity.accessibility.services;
 
-import java.util.concurrent.ExecutionException;
+//import java.util.concurrent.ExecutionException;
 
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +14,7 @@ import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.services.exceptions.QueryTypeDoesNotExist;
-import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
-import smartcity.accessibility.socialnetwork.User;
+//import smartcity.accessibility.socialnetwork.User;
 
 @RestController
 public class AddSearchQueryService {
@@ -58,15 +57,4 @@ public class AddSearchQueryService {
 		
 		//TODO pretty pretty finisher    	
     }
-	
-	//TODO null exception?
-	private User getUserFromToken(String token){
-		UserInfo userInfo = null;
-		try {
-			userInfo = Application.tokenToSession.get(token);
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-		return userInfo.getUser();
-	}
 }
