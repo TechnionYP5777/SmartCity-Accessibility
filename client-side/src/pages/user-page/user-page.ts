@@ -12,6 +12,7 @@ import { UserInformationService } from './userInformationService';
 export class UserPagePage {
   output :  any;
   UserName: any;
+  addSearchQueryPage = AddSearchQueryPage;
 	constructor(public navCtrl: NavController, public navParams: NavParams, public loginService : LoginService, public userInformationService : UserInformationService) {
 		this.UserName = "WUT";
 		this.output = "WUT";
@@ -22,10 +23,7 @@ export class UserPagePage {
   }
   
   addNewSearchQuery(){
-	    this.userInformationService.getUserProfile().subscribe(data => {
-			this.output = data.username;
-			
-		});
+		this.navCtrl.push(this.addSearchQueryPage);
   }
   
   showSearchQueries(){

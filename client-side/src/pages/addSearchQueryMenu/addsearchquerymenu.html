@@ -1,16 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      ADD SearchQuery
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
 <ion-content>
 	<ion-list>
-		<ion-list-header>
-		  you picked lat: {{lat}}, lng: {{lng}}
-		</ion-list-header>
-		<button ion-item (click)="addReview()">
-		  Add Review
-		</button>
-		<button ion-item>
-		  View Reviews
-		</button>
-		<button ion-item (click)="navigateToLocation()">
-		  navigate to location
-		</button>
+		<label class="item item-input">
+		  <span class="input-label">Adress</span>
+		  <input type="text">
+		</label>
+		
 	</ion-list>
+
+	<button ion-button round>Add</button>
 </ion-content>
