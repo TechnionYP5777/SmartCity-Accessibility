@@ -12,13 +12,20 @@ import { UserInformationService } from '../user-page/userInformationService';
 export class AdminPage {
   output :  any;
   name: any;
+  rating: any;
+  numOfReviews: any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
 			  public loginService : LoginService, public adminService : AdminService,
               public userInformationService : UserInformationService) {
 		this.adminService.getUserProfile().subscribe(data => {
 			this.name = data.username;
+			this.rating=data.rating;
+			this.numOfReviews=data.numOfReviews;
 		});
+		
   }
+  
+  
   
 
 }

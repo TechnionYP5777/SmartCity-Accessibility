@@ -10,7 +10,7 @@ import smartcity.accessibility.socialnetwork.UserProfile;
 @RestController
 public class AdminService {
 	@RequestMapping(value="/adminInfo")
-	@ResponseBody public UserProfile getUserInfoName(@RequestHeader("authToken") String token) {	
+	@ResponseBody public UserProfile getUserInfo(@RequestHeader("authToken") String token) {	
 		UserInfo userInfo = LogInService.getUserInfo(token);
 		return userInfo.getUser().getProfile();
 	}
