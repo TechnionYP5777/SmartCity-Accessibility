@@ -24,7 +24,7 @@ public abstract class JxMapsFunctionality {
 
 		private static final long serialVersionUID = 1L;
 		List<Marker> MarkerList = new ArrayList<Marker>();
-		@SuppressWarnings("unused")
+		//@SuppressWarnings("unused")
 
 		public ExtendedMapView(MapViewOptions options) {
 			super(options);
