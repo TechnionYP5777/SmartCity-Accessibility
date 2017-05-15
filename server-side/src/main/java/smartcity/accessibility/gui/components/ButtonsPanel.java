@@ -64,7 +64,7 @@ public class ButtonsPanel extends JPanel implements MouseListener {
 		if (¢.getSource() == SIGNUP_BUTTON)
 			new SignUpFrame();
 		if (¢.getSource() == CLEAR_MARKERS_BUTTON)
-			JxMapsFunctionality.ClearMarkers(JxMapsFunctionality.getMapView());
+			//OMGDEPRECATION!JxMapsFunctionality.ClearMarkers(JxMapsFunctionality.getMapView());
 		if (¢.getSource() == SEARCH_BY_TYPE)
 			new ElaborateSearchFrame();
 		if (¢.getSource() == ButtonsPanel.USER_PROFILE_BUTTON)

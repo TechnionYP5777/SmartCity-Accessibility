@@ -120,7 +120,7 @@ public class Application {
 
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				JxMapsFunctionality.onClick(arg0.latLng());
+				//OMGDEPRECATION!JxMapsFunctionality.onClick(arg0.latLng());
 
 			}
 		});
@@ -128,13 +128,13 @@ public class Application {
 		mapView.getMap().addEventListener("rightclick", new MapMouseEvent() {
 			@Override
 			public void onEvent(MouseEvent arg0) {
-				JxMapsFunctionality.onRightClick(arg0.latLng());
+				//OMGDEPRECATION!JxMapsFunctionality.onRightClick(arg0.latLng());
 			}
 
 		});
-		JxMapsFunctionality.addOptionsMenu(JxMapsFunctionality.createOptionsBar());
+		//OMGDEPRECATION!JxMapsFunctionality.addOptionsMenu(JxMapsFunctionality.createOptionsBar());
 
-		JxMapsFunctionality.initMapLocation("Eliezer 10, Haifa, Israel");
+		//OMGDEPRECATION!JxMapsFunctionality.initMapLocation("Eliezer 10, Haifa, Israel");
 	}
 
 }

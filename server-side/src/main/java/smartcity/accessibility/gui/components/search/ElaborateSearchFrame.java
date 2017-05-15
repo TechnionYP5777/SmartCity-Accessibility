@@ -116,7 +116,7 @@ public class ElaborateSearchFrame implements MouseListener {
 	public void mouseClicked(MouseEvent arg0) {
 		if (arg0.getSource() != btnSearch)
 			return;
-		JxMapsFunctionality.ClearMarkers(JxMapsFunctionality.getMapView());
+		//OMGDEPRECATION!JxMapsFunctionality.ClearMarkers(JxMapsFunctionality.getMapView());
 		try {
 			createAndSearchQuery();
 		} catch (illigalString e) {
@@ -164,7 +164,7 @@ public class ElaborateSearchFrame implements MouseListener {
 			JOptionPane.showMessageDialog(Application.frame, ¢.getMessage(), "Bad Input", JOptionPane.ERROR_MESSAGE);
 		}
 
-		JxMapsFunctionality.putAllExtendedMarker(JxMapsFunctionality.getMapView(), esr.getLocations());
+		//OMGDEPRECATION!JxMapsFunctionality.putAllExtendedMarker(JxMapsFunctionality.getMapView(), esr.getLocations());
 		return $;
 	}
 
