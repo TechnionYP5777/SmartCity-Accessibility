@@ -15,7 +15,7 @@ export class LoginService {
     }
     
     storeUserCredentials(token) {
-        window.sessionStorage.setItem('token', token);
+        window.sessionStorage.setItem('token', JSON.stringify(token));
         this.useCredentials(token);
     }
     
@@ -30,8 +30,12 @@ export class LoginService {
     }
 	
 	isLoggedIn(){
-		var token = window.sessionStorage.getItem('token');
-		return (token != null);
+		var currDate = new Date();
+        var token = JSON.parse(window.sessionStorage.getItem('token'));
+		if(token == null)
+			return false;
+        var expirationDate = token.expirationDate;
+        return (Date.parse(new Date().toISOString()) < Date.parse(expirationDate));
 	}
     
     destroyUserCredentials() {
@@ -48,7 +52,7 @@ export class LoginService {
         return new Promise(resolve => {
             this.http.post(Constants.serverAddress +'/login', creds, {headers: headers}).subscribe(data => {
                 if(data.status == 200){
-                    this.storeUserCredentials(data.json().token);
+                    this.storeUserCredentials(data.json());
                     resolve(true);
                 }
 			}, err => {
@@ -66,7 +70,7 @@ export class LoginService {
         return new Promise(resolve => {
             this.http.post(Constants.serverAddress +'/signup', creds, {headers: headers}).subscribe(data => {
                 if(data.status == 200){
-                    this.storeUserCredentials(data.json().token);
+                    this.storeUserCredentials(data.json());
                     resolve(true);
                 }
                 else

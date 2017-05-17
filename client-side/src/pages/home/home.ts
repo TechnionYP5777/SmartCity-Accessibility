@@ -22,7 +22,10 @@ export class HomePage {
   showReviews = GetReviewsPage;
   
   constructor(public navCtrl: NavController,public loginService : LoginService) {
-    this.isLoggedin = this.loginService.isLoggedIn();
+  }
+  
+  ionViewDidEnter(){
+	this.isLoggedin = this.loginService.isLoggedIn();
   }
 
 }
