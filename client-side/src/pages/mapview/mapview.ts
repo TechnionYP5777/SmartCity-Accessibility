@@ -8,6 +8,8 @@ import { LoginPage } from '../login/login';
 import { ComplexSearchPage } from '../complex-search/complex-search';
 import { AdminPage } from '../admin/admin'; 
 import { SearchService } from './searchService';
+import { navigationManeuverPage } from '../navigation_maneuver/navigation_maneuver';
+
 declare var google;  
  
  
@@ -83,7 +85,10 @@ export class MapviewPage {
 			    strokeOpacity: 1.0,
 			    strokeWeight: 2
 			});
-
+			google.maps.event.addListener(route,'click',(event)=>{ 
+				let clickMenu = this.modalCtrl.create(navigationManeuverPage,navigationResults);
+				clickMenu.present();
+			});
 			route.setMap(this.map);
 			loading.dismiss();
 		});

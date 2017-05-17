@@ -26,6 +26,7 @@ import { LocationListPage } from '../pages/location-list/location-list';
 import { ViewSearchQueryPage } from '../pages/viewSearchQuery/viewsearchquery';
 import { GetReviewsPage } from '../pages/reviews/reviews';
 import {GetReviewsService} from '../pages/reviews/ReviewsService';
+import { navigationManeuverPage } from '../pages/navigation_maneuver/navigation_maneuver';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {GetReviewsService} from '../pages/reviews/ReviewsService';
 	LocationListPage,
 	AdminPage,
 	ViewSearchQueryPage,
-	GetReviewsPage
+	GetReviewsPage,
+	navigationManeuverPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -66,6 +68,7 @@ import {GetReviewsService} from '../pages/reviews/ReviewsService';
 	AdminPage,
 	ViewSearchQueryPage,
 	GetReviewsPage,
+	navigationManeuverPage
   ],
   providers: [
     StatusBar,
