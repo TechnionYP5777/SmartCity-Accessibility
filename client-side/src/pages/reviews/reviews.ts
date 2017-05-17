@@ -14,6 +14,7 @@ export class GetReviewsPage {
   lng : any;
   revs : any;
   loading : any;
+  service : any;
   
   constructor(public navCtrl: NavController,
    public navParams: NavParams,
@@ -22,20 +23,13 @@ export class GetReviewsPage {
    public getreviewsservice: GetReviewsService) {
 	this.lat = navParams.get('lat');
 	this.lng = navParams.get('lng');
+	this.service = getreviewsservice;
 	
 	this.loading = this.loadingController.create({
       content: "ayyooo loading lmaooo"
     }); 
 	
-	this.loading.present();
-	
-	this.http.get('https://www.reddit.com/r/gifs/new/.json?limit=10').map(res => res.json()).subscribe(data => {
-        this.revs = data.data.children;
-        this.loading.dismiss();
-    },
-    err => {
-        console.log("Oops!");
-    });
+	this.revs = this.service.showMeStuff(this.loading);
   }
   
 
