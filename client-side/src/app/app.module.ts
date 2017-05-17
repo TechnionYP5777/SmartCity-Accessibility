@@ -24,6 +24,8 @@ import {AddSearchQueryPage} from '../pages/addSearchQueryMenu/addsearchquerymenu
 import {UserInformationService} from '../pages/user-page/userInformationService';
 import { LocationListPage } from '../pages/location-list/location-list';
 import { ViewSearchQueryPage } from '../pages/viewSearchQuery/viewsearchquery';
+import { GetReviewsPage } from '../pages/reviews/reviews';
+import {GetReviewsService} from '../pages/reviews/ReviewsService';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { ViewSearchQueryPage } from '../pages/viewSearchQuery/viewsearchquery';
 	AddSearchQueryPage,
 	LocationListPage,
 	AdminPage,
-	ViewSearchQueryPage
+	ViewSearchQueryPage,
+	GetReviewsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -62,6 +65,7 @@ import { ViewSearchQueryPage } from '../pages/viewSearchQuery/viewsearchquery';
 	LocationListPage,
 	AdminPage,
 	ViewSearchQueryPage,
+	GetReviewsPage,
   ],
   providers: [
     StatusBar,
@@ -74,6 +78,7 @@ import { ViewSearchQueryPage } from '../pages/viewSearchQuery/viewsearchquery';
 	ComplexSearchService,
 	UserInformationService,
 	AdminService,
+	GetReviewsService
   ]
 })
 export class AppModule {}

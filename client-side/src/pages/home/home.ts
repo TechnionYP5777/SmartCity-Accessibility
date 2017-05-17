@@ -5,7 +5,8 @@ import { MapviewPage } from '../mapview/mapview';
 import { UserPagePage } from '../user-page/user-page';
 import { LoginService } from '../login/LoginService';
 import { AdminPage } from '../admin/admin';
-import { AddReviewPage } from '../add-review/add-review';  
+import { AddReviewPage } from '../add-review/add-review';
+import { GetReviewsPage } from '../reviews/reviews'; 
 
 @Component({
   selector: 'page-home',  
@@ -18,6 +19,7 @@ export class HomePage {
   userProfile = UserPagePage;
   adminPage = AdminPage;
   addReviewPage = AddReviewPage;
+  showReviews = GetReviewsPage;
   
   constructor(public navCtrl: NavController,public loginService : LoginService) {
     this.isLoggedin = this.loginService.isLoggedIn();

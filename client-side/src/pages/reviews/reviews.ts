@@ -5,7 +5,7 @@ import {GetReviewsService} from './ReviewsService';
 
 @Component({
   selector: 'page-get-reviews',
-  templateUrl: 'get-reviews.html',
+  templateUrl: 'reviews.html',
 })
 
 export class GetReviewsPage {
