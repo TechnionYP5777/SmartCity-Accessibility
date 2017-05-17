@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 import { LoginService } from '../login/LoginService'; 
- 
+import { HomePage } from '../home/home';
+
 
 @Component({
   selector: 'page-signup',
@@ -23,6 +24,7 @@ export class SignupPage {
                     buttons: ['ok']
                 });
                 alert.present();
+				this.navCtrl.setRoot(HomePage);
             }
     });
 }

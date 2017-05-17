@@ -35,7 +35,7 @@ export class LoginService {
 		if(token == null)
 			return false;
         var expirationDate = token.expirationDate;
-        return (Date.parse(new Date().toISOString()) < Date.parse(expirationDate));
+        return (Date.parse(currDate.toISOString()) < expirationDate);
 	}
     
     destroyUserCredentials() {

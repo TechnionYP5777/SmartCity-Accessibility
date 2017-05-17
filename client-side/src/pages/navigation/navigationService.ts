@@ -9,7 +9,7 @@ export class NavigationService {
     }
      
 	navigatee(src,dst,accessibilityThreshold) {
-		var token = window.sessionStorage.getItem('token');
+		var token = JSON.parse(window.sessionStorage.getItem('token')).token;
 		if(token == null)
 			token = "no token";
 		var params = "srcLat=" + src.lat + "&srcLng=" + src.lng + "&dstLat=" + dst.lat + "&dstLng=" + dst.lng+"&accessibilityThreshold="+accessibilityThreshold;
