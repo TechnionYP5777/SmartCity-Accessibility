@@ -114,9 +114,8 @@ public class LoginServiceTest extends ServiceTest {
 	public void UserInfoPass10min() throws Exception {
 		mockMvc.perform(post("/signup" + "?name=" + name + "&password=" + password));
 		mockMvc.perform(post("/login" + "?name=" + name + "&password=" + password));
-		Thread.sleep(10*60*1000);
 		Token t = Token.calcToken(new UserBuilder().setUsername(name).setPassword(password).build());
+		Application.tokenToSession.invalidate(t.getToken());
 		LogInService.getUserInfo(t.getToken());
-	}
-	
+	}	
 }
