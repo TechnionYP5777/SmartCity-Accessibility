@@ -2,6 +2,8 @@ package smartcity.accessibility.services;
 
 import java.util.concurrent.ExecutionException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +13,13 @@ import smartcity.accessibility.services.exceptions.SignUpFailed;
 import smartcity.accessibility.services.exceptions.UserDoesNotExistException;
 import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
 import smartcity.accessibility.socialnetwork.User;
+
 /**
  * @author yael
  */
 @Controller
 public class LogInService {
+	private static Logger logger = LoggerFactory.getLogger(LogInService.class);
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
@@ -38,6 +42,7 @@ public class LogInService {
 			if (u == null)
 				throw new SignUpFailed();
 		} catch (UsernameAlreadyTakenException e) {
+			logger.info("signup failed", e);
 			throw new SignUpFailed();
 		}
 		Token t = Token.calcToken(u);
@@ -49,11 +54,11 @@ public class LogInService {
 		UserInfo userInfo = null;
 		try {
 			userInfo = Application.tokenToSession.get(token);
+			if (userInfo.getUser() == null) {
+				throw new UserIsNotLoggedIn();
+			}
 		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-		if (userInfo.getUser() == null) {
-			throw new UserIsNotLoggedIn();
+			logger.info("getting user from cache failed", e);
 		}
 		return userInfo;
 	}

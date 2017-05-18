@@ -16,7 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
 /**
  * @author yael
  */
-public class ServiceTest {
+public abstract class ServiceTest {
 	
 	protected MockMvc mockMvc;
 	protected MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),

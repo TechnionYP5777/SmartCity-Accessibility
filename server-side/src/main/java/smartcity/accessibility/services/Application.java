@@ -29,24 +29,20 @@ import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView
 @SpringBootApplication
 public class Application {
 	
-	public static LoadingCache<String, UserInfo> tokenToSession;
-	public static ExtendedMapView mapView = JxMapsFunctionality.getMapView();;
+	public static final LoadingCache<String, UserInfo> tokenToSession = resetSessions();
+	public static final ExtendedMapView mapView = JxMapsFunctionality.getMapView();
 	
-	public Application(){
-		resetSessions(); 
-	}
 	
 	public static void main(String[] args) {
 		Injector injector = Guice.createInjector(new DatabaseModule());
 		ReviewManager.initialize(injector.getInstance(ReviewManager.class));
 		LocationManager.initialize(injector.getInstance(LocationManager.class));
 		UserProfileManager.initialize(injector.getInstance(UserProfileManager.class));
-		mapView = JxMapsFunctionality.getMapView();
 		SpringApplication.run(Application.class, args);
 	}
 	
-	public static void resetSessions(){
-		tokenToSession = CacheBuilder.newBuilder()
+	public static LoadingCache<String, UserInfo> resetSessions(){
+		return CacheBuilder.newBuilder()
 	    .concurrencyLevel(4)
 	    .maximumSize(10000)
 	    .expireAfterWrite(3, TimeUnit.MINUTES)

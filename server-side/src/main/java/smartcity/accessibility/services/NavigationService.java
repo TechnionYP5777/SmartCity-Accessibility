@@ -1,5 +1,7 @@
 package smartcity.accessibility.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,8 @@ import smartcity.accessibility.services.exceptions.NavigationFailed;
  */
 @Controller
 public class NavigationService {
+	private static Logger logger = LoggerFactory.getLogger(NavigationService.class);
+
 	@RequestMapping(value = "/navigation", method = RequestMethod.POST)
 	@ResponseBody
 	public Latlng[] navigation(@RequestHeader("authToken") String token, @RequestParam("srcLat") Double srcLat,
@@ -28,7 +32,7 @@ public class NavigationService {
 
 		// example to get userInformation with the token. no need to check for
 		// null, an exception will rise if needed
-		//UserInfo userInfo = 
+		// UserInfo userInfo =
 		LogInService.getUserInfo(token);
 
 		Location source = new LocationBuilder().setCoordinates(srcLat, srcLng).build();
@@ -37,6 +41,7 @@ public class NavigationService {
 		try {
 			l = Navigation.getRoute(source, destination, accessibilityThreshold);
 		} catch (CommunicationFailed e) {
+			logger.info("navigation failed", e);
 			throw new NavigationFailed();
 		}
 		return l;
