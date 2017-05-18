@@ -73,8 +73,10 @@ export class LoginService {
                     this.storeUserCredentials(data.json());
                     resolve(true);
                 }
-                else
-                    resolve(false);
+			}
+            , err =>{
+				this.presentAlert("<p>error: " + err.json().error  + "</p> <p> message: " + err.json().message + "</p>");
+                resolve(false);
             });
         });
     }
