@@ -26,6 +26,7 @@ import smartcity.accessibility.socialnetwork.UserProfile;
 public class UserProfileManagerTest {
 	private static AbstractUserProfileManager manager;
 	private static Map<String, Object> m;
+	private static Map<String, Object> m_not;
 	private static Map<String, Object> m_noid;
 	private static UserProfile user1;
 	protected static Database db;
@@ -91,6 +92,12 @@ public class UserProfileManagerTest {
 		Mockito.verify(db).delete(UserProfileManager.DATABASE_CLASS, "MY_ID");
 	}
 	
+	@Test(expected=UserNotFoundException.class)
+	@Category(UnitTests.class)
+	public void testGetThrows() throws UserNotFoundException{
+		manager.get("I_DONT_EXIST", null);
+	}
+	
 	public static void setUpMock(){
 		db = Mockito.mock(Database.class);
 		m = new HashMap<>();
@@ -105,6 +112,10 @@ public class UserProfileManagerTest {
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyMap())).thenReturn(l);
 		Mockito.when(db.update(Mockito.anyString(), Mockito.anyString(), Mockito.anyMap())).thenReturn(true);
 		Mockito.when(db.delete(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
+		
+		m_not = new HashMap<>();
+		m_not.put(UserProfileManager.USERNAME_FIELD, "I_DONT_EXIST");	
+		Mockito.when(db.get(UserProfileManager.DATABASE_CLASS, m_not)).thenReturn(new ArrayList<>());
 		user1 = UserProfileManager.fromMap(m);
 	}
 	
