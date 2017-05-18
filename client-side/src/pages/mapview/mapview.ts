@@ -26,7 +26,6 @@ export class MapviewPage {
   isLoggedin : any;
   searchQuery: any;
   loginPage = LoginPage;
-  userProfile = UserPagePage;
   adminPage = AdminPage;
   complexSearchPage = ComplexSearchPage;
   output :  any;
@@ -75,7 +74,18 @@ export class MapviewPage {
 	
 	}
 		
-
+	userprofile(){
+		this.isLoggedin = this.loginService.isLoggedIn();
+		if(!this.isLoggedin)
+			this.presentAlert("Sorry, it seems you were not active for 10 minutes. Please re-login.");
+		else 
+		    this.navCtrl.push(UserPagePage);
+	}
+	
+	ionViewDidEnter(){
+	    this.isLoggedin = this.loginService.isLoggedIn();
+    }
+  
 	subscribeToNavigation(){
 		this.events.subscribe('navigation:done', (navigationResults,loading) => {
 			var route = new google.maps.Polyline({

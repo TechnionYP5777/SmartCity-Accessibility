@@ -27,8 +27,6 @@ export class NavigationPage {
 	};
 	loading : any;
     constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl: LoadingController,public alertCtrl: AlertController, public navigationService: NavigationService,public loginService : LoginService,public events: Events) {
-	    var token = window.sessionStorage.getItem('token');
-		this.isWork = token;
 		this.isLoggedin = this.loginService.isLoggedIn();
 		this.dstLocation.lat = navParams.get('lat');
 		this.dstLocation.lng = navParams.get('lng');

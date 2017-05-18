@@ -13,7 +13,7 @@
         <button ion-button *ngIf="!isLoggedin" [navPush]="loginPage">
             Login
         </button>
-		<button ion-button *ngIf="isLoggedin" [navPush]="userProfile">
+		<button ion-button *ngIf="isLoggedin" (click)="userprofile()">
             User profile
         </button>
     </ion-buttons>

@@ -35,6 +35,7 @@ export class MapClickMenuPage {
   
   navigateToLocation(){
 	this.viewCtrl.dismiss();
-    this.appCtrl.getRootNav().push(NavigationPage,{lat:this.lat,lng:this.lng});
+	let clickMenu = this.modalCtrl.create(NavigationPage,{lat:this.lat,lng:this.lng});
+	clickMenu.present();
   }
 }
