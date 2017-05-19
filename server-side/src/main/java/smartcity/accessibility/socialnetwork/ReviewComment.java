@@ -44,7 +44,7 @@ public class ReviewComment {
 			i += ¢.getRating();
 		return i;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -52,23 +52,19 @@ public class ReviewComment {
 		result = prime * result + ((commentator == null) ? 0 : commentator.hashCode());
 		result = prime * result + rating;
 		return result;
-	}
+	}	
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(Object o) {
+		if (o == this)
 			return true;
-		if (obj == null)
+		if (o == null || getClass() != o.getClass())
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ReviewComment other = (ReviewComment) obj;
+		ReviewComment other = (ReviewComment) o;
 		if (commentator == null) {
 			if (other.commentator != null)
 				return false;
 		} else if (!commentator.equals(other.commentator))
-			return false;
-		if (rating != other.rating)
 			return false;
 		return true;
 	}
@@ -82,8 +78,9 @@ public class ReviewComment {
 			String[] ls = s.split("#");
 			if (ls.length >= 2) {
 				Integer i = tryParse(ls[1]);
-				if (i != null)
-					return new ReviewComment(i, AbstractUserProfileManager.instance().get(ls[0], null));
+				if (i!= null)
+					return new ReviewComment(i,
+						AbstractUserProfileManager.instance().get(ls[0], null));
 			}
 		}
 		return new ReviewComment(AbstractUserProfileManager.instance().get(s.replace("#", ""), null));
