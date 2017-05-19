@@ -91,18 +91,7 @@ public class UserProfileManagerTest {
 		assertEquals(true, manager.delete(user1, null));
 		Mockito.verify(db).delete(UserProfileManager.DATABASE_CLASS, "MY_ID");
 	}
-	
-	@Test(expected=UserNotFoundException.class)
-	@Category(UnitTests.class)
-	public void testGetThrows() throws UserNotFoundException{
-		try {
-			manager.get("I_DONT_EXIST", null);
-		} catch (RuntimeException e){
-			Throwable t = e.getCause();
-			if (t instanceof UserNotFoundException)
-				throw (UserNotFoundException)t;
-		}
-	}
+
 	
 	public static void setUpMock(){
 		db = Mockito.mock(Database.class);
