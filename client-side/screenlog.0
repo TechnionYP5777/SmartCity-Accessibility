@@ -1,0 +1,121 @@
+******************************************************
+ Dependency warning - for the CLI to run correctly,      
+ it is highly recommended to install/upgrade the following:     
+
+ Please install your Cordova CLI to version  >=4.2.0 `npm install -g cordova`
+
+******************************************************
+[?25h[0G[K
+> ionic-hello-world@ ionic:serve /root/temp/SmartCity-Accessibility/client-side
+> ionic-app-scripts serve "--v2" "undefined" "--nobrowser" "--nolivereload" "--address" "0.0.0.0" "--port" "8100" "--livereload-port" "35729"
+
+[?25l[0G
+[?25h[?25h[1A[0G[K[?25h[0G[K[2m[13:14:32][22m[36m  ionic-app-scripts 1.1.4 [39m
+[2m[13:14:32][22m  watch started [2m...[22m 
+[2m[13:14:32][22m  build dev started [2m...[22m 
+[2m[13:14:32][22m  clean started [2m...[22m 
+[2m[13:14:32][22m  clean finished [2min 7 ms[22m 
+[2m[13:14:32][22m  copy started [2m...[22m 
+[2m[13:14:32][22m  transpile started [2m...[22m 
+[2m[13:14:47][22m  transpile finished [2min 14.95 s[22m 
+[2m[13:14:47][22m  preprocess started [2m...[22m 
+[2m[13:14:47][22m  preprocess finished [2min 1 ms[22m 
+[2m[13:14:47][22m  webpack started [2m...[22m 
+[2m[13:14:56][22m  copy finished [2min 24.13 s[22m 
+[2m[13:15:24][22m  webpack finished [2min 37.40 s[22m 
+[2m[13:15:24][22m  sass started [2m...[22m 
+[2m[13:15:36][22m  sass finished [2min 12.17 s[22m 
+[2m[13:15:36][22m  postprocess started [2m...[22m 
+[2m[13:15:36][22m  postprocess finished [2min 2 ms[22m 
+[2m[13:15:36][22m  lint started [2m...[22m 
+[2m[13:15:36][22m  build dev finished [2min 64.66 s[22m 
+[2m[13:15:38][22m  watch ready [2min 65.97 s[22m 
+[2m[13:15:38][22m[1m[32m  dev server running: http://localhost:8100/ [39m[22m
+
+[33m[13:15:46]  tslint: src/pages/addSearchQueryMenu/addsearchquerymenu.ts, line: 3 [39m
+            Unused import: 'App' 
+
+[2m       L2:  [22mimport { NavController, NavParams } from 'ionic-angular';
+[33m[13:15:46]  tslint: src/pages/addSearchQueryMenu/addsearchquerymenu.ts, line: 3 [39m
+[33m[13:15:46]  tslint: src/pages/viewSearchQuery/viewsearchquery.ts, line: 3 [39m
+[33m[13:15:46]  tslint: src/pages/viewSearchQuery/viewsearchquery.ts, line: 3 [39m
+[33m[13:15:46]  tslint: src/pages/user-page/userInformationService.ts, line: 2 [39m
+[33m[13:15:46]  tslint: src/pages/complex-search/complexSearchService.ts, line: 2 [39m
+[33m[13:15:46]  tslint: src/pages/complex-search/complexSearchService.ts, line: 2 [39m
+[33m[13:15:46]  tslint: src/pages/mapview/searchService.ts, line: 2 [39m
+[33m[13:15:46]  tslint: src/pages/mapview/searchService.ts, line: 2 [39m
+[2m       L3:  [22mimport { [41mA[49m[41mp[49m[41mp[49m, ViewController } from 'ionic-angular';
+
+            Unused import: 'ViewController' 
+
+[2m       L2:  [22mimport { NavController, NavParams } from 'ionic-angular';
+[2m       L3:  [22mimport { App, [41mV[49m[41mi[49m[41me[49m[41mw[49m[41mC[49m[41mo[49m[41mn[49m[41mt[49m[41mr[49m[41mo[49m[41ml[49m[41ml[49m[41me[49m[41mr[49m } from 'ionic-angular';
+
+            Unused import: 'App' 
+
+[2m       L2:  [22mimport { NavController, NavParams } from 'ionic-angular';
+[2m       L3:  [22mimport { [41mA[49m[41mp[49m[41mp[49m, ViewController } from 'ionic-angular';
+
+            Unused import: 'ViewController' 
+
+[2m       L2:  [22mimport { NavController, NavParams } from 'ionic-angular';
+[2m       L3:  [22mimport { App, [41mV[49m[41mi[49m[41me[49m[41mw[49m[41mC[49m[41mo[49m[41mn[49m[41mt[49m[41mr[49m[41mo[49m[41ml[49m[41ml[49m[41me[49m[41mr[49m } from 'ionic-angular';
+
+            Unused import: 'RequestOptions' 
+
+[2m       L1:  [22mimport {Injectable} from "@angular/core";
+[2m       L2:  [22mimport { Http, Headers,[41mR[49m[41me[49m[41mq[49m[41mu[49m[41me[49m[41ms[49m[41mt[49m[41mO[49m[41mp[49m[41mt[49m[41mi[49m[41mo[49m[41mn[49m[41ms[49m } from "@angular/http";
+[2m       L3:  [22mimport { Constants } from "../constants";
+
+            Unused import: 'Headers' 
+
+[2m       L1:  [22mimport {Injectable} from "@angular/core";
+[2m       L2:  [22mimport { Http, [41mH[49m[41me[49m[41ma[49m[41md[49m[41me[49m[41mr[49m[41ms[49m,RequestOptions } from "@angular/http";
+[2m       L3:  [22mimport { Constants } from "../constants";
+
+            Unused import: 'RequestOptions' 
+
+[2m       L1:  [22mimport {Injectable} from "@angular/core";
+[2m       L2:  [22mimport { Http, Headers,[41mR[49m[41me[49m[41mq[49m[41mu[49m[41me[49m[41ms[49m[41mt[49m[41mO[49m[41mp[49m[41mt[49m[41mi[49m[41mo[49m[41mn[49m[41ms[49m } from "@angular/http";
+[2m       L3:  [22mimport { Constants } from "../constants";
+
+            Unused import: 'Headers' 
+
+[2m       L1:  [22mimport {Injectable} from "@angular/core";
+[2m       L2:  [22mimport { Http, [41mH[49m[41me[49m[41ma[49m[41md[49m[41me[49m[41mr[49m[41ms[49m,RequestOptions } from "@angular/http";
+[2m       L3:  [22mimport { Constants } from "../constants";
+
+            Unused import: 'RequestOptions' 
+
+[2m       L1:  [22mimport {Injectable} from "@angular/core";
+[2m       L2:  [22mimport { Http, Headers,[41mR[49m[41me[49m[41mq[49m[41mu[49m[41me[49m[41ms[49m[41mt[49m[41mO[49m[41mp[49m[41mt[49m[41mi[49m[41mo[49m[41mn[49m[41ms[49m } from "@angular/http";
+[2m       L3:  [22mimport { Constants } from "../constants";
+
+[33m[13:15:46]  tslint: src/pages/admin/adminService.ts, line: 2 [39m
+[33m[13:15:46]  tslint: src/pages/reviews/ReviewsService.ts, line: 3 [39m
+[33m[13:15:46]  tslint: src/pages/reviews/ReviewsService.ts, line: 4 [39m
+[33m[13:15:46]  tslint: src/pages/reviews/ReviewsService.ts, line: 5 [39m
+            Unused import: 'RequestOptions' 
+
+[2m       L1:  [22mimport {Injectable} from "@angular/core";
+[2m       L2:  [22mimport { Http, Headers,[41mR[49m[41me[49m[41mq[49m[41mu[49m[41me[49m[41ms[49m[41mt[49m[41mO[49m[41mp[49m[41mt[49m[41mi[49m[41mo[49m[41mn[49m[41ms[49m } from "@angular/http";
+[2m       L3:  [22mimport { Constants } from "../constants";
+
+            Unused import: 'LoadingController' 
+
+[2m       L2:  [22mimport 'rxjs/add/operator/map';
+[2m       L3:  [22mimport {[41mL[49m[41mo[49m[41ma[49m[41md[49m[41mi[49m[41mn[49m[41mg[49m[41mC[49m[41mo[49m[41mn[49m[41mt[49m[41mr[49m[41mo[49m[41ml[49m[41ml[49m[41me[49m[41mr[49m} from 'ionic-angular';
+[2m       L4:  [22mimport {Http, Headers} from "@angular/http";
+
+            Unused import: 'Headers' 
+
+[2m       L3:  [22mimport {LoadingController} from 'ionic-angular';
+[2m       L4:  [22mimport {Http, [41mH[49m[41me[49m[41ma[49m[41md[49m[41me[49m[41mr[49m[41ms[49m} from "@angular/http";
+[2m       L5:  [22mimport { Constants } from "../constants";
+
+            Unused import: 'Constants' 
+
+[2m       L4:  [22mimport {Http, Headers} from "@angular/http";
+[2m       L5:  [22mimport { [41mC[49m[41mo[49m[41mn[49m[41ms[49m[41mt[49m[41ma[49m[41mn[49m[41mt[49m[41ms[49m } from "../constants";
+
+[2m[13:15:46][22m  lint finished [2min 9.81 s[22m 
