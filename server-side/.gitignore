@@ -85,5 +85,5 @@ logs/
 spartan.xml
 
 # Exclude logs and outs
-.log
-.out
+*.log
+*.out
