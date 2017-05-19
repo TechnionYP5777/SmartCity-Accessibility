@@ -4,19 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.Timeout;
 import org.mockito.Mockito;
 
-import com.teamdev.jxmaps.LatLng;
-
 import smartcity.accessibility.categories.NetworkTests;
 import smartcity.accessibility.database.AbstractLocationManager;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
@@ -61,10 +56,7 @@ public class NavigationTest {
 		Latlng from = new Latlng(31.768762, 34.632052), to = new Latlng(31.770981, 34.620567);
 		List<MapSegment> segmentsToAvoid = new ArrayList<MapSegment>();
 		segmentsToAvoid.add(Navigation.getMapSegmentOfLatLng(31.76935, 34.626793));// sd
-		Double[] shapePoints = Navigation.getRouteFromMapQuest(from, to, segmentsToAvoid).getShape().getShapePoints();
-		ExtendedMapView mapview = JxMapsFunctionality.getMapView();
-		JxMapsFunctionality.waitForMapReady(mapview);
-		JxMapsConvertor.displayRoute(mapview, Navigation.arrayToLatLng(shapePoints));
+		Navigation.getRouteFromMapQuest(from, to, segmentsToAvoid).getShape().getShapePoints();
 	}
 
 	@Test
@@ -76,22 +68,15 @@ public class NavigationTest {
 																					// tel
 																					// hai
 		segmentsToAvoid.add(Navigation.getMapSegmentOfLatLng(31.769937, 34.627658));
-		Double[] shapePoints = Navigation.getRouteFromMapQuest(from, to, segmentsToAvoid).getShape().getShapePoints();
-		ExtendedMapView mapview = JxMapsFunctionality.getMapView();
-		JxMapsFunctionality.waitForMapReady(mapview);
-		JxMapsConvertor.displayRoute(mapview, Navigation.arrayToLatLng(shapePoints));
+		Navigation.getRouteFromMapQuest(from, to, segmentsToAvoid).getShape().getShapePoints();
 	}
 
-	@Ignore
 	@Test
 	@Category(NetworkTests.class)
-	public void displayMap() throws CommunicationFailed {
+	public void getRoute() throws CommunicationFailed {
 		Location fromLocation = new LocationBuilder().setCoordinates(31.768762, 34.632052).build(),
 				toLocation = new LocationBuilder().setCoordinates(31.770981, 34.620567).build();//new Location(new LatLng(31.770981, 34.620567));
-		LatLng[] shapePoints = Navigation.showRoute(fromLocation, toLocation, 0);
-		ExtendedMapView mapview = JxMapsFunctionality.getMapView();
-		JxMapsFunctionality.waitForMapReady(mapview);
-		JxMapsConvertor.displayRoute(mapview, shapePoints);
+		Navigation.getRoute(fromLocation, toLocation, 0);
 	}
 
 }

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.navigation.Navigation;
+import smartcity.accessibility.navigation.RouteResponse;
 import smartcity.accessibility.navigation.exception.CommunicationFailed;
-import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 import smartcity.accessibility.services.exceptions.NavigationFailed;
 
 /**
@@ -25,7 +25,7 @@ public class NavigationService {
 
 	@RequestMapping(value = "/navigation", method = RequestMethod.POST)
 	@ResponseBody
-	public Latlng[] navigation(@RequestHeader("authToken") String token, @RequestParam("srcLat") Double srcLat,
+	public RouteResponse navigation(@RequestHeader("authToken") String token, @RequestParam("srcLat") Double srcLat,
 			@RequestParam("srcLng") Double srcLng, @RequestParam("dstLat") Double dstLat,
 			@RequestParam("dstLng") Double dstLng,
 			@RequestParam("accessibilityThreshold") Integer accessibilityThreshold) {
@@ -37,14 +37,13 @@ public class NavigationService {
 
 		Location source = new LocationBuilder().setCoordinates(srcLat, srcLng).build();
 		Location destination = new LocationBuilder().setCoordinates(dstLat, dstLng).build();
-		Latlng[] l;
 		try {
-			l = Navigation.getRoute(source, destination, accessibilityThreshold);
+			return Navigation.getRoute(source, destination, accessibilityThreshold);
 		} catch (CommunicationFailed e) {
 			logger.info("navigation failed", e);
 			throw new NavigationFailed();
 		}
-		return l;
+		
 	}
 
 }
