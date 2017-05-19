@@ -49,7 +49,7 @@ public abstract class Navigation {
 			latlng[k] = new Latlng(shapePointsArr[i], shapePointsArr[i + 1]);
 		RouteResponse r = new RouteResponse();
 		r.setLatlng(latlng);
-		r.setRealTime(route.getRealTime());
+		r.setTime(route.getTime());
 		return r;
 	}
 

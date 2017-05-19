@@ -7,7 +7,7 @@ package smartcity.accessibility.navigation.mapquestcommunication;
  */
 public class Route {
 	private Shape shape;
-	private Integer realTime;
+	private Integer time;
 
 	public Route() {
 		// empty constructor needed for JSON
@@ -21,12 +21,12 @@ public class Route {
 		this.shape = s;
 	}
 
-	public Integer getRealTime() {
-		return realTime;
+	public Integer getTime() {
+		return time;
 	}
 
-	public void setRealTime(Integer realTime) {
-		this.realTime = realTime;
+	public void setTime(Integer time) {
+		this.time = time;
 	}
 
 }

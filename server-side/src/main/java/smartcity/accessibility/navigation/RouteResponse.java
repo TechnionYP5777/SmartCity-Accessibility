@@ -10,15 +10,15 @@ import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
  *
  */
 public class RouteResponse {
-	private Integer realTime;
 	private Latlng[] latlng;
+	private Integer time;
 
-	public Integer getRealTime() {
-		return realTime;
+	public Integer getTime() {
+		return time;
 	}
 
-	public void setRealTime(Integer realTime) {
-		this.realTime = realTime;
+	public void setTime(Integer time) {
+		this.time = time;
 	}
 
 	public Latlng[] getLatlng() {
@@ -28,5 +28,4 @@ public class RouteResponse {
 	public void setLatlng(Latlng[] latlng) {
 		this.latlng = latlng;
 	}
-
 }

@@ -89,7 +89,7 @@ export class MapviewPage {
 	subscribeToNavigation(){
 		this.events.subscribe('navigation:done', (navigationResults,loading) => {
 			var route = new google.maps.Polyline({
-			    path: navigationResults,
+			    path: navigationResults.latlng,
 			    geodesic: true,
 			    strokeColor: '#FF0000',
 			    strokeOpacity: 1.0,
