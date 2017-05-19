@@ -8,8 +8,8 @@ public class UserProfile {
 
 	private final String username;
 	private Helpfulness hlp;
-	
-	public UserProfile(String username){
+
+	public UserProfile(String username) {
 		this.username = username;
 		hlp = new Helpfulness();
 	}
@@ -29,24 +29,24 @@ public class UserProfile {
 	public int getNumOfReviews() {
 		return hlp.getNumOfReviews();
 	}
-	
-	public void upvote(){
+
+	public void upvote() {
 		hlp.upvote();
 	}
-	
-	public void downvote(){
+
+	public void downvote() {
 		hlp.downvote();
 	}
-	
-	public void addReview(){
+
+	public void addReview() {
 		hlp.addReview();
 	}
-	
-	public void removeReview(){
+
+	public void removeReview() {
 		hlp.removeReview();
 	}
-	
-	public double getAvgRating(){
+
+	public double getAvgRating() {
 		return hlp.helpfulness();
 	}
 
@@ -58,6 +58,30 @@ public class UserProfile {
 	public Helpfulness getHelpfulness() {
 		return hlp;
 	}
-	
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserProfile other = (UserProfile) obj;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
+
 }

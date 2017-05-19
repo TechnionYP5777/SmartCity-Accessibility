@@ -12,7 +12,6 @@ import com.google.inject.Inject;
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 import smartcity.accessibility.database.callbacks.ICallback;
-import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
 /**
@@ -52,14 +51,14 @@ public class UserProfileManager extends AbstractUserProfileManager {
 	}
 
 	@Override
-	public UserProfile get(String username, ICallback<UserProfile> c) throws UserNotFoundException {
+	public UserProfile get(String username, ICallback<UserProfile> c) {
 		logger.debug("get UserProfile {}", username);
 		Flowable<UserProfile> res = Flowable.fromCallable(() -> {
 			Map<String, Object> m = new HashMap<>();
 			m.put(USERNAME_FIELD, username);
 			List<Map<String, Object>> l = db.get(DATABASE_CLASS, m);
 			if (l.isEmpty())
-				throw new UserNotFoundException();
+				return null;
 			return fromMap(l.get(0));
 		})
 		.subscribeOn(Schedulers.io())

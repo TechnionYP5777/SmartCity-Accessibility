@@ -14,7 +14,6 @@ import com.google.inject.Inject;
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 import smartcity.accessibility.database.callbacks.ICallback;
-import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.ReviewComment;
@@ -81,11 +80,9 @@ public class ReviewManager extends AbstractReviewManager {
 		int rating = (int) m.get(RATING_FIELD_NAME);
 		String content = m.get(CONTENT_FIELD_NAME).toString();
 		boolean isPinned = (boolean) m.get(IS_PINNED_FIELD_NAME);
-		UserProfile up = null;
-		try {
-			up = AbstractUserProfileManager.instance().get(m.get(USERNAME_FIELD_NAME).toString(), null);
-		} catch (UserNotFoundException e) {
-			logger.error("User not found for review {} with error {}", m.get(ID_FIELD_NAME), e);
+		UserProfile up = AbstractUserProfileManager.instance().get(m.get(USERNAME_FIELD_NAME).toString(), null);
+		if (up == null) {
+			logger.error("User not found for review {} ", m.get(ID_FIELD_NAME));
 		}
 		Review r = new Review(null, rating, content, up);
 		r.setPinned(isPinned);
@@ -103,11 +100,7 @@ public class ReviewManager extends AbstractReviewManager {
 		List<ReviewComment> lrc = new ArrayList<>();
 		for (String comment : ls){
 			logger.debug("comments split into {}", comment);
-			try {
-				lrc.add(ReviewComment.deserialize(comment));
-			} catch (NumberFormatException | UserNotFoundException e) {
-				logger.error("Couldn't deserialize review comment {}, with exception {}", comment, e);
-			}
+			lrc.add(ReviewComment.deserialize(comment));
 		}
 		r.addComments(lrc);
 		

@@ -95,7 +95,13 @@ public class UserProfileManagerTest {
 	@Test(expected=UserNotFoundException.class)
 	@Category(UnitTests.class)
 	public void testGetThrows() throws UserNotFoundException{
-		manager.get("I_DONT_EXIST", null);
+		try {
+			manager.get("I_DONT_EXIST", null);
+		} catch (RuntimeException e){
+			Throwable t = e.getCause();
+			if (t instanceof UserNotFoundException)
+				throw (UserNotFoundException)t;
+		}
 	}
 	
 	public static void setUpMock(){

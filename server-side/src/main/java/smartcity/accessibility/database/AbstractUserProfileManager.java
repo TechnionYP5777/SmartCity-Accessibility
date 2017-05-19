@@ -1,7 +1,6 @@
 package smartcity.accessibility.database;
 
 import smartcity.accessibility.database.callbacks.ICallback;
-import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
 /**
@@ -9,7 +8,6 @@ import smartcity.accessibility.socialnetwork.UserProfile;
  * Or block the operation until complete (not advised) and return the value
  * Blocking is done when callback method given is null
  * @author KaplanAlexander
- *
  */
 public abstract class AbstractUserProfileManager {
 	protected static AbstractUserProfileManager instance;
@@ -21,7 +19,7 @@ public abstract class AbstractUserProfileManager {
 		return instance;
 	}
 	
-	public abstract UserProfile get(String username, ICallback<UserProfile> c) throws UserNotFoundException;
+	public abstract UserProfile get(String username, ICallback<UserProfile> c);
 	
 	public abstract Boolean put(UserProfile up, ICallback<Boolean> callback);
 	

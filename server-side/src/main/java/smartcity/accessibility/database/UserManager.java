@@ -99,11 +99,9 @@ public abstract class UserManager {
 		Privilege pr = Privilege.valueOf(pu.getString(PRIVILEGE_LEVEL));
 		String favouriteQueries = pu.getString(FAVOURITE_SEARCH_QUERIES);
 
-		UserProfile up = null;
-		try {
-			up = AbstractUserProfileManager.instance().get(name, null);
-		} catch (UserNotFoundException e) {
-			logger.error("Public profile not found {}", e);
+		UserProfile up = AbstractUserProfileManager.instance().get(name, null);
+		if(up == null) {
+			logger.error("Public profile not found {}", name);
 		}
 
 		User u = new UserBuilder().setUsername(name).setPassword(password).setPrivilege(pr)
