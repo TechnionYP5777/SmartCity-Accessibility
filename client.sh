@@ -7,4 +7,5 @@ echo "Installing with npm"
 npm install --silent
 echo "Serving ionic"
 screen -d -m -L ionic serve --nolivereload --nobrowser
+sleep 5m
 echo "Success!"
