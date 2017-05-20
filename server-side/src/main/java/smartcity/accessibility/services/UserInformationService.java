@@ -19,10 +19,8 @@ import smartcity.accessibility.socialnetwork.UserProfile;
 public class UserInformationService {
 	@RequestMapping(value="/userInfo/name")
 	@ResponseBody public UserProfile getUserInfoName(@RequestHeader("authToken") String token) {	
-		
 		UserInfo userInfo = LogInService.getUserInfo(token);
 		return userInfo.getUser().getProfile();
-		
 	}
 	
 	@RequestMapping(value="/userInfo/JSONEXAMPLE")
