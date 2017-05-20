@@ -13,17 +13,20 @@ import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
+/*
+ * auth ariel
+ */
 
+//notice, this is the line to use:
+//localhost:8090/locationsInRadius?srcLat=31.906953&srcLng=34.992489
 @RestController
 public class LocationsInRadiusService {
-	private static final int radius = 50;
+	private static final int radius = 1000;
 	@RequestMapping(value="/locationsInRadius")
-	@ResponseBody public List<Location> getLocationsInRadius(/*@RequestHeader("authToken") String token, @RequestParam("srcLat") Double srcLat,
-			@RequestParam("srcLng") Double srcLng*/) {	
+	@ResponseBody public List<Location> getLocationsInRadius(/*@RequestHeader("authToken") String token,*/ @RequestParam("srcLat") Double srcLat,
+			@RequestParam("srcLng") Double srcLng) {	
 		//ExtendedMapView mv = LogInService.getUserInfo(token).getMapView();
 		try {
-			double srcLat = 31.906953;
-			double srcLng = 34.992489;
 			SearchQuery sq = SearchQuery.TypeSearch("");
 			Location dummy = new Location();
 			dummy.setCoordinates(new LatLng(srcLat, srcLng));
