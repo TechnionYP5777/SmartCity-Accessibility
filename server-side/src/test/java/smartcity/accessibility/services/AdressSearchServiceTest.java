@@ -34,8 +34,8 @@ public class AdressSearchServiceTest extends ServiceTest{
 	@Category(UnitTests.class)
 	public void searchSuccess() throws Exception {
 		String res = mockMvc.perform(get("/simpleSearch/Yehalom 70")).andReturn().getResponse().getContentAsString();
-		Assert.assertTrue(res.contains(":34.992489,"));
-		Assert.assertTrue(res.contains(":31.906953}"));
+		Assert.assertTrue(res.contains(":34.992489"));
+		Assert.assertTrue(res.contains(":31.906953"));
 		Assert.assertTrue(res.contains("Yahalom St 70, Modi'in-Maccabim-Re'ut, Israel"));
 	}
 }
