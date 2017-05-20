@@ -11,8 +11,12 @@ import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 
+/**
+ * @author ariel
+ */
+
 @RestController
-public class SimpleSearchService {
+public class AdressSearchService {
 	@RequestMapping(value="/simpleSearch/{search}")
 	@ResponseBody
     public Location searchService(@PathVariable("search") String search) {	

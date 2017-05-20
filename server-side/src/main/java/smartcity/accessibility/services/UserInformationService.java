@@ -11,6 +11,10 @@ import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserBuilder;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
+/**
+ * @author ariel
+ */
+
 @RestController
 public class UserInformationService {
 	@RequestMapping(value="/userInfo/name")
