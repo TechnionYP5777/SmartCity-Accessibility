@@ -21,7 +21,7 @@ import smartcity.accessibility.search.SearchQueryResult;
 //localhost:8090/locationsInRadius?srcLat=31.906953&srcLng=34.992489
 @RestController
 public class LocationsInRadiusService {
-	private static final int radius = 1000;
+	private static final double radius = 1;
 	@RequestMapping(value="/locationsInRadius")
 	@ResponseBody public List<Location> getLocationsInRadius(/*@RequestHeader("authToken") String token,*/ @RequestParam("srcLat") Double srcLat,
 			@RequestParam("srcLng") Double srcLng) {	
