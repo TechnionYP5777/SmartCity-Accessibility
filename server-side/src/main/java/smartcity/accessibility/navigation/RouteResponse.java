@@ -1,25 +1,17 @@
 package smartcity.accessibility.navigation;
 
 import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
+import smartcity.accessibility.navigation.mapquestcommunication.Route;
 
 /**
- * This class is the response for our NavigationService There is some
- * duplication with Route.java but due to our move to ionic it has to be.
+ * This class is the response for our NavigationService This is class extends
+ * Rout.java to avoid duplication due to our move to ionic.
  * 
  * @author yael
  *
  */
-public class RouteResponse {
+public class RouteResponse extends Route {
 	private Latlng[] latlng;
-	private Integer time;
-
-	public Integer getTime() {
-		return time;
-	}
-
-	public void setTime(Integer time) {
-		this.time = time;
-	}
 
 	public Latlng[] getLatlng() {
 		return latlng;

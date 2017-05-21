@@ -50,6 +50,7 @@ public abstract class Navigation {
 		RouteResponse r = new RouteResponse();
 		r.setLatlng(latlng);
 		r.setTime(route.getTime());
+		r.setLegs(route.getLegs());
 		return r;
 	}
 

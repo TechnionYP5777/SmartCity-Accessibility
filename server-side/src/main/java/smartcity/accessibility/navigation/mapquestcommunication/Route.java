@@ -8,10 +8,7 @@ package smartcity.accessibility.navigation.mapquestcommunication;
 public class Route {
 	private Shape shape;
 	private Integer time;
-
-	public Route() {
-		// empty constructor needed for JSON
-	}
+	private Leg[] legs;
 
 	public Shape getShape() {
 		return shape;
@@ -27,6 +24,14 @@ public class Route {
 
 	public void setTime(Integer time) {
 		this.time = time;
+	}
+
+	public Leg[] getLegs() {
+		return legs;
+	}
+
+	public void setLegs(Leg[] legs) {
+		this.legs = legs;
 	}
 
 }
