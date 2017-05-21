@@ -21,6 +21,8 @@
    <button ion-button [navPush]="adminPage">Admin Page</button>
    <button ion-button [navPush]="addReviewPage">Add Review</button>
    <button ion-button [navPush]="showReviews">Show Review</button>
+   <button ion-button [@flip]="flipState" (click)="toggleFlip()">animation</button>
+
 
 </ion-card-content>
 </ion-content>

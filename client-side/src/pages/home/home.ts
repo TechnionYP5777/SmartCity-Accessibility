@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
 import { LoginPage } from '../login/login';
 import { NavController, AlertController } from 'ionic-angular';
 import { MapviewPage } from '../mapview/mapview';
@@ -10,7 +10,18 @@ import { GetReviewsPage } from '../reviews/reviews';
 
 @Component({
   selector: 'page-home',  
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  
+   animations: [
+ 
+    trigger('flip', [
+      state('flipped', style({
+        transform: 'rotate(180deg)',
+        backgroundColor: '#f50e80'
+      })),
+      transition('* => flipped', animate('400ms ease'))
+    ])
+   ]
 })
 export class HomePage {
   isLoggedin : any;
@@ -19,7 +30,7 @@ export class HomePage {
   adminPage = AdminPage;
   addReviewPage = AddReviewPage;
   showReviews = GetReviewsPage;
-  
+  flipState: String = 'notFlipped';
     constructor(public navCtrl: NavController,public loginService : LoginService,public alertCtrl: AlertController) {
     }
   
@@ -42,5 +53,9 @@ export class HomePage {
 		  buttons: ['OK']
 		});
 		alert.present();
+	}
+	
+	toggleFlip() {
+		this.flipState = (this.flipState == 'notFlipped') ? 'flipped' : 'notFlipped';
 	}
 }
