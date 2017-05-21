@@ -9,9 +9,12 @@ export class NavigationService {
     }
      
 	navigatee(src,dst,accessibilityThreshold) {
-		var token = JSON.parse(window.sessionStorage.getItem('token')).token;
-		if(token == null)
+		try{
+			var token = JSON.parse(window.sessionStorage.getItem('token')).token;
+		}
+		catch(err){
 			token = "no token";
+		}
 		var params = "srcLat=" + src.lat + "&srcLng=" + src.lng + "&dstLat=" + dst.lat + "&dstLng=" + dst.lng+"&accessibilityThreshold="+accessibilityThreshold;
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
