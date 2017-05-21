@@ -10,7 +10,7 @@ export class AdminService {
     }
 
 	getUserProfile() {
-		var token = window.sessionStorage.getItem('token');
+		var token = JSON.parse(window.sessionStorage.getItem('token')).token;
 		var headers = new Headers();
 		headers.append('Content-Type', 'application/x-www-form-urlencoded');
 		headers.append('authToken',token);
