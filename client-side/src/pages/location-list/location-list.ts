@@ -10,15 +10,20 @@ export class LocationListPage {
 	lat : any;
 	lng : any;
 	output: any;
+	output2: any;
+	locations: any;
+	location: any;
+	index: any;
 	constructor(public navCtrl: NavController, public navParams: NavParams, public locationsInRadius: LocationsInRadiusService) {
 		this.lat = navParams.get('lat');
 		this.lng = navParams.get('lng');	
-		this.output = "aaaaaaaaaHWERWERWERWER";
-		this.locationsInRadius.GetLocationsInRadiusFrom(this.lat, this.lng).subscribe(data => {
-			for (var key in data) {
-				 console.log("we got:", data[key]);
+		this.output = "Calculating...";
+		this.locations = [{"reviews":[],"coordinates":{"lng":0,"lat":0},"name":"please wait...","locationType":"Coordinate","locationSubType":"Default","notPinnedReviews":[],"pinnedReviews":[]}];
+		this.locationsInRadius.GetLocationsInRadiusFrom(this.lat, this.lng).subscribe(data => {	
+			for(var count = 0; count < data.length; count++){
+				this.locations[count] = data[count];
 			}
-			this.output = data[key];
+		this.output = this.locations;
 		});
 	}
 

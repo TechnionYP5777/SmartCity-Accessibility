@@ -3,8 +3,6 @@
 		<ion-list-header>
 		  Location in radius from: {{lat}}, lng: {{lng}}
 		</ion-list-header>
-		<ion-item  >
-		{{output}}
-		</ion-item>
-	</ion-list>
+        <ion-item *ngFor="let location of locations">{{location.name}}</ion-item>
+    </ion-list>
 </ion-content>

@@ -57,7 +57,6 @@ export class MapviewPage {
 	
     callSearch(searchQuery) {
 	    this.searchService.search(searchQuery).subscribe(data => {
-			this.output = "Location is: " + data.name + " coordinates are: " + data.coordinates.lat + ":" + data.coordinates.lng ;
 			this.addMarker([data.coordinates]);
 			this.map.setCenter(data.coordinates);
 		});

@@ -20,5 +20,7 @@ export class AdminService {
 		headers.append('authToken',token);
 		return this.http.get(Constants.serverAddress +'/adminInfo', {headers: headers}).map(res=>res.json());
 	}
+	
+	getSystem
 
 }
