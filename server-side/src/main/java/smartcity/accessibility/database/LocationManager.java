@@ -107,7 +107,7 @@ public class LocationManager extends AbstractLocationManager {
 		Flowable<List<Location>> res = Flowable.fromCallable(() -> {
 			Map<String, Object> m = new HashMap<>();
 			m.put(LOCATION_FIELD_NAME, new ParseGeoPoint(coordinates.getLat(), coordinates.getLng()));
-			
+
 			List<Map<String, Object>> locsMap = db.get(DATABASE_CLASS, m);
 			logger.debug("db.get returned {}", locsMap.toString());
 			List<Location> locs = new ArrayList<>();
@@ -131,12 +131,9 @@ public class LocationManager extends AbstractLocationManager {
 			List<Map<String, Object>> mapList = db.get(DATABASE_CLASS, LOCATION_FIELD_NAME, l.getLat(), l.getLng(),
 					distance);
 			return mapList.stream().map(m -> {
-							Location ml = fromMap(m);
-							return getLocation(ml.getCoordinates(),
-												ml.getLocationType(),
-												ml.getLocationSubType(),
-												null);
-						}).collect(Collectors.toList());
+				Location ml = fromMap(m);
+				return getLocation(ml.getCoordinates(), ml.getLocationType(), ml.getLocationSubType(), null);
+			}).collect(Collectors.toList());
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
 			return res.blockingFirst();
@@ -184,15 +181,11 @@ public class LocationManager extends AbstractLocationManager {
 	public List<LatLng> getNonAccessibleLocationsInRadius(LatLng source, LatLng destination,
 			Integer accessibilityThreshold, ICallback<List<LatLng>> callback) {
 		Flowable<List<LatLng>> res = Flowable.fromCallable(() -> {
-			List<Location> locList = getLocationsAround(getCenter(source, destination),
-														distance(source, destination),
-														null);
-			return locList.stream()
-							.map(BestReviews::new)
-							.filter(br -> br.getTotalRatingByAvg() >= accessibilityThreshold)
-							.map(br -> br.getLocation().getCoordinates())
-							.distinct()
-							.collect(Collectors.toList());
+			List<Location> locList = getLocationsAround(getCenter(source, destination), distance(source, destination),
+					null);
+			return locList.stream().map(BestReviews::new)
+					.filter(br -> br.getTotalRatingByAvg() >= accessibilityThreshold)
+					.map(br -> br.getLocation().getCoordinates()).distinct().collect(Collectors.toList());
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
 			return res.blockingFirst();
@@ -218,7 +211,7 @@ public class LocationManager extends AbstractLocationManager {
 	}
 
 	private double distance(LatLng p1, LatLng p2) {
-		double lat1 = p1.getLat(); 
+		double lat1 = p1.getLat();
 		double lat2 = p2.getLat();
 		double lng1 = p1.getLng();
 		double lng2 = p2.getLng();
@@ -233,8 +226,17 @@ public class LocationManager extends AbstractLocationManager {
 
 	@Override
 	public List<Location> getTopRated(LatLng l, double radius, int n, ICallback<List<Location>> callback) {
-		// TODO Auto-generated method stub
-		return null;
+		Flowable<List<Location>> res = Flowable.fromCallable(() -> {
+			List<Location> locsList = getLocationsAround(l, radius, null);
+			return locsList.stream().map(BestReviews::new)
+					.sorted((br1, br2) -> br1.getTotalRatingByAvg() - br2.getTotalRatingByAvg())
+					.map(br -> br.getLocation())
+					.collect(Collectors.toList());
+		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
+		if (callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);
+		return new ArrayList<>();
 	}
 
 }
