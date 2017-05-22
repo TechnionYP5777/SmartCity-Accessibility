@@ -15,7 +15,7 @@ export class LocationListPage {
 		this.lng = navParams.get('lng');	
 		this.output = "aaaaaaaaaHWERWERWERWER";
 		this.locationsInRadius.GetLocationsInRadiusFrom(this.lat, this.lng).subscribe(data => {	
-			for(count = 0; count < data.length; count++){
+			for(var count = 0; count < data.length; count++){
 				this.output = data[0].name;	
 			}
 			
