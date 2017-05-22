@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.teamdev.jxmaps.LatLng;
 
-import smartcity.accessibility.database.AbstractReviewManager;
+import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
 
@@ -19,20 +19,17 @@ public class ReviewsService {
 	
 	@RequestMapping(value = "/reviews", produces = "application/json")
 	@ResponseBody
-    public void getreviews(@RequestParam("review") String review,
-    		@RequestParam("lat") Double lat,
+    public List<Review> showMeStuff(@RequestParam("lat") Double lat,
     		@RequestParam("lng") Double lng) {
 		
-		Location l = new Location();
-		l.setCoordinates(new LatLng(lat, lng));
+		List<Location> lstLocation = AbstractLocationManager.instance().getLocation(new LatLng(lat, lng), null);
+		List<Review> lstReviews = new ArrayList<>();
 		
-		List<Review> lst = new ArrayList<Review>(); //AbstractReviewManager.instance().
-		
-		for(Review r : lst){
-			//convert them to json objects
+		for(Location l : lstLocation){
+			lstReviews.addAll(l.getReviews());
 		}
 		
-		//return somehow
+		return lstReviews;
     }
 
 }

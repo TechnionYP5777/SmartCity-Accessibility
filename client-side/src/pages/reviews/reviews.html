@@ -9,7 +9,8 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let rev of revs">
-      <img [src]="rev.data.url" />
+      {{rev.content}}
+      {{rev.rating}}
     </ion-item>
   </ion-list>
 </ion-content>

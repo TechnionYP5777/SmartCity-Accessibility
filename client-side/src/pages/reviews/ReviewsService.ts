@@ -19,7 +19,9 @@ export class GetReviewsService {
   showMeStuff(loading, lat, lng){
     loading.present();
 	
-	this.http.get('https://www.reddit.com/r/gifs/new/.json?limit=10').map(res => res.json()).subscribe(data => {
+	var params = "lat=" + lat + "&lng=" + lng;
+	
+	this.http.get(Constants.serverAddress +'/reviews?'+params).map(res => res.json()).subscribe(data => {
         this.revs = data.data.children;
         loading.dismiss();
     },
