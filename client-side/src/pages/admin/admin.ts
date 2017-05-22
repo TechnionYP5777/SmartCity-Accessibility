@@ -39,6 +39,8 @@ export class AdminPage {
   rating: any;
   numOfReviews: any;
   hlp: any;
+  usersArray: any;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams,
 			  public loginService : LoginService, public adminService : AdminService,
               public userInformationService : UserInformationService) {
@@ -49,8 +51,11 @@ export class AdminPage {
 			(this.numOfReviews == 0) ? this.hlp = 0 : this.hlp = (this.rating / this.numOfReviews);
 			
 		});
-		
-		
+			
+  }
+  
+  showUsers(n) {
+	  
   }
   
   
