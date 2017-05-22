@@ -16,7 +16,7 @@ export class GetReviewsService {
     console.log('Hello GetReviewsService Provider');
   }
   
-  showMeStuff(loading){
+  showMeStuff(loading, lat, lng){
     loading.present();
 	
 	this.http.get('https://www.reddit.com/r/gifs/new/.json?limit=10').map(res => res.json()).subscribe(data => {

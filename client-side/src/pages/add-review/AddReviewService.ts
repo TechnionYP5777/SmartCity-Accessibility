@@ -14,7 +14,12 @@ export class AddReviewService {
   }
   
   addreview(rev, lat, lng){
-    var token = window.sessionStorage.getItem('token');
+    try{
+		var token = JSON.parse(window.sessionStorage.getItem('token')).token;
+	}
+	catch(err){
+		token = "no token";
+	}
     var params = "lat=" + lat + "&lng=" + lng + "&review=" + rev.review + "&score=" + rev.score;
   	var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');

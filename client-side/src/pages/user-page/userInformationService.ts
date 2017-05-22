@@ -10,9 +10,12 @@ export class UserInformationService {
     }
 
 	getUserProfile() {
-		var token = window.sessionStorage.getItem('token');
-		if(token == null)
+		try{
+		   var token = JSON.parse(window.sessionStorage.getItem('token')).token;
+		}
+		catch(err){
 			token = "no token";
+		}
 		var headers = new Headers();
 		headers.append('Content-Type', 'application/x-www-form-urlencoded');
 		headers.append('authToken',token);

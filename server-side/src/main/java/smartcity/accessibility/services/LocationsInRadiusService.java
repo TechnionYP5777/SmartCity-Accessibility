@@ -31,6 +31,9 @@ public class LocationsInRadiusService {
 			Location dummy = new Location();
 			dummy.setCoordinates(new LatLng(srcLat, srcLng));
 			SearchQueryResult sqr = sq.searchByType(dummy, radius);
+			/*
+			 * Todo, searcg for locations in the database
+			 */
 			sq.waitOnSearch();
 			return sqr.getLocations();
 		} catch (illigalString | InterruptedException e) {

@@ -23,5 +23,22 @@ page-admin {
 		 margin: 0 0 18px;
 		 text-shadow: 1px 0 0 #fff;
 	}
+	
+	 .login-button {
+          width: 100%;
+          border-radius: 30px;
+          font-size: 0.9em;
+          border: 1px solid #fff;
+          background-color: #39acdc;
+      }
+	  
+	   ion-item {
+          border-radius: 30px !important;
+          padding-left: 10px !important;
+          margin-bottom: 10px;
+          background-color: #f6f6f6;
+          opacity: 0.7;
+          font-size: 0.9em;
+      }
 
 }
