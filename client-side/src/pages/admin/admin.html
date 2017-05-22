@@ -12,9 +12,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content [@flyInBottomSlow]="logoState" padding>
 
-<button ion-button class="login-button" [@fadeIn]="loginState">animation</button>
 	<ion-card>
 	  <img class="card-image" src='../assets/img/Admin.png'/>
 	  <ion-card-content>
@@ -27,25 +26,35 @@
 	  </ion-card-content>
 	</ion-card>
 	
-	<ion-card>
-	<img class="card-image" src='../assets/img/helpfulness.png'/>
-	  <ion-card-content>
-		<p class="cardContent">
-		  Details about the helpfulness:<br>
-		  Rating : {{ rating }}<br>
-		  Numer of reviews : {{ numOfReviews }}<br>
-		</p>
+	
+	
+	<ion-grid>
+		<ion-row>
 		
-		<ion-item>
-			<ion-range min="-1" max="1" [(ngModel)]="saturation" color="blue">
-				<ion-label range-left>-1</ion-label>
-				<ion-label range-right>1</ion-label>
-			</ion-range>
-		</ion-item>
-	  </ion-card-content>
-	</ion-card>
+			<ion-col>
+				<ion-card>
+				<img class="card-image" src='../assets/img/helpfulness.png'/>
+				  <ion-card-content>
+					<p class="cardContent">
+					  Details about your helpfulness:<br>
+					  Rating : {{ rating }}<br>
+					  Numer of reviews : {{ numOfReviews }}<br>
+					  Helpfulness: {{ hlp }}<br>
+					</p>
+					
+					<img *ngIf="hlp > 0" class="emoji-image" src='../assets/img/great.png'/>
+					<img *ngIf="hlp == 0" class="emoji-image" src='../assets/img/unhelpful.png'/>
+					<img *ngIf="hlp < 0" class="emoji-image" src='../assets/img/bad.png'/>
+					
+				  </ion-card-content>
+				</ion-card>
+			</ion-col>
+			
+		</ion-row>
 	
+		
 	
+	</ion-grid>
 	
 </ion-content>
 

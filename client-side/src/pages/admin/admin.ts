@@ -1,4 +1,4 @@
-import { Component, trigger, state, style, transition, animate } from '@angular/core';
+import {Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { LoginService } from '../login/LoginService';
 import { AdminService } from './adminService';
@@ -38,8 +38,7 @@ export class AdminPage {
   name: any;
   rating: any;
   numOfReviews: any;
-  logoState: any = 'in';
-  loginState: any = 'in';
+  hlp: any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
 			  public loginService : LoginService, public adminService : AdminService,
               public userInformationService : UserInformationService) {
@@ -47,7 +46,10 @@ export class AdminPage {
 			this.name = data.username;
 			this.rating=data.rating;
 			this.numOfReviews=data.numOfReviews;
+			(this.numOfReviews == 0) ? this.hlp = 0 : this.hlp = (this.rating / this.numOfReviews);
+			
 		});
+		
 		
   }
   
