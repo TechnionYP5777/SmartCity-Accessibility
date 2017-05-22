@@ -1,9 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>SmartCity-Accessibility</groupId>
 	<artifactId>SmartCity-Accessibility</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.5.0</version>
+	<scm>
+		<connection>scm:git:https://github.com/TechnionYP5777/SmartCity-Accessibility.git</connection>
+		<tag>SmartCity-Accessibility-0.5.0</tag>
+		<url>https://github.com/TechnionYP5777/SmartCity-Accessibility.git</url>
+	</scm>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -222,13 +226,13 @@
 		<dependency>
 			<groupId>com.jayway.jsonpath</groupId>
 			<artifactId>json-path</artifactId>
-			<version>1.1.0</version><!--$NO-MVN-MAN-VER$-->
+			<version>1.1.0</version><!--$NO-MVN-MAN-VER$ -->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.jayway.jsonpath</groupId>
 			<artifactId>json-path-assert</artifactId>
-			<version>1.1.0</version><!--$NO-MVN-MAN-VER$-->
+			<version>1.1.0</version><!--$NO-MVN-MAN-VER$ -->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
