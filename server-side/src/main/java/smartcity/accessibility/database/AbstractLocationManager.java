@@ -48,6 +48,6 @@ public abstract class AbstractLocationManager {
 	public abstract List<LatLng> getNonAccessibleLocationsInRadius(LatLng source, LatLng destination,
 			Integer accessibilityThreshold, ICallback<List<LatLng>> locationListCallback);
 	
-	public abstract List<Location> getTopRated(ICallback<List<Location>> callback);
+	public abstract List<Location> getTopRated(LatLng l, double radius, int n, ICallback<List<Location>> callback);
 	
 }
