@@ -27,6 +27,7 @@ import { ViewSearchQueryPage } from '../pages/viewSearchQuery/viewsearchquery';
 import { GetReviewsPage } from '../pages/reviews/reviews';
 import {GetReviewsService} from '../pages/reviews/ReviewsService';
 import { navigationManeuverPage } from '../pages/navigation_maneuver/navigation_maneuver';
+import { LocationsInRadiusService } from '../pages/location-list/LocationsInRadiusService';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { navigationManeuverPage } from '../pages/navigation_maneuver/navigation_
 	ComplexSearchService,
 	UserInformationService,
 	AdminService,
-	GetReviewsService
+	GetReviewsService,
+	LocationsInRadiusService
   ]
 })
 export class AppModule {}
