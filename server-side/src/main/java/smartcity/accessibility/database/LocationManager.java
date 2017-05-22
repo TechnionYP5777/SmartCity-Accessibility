@@ -232,7 +232,7 @@ public class LocationManager extends AbstractLocationManager {
 	}
 
 	@Override
-	public List<Location> getTopRated(ICallback<List<Location>> callback) {
+	public List<Location> getTopRated(LatLng l, double radius, int n, ICallback<List<Location>> callback) {
 		// TODO Auto-generated method stub
 		return null;
 	}
