@@ -9,9 +9,17 @@ import { LocationsInRadiusService } from './LocationsInRadiusService';
 export class LocationListPage {
 	lat : any;
 	lng : any;
+	output: any;
 	constructor(public navCtrl: NavController, public navParams: NavParams, public locationsInRadius: LocationsInRadiusService) {
 		this.lat = navParams.get('lat');
 		this.lng = navParams.get('lng');	
+		this.output = "aaaaaaaaaHWERWERWERWER";
+		this.locationsInRadius.GetLocationsInRadiusFrom(this.lat, this.lng).subscribe(data => {
+			for (var key in data) {
+				 console.log("we got:", data[key]);
+			}
+			this.output = data[key];
+		});
 	}
 
 }
