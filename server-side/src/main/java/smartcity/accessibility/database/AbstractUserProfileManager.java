@@ -1,5 +1,7 @@
 package smartcity.accessibility.database;
 
+import java.util.List;
+
 import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
@@ -26,4 +28,8 @@ public abstract class AbstractUserProfileManager {
 	public abstract Boolean update(UserProfile up, ICallback<Boolean> callback);
 	
 	public abstract Boolean delete(UserProfile up, ICallback<Boolean> callback);
+	
+	public abstract List<UserProfile> mostHelpful(int n, ICallback<List<UserProfile>> callback);
+	
+	public abstract Integer userCount(ICallback<Integer> callback);
 }

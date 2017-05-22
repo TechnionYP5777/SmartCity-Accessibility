@@ -126,5 +126,17 @@ public class UserProfileManager extends AbstractUserProfileManager {
 		return false;
 	}
 
+	@Override
+	public List<UserProfile> mostHelpful(int n, ICallback<List<UserProfile>> callback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer userCount(ICallback<Integer> callback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }
