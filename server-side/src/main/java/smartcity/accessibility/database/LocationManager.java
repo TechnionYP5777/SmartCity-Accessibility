@@ -231,4 +231,10 @@ public class LocationManager extends AbstractLocationManager {
 		return earthRadius * c;
 	}
 
+	@Override
+	public List<Location> getTopRated(ICallback<List<Location>> callback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
