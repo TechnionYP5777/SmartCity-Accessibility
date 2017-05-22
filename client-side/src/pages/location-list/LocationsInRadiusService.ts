@@ -11,6 +11,6 @@ export class LocationsInRadiusService {
 
 	GetLocationsInRadiusFrom(lat, lng){
 		var params = "srcLat=" + lat + "&srcLng=" + lng;
-		return this.http.get(Constants.serverAddress +'/locationsInRadius'+params).map(res=>res.json());
+		return this.http.get(Constants.serverAddress +'/locationsInRadius?'+params).map(res=>res.json());
 	}
 }
