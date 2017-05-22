@@ -1,8 +1,10 @@
 <ion-content>
-	<ion-navbar>
-		<ion-title>Location in radius from ({{lat}},{{lng}})</ion-title>   
-	</ion-navbar>
-<ion-item  >
-  	{{output}}
-</ion-item>
+	<ion-list>
+		<ion-list-header>
+		  Location in radius from: {{lat}}, lng: {{lng}}
+		</ion-list-header>
+		<ion-item  >
+		{{output}}
+		</ion-item>
+	</ion-list>
 </ion-content>
