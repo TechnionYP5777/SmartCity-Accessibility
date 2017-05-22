@@ -230,7 +230,7 @@ public class LocationManager extends AbstractLocationManager {
 			List<Location> locsList = getLocationsAround(l, radius, null);
 			return locsList.stream().map(BestReviews::new)
 					.sorted((br1, br2) -> br1.getTotalRatingByAvg() - br2.getTotalRatingByAvg())
-					.map(br -> br.getLocation())
+					.map(BestReviews::getLocation)
 					.collect(Collectors.toList());
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
