@@ -29,7 +29,7 @@ export class GetReviewsPage {
       content: "ayyooo loading lmaooo"
     }); 
 	
-	this.revs = this.service.showMeStuff(this.loading);
+	this.revs = this.service.showMeStuff(this.loading, this.lat, this.lng);
   }
   
 
