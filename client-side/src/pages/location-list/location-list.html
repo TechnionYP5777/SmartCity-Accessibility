@@ -3,11 +3,6 @@
 		<ion-list-header>
 		  Location in radius from: {{lat}}, lng: {{lng}}
 		</ion-list-header>
-	</ion-list>
-	<div ng-repeat="n in [].constructor(10) track by $index">
-    {{ $index }}
-	</div>
-	<div  ng-repeat="location in locations">
-		{{locations[0].name}}
-	</div >
+        <ion-item *ngFor="let location of locations">{{location.name}}</ion-item>
+    </ion-list>
 </ion-content>

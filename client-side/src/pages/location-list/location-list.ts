@@ -21,9 +21,9 @@ export class LocationListPage {
 		this.locations = [{"reviews":[],"coordinates":{"lng":0,"lat":0},"name":"please wait...","locationType":"Coordinate","locationSubType":"Default","notPinnedReviews":[],"pinnedReviews":[]}];
 		this.locationsInRadius.GetLocationsInRadiusFrom(this.lat, this.lng).subscribe(data => {	
 			for(var count = 0; count < data.length; count++){
-				this.output = data[0].name;	
 				this.locations[count] = data[count];
 			}
+		this.output = this.locations;
 		});
 	}
 
