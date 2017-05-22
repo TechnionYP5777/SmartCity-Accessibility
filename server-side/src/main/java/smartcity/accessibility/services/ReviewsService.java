@@ -19,7 +19,7 @@ public class ReviewsService {
 	
 	@RequestMapping(value = "/reviews", produces = "application/json")
 	@ResponseBody
-    public List<Review> showMeStuff(@RequestParam("lat") Double lat,
+    public Review[] showMeStuff(@RequestParam("lat") Double lat,
     		@RequestParam("lng") Double lng) {
 		
 		List<Location> lstLocation = AbstractLocationManager.instance().getLocation(new LatLng(lat, lng), null);
@@ -29,7 +29,7 @@ public class ReviewsService {
 			lstReviews.addAll(l.getReviews());
 		}
 		
-		return lstReviews;
+		return lstReviews.toArray(null);
     }
 
 }
