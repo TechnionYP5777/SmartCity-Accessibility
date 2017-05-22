@@ -14,11 +14,11 @@ export class LocationListPage {
 		this.lat = navParams.get('lat');
 		this.lng = navParams.get('lng');	
 		this.output = "aaaaaaaaaHWERWERWERWER";
-		this.locationsInRadius.GetLocationsInRadiusFrom(this.lat, this.lng).subscribe(data => {
-			for (var key in data) {
-				 console.log("we got:", data[key]);
+		this.locationsInRadius.GetLocationsInRadiusFrom(this.lat, this.lng).subscribe(data => {	
+			for(count = 0; count < data.length; count++){
+				this.output = data[0].name;	
 			}
-			this.output = data[key];
+			
 		});
 	}
 
