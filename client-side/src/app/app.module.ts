@@ -25,6 +25,7 @@ import {UserInformationService} from '../pages/user-page/userInformationService'
 import { LocationListPage } from '../pages/location-list/location-list';
 import { ViewSearchQueryPage } from '../pages/viewSearchQuery/viewsearchquery';
 import { GetReviewsPage } from '../pages/reviews/reviews';
+import { HelpfulUsersPage } from '../pages/helpfulUsers/helpfulUsers';
 import {GetReviewsService} from '../pages/reviews/ReviewsService';
 import { navigationManeuverPage } from '../pages/navigation_maneuver/navigation_maneuver';
 import { LocationsInRadiusService } from '../pages/location-list/LocationsInRadiusService';
@@ -47,7 +48,8 @@ import { LocationsInRadiusService } from '../pages/location-list/LocationsInRadi
 	AdminPage,
 	ViewSearchQueryPage,
 	GetReviewsPage,
-	navigationManeuverPage
+	navigationManeuverPage,
+	HelpfulUsersPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -69,7 +71,8 @@ import { LocationsInRadiusService } from '../pages/location-list/LocationsInRadi
 	AdminPage,
 	ViewSearchQueryPage,
 	GetReviewsPage,
-	navigationManeuverPage
+	navigationManeuverPage,
+	HelpfulUsersPage
   ],
   providers: [
     StatusBar,

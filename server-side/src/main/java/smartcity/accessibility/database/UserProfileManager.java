@@ -1,5 +1,6 @@
 package smartcity.accessibility.database;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,8 @@ import com.google.inject.Inject;
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 import smartcity.accessibility.database.callbacks.ICallback;
+import smartcity.accessibility.socialnetwork.User;
+import smartcity.accessibility.socialnetwork.UserBuilder;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
 /**
@@ -129,7 +132,15 @@ public class UserProfileManager extends AbstractUserProfileManager {
 	@Override
 	public List<UserProfile> mostHelpful(int n, ICallback<List<UserProfile>> callback) {
 		// TODO Auto-generated method stub
-		return null;
+		List<UserProfile> res = new ArrayList<UserProfile>();
+		User u1 = UserBuilder.RegularUser("Koral", "123", "");
+		User u2 = UserBuilder.RegularUser("Koral2", "123", "");
+		User u3 = UserBuilder.Admin("Simba", "355", "");
+		res.add(u1.getProfile());
+		res.add(u2.getProfile());
+		res.add(u3.getProfile());
+
+		return res;
 	}
 
 	@Override
