@@ -60,6 +60,8 @@ public class UserProfileManagerTest {
 		assertEquals(false, manager.put(new UserProfile("a"), c->{}));
 		assertEquals(false, manager.update(new UserProfile("a"), c->{}));
 		assertEquals(false, manager.delete(new UserProfile("a"), c->{}));
+		assertEquals(0, manager.userCount(c -> {}).intValue());
+		assertEquals(0, manager.mostHelpful(123, c->{}).size());
 	}
 
 	@Test

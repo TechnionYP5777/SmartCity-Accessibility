@@ -148,6 +148,13 @@ public class LocationManagerTest {
 		ll = lm.getNonAccessibleLocationsInRadius(new LatLng(), new LatLng(), 5, null);
 		assertEquals(0, ll.size());
 	}
+	
+	@Test
+	@Category(UnitTests.class)
+	public void testGetTopRated(){
+		List<Location> ll = lm.getTopRated(new LatLng(), 1, 1, null);
+		assertEquals(1, ll.size());
+	}
 
 	public static void setUpMock() throws ObjectNotFoundException {
 		db = Mockito.mock(Database.class);
