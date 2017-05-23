@@ -1,6 +1,6 @@
 import {Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { LoginService } from '../login/LoginService';
+import { NavController, ModalController, NavParams } from 'ionic-angular';
+import { HelpfulUsersPage } from '../helpfulUsers/helpfulUsers';
 import { AdminService } from './adminService';
 import { UserInformationService } from '../user-page/userInformationService';
 
@@ -42,8 +42,7 @@ export class AdminPage {
   usersArray: any;
   
   constructor(public navCtrl: NavController, public navParams: NavParams,
-			  public loginService : LoginService, public adminService : AdminService,
-              public userInformationService : UserInformationService) {
+			  public adminService : AdminService, public modalCtrl: ModalController) {
 		this.adminService.getUserProfile().subscribe(data => {
 			this.name = data.username;
 			this.rating=data.rating;
@@ -55,6 +54,10 @@ export class AdminPage {
   }
   
   showUsers(n) {
+	  this.adminService.helpfulUsers(n).subscribe(data => {
+		  let clickMenu = this.modalCtrl.create(HelpfulUsersPage,{array: data});
+		  clickMenu.present();
+	  });
 	  
   }
   
