@@ -13,6 +13,7 @@ import com.teamdev.jxmaps.LatLng;
 import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.Review;
+import smartcity.accessibility.socialnetwork.UserProfile;
 
 @RestController
 public class ReviewsService {
@@ -29,7 +30,13 @@ public class ReviewsService {
 			lstReviews.addAll(l.getReviews());
 		}
 		
-		return lstReviews.toArray(null);
+		//return lstReviews.toArray(null);
+		
+		Location l = new Location();
+		l.setCoordinates(new LatLng(lat, lng));
+		UserProfile u = new UserProfile("ayyy");
+		Review[] r = {new Review(l, 5, "amazing", u), new Review(l, 3, "so lame bruh", u)};
+		return r;
     }
 
 }

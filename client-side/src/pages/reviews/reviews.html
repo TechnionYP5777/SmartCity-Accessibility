@@ -7,10 +7,28 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let rev of revs">
-      {{rev.content}}
-      {{rev.rating.score}}
-    </ion-item>
-  </ion-list>
+	<ion-item *ngFor="let rev of revs">
+		<ion-card>
+			<ion-item>
+				<h2>{{rev.user.username}}</h2>
+			</ion-item>
+			<ion-card-content>
+				<p>{{rev.content}}</p>
+			</ion-card-content>
+			<ion-row>
+				<ion-col>
+					<button ion-button icon-left clear small>
+						<ion-icon name="thumbs-up"></ion-icon>
+						<div>{{rev.upvotes}}</div>
+					</button>
+				</ion-col>
+				<ion-col>
+					<button ion-button icon-left clear small>
+						<ion-icon name="thumbs-down"></ion-icon>
+						<div>{{rev.downvotes}}</div>
+					</button>
+				</ion-col>
+			</ion-row>
+		</ion-card>
+	</ion-item>
 </ion-content>
