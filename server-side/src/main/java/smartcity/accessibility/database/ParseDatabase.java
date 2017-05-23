@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.parse4j.Parse;
 import org.parse4j.ParseException;
@@ -97,7 +98,7 @@ public class ParseDatabase implements Database {
 			return toMap(po);
 		} catch (ParseException e) {
 			logger.error("get object failed with error " + e.getMessage());
-			throw new ObjectNotFoundException(); 
+			throw new ObjectNotFoundException();
 		}
 	}
 
@@ -173,6 +174,27 @@ public class ParseDatabase implements Database {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public int countEntries(String objectClass) {
+		try {
+			return ParseQuery.getQuery(objectClass).count();
+		} catch (ParseException e) {
+			logger.error("count entries {} failed with error {}", objectClass, e);
+		}
+		return 0;
+	}
+
+	@Override
+	public List<Map<String, Object>> getHighestBy(String objectClass, String field, int n) {
+		try {
+			return ParseQuery.getQuery(objectClass).orderByDescending(field).find().stream().limit(n)
+					.map(ParseDatabase::toMap).collect(Collectors.toList());
+		} catch (ParseException e) {
+			logger.error("get highest rated of {} by {} failed with error {}", objectClass, field, e);
+		}
+		return new ArrayList<>();
 	}
 
 }

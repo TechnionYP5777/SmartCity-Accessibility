@@ -1,4 +1,4 @@
-import {Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
+import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
 import { NavController, ModalController, NavParams } from 'ionic-angular';
 import { HelpfulUsersPage } from '../helpfulUsers/helpfulUsers';
 import { AdminService } from './adminService';
@@ -55,10 +55,10 @@ export class AdminPage {
   
   showUsers(n) {
 	  this.adminService.helpfulUsers(n).subscribe(data => {
-		  let clickMenu = this.modalCtrl.create(HelpfulUsersPage,{array: data});
-		  clickMenu.present();
+		  this.usersArray = data;
 	  });
-	  
+	  let users = this.modalCtrl.create(HelpfulUsersPage,{array: this.usersArray, num: n});
+	  users.present();
   }
   
   

@@ -62,4 +62,20 @@ public interface Database {
 	 * @return
 	 */
 	boolean update(String objectClass, String id, Map<String, Object> m);
+	
+	/**
+	 * Returns the number of entries in the class
+	 * @param objectClass
+	 * @return
+	 */
+	int countEntries(String objectClass);
+	
+	/**
+	 * Return a list of with the n object that have the highest value in field
+	 * @param objectClass
+	 * @param field
+	 * @param n
+	 * @return
+	 */
+	public List<Map<String, Object>> getHighestBy(String objectClass, String field, int n);
 }

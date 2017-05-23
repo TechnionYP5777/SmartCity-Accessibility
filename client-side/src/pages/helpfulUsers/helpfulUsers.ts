@@ -11,9 +11,11 @@ import { LocationListPage } from '../location-list/location-list';
 
 export class HelpfulUsersPage {
   usersArray: any;  
+  num: any = 0;
   
    constructor(public viewCtrl: ViewController,public appCtrl: App, public navParams: NavParams,public modalCtrl: ModalController) {
 	this.usersArray = navParams.get('array');
+	this.num = navParams.get('num');
   } 
 
 }

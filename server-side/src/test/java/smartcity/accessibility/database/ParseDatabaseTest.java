@@ -42,7 +42,9 @@ public class ParseDatabaseTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		deleteTestObjects();
 	}
+
 
 	@Before
 	public void setUp() throws Exception {
@@ -92,6 +94,7 @@ public class ParseDatabaseTest {
 
 		String id = pd.put(databaseClass, object1);
 		Map<String, Object> res = pd.get(databaseClass, id);
+		testObjects.put(id, res);
 		for (Entry<String, Object> e : object1.entrySet()) {
 			if(e.getKey().equals("location"))
 				continue;
@@ -110,6 +113,7 @@ public class ParseDatabaseTest {
 		assertTrue(pd.update(databaseClass, id, m));
 		
 		Map<String, Object> res = pd.get(databaseClass, id);
+		testObjects.put(id, res);
 		for (Entry<String, Object> e: object1.entrySet()){
 			if(e.getKey().equals("test1"))
 				assertEquals(6, res.get(e.getKey()));
@@ -133,7 +137,21 @@ public class ParseDatabaseTest {
 		} catch (ObjectNotFoundException e){
 			return;
 		}
-		fail();
+		fail("object not deleted from db");
+	}
+	
+	@Test
+	@Category(NetworkTests.class)
+	public void testCount() {
+		assertEquals(testObjects.size() ,pd.countEntries(databaseClass));
+	}
+	
+	@Test
+	@Category(NetworkTests.class)
+	public void testGetHighestBy() {
+		List<Map<String, Object>> lm = pd.getHighestBy(databaseClass, "test3", 1);
+		assertEquals(1, lm.size());
+		assertEquals(sampleObjectId, lm.get(0).get("objectId"));
 	}
 
 	public static void initTestObjects() throws ParseException {
@@ -152,5 +170,20 @@ public class ParseDatabaseTest {
 
 		sampleObjectId = po1.getObjectId();
 	}
+	
+	private static void deleteTestObjects() {
+		for ( String s : testObjects.keySet()){
+			boolean succ = false;
+			for (int i= 0 ; i< 3; i++){
+				if (pd.delete(databaseClass, s)){
+					succ = true;
+					break;
+				}
+			}
+			if (!succ)
+				fail("Failed to delete objects from test class, delete manually");
+		}
+	}
+
 
 }
