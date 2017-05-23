@@ -91,6 +91,21 @@ public class UserProfileManagerTest {
 		assertEquals(true, manager.delete(user1, null));
 		Mockito.verify(db).delete(UserProfileManager.DATABASE_CLASS, "MY_ID");
 	}
+	
+	@Test
+	@Category(UnitTests.class)
+	public void testMostHelpful() {
+		List<UserProfile> lu = manager.mostHelpful(1, null);
+		assertEquals(1, lu.size());
+		Mockito.verify(db).getHighestBy(UserProfileManager.DATABASE_CLASS, UserProfileManager.RATING_FIELD, 1);
+	}
+	
+	@Test
+	@Category(UnitTests.class)
+	public void testCount() {
+		assertEquals(1, manager.userCount(null).intValue());
+		Mockito.verify(db).countEntries(UserProfileManager.DATABASE_CLASS);
+	}
 
 	
 	public static void setUpMock(){
@@ -107,6 +122,8 @@ public class UserProfileManagerTest {
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyMap())).thenReturn(l);
 		Mockito.when(db.update(Mockito.anyString(), Mockito.anyString(), Mockito.anyMap())).thenReturn(true);
 		Mockito.when(db.delete(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
+		Mockito.when(db.getHighestBy(Mockito.anyString(), Mockito.anyString(), Mockito.anyInt())).thenReturn(l);
+		Mockito.when(db.countEntries(Mockito.anyString())).thenReturn(1);
 		
 		m_not = new HashMap<>();
 		m_not.put(UserProfileManager.USERNAME_FIELD, "I_DONT_EXIST");	

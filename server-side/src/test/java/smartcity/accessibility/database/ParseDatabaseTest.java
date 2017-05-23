@@ -149,9 +149,16 @@ public class ParseDatabaseTest {
 	@Test
 	@Category(NetworkTests.class)
 	public void testGetHighestBy() {
+		Map<String, Object> object1 = new HashMap<>();
+		object1.put("test1", 1);
+		object1.put("test2", "val2");
+		object1.put("test3", 66);
+		String id = pd.put(databaseClass, object1);
+		testObjects.put(id, object1);
+		
 		List<Map<String, Object>> lm = pd.getHighestBy(databaseClass, "test3", 1);
 		assertEquals(1, lm.size());
-		assertEquals(sampleObjectId, lm.get(0).get("objectId"));
+		assertEquals(id, lm.get(0).get("objectId"));
 	}
 
 	public static void initTestObjects() throws ParseException {
