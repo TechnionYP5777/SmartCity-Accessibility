@@ -8,7 +8,8 @@
 <ion-content>
 	<ion-list>
 		<ion-list-header>
-		  The {{num}} most helpful users are:
+		  The {{num}} most helpful users are
 		</ion-list-header>
+		<ion-item *ngFor="let user of users">{{ user.username }}</ion-item>
 	</ion-list>
 </ion-content>

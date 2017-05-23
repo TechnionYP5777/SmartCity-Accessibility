@@ -12,10 +12,18 @@ import { LocationListPage } from '../location-list/location-list';
 export class HelpfulUsersPage {
   usersArray: any;  
   num: any = 0;
+  users: any;
+  len: any = 0;
   
    constructor(public viewCtrl: ViewController,public appCtrl: App, public navParams: NavParams,public modalCtrl: ModalController) {
-	this.usersArray = navParams.get('array');
+	this.usersArray = navParams.get('hlpusers');
 	this.num = navParams.get('num');
   } 
+  
+  ionViewDidLoad() {
+	 	for(var i = 0; i < this.usersArray.length; i++) {
+		this.users[i] = this.usersArray[i];
+	} 
+  }
 
 }
