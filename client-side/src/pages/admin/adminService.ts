@@ -21,6 +21,8 @@ export class AdminService {
 		return this.http.get(Constants.serverAddress +'/adminInfo', {headers: headers}).map(res=>res.json());
 	}
 	
-	getSystem
+	helpfulUsers(n) {
+		return this.http.get(Constants.serverAddress + '/helpfulUsers?numOfUsers=' + n).map(res=>res.json());
+	}
 
 }

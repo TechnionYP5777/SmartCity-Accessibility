@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import smartcity.accessibility.database.AbstractUserProfileManager;
-import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
 @RestController
@@ -21,7 +20,7 @@ public class AdminService {
 		return userInfo.getUser().getProfile();
 	}
 	
-	@RequestMapping("/userHelpful")
+	@RequestMapping("/helpfulUsers")
 	@ResponseBody public List<UserProfile> getMostHelpfulUsers(@RequestHeader("authToken") String token,
 															   @RequestParam("numOfUsers") Integer numOfUsers) {
 		
