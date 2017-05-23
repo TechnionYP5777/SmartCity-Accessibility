@@ -21,20 +21,29 @@ export class GetReviewsPage {
    public http: Http,
    public loadingController: LoadingController,
    public getreviewsservice: GetReviewsService) {
-	this.lat = navParams.get('lat');
-	this.lng = navParams.get('lng');
+	this.lat = 35.2;//navParams.get('lat');
+	this.lng = 34.2;//navParams.get('lng');
 	this.service = getreviewsservice;
-	
-	this.loading = this.loadingController.create({
-      content: "ayyooo loading lmaooo"
-    }); 
-	
-	this.revs = this.service.showMeStuff(this.loading, this.lat, this.lng);
   }
   
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad GetReviewPage');
+	  
+    this.loading = this.loadingController.create({
+      content: "ayyooo loading lmaooo"
+    }); 
+	
+	this.loading.present();
+	
+	 this.service.showMeStuff(this.lat, this.lng).subscribe(data => {
+		this.revs = data.json();
+		this.loading.dismiss();
+    },
+    err => {
+        this.loading.dismiss();
+        console.log("Oops!");
+    });
+    
   }
 
 }

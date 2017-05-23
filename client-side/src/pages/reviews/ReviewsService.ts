@@ -16,21 +16,10 @@ export class GetReviewsService {
     console.log('Hello GetReviewsService Provider');
   }
   
-  showMeStuff(loading, lat, lng){
-    loading.present();
-	
+  showMeStuff(lat, lng){
 	var params = "lat=" + lat + "&lng=" + lng;
-	
-	this.http.get(Constants.serverAddress +'/reviews?'+params).map(res => res.json()).subscribe(data => {
-        this.revs = data.data.children;
-        loading.dismiss();
-    },
-    err => {
-        loading.dismiss();
-        console.log("Oops!");
-    });
-    
-    return this.revs;
+	return this.http.get(Constants.serverAddress +'/reviews?'+params);
+    //return this.revs;
   }
 
 }
