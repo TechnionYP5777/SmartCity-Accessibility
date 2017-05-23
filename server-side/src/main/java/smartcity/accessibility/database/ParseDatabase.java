@@ -175,4 +175,14 @@ public class ParseDatabase implements Database {
 		return true;
 	}
 
+	@Override
+	public int countEntries(String objectClass) {
+		try {
+			return ParseQuery.getQuery(objectClass).count();
+		} catch (ParseException e) {
+			logger.error("count entries {} failed with error {}", objectClass, e);
+		}
+		return 0;
+	}
+
 }

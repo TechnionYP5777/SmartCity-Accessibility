@@ -62,4 +62,11 @@ public interface Database {
 	 * @return
 	 */
 	boolean update(String objectClass, String id, Map<String, Object> m);
+	
+	/**
+	 * Returns the number of entries in the class
+	 * @param objectClass
+	 * @return
+	 */
+	int countEntries(String objectClass);
 }

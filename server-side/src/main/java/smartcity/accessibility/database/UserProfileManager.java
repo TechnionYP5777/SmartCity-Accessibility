@@ -145,8 +145,16 @@ public class UserProfileManager extends AbstractUserProfileManager {
 
 	@Override
 	public Integer userCount(ICallback<Integer> callback) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.debug("count UserProfile");
+		Flowable<Integer> res = Flowable.fromCallable(() -> {
+			return db.countEntries(DATABASE_CLASS);
+		})
+		.subscribeOn(Schedulers.io())
+		.observeOn(Schedulers.single());
+		if(callback == null)
+			return res.blockingFirst();
+		res.subscribe();
+		return 0;
 	}
 
 	
