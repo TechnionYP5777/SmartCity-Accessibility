@@ -21,13 +21,13 @@ import smartcity.accessibility.search.SearchQueryResult;
 //localhost:8090/locationsInRadius?srcLat=31.906953&srcLng=34.992489
 @RestController
 public class LocationsInRadiusService {
-	private static final double radius = 1;
+	private static final double radius = 1000;
 	@RequestMapping(value="/locationsInRadius")
 	@ResponseBody public List<Location> getLocationsInRadius(/*@RequestHeader("authToken") String token,*/ @RequestParam("srcLat") Double srcLat,
 			@RequestParam("srcLng") Double srcLng) {	
 		//ExtendedMapView mv = LogInService.getUserInfo(token).getMapView();
 		try {
-			SearchQuery sq = SearchQuery.TypeSearch("");
+			SearchQuery sq = SearchQuery.TypeSearch("cafe");
 			Location dummy = new Location();
 			dummy.setCoordinates(new LatLng(srcLat, srcLng));
 			SearchQueryResult sqr = sq.searchByType(dummy, radius);
