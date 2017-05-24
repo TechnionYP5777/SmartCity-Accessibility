@@ -15,6 +15,7 @@ export class navigationManeuverPage {
 	}
 	
 	ionViewDidLoad(){
+		this.nerratives = [];
 		var k = 0;
 		for(var i = 0; i < this.legs.length; i++) {
 			var leg = this.legs[i];
