@@ -15,7 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import smartcity.accessibility.categories.UnitTests;
 
 /**
- * @author ariel
+ * @author Ariel
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)

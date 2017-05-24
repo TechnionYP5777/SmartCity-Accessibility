@@ -155,12 +155,28 @@ public class Location {
 	}
 	
 	public enum LocationSubTypes {
-		Restaurant, Hotel, Bar, Default
+		Restaurant, Hotel, Cafe, Default;
+		
+		public String toString(){
+				switch(this){
+				case Default:
+					return "";
+				case Hotel:
+					return "Hotel";
+				case Restaurant:
+					return "Restaurant";
+				case Cafe:
+					return "Cafe";
+				default:
+					break;
+			}
+				return null;
+		}
 	}
 
 	public enum LocationTypes {
 		Coordinate(LocationSubTypes.Default), Facility(LocationSubTypes.Restaurant, LocationSubTypes.Hotel,
-				LocationSubTypes.Bar, LocationSubTypes.Default), Street(LocationSubTypes.Default);
+				LocationSubTypes.Cafe, LocationSubTypes.Default), Street(LocationSubTypes.Default);
 
 		private List<LocationSubTypes> subTypes = new ArrayList<>();
 
@@ -168,6 +184,8 @@ public class Location {
 			for (LocationSubTypes st : s)
 				subTypes.add(st);
 		}
+		
+		
 
 		public List<LocationSubTypes> getSubTypes() {
 			return Collections.unmodifiableList(subTypes);

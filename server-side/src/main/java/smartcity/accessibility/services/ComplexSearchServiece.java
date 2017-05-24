@@ -19,7 +19,7 @@ import smartcity.accessibility.services.exceptions.SearchFailed;
 public class ComplexSearchServiece {
 	@RequestMapping("/complexSearch")
 	@ResponseBody
-	public List<Location> complexSearch(@RequestParam("type") String type,
+	public List<Location> complexSearch(@RequestParam("") String type,
 			@RequestParam("radius") Integer radius, @RequestParam("startLocation") String startLoc,
 			@RequestParam("threshold") Integer threshold) {
 

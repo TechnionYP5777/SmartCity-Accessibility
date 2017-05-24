@@ -21,6 +21,7 @@ import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 
 /**
@@ -125,7 +126,13 @@ public class SearchQuery {
 	private SearchQueryResult typeSearch(Location initLocation, double radius) {
 		SetSearchStatus(SearchStage.Running);
 		List<String> kindsOfLocations = new ArrayList<String>();
-		kindsOfLocations.add(queryString);
+		if(!queryString.equals("")){
+			for (LocationSubTypes lst : LocationSubTypes.values()) {
+				kindsOfLocations.add(lst.toString());
+				}
+		}else{
+			kindsOfLocations.add(queryString);
+		}
 		MapViewOptions options = new MapViewOptions();
 		options.importPlaces();
 		MapView mapView = JxMapsFunctionality.getMapView();
