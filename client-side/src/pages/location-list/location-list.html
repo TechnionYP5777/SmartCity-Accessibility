@@ -3,7 +3,7 @@
 		<ion-list-header>
 		  Location in radius from: {{lat}}, lng: {{lng}}
 		</ion-list-header>
-        <button ion-item *ngFor="let location of locations" click="chooseLocation(location)">{{location.name}}: {{location.coordinates.lat}}, {{location.coordinates.lng}}</button>
-	</ion-list>
-			{{youChose}}
+        <button ion-item *ngFor="let location of locations" (click)="cc(location)" class="buttons">{{location.name}}</button>
+		<ion-item> {{youChose}} </ion-item>
+	</ion-list>		
 </ion-content>

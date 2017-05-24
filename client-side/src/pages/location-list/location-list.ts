@@ -29,7 +29,7 @@ export class LocationListPage {
 		});
 	}
 
-	chooseLocation(location){
-		this.youChose = "asdsadasdasd";
+	cc(locationn){
+		this.youChose = "you chose: " + locationn.name +" at: " + locationn.coordinates.lat + ", " + locationn.coordinates.lng;
 	}
 }
