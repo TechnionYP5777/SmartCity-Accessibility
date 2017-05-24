@@ -137,6 +137,7 @@ public class Location {
 			return $;
 		logger.error("This review doesn't exist in current location! {}", this.coordinates);
 		return null;
+		
 	}
 
 	@Override
