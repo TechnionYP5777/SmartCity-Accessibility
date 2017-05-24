@@ -45,8 +45,8 @@ public class Application {
 		return CacheBuilder.newBuilder()
 	    .concurrencyLevel(4)
 	    .maximumSize(10000)
-	    .expireAfterWrite(3, TimeUnit.MINUTES)
-	    .expireAfterAccess(10, TimeUnit.MINUTES)
+	    .expireAfterWrite(30, TimeUnit.MINUTES)
+	    .expireAfterAccess(30, TimeUnit.MINUTES)
 	    .build(
 	        new CacheLoader<String, UserInfo>() {
 				@Override
