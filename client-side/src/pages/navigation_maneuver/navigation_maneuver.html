@@ -1,6 +1,12 @@
 <ion-content padding>
-	the estimate time is: {{formatTime}}
+	<ion-item text-wrap>
+		<b>the estimate time is: {{formatTime}} </b>
+	</ion-item>
+	<p></p>
 	<ion-list>
+		<ion-list-header>
+			  Route Nerratives:
+		</ion-list-header>
         <ion-item *ngFor="let nerrative of nerratives" text-wrap>{{nerrative}}</ion-item>
     </ion-list>
 </ion-content>
