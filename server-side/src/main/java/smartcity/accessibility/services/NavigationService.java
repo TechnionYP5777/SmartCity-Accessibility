@@ -17,6 +17,8 @@ import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.services.exceptions.NavigationFailed;
 
 /**
+ * This class is web service for navigation
+ * 
  * @author yael
  */
 @Controller
@@ -29,7 +31,7 @@ public class NavigationService {
 			@RequestParam("srcLng") Double srcLng, @RequestParam("dstLat") Double dstLat,
 			@RequestParam("dstLng") Double dstLng,
 			@RequestParam("accessibilityThreshold") Integer accessibilityThreshold) {
-
+		logger.info("navigation service started");
 		// example to get userInformation with the token. no need to check for
 		// null, an exception will rise if needed
 		// UserInfo userInfo =
@@ -43,7 +45,7 @@ public class NavigationService {
 			logger.info("navigation failed", e);
 			throw new NavigationFailed();
 		}
-		
+
 	}
 
 }

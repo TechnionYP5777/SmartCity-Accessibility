@@ -59,8 +59,7 @@ public abstract class Navigation {
 		WebTarget target = client.target(path).queryParam("key", MAP_KEY)
 				.queryParam("from", from.getLat() + "," + from.getLng())
 				.queryParam("to", to.getLat() + "," + to.getLng()).queryParam("fullShape", true)
-				.queryParam("shapeFormat", "raw").queryParam("routeType", "pedestrian")
-				.queryParam("unit", "k");
+				.queryParam("shapeFormat", "raw").queryParam("routeType", "pedestrian").queryParam("unit", "k");
 		Set<String> mustAvoidLinkIds = new HashSet<>();
 		if (!segmentsToAvoid.isEmpty()) {
 			for (MapSegment ¢ : segmentsToAvoid)
