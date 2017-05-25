@@ -1,6 +1,14 @@
 <ion-content padding>
-	the estimate time is: {{time}}
+	<ion-item text-wrap>
+		<b>The estimate time is: {{formatTime}} </b>
+		<p></p>
+		<b>The total distance is: {{distance}} km</b>
+	</ion-item>
+	<p></p>
 	<ion-list>
-        <ion-item *ngFor="let nerrative of nerratives">{{nerrative}}</ion-item>
+		<ion-list-header>
+			  Route Nerratives:
+		</ion-list-header>
+        <ion-item *ngFor="let nerrative of nerratives" text-wrap>{{nerrative}}</ion-item>
     </ion-list>
 </ion-content>

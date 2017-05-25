@@ -54,10 +54,7 @@ export class AdminPage {
   }
   
   showUsers(n) {
-	  this.adminService.helpfulUsers(n).subscribe(data => {
-		  this.usersArray = data;
-	  });
-	  let users = this.modalCtrl.create(HelpfulUsersPage,{hlpusers: this.usersArray, num: n});
+	  let users = this.modalCtrl.create(HelpfulUsersPage,{num: n});
 	  users.present();
   }
   

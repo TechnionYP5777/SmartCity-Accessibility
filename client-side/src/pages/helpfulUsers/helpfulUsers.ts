@@ -3,6 +3,7 @@ import { NavParams, ModalController,App, ViewController } from 'ionic-angular';
 import { AddReviewPage } from '../add-review/add-review';
 import { NavigationPage } from '../navigation/navigation';
 import { LocationListPage } from '../location-list/location-list';
+import { AdminService } from '../admin/adminService';
 
 @Component({
   selector: 'page-helpfulUsers',
@@ -15,15 +16,17 @@ export class HelpfulUsersPage {
   users: any;
   len: any = 0;
   
-   constructor(public viewCtrl: ViewController,public appCtrl: App, public navParams: NavParams,public modalCtrl: ModalController) {
-	this.usersArray = navParams.get('hlpusers');
+   constructor(public viewCtrl: ViewController,public appCtrl: App, 
+			public navParams: NavParams,public modalCtrl: ModalController,
+			public adminService : AdminService) {
 	this.num = navParams.get('num');
   } 
   
   ionViewDidLoad() {
-	 	for(var i = 0; i < this.usersArray.length; i++) {
-		this.users[i] = this.usersArray[i];
-	} 
+	   this.adminService.helpfulUsers(this.num).subscribe(data => {
+		  this.users = data;
+	  });
+	 
   }
 
 }

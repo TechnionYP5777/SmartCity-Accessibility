@@ -30,6 +30,7 @@ export class NavigationPage {
 		this.isLoggedin = this.loginService.isLoggedIn();
 		this.dstLocation.lat = navParams.get('lat');
 		this.dstLocation.lng = navParams.get('lng');
+		this.minRating = 5;
 	}
 	ionViewDidLoad(){
         this.geolocation = new Geolocation();
