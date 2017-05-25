@@ -22,7 +22,15 @@ export class AdminService {
 	}
 	
 	helpfulUsers(n) {
-		return this.http.get(Constants.serverAddress + '/helpfulUsers?numOfUsers=' + n).map(res=>res.json());
+		try {
+			var token = JSON.parse(window.sessionStorage.getItem('token')).token;
+		} catch(err){
+			token = "no token";
+		}
+		var headers = new Headers();
+		headers.append('Content-Type', 'application/x-www-form-urlencoded');
+		headers.append('authToken',token);
+		return this.http.get(Constants.serverAddress + '/helpfulUsers?numOfUsers=' + n, {headers: headers}).map(res=>res.json());
 	}
 
 }
