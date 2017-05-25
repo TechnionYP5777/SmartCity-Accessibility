@@ -1,5 +1,7 @@
 package smartcity.accessibility.navigation;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,13 +42,12 @@ public class NavigationTest {
 	@Test
 	@Category(NetworkTests.class)
 	public void getMapSegmentFromLatLng() {
-		MapSegment m = null;
 		try {
-			m = Navigation.getMapSegmentOfLatLng(31.766932, 34.631666);
+			MapSegment m = Navigation.getMapSegmentOfLatLng(31.766932, 34.631666);
+			assertNotNull(m.getLinkId());
+			assertNotNull(m.getStreet());
 		} catch (CommunicationFailed e) {
 		}
-		System.out.println(m.getLinkId());
-		System.out.println(m.getStreet());
 	}
 
 	
