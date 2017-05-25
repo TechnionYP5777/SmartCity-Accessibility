@@ -156,14 +156,16 @@ public class Location {
 	}
 	
 	public enum LocationSubTypes {
-		Restaurant, Hotel, Cafe, Default;
+		Restaurant, Hotel, Cafe, Default, Municipal;
 		
 		public String toString(){
 				switch(this){
 				case Default:
-					return "";
+					return "Default";
 				case Hotel:
 					return "Hotel";
+				case Municipal:
+					return "";
 				case Restaurant:
 					return "Restaurant";
 				case Cafe:
