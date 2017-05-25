@@ -47,10 +47,8 @@ public abstract class Navigation {
 		Latlng[] latlng = new Latlng[shapePointsArr.length / 2];
 		for (int k = 0, i = 0; i < shapePointsArr.length - 1; i += 2, k++)
 			latlng[k] = new Latlng(shapePointsArr[i], shapePointsArr[i + 1]);
-		RouteResponse r = new RouteResponse();
+		RouteResponse r = new RouteResponse(route);
 		r.setLatlng(latlng);
-		r.setTime(route.getTime());
-		r.setLegs(route.getLegs());
 		return r;
 	}
 
@@ -61,7 +59,8 @@ public abstract class Navigation {
 		WebTarget target = client.target(path).queryParam("key", MAP_KEY)
 				.queryParam("from", from.getLat() + "," + from.getLng())
 				.queryParam("to", to.getLat() + "," + to.getLng()).queryParam("fullShape", true)
-				.queryParam("shapeFormat", "raw").queryParam("routeType", "pedestrian");
+				.queryParam("shapeFormat", "raw").queryParam("routeType", "pedestrian")
+				.queryParam("unit", "k");
 		Set<String> mustAvoidLinkIds = new HashSet<>();
 		if (!segmentsToAvoid.isEmpty()) {
 			for (MapSegment ¢ : segmentsToAvoid)

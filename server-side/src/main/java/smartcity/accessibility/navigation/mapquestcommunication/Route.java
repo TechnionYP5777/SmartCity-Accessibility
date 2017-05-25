@@ -9,6 +9,7 @@ public class Route {
 	private Shape shape;
 	private Integer time;
 	private Leg[] legs;
+	private Double distance;
 
 	public Shape getShape() {
 		return shape;
@@ -32,6 +33,14 @@ public class Route {
 
 	public void setLegs(Leg[] legs) {
 		this.legs = legs;
+	}
+
+	public Double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(Double distance) {
+		this.distance = distance;
 	}
 
 }

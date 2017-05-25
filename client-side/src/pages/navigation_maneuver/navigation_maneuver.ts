@@ -10,9 +10,11 @@ export class navigationManeuverPage {
 	legs : any;
 	nerratives : any;
 	formatTime : any;
+	distance : any;
     constructor(public navCtrl: NavController, public navParams: NavParams) {
 		this.time = this.navParams.get('time');
 		this.legs = this.navParams.get('legs');
+		this.distance = this.navParams.get('distance');
 	}
 	presentRouteTime(){
 		var date = new Date(null);

@@ -13,6 +13,12 @@ import smartcity.accessibility.navigation.mapquestcommunication.Route;
 public class RouteResponse extends Route {
 	private Latlng[] latlng;
 
+	public RouteResponse(Route r) {
+		this.setDistance(r.getDistance());
+		this.setTime(r.getTime());
+		this.setLegs(r.getLegs());
+	}
+
 	public Latlng[] getLatlng() {
 		return latlng;
 	}

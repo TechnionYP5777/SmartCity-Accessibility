@@ -9,10 +9,6 @@ package smartcity.accessibility.navigation.mapquestcommunication;
 public class Shape {
 	private Double[] shapePoints;
 
-	public Shape() {
-
-	}
-
 	public Double[] getShapePoints() {
 		return shapePoints;
 	}

@@ -1,7 +1,7 @@
 package smartcity.accessibility.navigation.mapquestcommunication;
 
 /**
- * Leg is part of the rout result
+ * Leg is part of the route result
  * 
  * @author yael
  *
