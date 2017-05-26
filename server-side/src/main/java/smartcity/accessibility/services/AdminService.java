@@ -31,7 +31,7 @@ public class AdminService {
 		return AbstractUserProfileManager.instance().mostHelpful(numOfUsers, null);	
 	}
 	
-	@RequestMapping("/helpfulUsers")
+	@RequestMapping("/mostRatedLocs")
 	@ResponseBody public List<Location> getMostRatedLocations(@RequestHeader("authToken") String token,
 															   @RequestParam("radius") Integer radius,
 															   @RequestParam("srcLat") Double srcLat,

@@ -5,20 +5,23 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AdminService {
+	headers: any;
+	
     constructor(public http: Http) {
         this.http = http;
-    }
-
-	getUserProfile() {
 		try {
 			var token = JSON.parse(window.sessionStorage.getItem('token')).token;
 		} catch(err){
 			token = "no token";
 		}
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/x-www-form-urlencoded');
-		headers.append('authToken',token);
-		return this.http.get(Constants.serverAddress +'/adminInfo', {headers: headers}).map(res=>res.json());
+		this.headers = new Headers();
+		this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
+		this.headers.append('authToken',token);
+    }
+
+	getUserProfile() {
+		
+		return this.http.get(Constants.serverAddress +'/adminInfo', {headers: this.headers}).map(res=>res.json());
 	}
 	
 	helpfulUsers(n) {
