@@ -3,7 +3,6 @@ package smartcity.accessibility.services;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -31,5 +30,6 @@ public class LocationsInRadiusServiceTest extends ServiceTest{
 	@Category(UnitTests.class)
 	public void locationtest1() throws Exception {
 		String res = mockMvc.perform(get("locationsInRadius?srcLat=31.906953&srcLng=34.992489")).andReturn().getResponse().getContentAsString();
+		System.out.println(res);
 	}
 }

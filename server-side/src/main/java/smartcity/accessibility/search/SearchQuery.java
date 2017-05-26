@@ -126,7 +126,7 @@ public class SearchQuery {
 	private SearchQueryResult typeSearch(Location initLocation, double radius) {
 		SetSearchStatus(SearchStage.Running);
 		List<String> kindsOfLocations = new ArrayList<String>();
-		if(!queryString.equals("")){
+		if(queryString.equals("")){
 			for (LocationSubTypes lst : LocationSubTypes.values()) {
 				kindsOfLocations.add(lst.getSearchType());
 				}

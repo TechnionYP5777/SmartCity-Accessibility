@@ -1,5 +1,6 @@
 package smartcity.accessibility.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,12 +33,31 @@ public class LocationsInRadiusService {
 			Location dummy = new Location();
 			dummy.setCoordinates(new LatLng(srcLat, srcLng));
 			SearchQueryResult sqr = sq.searchByType(dummy, radius);
-			/*
-			 * Todo, searcg for locations in the database
-			 */
+			List<Location> retVal = new ArrayList<Location>();
+			
 			sq.waitOnSearch();
+			//retVal.addAll(sqr.getLocations());
+			/*AbstractLocationManager.instance().getLocationsAround(new LatLng(srcLat, srcLng), radius, new ICallback<List<Location>>() {
+				
+				@Override
+				public void onFinish(List<Location> u) {
+					try {
+						sq.waitOnSearch();
+						retVal.addAll(sqr.getLocations());
+						retVal.addAll(u);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+			});*/
 			return sqr.getLocations();
-		} catch (illigalString | InterruptedException e) {
+		} catch (illigalString e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
