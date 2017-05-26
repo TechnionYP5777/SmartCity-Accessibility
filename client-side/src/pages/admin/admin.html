@@ -55,10 +55,10 @@
 				<ion-card>
 				  <ion-card-content>
 					<ion-card-title class ="cardTitle">
-					  Most helpfulness users!
+					  Most Helpful Users!
 					  </ion-card-title>
 					<p class="cardContent">
-						  Take a look at the most helpfulness users to the app:
+						  Take a look at the most helpful users to the app:
 					</p>
 					
 				     <ion-item class="inputs">
@@ -89,8 +89,19 @@
 					 </ion-item>
 					 
 					 <ion-item class="inputs">
+						<ion-label color="primary" fixed>radius</ion-label>
+						<ion-input [(ngModel)] = "radius" type="number" placeholder="Insert the radius in meters"></ion-input>
+					 </ion-item>
+					 
+					 <ion-item class="inputs">
 						<ion-input [(ngModel)] = "initLoc"  type="search" placeholder="Initial Location" class="text"></ion-input>
 					 </ion-item>
+					 
+					 <div class="col">
+						<button ion-button class="buttons">Show Me</button>
+					</div>
+					 
+					 
 				  </ion-card-content>
 				</ion-card>
 						

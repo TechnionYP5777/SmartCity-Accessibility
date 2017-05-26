@@ -18,6 +18,7 @@ export class AdminPage {
   hlp: any;
   usersArray: any;
   numOfLocations: any;
+  radius: any;
   
   
   constructor(public navCtrl: NavController, public navParams: NavParams,
