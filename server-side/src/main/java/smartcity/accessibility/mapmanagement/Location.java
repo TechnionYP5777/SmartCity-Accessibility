@@ -30,6 +30,7 @@ public class Location {
 	private String name = "";
 	private LocationTypes locationType;
 	private LocationSubTypes locationSubType;
+	private String segmentId;
 
 	public void setCoordinates(LatLng coordinates) {
 		this.coordinates = coordinates;
@@ -67,7 +68,14 @@ public class Location {
 	public String getName() {
 		return this.name;
 	}
+	
+	public String getSegmentId() {
+		return segmentId;
+	}
 
+	public void setSegmentId(String segmentId) {
+		this.segmentId = segmentId;
+	}
 
 	/**
 	 * The calculation of the rating works as follows: if there are no
