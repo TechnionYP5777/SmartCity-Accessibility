@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
-import { Http, Headers,RequestOptions } from "@angular/http";
+import {
+Http, Headers,RequestOptions } from "@angular/http";
 import { Constants } from "../constants";
 import 'rxjs/add/operator/map';
 

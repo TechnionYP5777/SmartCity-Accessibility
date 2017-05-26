@@ -29,6 +29,7 @@ import { HelpfulUsersPage } from '../pages/helpfulUsers/helpfulUsers';
 import {GetReviewsService} from '../pages/reviews/ReviewsService';
 import { navigationManeuverPage } from '../pages/navigation_maneuver/navigation_maneuver';
 import { LocationsInRadiusService } from '../pages/location-list/LocationsInRadiusService';
+import { LocationListPage } from '../pages/add-location/add-location';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { LocationsInRadiusService } from '../pages/location-list/LocationsInRadi
 	ViewSearchQueryPage,
 	GetReviewsPage,
 	navigationManeuverPage,
-	HelpfulUsersPage
+	HelpfulUsersPage,
+	LocationListPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -72,7 +74,8 @@ import { LocationsInRadiusService } from '../pages/location-list/LocationsInRadi
 	ViewSearchQueryPage,
 	GetReviewsPage,
 	navigationManeuverPage,
-	HelpfulUsersPage
+	HelpfulUsersPage,
+	LocationListPage
   ],
   providers: [
     StatusBar,
