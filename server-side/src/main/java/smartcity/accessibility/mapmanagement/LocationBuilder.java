@@ -2,6 +2,9 @@ package smartcity.accessibility.mapmanagement;
 
 import java.util.Collection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
@@ -14,6 +17,7 @@ import smartcity.accessibility.socialnetwork.Review;
  */
 public class LocationBuilder {
 	
+	private static Logger logger = LoggerFactory.getLogger(LocationBuilder.class);
 	private Location l;
 
 	public LocationBuilder(){
@@ -23,6 +27,10 @@ public class LocationBuilder {
 	}
 	
 	public Location build(){
+		if (l.getLocationType().equals(LocationTypes.Street) && l.getSegmentId() == null) {
+			logger.error("cannot build locaiton of type street with no segmentId");
+			return null;
+		}
 		return l;
 	}
 	
@@ -48,6 +56,11 @@ public class LocationBuilder {
 	
 	public LocationBuilder setType(LocationTypes lt){
 		l.setLocationType(lt);
+		return this;
+	}
+	
+	public LocationBuilder setSegmentId(String id){
+		l.setSegmentId(id);
 		return this;
 	}
 	
