@@ -128,7 +128,7 @@ public class SearchQuery {
 		List<String> kindsOfLocations = new ArrayList<String>();
 		if(!queryString.equals("")){
 			for (LocationSubTypes lst : LocationSubTypes.values()) {
-				kindsOfLocations.add(lst.toString());
+				kindsOfLocations.add(lst.getSearchType());
 				}
 		}else{
 			kindsOfLocations.add(queryString);

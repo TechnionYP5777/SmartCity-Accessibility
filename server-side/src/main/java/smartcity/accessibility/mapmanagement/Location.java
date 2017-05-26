@@ -158,7 +158,7 @@ public class Location {
 	public enum LocationSubTypes {
 		Restaurant, Hotel, Cafe, Default, Municipal;
 		
-		public String toString(){
+		public String getSearchType(){
 				switch(this){
 				case Default:
 					return "Default";
