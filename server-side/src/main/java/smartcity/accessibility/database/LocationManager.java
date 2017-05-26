@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.parse4j.ParseGeoPoint;
@@ -64,35 +65,39 @@ public class LocationManager extends AbstractLocationManager {
 	}
 
 	@Override
-	public String getId(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType,
-			ICallback<String> callback) {
+	public Optional<String> getId(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType,
+			ICallback<Optional<String>> callback) {
 		logger.info("getting id of location {} {} {}", coordinates, locType, locSubType);
-		Flowable<String> res = Flowable.fromCallable(() -> {
+		Flowable<Optional<String>> res = Flowable.fromCallable(() -> {
 			Map<String, Object> m = new HashMap<>();
 			m.put(LOCATION_FIELD_NAME, new ParseGeoPoint(coordinates.getLat(), coordinates.getLng()));
-			m.put(TYPE_FIELD_NAME, locType);
-			m.put(SUB_TYPE_FIELD_NAME, locSubType);
+			m.put(TYPE_FIELD_NAME, locType.toString());
+			m.put(SUB_TYPE_FIELD_NAME, locSubType.toString());
 			List<Map<String, Object>> locs = db.get(DATABASE_CLASS, m);
 			if (locs.isEmpty()) {
 				logger.info("no locations found for {}, {}, {}", coordinates, locType, locSubType);
-				return null;
+				String s = null;
+				return Optional.ofNullable(s);
 			}
 			if (locs.size() > 1)
 				logger.error("Multiple locations found with same id (coord, loctype and loc subtype) for {} , {} , {}",
 						coordinates, locType, locSubType);
-			return locs.get(0).get(ID_FIELD_NAME).toString();
+			return Optional.of(locs.get(0).get(ID_FIELD_NAME).toString());
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
 			return res.blockingFirst();
 		res.subscribe(callback::onFinish, Throwable::printStackTrace);
-		return null;
+		return Optional.empty();
 	}
 
 	@Override
 	public String uploadLocation(Location l, ICallback<String> callback) {
+		logger.info("upload location {}", l);
 		Flowable<String> res = Flowable.fromCallable(() -> {
-			if (getId(l.getCoordinates(), l.getLocationType(), l.getLocationSubType(), null) == null)
+			if (getId(l.getCoordinates(), l.getLocationType(), l.getLocationSubType(), null).isPresent()) {
+				logger.debug("location already in db");
 				return null;
+			}
 			return db.put(DATABASE_CLASS, toMap(l));
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
@@ -145,11 +150,11 @@ public class LocationManager extends AbstractLocationManager {
 	public Location getLocation(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType,
 			ICallback<Location> callback) {
 		Flowable<Location> res = Flowable.fromCallable(() -> {
-			String id = getId(coordinates, locType, locSubType, null);
-			if (id == null)
+			Optional<String> id = getId(coordinates, locType, locSubType, null);
+			if (!id.isPresent())
 				return null;
-			Location l = fromMap(db.get(DATABASE_CLASS, id));
-			l.addReviews(AbstractReviewManager.instance().getReviews(id, null));
+			Location l = fromMap(db.get(DATABASE_CLASS, id.get()));
+			l.addReviews(AbstractReviewManager.instance().getReviews(id.get(), null));
 			return l;
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
@@ -163,13 +168,13 @@ public class LocationManager extends AbstractLocationManager {
 		logger.info("updateLocation for loc {},{},{}", loc.getCoordinates(), loc.getLocationType(),
 				loc.getLocationSubType());
 		Flowable<Boolean> res = Flowable.fromCallable(() -> {
-			String id = getId(loc.getCoordinates(), loc.getLocationType(), loc.getLocationSubType(), null);
-			if (id == null) {
+			Optional<String> id = getId(loc.getCoordinates(), loc.getLocationType(), loc.getLocationSubType(), null);
+			if (!id.isPresent()) {
 				logger.error("Location not found {},{},{}", loc.getCoordinates(), loc.getLocationType(),
 						loc.getLocationSubType());
 				return false;
 			}
-			return db.update(DATABASE_CLASS, id, toMap(loc));
+			return db.update(DATABASE_CLASS, id.get(), toMap(loc));
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
 			return res.blockingFirst();

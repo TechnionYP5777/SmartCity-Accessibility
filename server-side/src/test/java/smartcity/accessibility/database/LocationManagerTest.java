@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -69,8 +70,9 @@ public class LocationManagerTest {
 	@Test
 	@Category(UnitTests.class)
 	public void testGetId() {
-		String id = lm.getId(new LatLng(), LocationTypes.Coordinate, LocationSubTypes.Default, null);
-		assertEquals("MY_ID", id);
+		Optional<String> id = lm.getId(new LatLng(), LocationTypes.Coordinate, LocationSubTypes.Default, null);
+		assertEquals(true, id.isPresent());
+		assertEquals("MY_ID", id.get());
 	}
 	
 	@Test

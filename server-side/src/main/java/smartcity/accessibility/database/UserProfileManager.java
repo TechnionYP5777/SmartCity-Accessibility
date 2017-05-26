@@ -59,7 +59,7 @@ public class UserProfileManager extends AbstractUserProfileManager {
 			m.put(USERNAME_FIELD, username);
 			List<Map<String, Object>> l = db.get(DATABASE_CLASS, m);
 			if (l.isEmpty())
-				return null;
+				return new UserProfile(username);
 			return fromMap(l.get(0));
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (c == null)

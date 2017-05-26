@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -47,15 +48,15 @@ public class ReviewManager extends AbstractReviewManager {
 		logger.debug("toMap {} by {}",r.getContent(),r.getUser().getUsername());
 		Map<String, Object> map = new HashMap<>();
 		Location l = r.getLocation();
-		String id = null;
+		Optional<String> id = null;
 		if(l!=null){
 			id = AbstractLocationManager.instance().getId(l.getCoordinates(), l.getLocationType(),
 					l.getLocationSubType(), null);
-			if (id == null) {
-				id = AbstractLocationManager.instance().uploadLocation(l, null);
-			}
 		}
-		map.put(LOCATION_FIELD_NAME, id);
+		if ( !id.isPresent())
+			map.put(LOCATION_FIELD_NAME, "");
+		else
+			map.put(LOCATION_FIELD_NAME, id.get());
 		map.put(RATING_FIELD_NAME, r.getRating().getScore());
 		map.put(CONTENT_FIELD_NAME, r.getContent());
 		map.put(IS_PINNED_FIELD_NAME, r.isPinned());

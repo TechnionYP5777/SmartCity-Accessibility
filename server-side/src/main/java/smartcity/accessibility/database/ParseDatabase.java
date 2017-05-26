@@ -134,6 +134,7 @@ public class ParseDatabase implements Database {
 
 	@Override
 	public String put(String objectClass, Map<String, Object> object) {
+		logger.info("puting obejct {} ", object);
 		ParseObject po = fromMap(objectClass, object);
 		if (po == null)
 			return null;

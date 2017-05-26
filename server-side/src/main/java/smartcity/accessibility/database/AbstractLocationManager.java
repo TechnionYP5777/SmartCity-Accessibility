@@ -1,6 +1,7 @@
 package smartcity.accessibility.database;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.teamdev.jxmaps.LatLng;
 
@@ -27,7 +28,7 @@ public abstract class AbstractLocationManager {
 		return instance;
 	}
 	
-	public abstract String getId(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType, ICallback<String> callback);
+	public abstract Optional<String> getId(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType, ICallback<Optional<String>> callback);
 	
 	public abstract String uploadLocation(Location l, ICallback<String> callback);
 	

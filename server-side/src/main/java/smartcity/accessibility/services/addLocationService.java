@@ -18,15 +18,13 @@ import smartcity.accessibility.mapmanagement.Location.LocationTypes;
 
 @RestController
 public class addLocationService {
-	
-	@RequestMapping(value = "/addLocation", method = RequestMethod.POST,
-			produces = "application/json")
-	@ResponseBody public void getLocationsInRadius(@RequestParam("name") String name, @RequestParam("srcLat") Double srcLat, @RequestParam("srcLng") Double srcLng) {	
-		Location dummy = new LocationBuilder().setCoordinates(new LatLng(srcLat, srcLng))
-				.setName(name)
-				.setType(LocationTypes.Coordinate)
-				.setSubType(LocationSubTypes.Default)
-				.build();
+
+	@RequestMapping(value = "/addLocation", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public void getLocationsInRadius(@RequestParam("name") String name, @RequestParam("srcLat") Double srcLat,
+			@RequestParam("srcLng") Double srcLng) {
+		Location dummy = new LocationBuilder().setCoordinates(new LatLng(srcLat, srcLng)).setName(name)
+				.setType(LocationTypes.Coordinate).setSubType(LocationSubTypes.Default).build();
 		AbstractLocationManager.instance().uploadLocation(dummy, new ICallback<String>() {
 			@Override
 			public void onFinish(String u) {
