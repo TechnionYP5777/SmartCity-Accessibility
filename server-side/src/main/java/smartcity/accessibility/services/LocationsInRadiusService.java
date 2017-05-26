@@ -35,25 +35,11 @@ public class LocationsInRadiusService {
 			Location dummy = new Location();
 			dummy.setCoordinates(new LatLng(srcLat, srcLng));
 			SearchQueryResult sqr = sq.searchByType(dummy, radius);
-			List<Location> retVal = new ArrayList<Location>();
-			
-			AbstractLocationManager.instance().getLocationsAround(new LatLng(srcLat, srcLng), radius, new ICallback<List<Location>>() {
-				
-				@Override
-				public void onFinish(List<Location> u) {
-					try {
-						sq.waitOnSearch();
-						retVal.addAll(sqr.getLocations());
-						retVal.addAll(u);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-				}
-			});
+			List<Location> retVal = AbstractLocationManager.instance().getLocationsAround(new LatLng(srcLat, srcLng), radius, null);	
+			sq.waitOnSearch();
+			retVal.addAll(sqr.getLocations());
 			return retVal;
-		} catch (illigalString e) {
+		} catch (illigalString | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
