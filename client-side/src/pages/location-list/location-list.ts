@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams , ModalController,App, ViewController} from 'ionic-angular';
 import { LocationsInRadiusService } from './LocationsInRadiusService';
+import { AddLocationPage } from '../add-location/add-location';
 
 @Component({
   selector: 'page-location-list',
@@ -15,7 +16,7 @@ export class LocationListPage {
 	location: any;
 	youChose: any;
 	index: any;
-	constructor(public navCtrl: NavController, public navParams: NavParams, public locationsInRadius: LocationsInRadiusService) {
+	constructor(public viewCtrl: ViewController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public locationsInRadius: LocationsInRadiusService) {
 		this.lat = navParams.get('lat');
 		this.lng = navParams.get('lng');	
 		this.output = "Calculating...";
@@ -31,5 +32,11 @@ export class LocationListPage {
 
 	cc(locationn){
 		this.youChose = "you chose: " + locationn.name +" at: " + locationn.coordinates.lat + ", " + locationn.coordinates.lng;
+	}
+	
+	addLocation(){
+		this.viewCtrl.dismiss();
+		let clickMenu = this.modalCtrl.create(AddLocationPage,{lat:this.lat,lng:this.lng});
+		clickMenu.present();
 	}
 }

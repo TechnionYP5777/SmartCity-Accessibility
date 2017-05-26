@@ -5,5 +5,6 @@
 		</ion-list-header>
         <button ion-item *ngFor="let location of locations" (click)="cc(location)" class="buttons">{{location.name}}</button>
 		<ion-item> {{youChose}} </ion-item>
+		<button ion-item (click)="addLocation()" class="buttons"> add new location </button>
 	</ion-list>		
 </ion-content>
