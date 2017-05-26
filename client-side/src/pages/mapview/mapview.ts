@@ -21,7 +21,7 @@ export class MapviewPage {
  
   @ViewChild('map') mapElement: ElementRef;
   map: any;
-  marker:any;
+  markers : any;
   geolocation: Geolocation;
   isLoggedin : any;
   searchQuery: any;
@@ -35,6 +35,7 @@ export class MapviewPage {
 	    this.isLoggedin = this.loginService.isLoggedIn();
 		this.output = "";
 		this.subscribeToNavigation();
+		this.markers = [];
   }
   
     ionViewDidLoad(){
@@ -42,7 +43,12 @@ export class MapviewPage {
     }
   
 	addMarker(LatLngArr){
+		for (var i = 0; i < this.markers.length; i++) {
+            this.markers[i].setMap(null);
+        }
+		this.markers = [];
 	    for (var i = 0; i < LatLngArr.length; i++) {
+			this.markers[i] = LatLngArr[i];
             var coords = LatLngArr[i];
             var latLng = new google.maps.LatLng(coords.lat,coords.lng);
             var marker = new google.maps.Marker({
