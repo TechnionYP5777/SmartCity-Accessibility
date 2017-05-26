@@ -1,6 +1,5 @@
 package smartcity.accessibility.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.database.AbstractLocationManager;
-import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery;

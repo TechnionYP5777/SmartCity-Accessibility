@@ -30,6 +30,7 @@ import {GetReviewsService} from '../pages/reviews/ReviewsService';
 import { navigationManeuverPage } from '../pages/navigation_maneuver/navigation_maneuver';
 import { LocationsInRadiusService } from '../pages/location-list/LocationsInRadiusService';
 import { AddLocationPage } from '../pages/add-location/add-location';
+import { AddLocationService } from '../pages/add-location/AddLocationService';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { AddLocationPage } from '../pages/add-location/add-location';
 	UserInformationService,
 	AdminService,
 	GetReviewsService,
-	LocationsInRadiusService
+	LocationsInRadiusService,
+	AddLocationService
   ]
 })
 export class AppModule {}

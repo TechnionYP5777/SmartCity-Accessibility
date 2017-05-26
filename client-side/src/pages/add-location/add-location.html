@@ -8,7 +8,7 @@
 	{{omg}}
 	<ion-list>
 		<ion-item>
-			<ion-input  type="text" placeholder="Location Name"></ion-input>
+			<ion-input [(ngModel)]="name" type="text" placeholder="Location Name"></ion-input>
 		</ion-item>
 		<ion-item class="inputs">
 		  <ion-label class="text">  
@@ -21,6 +21,7 @@
 			<ion-option value="hotel">Hotel</ion-option>
 		  </ion-select>
 		</ion-item>
+		
 	</ion-list>
 	<button ion-item (click)="addToDataBase()" class="buttons"> done! </button>
 </ion-content>
