@@ -94,9 +94,10 @@ public class LocationManager extends AbstractLocationManager {
 	public String uploadLocation(Location l, ICallback<String> callback) {
 		logger.info("upload location {}", l);
 		Flowable<String> res = Flowable.fromCallable(() -> {
-			if (getId(l.getCoordinates(), l.getLocationType(), l.getLocationSubType(), null).isPresent()) {
+			Optional<String> oid = getId(l.getCoordinates(), l.getLocationType(), l.getLocationSubType(), null);
+			if (oid.isPresent()) {
 				logger.debug("location already in db");
-				return null;
+				return oid.get();
 			}
 			return db.put(DATABASE_CLASS, toMap(l));
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());

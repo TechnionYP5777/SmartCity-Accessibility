@@ -48,7 +48,7 @@ public class ReviewManager extends AbstractReviewManager {
 		logger.debug("toMap {} by {}",r.getContent(),r.getUser().getUsername());
 		Map<String, Object> map = new HashMap<>();
 		Location l = r.getLocation();
-		Optional<String> id = null;
+		Optional<String> id = Optional.ofNullable("");
 		if(l!=null){
 			id = AbstractLocationManager.instance().getId(l.getCoordinates(), l.getLocationType(),
 					l.getLocationSubType(), null);

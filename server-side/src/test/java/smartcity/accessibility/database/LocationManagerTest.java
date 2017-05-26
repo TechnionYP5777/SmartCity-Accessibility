@@ -82,7 +82,9 @@ public class LocationManagerTest {
 				.setName("asd")
 				.setType(LocationTypes.Coordinate)
 				.setSubType(LocationSubTypes.Default)
+				.setCoordinates(1,1)
 				.build();
+		Mockito.when(db.get(Mockito.anyString(), Mockito.anyMap())).thenReturn(new ArrayList<Map<String, Object>>());
 		String res = lm.uploadLocation(ml, null);
 		Mockito.verify(db).put(Mockito.anyString(), Mockito.anyMap());
 		assertEquals("MY_ID2", res);
@@ -168,6 +170,7 @@ public class LocationManagerTest {
 		m.put(LocationManager.ID_FIELD_NAME, "MY_ID");
 		List<Map<String, Object>> l = new ArrayList<>();
 		l.add(m);
+
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyMap())).thenReturn(l);
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyString())).thenReturn(m);
 		Mockito.when(db.put(Mockito.anyString(), Mockito.anyMap())).thenReturn("MY_ID2");

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -122,7 +123,7 @@ public class ReviewManagerTest {
 		assertEquals(true, res);
 		Map<String, Object> nm = new HashMap<>(m);
 		nm.remove(ReviewManager.ID_FIELD_NAME);
-		nm.put(ReviewManager.LOCATION_FIELD_NAME, null);
+		nm.put(ReviewManager.LOCATION_FIELD_NAME, "");
 		Mockito.verify(db).update(ReviewManager.DATABASE_CLASS, "MY_ID_REV", nm);
 	}
 	
@@ -191,6 +192,7 @@ public class ReviewManagerTest {
 		
 		lm = Mockito.mock(AbstractLocationManager.class);
 		Mockito.when(lm.getLocation(Mockito.any(LatLng.class), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(sample);
+		Mockito.when(lm.getId(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(Optional.of("ID"));
 		AbstractLocationManager.initialize(lm);
 		
 		
