@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.database.AbstractLocationManager;
+import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery;
@@ -35,9 +37,7 @@ public class LocationsInRadiusService {
 			SearchQueryResult sqr = sq.searchByType(dummy, radius);
 			List<Location> retVal = new ArrayList<Location>();
 			
-			sq.waitOnSearch();
-			//retVal.addAll(sqr.getLocations());
-			/*AbstractLocationManager.instance().getLocationsAround(new LatLng(srcLat, srcLng), radius, new ICallback<List<Location>>() {
+			AbstractLocationManager.instance().getLocationsAround(new LatLng(srcLat, srcLng), radius, new ICallback<List<Location>>() {
 				
 				@Override
 				public void onFinish(List<Location> u) {
@@ -51,17 +51,13 @@ public class LocationsInRadiusService {
 					}
 					
 				}
-			});*/
-			return sqr.getLocations();
+			});
+			return retVal;
 		} catch (illigalString e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+		} 
 	}
 
 }
