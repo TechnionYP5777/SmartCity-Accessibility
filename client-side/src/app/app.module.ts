@@ -29,7 +29,7 @@ import { HelpfulUsersPage } from '../pages/helpfulUsers/helpfulUsers';
 import {GetReviewsService} from '../pages/reviews/ReviewsService';
 import { navigationManeuverPage } from '../pages/navigation_maneuver/navigation_maneuver';
 import { LocationsInRadiusService } from '../pages/location-list/LocationsInRadiusService';
-import { LocationListPage } from '../pages/add-location/add-location';
+import { AddLocationPage } from '../pages/add-location/add-location';
 
 @NgModule({
   declarations: [
