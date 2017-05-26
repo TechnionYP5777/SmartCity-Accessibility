@@ -11,7 +11,7 @@ export class AddLocationService {
 
 	addLocation(name, lat, lng){
 		var params = "name=" + name + "&srcLat=" + lat + "&srcLng=" + lng;
-		this.http.post(Constants.serverAddress +'/addLocation?'+params).subscribe(data => {
+		 return new Promise(resolve => {this.http.post(Constants.serverAddress +'/addLocation?', params).subscribe(data => {
                 if(data.status == 200){
                 	console.log('Review added successfully!')
                     resolve(true);
@@ -19,5 +19,6 @@ export class AddLocationService {
                 else
                     resolve(false);
             });
+		 });
 	}
 }
