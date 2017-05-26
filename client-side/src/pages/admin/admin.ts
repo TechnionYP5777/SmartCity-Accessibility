@@ -17,6 +17,8 @@ export class AdminPage {
   numOfReviews: any;
   hlp: any;
   usersArray: any;
+  numOfLocations: any;
+  
   
   constructor(public navCtrl: NavController, public navParams: NavParams,
 			  public adminService : AdminService, public modalCtrl: ModalController) {
