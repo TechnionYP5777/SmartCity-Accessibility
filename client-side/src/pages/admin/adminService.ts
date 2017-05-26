@@ -28,5 +28,11 @@ export class AdminService {
 
 		return this.http.get(Constants.serverAddress + '/helpfulUsers?numOfUsers=' + n, {headers: this.headers}).map(res=>res.json());
 	}
+	
+	mostRatedLocs(radius, n, srcLat, srcLng) {
+	
+		return this.http.get(Constants.serverAddress + '/mostRatedLocs?radius=' + radius + '&srcLat=' + srcLat + '&srcLng=' + srcLng 
+							+ '&numOfLocs=' + n, {headers: this.headers}).map(res=>res.json());
+	}
 
 }
