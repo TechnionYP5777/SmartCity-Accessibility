@@ -29,7 +29,8 @@ export class MapviewPage {
   adminPage = AdminPage;
   complexSearchPage = ComplexSearchPage;
   output :  any;
-  myCallbackFunction : any;
+  route : any;
+
   constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService, public searchService : SearchService, public events: Events) {
 	    this.isLoggedin = this.loginService.isLoggedIn();
 		this.output = "";
@@ -87,18 +88,20 @@ export class MapviewPage {
   
 	subscribeToNavigation(){
 		this.events.subscribe('navigation:done', (navigationResults,loading) => {
-			var route = new google.maps.Polyline({
+			if(this.route != null)
+				this.route.setMap(null);
+			this.route = new google.maps.Polyline({
 			    path: navigationResults.latlng,
 			    geodesic: true,
 			    strokeColor: '#FF0000',
 			    strokeOpacity: 1.0,
 			    strokeWeight: 2
 			});
-			google.maps.event.addListener(route,'click',(event)=>{ 
+			google.maps.event.addListener(this.route,'click',(event)=>{ 
 				let clickMenu = this.modalCtrl.create(navigationManeuverPage,navigationResults);
 				clickMenu.present();
 			});
-			route.setMap(this.map);
+			this.route.setMap(this.map);
 			loading.dismiss();
 		});
 	}
