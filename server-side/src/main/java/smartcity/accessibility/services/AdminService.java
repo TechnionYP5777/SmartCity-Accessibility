@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.teamdev.jxmaps.LatLng;
+
 import smartcity.accessibility.database.AbstractUserProfileManager;
+import smartcity.accessibility.database.LocationManager;
+import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
 @RestController
@@ -27,5 +31,13 @@ public class AdminService {
 		return AbstractUserProfileManager.instance().mostHelpful(numOfUsers, null);	
 	}
 	
-	
+	@RequestMapping("/helpfulUsers")
+	@ResponseBody public List<Location> getMostRatedLocations(@RequestHeader("authToken") String token,
+															   @RequestParam("radius") Integer radius,
+															   @RequestParam("srcLat") Double srcLat,
+															   @RequestParam("srcLng") Double srcLng,
+															   @RequestParam("numOfLocs") Integer numOfLocs) {
+		LatLng src = new LatLng(srcLat, srcLng);
+		return LocationManager.instance().getTopRated(src, radius, numOfLocs, null);
+	}
 }
