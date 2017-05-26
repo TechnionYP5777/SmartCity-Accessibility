@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams , ModalController,App, ViewController} from 'ionic-angular';
 import { LocationsInRadiusService } from './LocationsInRadiusService';
 import { AddLocationPage } from '../add-location/add-location';
+import { GetReviewsPage } from '../reviews/reviews'; 
 
 @Component({
   selector: 'page-location-list',
@@ -32,6 +33,9 @@ export class LocationListPage {
 
 	cc(locationn){
 		this.youChose = "you chose: " + locationn.name +" at: " + locationn.coordinates.lat + ", " + locationn.coordinates.lng;
+		this.viewCtrl.dismiss();
+		let clickMenu = this.modalCtrl.create(GetReviewsPage);
+		clickMenu.present();
 	}
 	
 	addLocation(){

@@ -51,7 +51,7 @@ import { AddLocationPage } from '../pages/add-location/add-location';
 	GetReviewsPage,
 	navigationManeuverPage,
 	HelpfulUsersPage,
-	LocationListPage
+	AddLocationPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -75,7 +75,7 @@ import { AddLocationPage } from '../pages/add-location/add-location';
 	GetReviewsPage,
 	navigationManeuverPage,
 	HelpfulUsersPage,
-	LocationListPage
+	AddLocationPage
   ],
   providers: [
     StatusBar,
