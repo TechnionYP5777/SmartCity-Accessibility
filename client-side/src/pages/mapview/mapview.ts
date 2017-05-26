@@ -48,7 +48,6 @@ export class MapviewPage {
         }
 		this.markers = [];
 	    for (var i = 0; i < LatLngArr.length; i++) {
-			this.markers[i] = LatLngArr[i];
             var coords = LatLngArr[i];
             var latLng = new google.maps.LatLng(coords.lat,coords.lng);
             var marker = new google.maps.Marker({
@@ -59,6 +58,7 @@ export class MapviewPage {
 			    let clickMenu = this.modalCtrl.create(MapClickMenuPage,{latlng : event.latLng});
 			    clickMenu.present();
 		    });
+			this.markers[i] = marker;
         }
     }
 	
