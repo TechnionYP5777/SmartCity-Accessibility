@@ -21,7 +21,7 @@ export class MapviewPage {
  
   @ViewChild('map') mapElement: ElementRef;
   map: any;
-  marker:any;
+  markers : any;
   geolocation: Geolocation;
   isLoggedin : any;
   searchQuery: any;
@@ -29,11 +29,13 @@ export class MapviewPage {
   adminPage = AdminPage;
   complexSearchPage = ComplexSearchPage;
   output :  any;
-  myCallbackFunction : any;
+  route : any;
+
   constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService, public searchService : SearchService, public events: Events) {
 	    this.isLoggedin = this.loginService.isLoggedIn();
 		this.output = "";
 		this.subscribeToNavigation();
+		this.markers = [];
   }
   
     ionViewDidLoad(){
@@ -41,6 +43,10 @@ export class MapviewPage {
     }
   
 	addMarker(LatLngArr){
+		for (var i = 0; i < this.markers.length; i++) {
+            this.markers[i].setMap(null);
+        }
+		this.markers = [];
 	    for (var i = 0; i < LatLngArr.length; i++) {
             var coords = LatLngArr[i];
             var latLng = new google.maps.LatLng(coords.lat,coords.lng);
@@ -52,6 +58,7 @@ export class MapviewPage {
 			    let clickMenu = this.modalCtrl.create(MapClickMenuPage,{latlng : event.latLng});
 			    clickMenu.present();
 		    });
+			this.markers[i] = marker;
         }
     }
 	
@@ -87,18 +94,20 @@ export class MapviewPage {
   
 	subscribeToNavigation(){
 		this.events.subscribe('navigation:done', (navigationResults,loading) => {
-			var route = new google.maps.Polyline({
+			if(this.route != null)
+				this.route.setMap(null);
+			this.route = new google.maps.Polyline({
 			    path: navigationResults.latlng,
 			    geodesic: true,
 			    strokeColor: '#FF0000',
 			    strokeOpacity: 1.0,
 			    strokeWeight: 2
 			});
-			google.maps.event.addListener(route,'click',(event)=>{ 
+			google.maps.event.addListener(this.route,'click',(event)=>{ 
 				let clickMenu = this.modalCtrl.create(navigationManeuverPage,navigationResults);
 				clickMenu.present();
 			});
-			route.setMap(this.map);
+			this.route.setMap(this.map);
 			loading.dismiss();
 		});
 	}
