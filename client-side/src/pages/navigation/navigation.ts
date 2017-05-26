@@ -26,6 +26,7 @@ export class NavigationPage {
 		lng : ''
 	};
 	loading : any;
+	
     constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl: LoadingController,public alertCtrl: AlertController, public navigationService: NavigationService,public loginService : LoginService,public events: Events) {
 		this.isLoggedin = this.loginService.isLoggedIn();
 		this.dstLocation.lat = navParams.get('lat');
@@ -33,22 +34,24 @@ export class NavigationPage {
 		this.minRating = 5;
 	}
 	ionViewDidLoad(){
-        this.geolocation = new Geolocation();
+    }
+	
+	startNavigation(){
+	    this.presentLoadingCustom();
+		this.geolocation = new Geolocation();
 		this.geolocation.getCurrentPosition().then((position) => {
 			this.srcLocation.lat = String(position.coords.latitude);
 			this.srcLocation.lng = String(position.coords.longitude);
+			
+			this.navigationService.navigatee(this.srcLocation,this.dstLocation,this.minRating).subscribe(
+			data => {
+				this.events.publish('navigation:done', data.json(),this.loading);
+			}
+			, err => {
+				this.handleError(err.json());
+			}
+			);
 		});
-    }
-	startNavigation(){
-	    this.presentLoadingCustom();
-		this.navigationService.navigatee(this.srcLocation,this.dstLocation,this.minRating).subscribe(
-		data => {
-            this.events.publish('navigation:done', data.json(),this.loading);
-		}
-		, err => {
-		    this.handleError(err.json());
-		}
-		);
 		this.navCtrl.pop();
 	}
 	
