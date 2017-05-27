@@ -8,7 +8,7 @@
 <ion-header class="headers">
   <ion-navbar>
     <ion-title>
-      The {{num}} most helpful users : <br>
+      The {{num}} most rated locations : <br>
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -16,14 +16,13 @@
 
 <ion-content>
 	<ion-list>
-		<ion-item *ngFor="let user of users">
+		<ion-item *ngFor="let loc of locations">
 			<ion-card>
 				<ion-card-title class ="cardTitle">
-					{{ user.username }}
+					{{locations}}
 				</ion-card-title>
 				<p class="cardContent">
-					  Rating : {{user.rating}} <br>
-					  Num of reviews: {{user.numOfReviews}} <br>
+					  location rating
 				</p>
 			</ion-card>
 		</ion-item>

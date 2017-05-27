@@ -9,10 +9,8 @@ import { AdminService } from '../admin/adminService';
 })
 
 export class HelpfulUsersPage {
-  usersArray: any;  
   num: any = 0;
   users: any;
-  len: any = 0;
   
    constructor(public viewCtrl: ViewController,public appCtrl: App, 
 			public navParams: NavParams,public modalCtrl: ModalController,
