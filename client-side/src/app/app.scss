@@ -22,6 +22,12 @@
 	background-color: color($colors, secondary);
 }
 
+.scroll-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 
 ion-content {
 	background-image: url('../assets/img/background.jpg');

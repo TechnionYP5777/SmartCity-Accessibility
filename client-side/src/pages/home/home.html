@@ -4,11 +4,11 @@
       Ionic Map
     </ion-title>
     <ion-buttons end>
-      <button ion-button *ngIf="!isLoggedin" [navPush]="loginPage">
-        Login
+      <button ion-button icon-only *ngIf="!isLoggedin" [navPush]="loginPage">
+        <ion-icon name="person"></ion-icon>
       </button>
-      <button ion-button *ngIf="isLoggedin" (click)="userprofile()">
-        User profile
+      <button ion-button icon-only *ngIf="isLoggedin" (click)="userprofile()">
+        <ion-icon name="person"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
