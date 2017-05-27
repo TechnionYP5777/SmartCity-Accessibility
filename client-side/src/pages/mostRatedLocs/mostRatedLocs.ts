@@ -13,8 +13,8 @@ export class MostRatedLocsPage {
   locations: any;
   num: any = 0;
   radius: any = 0;
-  initLoc: any;
-  coordinates: any;
+  initLoc: any = 'empty';
+  coordinates: any = null;
   
    constructor(public viewCtrl: ViewController,public appCtrl: App, 
 			public navParams: NavParams,public modalCtrl: ModalController,
@@ -26,15 +26,16 @@ export class MostRatedLocsPage {
   } 
   
   ionViewDidLoad() {
-	  this.searchService.search(this.initLoc).subscribe(
-			data => {
-				this.coordinates = data.coordinates;
-			}
-			, err => {
-				this.handleError(err.json());
-			}
-		);
-	  
+		this.coordinates = this.searchService.search(this.initLoc).subscribe(
+		data => {
+			this.coordinates = data.coordinates;
+			this.adminService.mostRatedLocs(this.radius, this.num, this.coordinates.lat, this.coordinates.lng).subscribe(data => {
+			  this.locations = data;
+			});
+			
+		});
+		
+		while(this.coordinates == null){continue;}
 	   this.adminService.mostRatedLocs(this.radius, this.num, this.coordinates.lat, this.coordinates.lng).subscribe(data => {
 		  this.locations = data;
 	  });

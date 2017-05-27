@@ -31,7 +31,7 @@ export class AdminService {
 	
 	mostRatedLocs(radius, n, srcLat, srcLng) {
 	
-		return this.http.get(Constants.serverAddress + '/mostRatedLocs?radius=' + radius + '&srcLat=' + srcLat + '&srcLng=' + srcLng 
+		return this.http.get(Constants.serverAddress + '/mostRatedLocs?radius=' + radius + '&srcLat=' + srcLat + '&srcLng=' + srcLng
 							+ '&numOfLocs=' + n, {headers: this.headers}).map(res=>res.json());
 	}
 
