@@ -4,6 +4,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -28,8 +30,7 @@ import smartcity.accessibility.socialnetwork.User.Privilege;
 import smartcity.accessibility.socialnetwork.UserBuilder;
 
 import org.junit.Assert;
-import static org.hamcrest.Matchers.is;
-
+import static org.hamcrest.Matchers.*;
 
 /**
  * @author yael
@@ -38,10 +39,10 @@ import static org.hamcrest.Matchers.is;
 @SpringBootTest(classes = Application.class)
 @WebAppConfiguration
 public class LoginServiceTest extends ServiceTest {
-	
+
 	private String name = "Dr.Awesome";
 	private String password = "T4RRR76ppp";
-	
+
 	@Before
 	public void setup() throws Exception {
 		ParseDatabase.initialize();
@@ -66,17 +67,16 @@ public class LoginServiceTest extends ServiceTest {
 				.andExpect(status().is2xxSuccessful())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.token").value(t.getToken()));
 	}
-	
+
 	@Test
 	@Category(UnitTests.class)
 	public void signupUserExist() throws Exception {
 		String reason = SignUpFailed.class.getAnnotation(ResponseStatus.class).reason();
 		mockMvc.perform(post("/signup" + "?name=" + name + "&password=" + password));
-		mockMvc.perform(post("/signup" + "?name=" + name + "&password=" + password))
-				.andExpect(status().isBadRequest())
+		mockMvc.perform(post("/signup" + "?name=" + name + "&password=" + password)).andExpect(status().isBadRequest())
 				.andExpect(status().reason(reason));
 	}
-	
+
 	@Test
 	@Category(UnitTests.class)
 	public void loginSuccess() throws Exception {
@@ -86,16 +86,15 @@ public class LoginServiceTest extends ServiceTest {
 				.andExpect(status().is2xxSuccessful())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.token").value(t.getToken()));
 	}
-	
+
 	@Test
 	@Category(UnitTests.class)
 	public void loginUserDoesNotExist() throws Exception {
 		String reason = UserDoesNotExistException.class.getAnnotation(ResponseStatus.class).reason();
-		mockMvc.perform(post("/login" + "?name=" + name + "&password=" + password))
-				.andExpect(status().isNotFound())
+		mockMvc.perform(post("/login" + "?name=" + name + "&password=" + password)).andExpect(status().isNotFound())
 				.andExpect(status().reason(reason));
 	}
-	
+
 	@Test
 	@Category(UnitTests.class)
 	public void UserInfoSuccess() throws Exception {
@@ -104,11 +103,11 @@ public class LoginServiceTest extends ServiceTest {
 		Token t = Token.calcToken(new UserBuilder().setUsername(name).setPassword(password).build());
 		UserInfo userInfo = LogInService.getUserInfo(t.getToken());
 		User u = userInfo.getUser();
-		Assert.assertThat(u.getUsername(),is(name));
+		Assert.assertThat(u.getUsername(), is(name));
 		Assert.assertThat(u.getPassword(), is(password));
-		Assert.assertThat(u.getPrivilegeLevel(),is(Privilege.RegularUser));
+		Assert.assertThat(u.getPrivilegeLevel(), is(Privilege.RegularUser));
 	}
-	
+
 	@Test(expected = UserIsNotLoggedIn.class)
 	@Category(LongTests.class)
 	public void UserInfoPass10min() throws Exception {
@@ -117,5 +116,40 @@ public class LoginServiceTest extends ServiceTest {
 		Token t = Token.calcToken(new UserBuilder().setUsername(name).setPassword(password).build());
 		Application.tokenToSession.invalidate(t.getToken());
 		LogInService.getUserInfo(t.getToken());
-	}	
+	}
+
+	@Test
+	@Category(UnitTests.class)
+	public void AdminLogin() throws Exception {
+		mockMvc.perform(post("/login" + "?name=" + "yaeli" + "&password=" + "1234"));
+		Token t = Token.calcToken(new UserBuilder().setUsername("yaeli").setPassword("1234").build());
+		UserInfo userInfo = LogInService.getUserInfo(t.getToken());
+		User u = userInfo.getUser();
+		Assert.assertThat(u.getPrivilegeLevel(), is(Privilege.Admin));
+	}
+
+	@Test
+	@Category(UnitTests.class)
+	public void AdminLoginResponse() throws Exception {
+		mockMvc.perform(post("/login" + "?name=" + "yaeli" + "&password=" + "1234"))
+				.andExpect(status().is2xxSuccessful()).andExpect(MockMvcResultMatchers.jsonPath("$.admin").value(true));
+	}
+
+	@Test
+	@Category(UnitTests.class)
+	public void NotAdminLoginResponse() throws Exception {
+		mockMvc.perform(post("/signup" + "?name=" + name + "&password=" + password));
+		mockMvc.perform(post("/login" + "?name=" + name + "&password=" + password))
+				.andExpect(status().is2xxSuccessful())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.admin").value(false));
+	}
+
+	@Test
+	@Category(UnitTests.class)
+	public void ExpirationTime() throws Exception {
+		mockMvc.perform(post("/signup" + "?name=" + name + "&password=" + password));
+		mockMvc.perform(post("/login" + "?name=" + name + "&password=" + password))
+				.andExpect(status().is2xxSuccessful())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.expirationDate").value(greaterThan(new Date().getTime())));
+	}
 }
