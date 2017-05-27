@@ -1,4 +1,4 @@
-import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
+import { Component, trigger, state, style, transition, animate} from '@angular/core';
 import { LoginPage } from '../login/login';
 import { NavController, AlertController } from 'ionic-angular';
 import { MapviewPage } from '../mapview/mapview';
@@ -7,6 +7,7 @@ import { LoginService } from '../login/LoginService';
 import { AdminPage } from '../admin/admin';
 import { AddReviewPage } from '../add-review/add-review';
 import { GetReviewsPage } from '../reviews/reviews'; 
+import { Constants } from "../constants";
 
 @Component({
   selector: 'page-home',  
@@ -41,9 +42,13 @@ export class HomePage {
     userprofile(){
 		this.isLoggedin = this.loginService.isLoggedIn();
 		if(!this.isLoggedin)
-			this.presentAlert("Sorry, it seems you were not active for 10 minutes. Please re-login.");
-		else 
-		    this.navCtrl.push(UserPagePage);
+			this.presentAlert(Constants.userExpiredMessage);
+		else {
+			var token = JSON.parse(window.sessionStorage.getItem('token'));	
+		    if(token.admin == true)
+				this.navCtrl.push(this.adminPage);
+			else this.navCtrl.push(UserPagePage);
+		}
 	}
 
 	presentAlert(str) {

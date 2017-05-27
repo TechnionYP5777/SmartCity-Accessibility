@@ -9,6 +9,7 @@ import { ComplexSearchPage } from '../complex-search/complex-search';
 import { AdminPage } from '../admin/admin'; 
 import { SearchService } from './searchService';
 import { navigationManeuverPage } from '../navigation_maneuver/navigation_maneuver';
+import { Constants } from "../constants";
 
 declare var google;  
  
@@ -85,9 +86,13 @@ export class MapviewPage {
 	userprofile(){
 		this.isLoggedin = this.loginService.isLoggedIn();
 		if(!this.isLoggedin)
-			this.presentAlert("Sorry, it seems you were not active for 30 minutes. Please re-login.");
-		else 
-		    this.navCtrl.push(UserPagePage);
+			this.presentAlert(Constants.userExpiredMessage);
+		else {
+			var token = JSON.parse(window.sessionStorage.getItem('token'));	
+		    if(token.admin == true)
+				this.navCtrl.push(this.adminPage);
+			else this.navCtrl.push(UserPagePage);
+		}
 	}
 	
 	ionViewDidEnter(){
