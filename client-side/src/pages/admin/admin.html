@@ -14,6 +14,8 @@
 
 <ion-content>
 
+<ion-list>
+
 	<ion-card>
 	  <img class="card-image" src='../assets/img/Admin.png'/>
 	  <ion-card-content>
@@ -72,6 +74,7 @@
 			
 		</ion-row>
 		
+		<ion-row>
 			<ion-col>
 				
 				<ion-card>
@@ -106,14 +109,31 @@
 				</ion-card>
 						
 			</ion-col>
+		</ion-row>
 		
+
 		<ion-row>
-		
-	
+			<ion-col>
+				
+				<ion-card>
+				  <ion-card-content>
+					<ion-card-title class ="cardTitle">
+					  General Info
+					  </ion-card-title>
+					<p class="cardContent">
+						  The number of users registered to the app: {{ numOfUsers }}
+					</p>
+
+				  </ion-card-content>
+				</ion-card>
+						
+			</ion-col>
 		
 		</ion-row>
 		
 	</ion-grid>
+
+</ion-list>
 	
 </ion-content>
 

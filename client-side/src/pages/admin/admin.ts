@@ -17,7 +17,7 @@ export class AdminPage {
   rating: any;
   numOfReviews: any;
   hlp: any;
-  numOfUsers: any;
+  numOfUsers: any = -1;
   
   constructor(public navCtrl: NavController, public navParams: NavParams,
 			  public adminService : AdminService, public modalCtrl: ModalController) {
