@@ -31,7 +31,7 @@ public class Application {
 	
 	public static final LoadingCache<String, UserInfo> tokenToSession = resetSessions();
 	public static final ExtendedMapView mapView = JxMapsFunctionality.getMapView();
-	
+	public static final long expirationLoginTime = 30;
 	
 	public static void main(String[] args) {
 		Injector injector = Guice.createInjector(new DatabaseModule());
@@ -45,8 +45,8 @@ public class Application {
 		return CacheBuilder.newBuilder()
 	    .concurrencyLevel(4)
 	    .maximumSize(10000)
-	    .expireAfterWrite(30, TimeUnit.MINUTES)
-	    .expireAfterAccess(30, TimeUnit.MINUTES)
+	    .expireAfterWrite(expirationLoginTime, TimeUnit.MINUTES)
+	    .expireAfterAccess(expirationLoginTime, TimeUnit.MINUTES)
 	    .build(
 	        new CacheLoader<String, UserInfo>() {
 				@Override

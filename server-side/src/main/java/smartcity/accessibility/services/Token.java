@@ -29,7 +29,8 @@ public class Token {
 			messageDigest.update(str.getBytes());
 			String hashStr = String.format("%064x", new java.math.BigInteger(1, messageDigest.digest()));
 			t.setToken(hashStr);
-			t.setExpirationDate(DateUtils.addMinutes(new Date(), 3));
+			int addMin = (int) Application.expirationLoginTime;
+			t.setExpirationDate(DateUtils.addMinutes(new Date(), addMin));
 			t.setIsAdmin(u.getPrivilegeLevel().equals(Privilege.Admin));
 		} catch (NoSuchAlgorithmException e) {
 			logger.info("token hash function doesn't exists", e);
