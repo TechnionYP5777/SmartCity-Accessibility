@@ -17,7 +17,7 @@ export class AdminPage {
   rating: any;
   numOfReviews: any;
   hlp: any;
-  
+  numOfUsers: any;
   
   constructor(public navCtrl: NavController, public navParams: NavParams,
 			  public adminService : AdminService, public modalCtrl: ModalController) {
@@ -29,6 +29,7 @@ export class AdminPage {
 			
 		});
 			
+		this.adminService.numOfUsers().subscribe(data => this.numOfUsers = data);
   }
   
   showUsers(n) {
