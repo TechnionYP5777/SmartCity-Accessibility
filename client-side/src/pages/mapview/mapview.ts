@@ -71,10 +71,12 @@ export class MapviewPage {
 	
 	callToComplexSearch() {
 			this.navCtrl.push(this.complexSearchPage);
+			let markers_complex = [];
 			this.events.subscribe('complexSearch:pressed', (complexSearchResults, initLocation) => {
-				for(var i = 1; i < complexSearchResults.length - 1; i++) {
-					this.addMarker([complexSearchResults[i].coordinates]);
-				}	
+				for(var i = 0; i < complexSearchResults.length; i++) {
+					markers_complex[i] = complexSearchResults[i].coordinates;
+				}
+				this.addMarker(markers_complex);
 				this.map.setCenter(initLocation);
 			});
 	
@@ -83,7 +85,7 @@ export class MapviewPage {
 	userprofile(){
 		this.isLoggedin = this.loginService.isLoggedIn();
 		if(!this.isLoggedin)
-			this.presentAlert("Sorry, it seems you were not active for 10 minutes. Please re-login.");
+			this.presentAlert("Sorry, it seems you were not active for 30 minutes. Please re-login.");
 		else 
 		    this.navCtrl.push(UserPagePage);
 	}
