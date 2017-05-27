@@ -37,6 +37,7 @@ public class LocationManager extends AbstractLocationManager {
 	public static final String TYPE_FIELD_NAME = "type";
 	public static final String LOCATION_FIELD_NAME = "location";
 	public static final String ID_FIELD_NAME = "objectId";
+	public static final String SEGMENT_ID_FIELD_NAME = "segmentId";
 
 	private static Logger logger = LoggerFactory.getLogger(LocationManager.class);
 
@@ -51,6 +52,7 @@ public class LocationManager extends AbstractLocationManager {
 		map.put(TYPE_FIELD_NAME, l.getLocationType().toString());
 		map.put(SUB_TYPE_FIELD_NAME, l.getLocationSubType().toString());
 		map.put(NAME_FIELD_NAME, l.getName());
+		map.put(SEGMENT_ID_FIELD_NAME, l.getSegmentId() == null ? "" : l.getSegmentId());
 		return map;
 	}
 
@@ -61,6 +63,8 @@ public class LocationManager extends AbstractLocationManager {
 		lb.setSubType(LocationSubTypes.valueOf(m.get(SUB_TYPE_FIELD_NAME).toString()));
 		ParseGeoPoint pgp = (ParseGeoPoint) m.get(LOCATION_FIELD_NAME);
 		lb.setCoordinates(pgp.getLatitude(), pgp.getLongitude());
+		if (!"".equals(m.get(SEGMENT_ID_FIELD_NAME)))
+			lb.setSegmentId(m.get(SEGMENT_ID_FIELD_NAME).toString());
 		return lb.build();
 	}
 
@@ -113,14 +117,12 @@ public class LocationManager extends AbstractLocationManager {
 		Flowable<List<Location>> res = Flowable.fromCallable(() -> {
 			Map<String, Object> m = new HashMap<>();
 			m.put(LOCATION_FIELD_NAME, new ParseGeoPoint(coordinates.getLat(), coordinates.getLng()));
-
 			List<Map<String, Object>> locsMap = db.get(DATABASE_CLASS, m);
 			logger.debug("db.get returned {}", locsMap.toString());
 			List<Location> locs = new ArrayList<>();
 			Flowable.fromIterable(locsMap).flatMap(m1 -> Flowable.just(m1).subscribeOn(Schedulers.io()).map(m2 -> {
 				Location l = fromMap(m2);
-				l.addReviews(AbstractReviewManager.instance().getReviews(m2.get(ID_FIELD_NAME).toString(), null));
-				return l;
+				return getLocation(l.getCoordinates(), l.getLocationType(), l.getLocationSubType(), null).get();
 			})).blockingSubscribe(locs::add);
 			return locs;
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
@@ -132,36 +134,49 @@ public class LocationManager extends AbstractLocationManager {
 	}
 
 	@Override
+	public Optional<Location> getLocation(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType,
+			ICallback<Optional<Location>> callback) {
+		Flowable<Optional<Location>> res = Flowable.fromCallable(() -> {
+			Optional<String> id = getId(coordinates, locType, locSubType, null);
+			if (!id.isPresent()) {
+				Location temp = null;
+				return Optional.ofNullable(temp);
+			}
+			Location l = fromMap(db.get(DATABASE_CLASS, id.get()));
+			if (l.getSegmentId() != null) {
+				logger.debug("location has segment id, getting others with same field name");
+				Map<String, Object> m = new HashMap<>();
+				m.put(SEGMENT_ID_FIELD_NAME, l.getSegmentId());
+				l.addReviews(db.get(DATABASE_CLASS, m).stream()
+						.map(locMap -> AbstractReviewManager.instance().getReviews(locMap.get(ID_FIELD_NAME).toString(), null))
+						.flatMap(List::stream).collect(Collectors.toList()));
+			} else {
+				logger.debug("location has no segment id, getting others with same field name");
+				l.addReviews(AbstractReviewManager.instance().getReviews(id.get(), null));
+			}
+			return Optional.of(l);
+		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
+		if (callback == null)
+			return res.blockingFirst();
+		res.subscribe(callback::onFinish, Throwable::printStackTrace);
+		Location temp = null;
+		return Optional.ofNullable(temp);
+	}
+
+	@Override
 	public List<Location> getLocationsAround(LatLng l, double distance, ICallback<List<Location>> callback) {
 		Flowable<List<Location>> res = Flowable.fromCallable(() -> {
 			List<Map<String, Object>> mapList = db.get(DATABASE_CLASS, LOCATION_FIELD_NAME, l.getLat(), l.getLng(),
 					distance);
 			return mapList.stream().map(m -> {
 				Location ml = fromMap(m);
-				return getLocation(ml.getCoordinates(), ml.getLocationType(), ml.getLocationSubType(), null);
+				return getLocation(ml.getCoordinates(), ml.getLocationType(), ml.getLocationSubType(), null).get();
 			}).collect(Collectors.toList());
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
 			return res.blockingFirst();
 		res.subscribe(callback::onFinish, Throwable::printStackTrace);
 		return new ArrayList<>();
-	}
-
-	@Override
-	public Location getLocation(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType,
-			ICallback<Location> callback) {
-		Flowable<Location> res = Flowable.fromCallable(() -> {
-			Optional<String> id = getId(coordinates, locType, locSubType, null);
-			if (!id.isPresent())
-				return null;
-			Location l = fromMap(db.get(DATABASE_CLASS, id.get()));
-			l.addReviews(AbstractReviewManager.instance().getReviews(id.get(), null));
-			return l;
-		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
-		if (callback == null)
-			return res.blockingFirst();
-		res.subscribe(callback::onFinish, Throwable::printStackTrace);
-		return null;
 	}
 
 	@Override
@@ -235,10 +250,8 @@ public class LocationManager extends AbstractLocationManager {
 		Flowable<List<Location>> res = Flowable.fromCallable(() -> {
 			List<Location> locsList = getLocationsAround(l, radius, null);
 			return locsList.stream().map(BestReviews::new)
-					.sorted((br1, br2) -> br1.getTotalRatingByAvg() - br2.getTotalRatingByAvg())
-					.limit(n)
-					.map(BestReviews::getLocation)
-					.collect(Collectors.toList());
+					.sorted((br1, br2) -> br1.getTotalRatingByAvg() - br2.getTotalRatingByAvg()).limit(n)
+					.map(BestReviews::getLocation).collect(Collectors.toList());
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
 			return res.blockingFirst();

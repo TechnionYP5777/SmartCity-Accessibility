@@ -2,6 +2,7 @@ package smartcity.accessibility.search;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.teamdev.jxmaps.Map;
 
@@ -47,9 +48,12 @@ public class SearchQueryResult {
 		if (locations.isEmpty())
 			throw new EmptySearchQuery();
 
-		ArrayList<Location> arr = new ArrayList<Location>();
-		for (Location ¢ : locations)
-			arr.add(AbstractLocationManager.instance().getLocation(¢.getCoordinates(), ¢.getLocationType(), ¢.getLocationSubType(), null));
+		ArrayList<Location> arr = new ArrayList<>();
+		for (Location ¢ : locations){
+			Optional<Location> loc = AbstractLocationManager.instance().getLocation(¢.getCoordinates(), ¢.getLocationType(), ¢.getLocationSubType(), null);
+			if (loc.isPresent())
+				arr.add(loc.get());
+		}
 		
 		locations.clear();
 		locations.addAll(arr);

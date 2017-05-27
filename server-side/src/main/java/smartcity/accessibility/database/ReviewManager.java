@@ -135,7 +135,7 @@ public class ReviewManager extends AbstractReviewManager {
 				.getLocation(l.getCoordinates(),
 						l.getLocationType(),
 						l.getLocationSubType(),
-						null);
+						null).get();
 			return l.getReviews();
 		})
 		.subscribeOn(Schedulers.io())
