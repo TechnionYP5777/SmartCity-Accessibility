@@ -40,14 +40,14 @@ public class AdminService {
 															   @RequestParam("srcLng") String srcLng,
 															   @RequestParam("numOfLocs") Integer numOfLocs) {
 		LatLng src = new LatLng(Double.parseDouble(srcLat), Double.parseDouble(srcLng));
-		List<Location> res = new ArrayList<Location>();
-		Location l = (new LocationBuilder()).build();
-		l.setCoordinates(src);
-		l.setRating();
-		res.add(l);
-		return res;
-//		List<Location> res = LocationManager.instance().getTopRated(src, radius, numOfLocs, null);
-//		res.stream().forEach(l -> l.setRating());
+//		List<Location> res = new ArrayList<Location>();
+//		Location l = (new LocationBuilder()).build();
+//		l.setCoordinates(src);
+//		l.setRating();
+//		res.add(l);
 //		return res;
+		List<Location> res = LocationManager.instance().getTopRated(src, radius, numOfLocs, null);
+		res.stream().forEach(l -> l.setRating());
+		return res;
 	}
 }

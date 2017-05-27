@@ -9,10 +9,6 @@
   <ion-navbar>
     <ion-title>
       The {{num}} most rated locations : <br>
-	  {{locations}}
-		{{num}}
-		{{radius}}
-		{{initLoc}}
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -23,11 +19,13 @@
 		<ion-item *ngFor="let loc of locations">
 			<ion-card>
 				<ion-card-title class ="cardTitle">
-					{{loc.coordinates}}
-					{{loc.rating}}
+					{{loc.name}}
 				</ion-card-title>
 				<p class="cardContent">
-					  location rating
+					  The coordinates are: <br>
+					  Lat : {{loc.coordinates.lat}} <br>
+					  Lng : {{loc.coordinates.lng}} <br>
+					  The Rating is : {{loc.rating}} <br>
 				</p>
 			</ion-card>
 		</ion-item>
