@@ -3,13 +3,13 @@
     <ion-title>
       Ionic Map
     </ion-title>
-	<ion-buttons end>
-        <button ion-button *ngIf="!isLoggedin" [navPush]="loginPage">
-            Login
-        </button>
-		<button ion-button *ngIf="isLoggedin" (click)="userprofile()">
-            User profile
-        </button> 
+    <ion-buttons end>
+      <button ion-button *ngIf="!isLoggedin" [navPush]="loginPage">
+        Login
+      </button>
+      <button ion-button *ngIf="isLoggedin" (click)="userprofile()">
+        User profile
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -25,4 +25,3 @@
 
 
 </ion-content>
-
