@@ -42,7 +42,7 @@ public abstract class AbstractLocationManager {
 	 */
 	public abstract List<Location> getLocationsAround(LatLng l, double distance, ICallback<List<Location>> locationListCallback);
 	
-	public abstract Location getLocation(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType, ICallback<Location> callback);
+	public abstract Optional<Location> getLocation(LatLng coordinates, LocationTypes locType, LocationSubTypes locSubType, ICallback<Optional<Location>> callback);
 	
 	public abstract Boolean updateLocation(Location loc, ICallback<Boolean> callback);
 	

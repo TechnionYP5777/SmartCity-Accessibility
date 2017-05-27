@@ -31,6 +31,11 @@ public class Location {
 	private LocationTypes locationType;
 	private LocationSubTypes locationSubType;
 	private String segmentId;
+	
+	public Location() {
+		reviews = new ArrayList<>();
+		this.coordinates = null;
+	}
 
 	public void setCoordinates(LatLng coordinates) {
 		this.coordinates = coordinates;
@@ -49,20 +54,15 @@ public class Location {
 	}
 
 	public List<Review> getPinnedReviews() {
-		return reviews.stream().filter(λ -> λ.isPinned()).collect(Collectors.toList());
+		return reviews.stream().filter(Review::isPinned).collect(Collectors.toList());
 	}
 
 	public List<Review> getNotPinnedReviews() {
 		return reviews.stream().filter(λ -> !λ.isPinned()).collect(Collectors.toList());
 	}
 
-	public Location() {
-		reviews = new ArrayList<>();
-		this.coordinates = null;
-	}
-
-	public void setName(String ¢) {
-		this.name = ¢;
+	public void setName(String s) {
+		this.name = s;
 	}
 
 	public String getName() {
@@ -80,17 +80,17 @@ public class Location {
 	/**
 	 * The calculation of the rating works as follows: if there are no
 	 * 
-	 * @param ¢
+	 * @param i
 	 *            - the number of reviews we want to calculate the Location's
 	 *            rating by
 	 * @return the rating of the specified location.
 	 */
-	public Score getRating(int ¢) {
-		int $ = Score.getMaxScore();
+	public Score getRating(int i) {
+		int score = Score.getMaxScore();
 		if (reviews.isEmpty())
-			return new Score($);
-		$ = (new BestReviews(¢, this)).getTotalRatingByAvg();
-		return new Score($);
+			return new Score(score);
+		score = (new BestReviews(i, this)).getTotalRatingByAvg();
+		return new Score(score);
 	}
 
 	public LatLng getCoordinates() {
@@ -105,13 +105,13 @@ public class Location {
 	 * @author ArthurSap
 	 * @throws ParseException
 	 */
-	public void addReview(Review ¢) {
-		reviews.add(¢);
+	public void addReview(Review r) {
+		reviews.add(r);
 	}
 
-	private Review getReview(Review ¢) {
+	private Review getReview(Review r) {
 		for (Review $ : reviews)
-			if ($.equals(¢))
+			if ($.equals(r))
 				return $;
 		return null;
 	}
@@ -135,24 +135,29 @@ public class Location {
 	/**
 	 * Checks whether a given review belongs to this location
 	 * 
-	 * @param ¢
+	 * @param r
 	 *            - the review to be checked
 	 * @return - the review if it exists or null otherwise
 	 */
-	private Review checkExistence(Review ¢) {
-		Review $ = getReview(¢);
-		if ($ != null)
-			return $;
+	private Review checkExistence(Review r) {
+		Review review = getReview(r);
+		if (review != null)
+			return review;
 		logger.error("This review doesn't exist in current location! {}", this.coordinates);
 		return null;
 		
 	}
 
 	@Override
-	public boolean equals(Object ¢) {
-		return ¢ == this || (¢ instanceof Location && ((Location) ¢).coordinates.equals(this.coordinates)
-				&& ((Location) ¢).locationSubType.equals(locationSubType)
-				&& ((Location) ¢).locationType.equals(locationType));
+	public boolean equals(Object o) {
+		return o instanceof Location && ((Location) o).coordinates.equals(this.coordinates)
+				&& ((Location) o).locationSubType.equals(locationSubType)
+				&& ((Location) o).locationType.equals(locationType);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Double.hashCode(coordinates.getLat())+Double.hashCode(coordinates.getLng());
 	}
 
 	public LocationTypes getLocationType() {

@@ -191,7 +191,7 @@ public class ReviewManagerTest {
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyString())).thenReturn(locMap);
 		
 		lm = Mockito.mock(AbstractLocationManager.class);
-		Mockito.when(lm.getLocation(Mockito.any(LatLng.class), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(sample);
+		Mockito.when(lm.getLocation(Mockito.any(LatLng.class), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(Optional.of(sample));
 		Mockito.when(lm.getId(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(Optional.of("ID"));
 		AbstractLocationManager.initialize(lm);
 		
