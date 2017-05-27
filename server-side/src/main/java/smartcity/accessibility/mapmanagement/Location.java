@@ -31,10 +31,12 @@ public class Location {
 	private LocationTypes locationType;
 	private LocationSubTypes locationSubType;
 	private String segmentId;
+	private int rating;
 	
 	public Location() {
 		reviews = new ArrayList<>();
 		this.coordinates = null;
+		this.rating = -1;
 	}
 
 	public void setCoordinates(LatLng coordinates) {
@@ -69,6 +71,14 @@ public class Location {
 		return this.name;
 	}
 	
+	public void setRating() {
+		this.rating = this.getTotalRating();
+	}
+	
+	public int getRating() {
+		return this.rating;
+	}
+	
 	public String getSegmentId() {
 		return segmentId;
 	}
@@ -78,8 +88,6 @@ public class Location {
 	}
 
 	/**
-	 * The calculation of the rating works as follows: if there are no
-	 * 
 	 * @param i
 	 *            - the number of reviews we want to calculate the Location's
 	 *            rating by
@@ -92,6 +100,16 @@ public class Location {
 		score = (new BestReviews(i, this)).getTotalRatingByAvg();
 		return new Score(score);
 	}
+	
+	/*
+	 * This is the method we should use to check the total rating of a location.
+	 */
+	public int getTotalRating() {
+		if (reviews.isEmpty())
+			return Score.getMaxScore();
+		return (new BestReviews(this)).getTotalRatingByAvg();
+	}
+	
 
 	public LatLng getCoordinates() {
 		return this.coordinates;

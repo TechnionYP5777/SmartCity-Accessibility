@@ -1,5 +1,6 @@
 package smartcity.accessibility.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -12,7 +13,11 @@ import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.database.AbstractUserProfileManager;
 import smartcity.accessibility.database.LocationManager;
+import smartcity.accessibility.database.ParseDatabase;
+import smartcity.accessibility.database.UserManager;
+import smartcity.accessibility.database.UserProfileManager;
 import smartcity.accessibility.mapmanagement.Location;
+import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
 @RestController
@@ -34,10 +39,24 @@ public class AdminService {
 	@RequestMapping("/mostRatedLocs")
 	@ResponseBody public List<Location> getMostRatedLocations(@RequestHeader("authToken") String token,
 															   @RequestParam("radius") Integer radius,
-															   @RequestParam("srcLat") Double srcLat,
-															   @RequestParam("srcLng") Double srcLng,
+															   @RequestParam("srcLat") String srcLat,
+															   @RequestParam("srcLng") String srcLng,
 															   @RequestParam("numOfLocs") Integer numOfLocs) {
-		LatLng src = new LatLng(srcLat, srcLng);
-		return LocationManager.instance().getTopRated(src, radius, numOfLocs, null);
+		LatLng src = new LatLng(Double.parseDouble(srcLat), Double.parseDouble(srcLng));
+//		List<Location> res = new ArrayList<Location>();
+//		Location l = (new LocationBuilder()).build();
+//		l.setCoordinates(src);
+//		l.setRating();
+//		res.add(l);
+//		return res;
+		List<Location> res = LocationManager.instance().getTopRated(src, radius, numOfLocs, null);
+		res.stream().forEach(l -> l.setRating());
+		return res;
+	}
+	
+	@RequestMapping("/numOfUsers")
+	@ResponseBody public Integer getNumOfUsers(@RequestHeader("authToken") String token) {
+		UserProfileManager up = new UserProfileManager(ParseDatabase.get());
+		return up.userCount(null);	
 	}
 }

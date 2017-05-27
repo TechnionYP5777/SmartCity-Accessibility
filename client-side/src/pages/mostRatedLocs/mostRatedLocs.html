@@ -19,10 +19,13 @@
 		<ion-item *ngFor="let loc of locations">
 			<ion-card>
 				<ion-card-title class ="cardTitle">
-					{{locations}}
+					{{loc.name}}
 				</ion-card-title>
 				<p class="cardContent">
-					  location rating
+					  The coordinates are: <br>
+					  Lat : {{loc.coordinates.lat}} <br>
+					  Lng : {{loc.coordinates.lng}} <br>
+					  The Rating is : {{loc.rating}} <br>
 				</p>
 			</ion-card>
 		</ion-item>
