@@ -17,15 +17,17 @@
 
 
 .md .button {
-	background:url('../assets/img/buttons.png');
-    font-weight: bold;
-	font-size: 20px;
-	text-align: justify;
-	font-style: italic;
-	text-color: light;
-	border-radius: 30px;
-    border: 1px solid #fff;
+  font-weight: bold;
+	font-size: 25px;
+	background-color: color($colors, secondary);
 }
+
+.scroll-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 
 ion-content {
 	background-image: url('../assets/img/background.jpg');
@@ -35,13 +37,15 @@ ion-header {
 	text-align: center;
 	background: transparent;
 	text-shadow: 3px 2px red;
-	color: danger;
-	font-family: 'Oleo Script', cursive; font-size: 80px;
+	color: color($colors, primary-text);
+	font-family: 'roboto'; font-size: 80px;
 	font-weight: normal;
 	line-height: 32px;
 	margin: 0 0 18px;
 	text-shadow: 1px 0 0 #fff;
 }
+
+
 
 .card-image {
     width: 50%;
