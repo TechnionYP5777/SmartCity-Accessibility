@@ -13,6 +13,9 @@ import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.database.AbstractUserProfileManager;
 import smartcity.accessibility.database.LocationManager;
+import smartcity.accessibility.database.ParseDatabase;
+import smartcity.accessibility.database.UserManager;
+import smartcity.accessibility.database.UserProfileManager;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.socialnetwork.UserProfile;
@@ -49,5 +52,11 @@ public class AdminService {
 		List<Location> res = LocationManager.instance().getTopRated(src, radius, numOfLocs, null);
 		res.stream().forEach(l -> l.setRating());
 		return res;
+	}
+	
+	@RequestMapping("/numOfUsers")
+	@ResponseBody public Integer getNumOfUsers(@RequestHeader("authToken") String token) {
+		UserProfileManager up = new UserProfileManager(ParseDatabase.get());
+		return up.userCount(null);	
 	}
 }
