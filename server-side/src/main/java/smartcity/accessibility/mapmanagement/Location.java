@@ -105,9 +105,8 @@ public class Location {
 	 * This is the method we should use to check the total rating of a location.
 	 */
 	public int getTotalRating() {
-		int score = Score.getMaxScore();
 		if (reviews.isEmpty())
-			return score;
+			return Score.getMaxScore();
 		return (new BestReviews(this)).getTotalRatingByAvg();
 	}
 	
