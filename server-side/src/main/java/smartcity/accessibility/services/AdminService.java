@@ -56,7 +56,6 @@ public class AdminService {
 	
 	@RequestMapping("/numOfUsers")
 	@ResponseBody public Integer getNumOfUsers(@RequestHeader("authToken") String token) {
-		UserProfileManager up = new UserProfileManager(ParseDatabase.get());
-		return up.userCount(null);	
+		return AbstractUserProfileManager.instance().userCount(null);
 	}
 }
