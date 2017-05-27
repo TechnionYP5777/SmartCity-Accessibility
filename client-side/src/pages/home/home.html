@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>
       Ionic Map
     </ion-title>
@@ -17,11 +17,11 @@
 
 <ion-content padding>
 
-   <button ion-button [navPush]="mapviewPage">Go To mapviewPage</button>
-   <button ion-button [navPush]="adminPage">Admin Page</button>
-   <button ion-button [navPush]="addReviewPage">Add Review</button>
-   <button ion-button [navPush]="showReviews">Show Review</button>
-   <button ion-button [@flip]="flipState" (click)="toggleFlip()">animation</button>
+   <button ion-button round [navPush]="mapviewPage">Go To mapviewPage</button>
+   <button ion-button round [navPush]="adminPage">Admin Page</button>
+   <button ion-button round [navPush]="addReviewPage">Add Review</button>
+   <button ion-button round [navPush]="showReviews">Show Review</button>
+   <button ion-button round [@flip]="flipState" (click)="toggleFlip()">animation</button>
 
 
 </ion-content>
