@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import { Http} from "@angular/http";
+import { Http, Headers} from "@angular/http";
 import { Constants } from "../constants";
 import 'rxjs/add/operator/map';
 
@@ -10,8 +10,11 @@ export class AddLocationService {
     }
 
 	addLocation(name, lat, lng){
+		var headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
 		var params = "name=" + name + "&srcLat=" + lat + "&srcLng=" + lng;
-		 return new Promise(resolve => {this.http.post(Constants.serverAddress +'/addLocation?', params).subscribe(data => {
+		 return new Promise(resolve => 
+		 {this.http.post(Constants.serverAddress +'/addLocation?', params,{headers: headers}).subscribe(data => {
                 if(data.status == 200){
                 	console.log('Review added successfully!')
                     resolve(true);
