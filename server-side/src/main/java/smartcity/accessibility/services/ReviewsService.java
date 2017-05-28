@@ -26,17 +26,15 @@ public class ReviewsService {
 		List<Location> lstLocation = AbstractLocationManager.instance().getLocation(new LatLng(lat, lng), null);
 		List<Review> lstReviews = new ArrayList<>();
 		
-		for(Location l : lstLocation){
+		for(Location l : lstLocation)
 			lstReviews.addAll(l.getReviews());
-		}
 		
 		//return lstReviews.toArray(null);
 		
 		Location l = new Location();
 		l.setCoordinates(new LatLng(lat, lng));
 		UserProfile u = new UserProfile("ayyy");
-		Review[] r = {new Review(l, 5, "amazing", u), new Review(l, 3, "so lame bruh", u)};
-		return r;
+		return new Review[] { new Review(l, 5, "amazing", u), new Review(l, 3, "so lame bruh", u) };
     }
 
 }
