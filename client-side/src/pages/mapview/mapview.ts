@@ -24,6 +24,7 @@ export class MapviewPage {
   map: any;
   markers : any;
   geolocation: Geolocation;
+  marker_curr_location : any;
   isLoggedin : any;
   searchQuery: any;
   loginPage = LoginPage;
@@ -157,9 +158,37 @@ loadMap(){
 			let clickMenu = this.modalCtrl.create(MapClickMenuPage,{latlng : event.latLng});
 			clickMenu.present();
 		} );
-		this.addMarker([]);
+		
+		this.trackUser();
+		
     }, (err) => {
       console.log(err);
     });	
   }
+  
+trackUser() {
+	this.geolocation.watchPosition().subscribe((position) => {
+		let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		
+		if(this.marker_curr_location != null)
+			this.marker_curr_location.setMap(null);
+		
+		this.marker_curr_location = new google.maps.Marker({
+			map: this.map,
+			position: latLng,
+			icon: 'assets/icon/curr_location.png'
+		});
+		
+		var infowindow = new google.maps.InfoWindow({
+		    content: '   you are here'
+	    });
+		
+		this.marker_curr_location.addListener('click', function() {
+            infowindow.open(this.map, this.marker_curr_location);
+        });
+		
+    }, (err) => {
+      console.log(err);
+    });	
+}  
 }
