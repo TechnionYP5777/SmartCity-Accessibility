@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.teamdev.jxmaps.LatLng;
 
+import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.database.AbstractReviewManager;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
@@ -34,7 +35,12 @@ public class AddReviewService {
 		
 		
 		Location l = new Location();
-		l.setCoordinates(new LatLng(lat, lng));
+		LatLng coordinates = new LatLng(lat, lng);
+		l.setCoordinates(coordinates);
+		
+		if(AbstractLocationManager.instance().getLocation(coordinates, null) == null)
+			AbstractLocationManager.instance().uploadLocation(l, null);
+		
 		
 		Review r = new Review(l, Integer.parseInt(score), review, u.getProfile());
 		
