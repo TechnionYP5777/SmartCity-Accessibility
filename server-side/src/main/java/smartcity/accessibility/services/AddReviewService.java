@@ -50,7 +50,7 @@ public class AddReviewService {
     }
 	
 	//TODO null exception?
-	private User getUserFromToken(String token){
+	public static User getUserFromToken(String token){
 		UserInfo userInfo = null;
 		try {
 			userInfo = Application.tokenToSession.get(token);

@@ -18,6 +18,7 @@ export class GetReviewsPage {
   loading : any;
   service : any;
   isLoggedin : any;
+  token : any;
   
   constructor(public navCtrl: NavController,
    public navParams: NavParams,
@@ -27,6 +28,7 @@ export class GetReviewsPage {
    public loginService : LoginService,
    public alertCtrl: AlertController) {
    
+    this.token = window.sessionStorage.getItem('token');
 	this.lat = 35.2;//navParams.get('lat');
 	this.lng = 34.2;//navParams.get('lng');
 	this.service = getreviewsservice;

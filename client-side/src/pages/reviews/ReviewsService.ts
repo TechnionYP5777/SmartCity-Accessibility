@@ -20,9 +20,21 @@ export class GetReviewsService {
   }
   
   changeRevLikes(rev, like){
+  
+  	try{
+		var token = JSON.parse(window.sessionStorage.getItem('token')).token;
+	}
+	catch(err){
+		token = "no token";
+	}
+	
   	var params = "lat=" + rev.location.coordinates.lat + "&lng=" + rev.location.coordinates.lng + "&type=" + rev.location.locationType + "&subtype=" + rev.location.locationSubType + "&username=" + rev.user.username + "&likes=" + like;
   	
-  	this.http.post(Constants.serverAddress +'/reviews?', params);
+  	var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers.append('authToken',token);
+    
+  	this.http.post(Constants.serverAddress +'/reviews?', params, {headers: headers});
   }
 
 }
