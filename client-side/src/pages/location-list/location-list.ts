@@ -34,7 +34,7 @@ export class LocationListPage {
 	cc(locationn){
 		this.youChose = "you chose: " + locationn.name +" at: " + locationn.coordinates.lat + ", " + locationn.coordinates.lng;
 		this.viewCtrl.dismiss();
-		let clickMenu = this.modalCtrl.create(GetReviewsPage);
+		let clickMenu = this.modalCtrl.create(GetReviewsPage, {lat:this.lat,lng:this.lng});
 		clickMenu.present();
 	}
 	
