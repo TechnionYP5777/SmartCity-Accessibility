@@ -20,14 +20,18 @@ public class AddLocationService {
 	@RequestMapping(value = "/addLocation", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public void getLocationsInRadius(@RequestParam("name") String name, @RequestParam("srcLat") Double srcLat,
-			@RequestParam("srcLng") Double srcLng) {
+			@RequestParam("srcLng") Double srcLng, @RequestParam("type") String sstype) {
 		
-		String stype = "Cafe"; 
+		String stype = Capitilize(sstype); 
 		Location.LocationSubTypes subtype = Location.LocationSubTypes.valueOf(stype);
 		Location.LocationTypes type = subtype.getParentype();
 		
 		Location dummy = new LocationBuilder().setCoordinates(new LatLng(srcLat, srcLng)).setName(name)
 				.setType(type).setSubType(subtype).build();
 		AbstractLocationManager.instance().uploadLocation(dummy, s -> {});
+	}
+
+	private String Capitilize(String sstype) {
+		return sstype.substring(0, 1).toUpperCase() + sstype.substring(1);
 	}
 }

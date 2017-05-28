@@ -9,10 +9,10 @@ export class AddLocationService {
         this.http = http;
     }
 
-	addLocation(name, lat, lng){
+	addLocation(name, lat, lng, type){
 		var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-		var params = "name=" + name + "&srcLat=" + lat + "&srcLng=" + lng;
+		var params = "name=" + name + "&srcLat=" + lat + "&srcLng=" + lng + "&type=" + type;
 		 return new Promise(resolve => 
 		 {this.http.post(Constants.serverAddress +'/addLocation?', params,{headers: headers}).subscribe(data => {
                 if(data.status == 200){

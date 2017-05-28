@@ -24,7 +24,7 @@ export class AddLocationPage {
   
   addToDataBase(){
 		this.omg = this.type;
-		this.addLocationService.addLocation(this.name, this.lat, this.lng);
+		this.addLocationService.addLocation(this.name, this.lat, this.lng, this.type);
   }
 
   ionViewDidLoad() {
