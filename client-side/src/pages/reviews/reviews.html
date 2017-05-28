@@ -2,10 +2,11 @@
 
   <ion-navbar>
     <ion-title>Showing reviews of ({{lat}},{{lng}})</ion-title> 
-    <ion-buttons>
-    	<button (click)="openAddReview()">Add a review to ({{lat}},{{lng}})</button>   
-    </ion-buttons>
   </ion-navbar>
+  
+    <ion-buttons end>
+    	<button ion-button round *ngIf="isLoggedin" (click)="openAddReview()">Add a review to ({{lat}},{{lng}})</button>   
+    </ion-buttons>
   
 </ion-header>
 
