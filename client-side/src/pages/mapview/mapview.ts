@@ -30,7 +30,7 @@ export class MapviewPage {
   adminPage = AdminPage;
   complexSearchPage = ComplexSearchPage;
   output :  any;
-  route : any;
+  navigateMarkers : any;
 
   constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService, public searchService : SearchService, public events: Events) {
 	    this.isLoggedin = this.loginService.isLoggedIn();
@@ -101,20 +101,35 @@ export class MapviewPage {
   
 	subscribeToNavigation(){
 		this.events.subscribe('navigation:done', (navigationResults,loading) => {
-			if(this.route != null)
-				this.route.setMap(null);
-			this.route = new google.maps.Polyline({
+			if(this.navigateMarkers != null){
+				this.navigateMarkers[0].setMap(null);
+				this.navigateMarkers[1].setMap(null);
+				this.navigateMarkers[2].setMap(null);
+			}
+			var route = new google.maps.Polyline({
 			    path: navigationResults.latlng,
 			    geodesic: true,
 			    strokeColor: '#FF0000',
 			    strokeOpacity: 1.0,
 			    strokeWeight: 2
 			});
-			google.maps.event.addListener(this.route,'click',(event)=>{ 
+            var start_marker = new google.maps.Marker({
+                position: navigationResults.latlng[0],
+                map: this.map,
+				icon: 'assets/icon/start.png'
+            });
+			var len = navigationResults.latlng.length;
+			var end_marker = new google.maps.Marker({
+                position: navigationResults.latlng[len-1],
+                map: this.map,
+				icon: 'assets/icon/end.png'
+            });
+			route.setMap(this.map);
+			this.navigateMarkers = [route, start_marker, end_marker];
+			google.maps.event.addListener(route,'click',(event)=>{ 
 				let clickMenu = this.modalCtrl.create(navigationManeuverPage,navigationResults);
 				clickMenu.present();
 			});
-			this.route.setMap(this.map);
 			loading.dismiss();
 		});
 	}
