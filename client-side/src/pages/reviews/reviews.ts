@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
-import {LoadingController, NavController, NavParams} from 'ionic-angular';
+import {LoadingController, NavController, NavParams, AlertController} from 'ionic-angular';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {GetReviewsService} from './ReviewsService';
+import { LoginService } from '../login/LoginService';
 
 @Component({
   selector: 'page-get-reviews',
@@ -15,15 +16,20 @@ export class GetReviewsPage {
   revs : any;
   loading : any;
   service : any;
+  isLoggedin : any;
   
   constructor(public navCtrl: NavController,
    public navParams: NavParams,
    public http: Http,
    public loadingController: LoadingController,
-   public getreviewsservice: GetReviewsService) {
+   public getreviewsservice: GetReviewsService,
+   public loginService : LoginService,
+   public alertCtrl: AlertController) {
+   
 	this.lat = 35.2;//navParams.get('lat');
 	this.lng = 34.2;//navParams.get('lng');
 	this.service = getreviewsservice;
+	this.isLoggedin = this.loginService.isLoggedIn();
   }
   
 
@@ -45,5 +51,34 @@ export class GetReviewsPage {
     });
     
   }
+  
+  like(e, rev){
+  	if(this.isLoggedin == true){
+  		rev.upvotes++;
+  		this.service.changeRevLikes(rev, 1);
+  	}
+  	else{
+  		this.presentAlert();
+  	}
+  }
+  
+  dislike(e, rev){
+  	if(this.isLoggedin == true){
+  		rev.downvotes++;
+  		this.service.changeRevLikes(rev, -1);
+  	}
+  	else{
+  		this.presentAlert();
+  	}
+  }
+  
+  presentAlert() {
+		let alert = this.alertCtrl.create({
+		  title: 'Error',
+		  subTitle: 'Please login to do that!',
+		  buttons: ['OK']
+		});
+		alert.present();
+	}
 
 }

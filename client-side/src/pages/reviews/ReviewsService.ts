@@ -9,8 +9,6 @@ import { Constants } from "../constants";
 @Injectable()
 export class GetReviewsService {
 
-  revs : any;
-
   constructor(public http: Http) {
   	this.http = http;
     console.log('Hello GetReviewsService Provider');
@@ -19,7 +17,12 @@ export class GetReviewsService {
   showMeStuff(lat, lng){
 	var params = "lat=" + lat + "&lng=" + lng;
 	return this.http.get(Constants.serverAddress +'/reviews?'+params);
-    //return this.revs;
+  }
+  
+  changeRevLikes(rev, like){
+  	var params = "lat=" + rev.location.coordinates.lat + "&lng=" + rev.location.coordinates.lng + "&type=" + rev.location.locationType + "&subtype=" + rev.location.locationSubType + "&username=" + rev.user.username + "&likes=" + like;
+  	
+  	this.http.post(Constants.serverAddress +'/reviews?', params);
   }
 
 }
