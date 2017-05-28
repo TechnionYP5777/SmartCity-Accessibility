@@ -21,5 +21,9 @@ export class GetReviewsService {
 	return this.http.get(Constants.serverAddress +'/reviews?'+params);
     //return this.revs;
   }
+  
+  changeRevLikes(rev, like){
+  	
+  }
 
 }
