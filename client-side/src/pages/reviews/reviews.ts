@@ -29,8 +29,8 @@ export class GetReviewsPage {
    public alertCtrl: AlertController) {
    
     this.token = window.sessionStorage.getItem('token');
-	this.lat = 35.2;//navParams.get('lat');
-	this.lng = 34.2;//navParams.get('lng');
+	this.lat = navParams.get('lat');//35.2;
+	this.lng = navParams.get('lng');//34.2;
 	this.service = getreviewsservice;
 	this.isLoggedin = this.loginService.isLoggedIn();
   }
