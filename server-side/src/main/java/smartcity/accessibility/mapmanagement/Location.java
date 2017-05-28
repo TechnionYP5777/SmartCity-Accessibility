@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
+import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.socialnetwork.BestReviews;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.Score;
@@ -204,6 +205,15 @@ public class Location {
 			}
 				return null;
 		}
+		
+		public LocationTypes getParentype(){
+			for (LocationTypes lt : LocationTypes.values()) {
+				if(lt.subTypes.contains(this)){
+					return lt;
+				}
+			} 
+			return null;
+		}
 	}
 
 	public enum LocationTypes {
@@ -217,11 +227,10 @@ public class Location {
 				subTypes.add(st);
 		}
 		
-		
-
 		public List<LocationSubTypes> getSubTypes() {
 			return Collections.unmodifiableList(subTypes);
 		}
+		
 	}
 
 }

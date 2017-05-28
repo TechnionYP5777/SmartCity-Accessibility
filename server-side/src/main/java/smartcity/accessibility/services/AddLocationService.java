@@ -21,8 +21,13 @@ public class AddLocationService {
 	@ResponseBody
 	public void getLocationsInRadius(@RequestParam("name") String name, @RequestParam("srcLat") Double srcLat,
 			@RequestParam("srcLng") Double srcLng) {
+		
+		String stype = "Cafe"; 
+		Location.LocationSubTypes subtype = Location.LocationSubTypes.valueOf(stype);
+		Location.LocationTypes type = subtype.getParentype();
+		
 		Location dummy = new LocationBuilder().setCoordinates(new LatLng(srcLat, srcLng)).setName(name)
-				.setType(LocationTypes.Coordinate).setSubType(LocationSubTypes.Default).build();
+				.setType(type).setSubType(subtype).build();
 		AbstractLocationManager.instance().uploadLocation(dummy, s -> {});
 	}
 }
