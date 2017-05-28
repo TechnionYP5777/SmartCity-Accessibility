@@ -4,6 +4,7 @@ import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {GetReviewsService} from './ReviewsService';
 import { LoginService } from '../login/LoginService';
+import {AddReviewPage} from '../add-review/add-review';
 
 @Component({
   selector: 'page-get-reviews',
@@ -79,6 +80,10 @@ export class GetReviewsPage {
 		  buttons: ['OK']
 		});
 		alert.present();
+	}
+	
+	openAddReview(){
+		this.navCtrl.push(AddReviewPage, {lat : this.lat, lng : this.lng});
 	}
 
 }

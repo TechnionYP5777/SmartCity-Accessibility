@@ -1,7 +1,10 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Showing reviews of ({{lat}},{{lng}})</ion-title>    
+    <ion-title>Showing reviews of ({{lat}},{{lng}})</ion-title> 
+    <ion-buttons end>
+    	<button (click)="openAddReview()">Add a review to ({{lat}},{{lng}})</button>   
+    </ion-buttons>
   </ion-navbar>
   
 </ion-header>
