@@ -5,15 +5,21 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+  <ion-navbar color="dark" hideBackButton="true">
+    <ion-buttons left>
+  	  <button ion-button menuToggle>
+  		    <ion-icon name="menu"></ion-icon>
+  	  </button>
+    </ion-buttons>
+    <ion-title>
+      Login
+    </ion-title>
 
-  <ion-navbar>
-    <ion-title>login</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding class="login">  
+<ion-content padding class="login">
 	<ion-list>
         <ion-item>
           <ion-label floating>Username</ion-label>
