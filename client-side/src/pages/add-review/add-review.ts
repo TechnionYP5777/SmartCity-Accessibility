@@ -35,7 +35,7 @@ export class AddReviewPage {
   addreview(rev) {
   	 this.addreviewservice.addreview(rev, this.lat, this.lng).then(data => {
   	 	if(data) {
-  	 		this.navCtrl.setRoot(HomePage);
+  	 		this.navCtrl.pop();
   	 	}
   	 });
      console.log(rev.review);

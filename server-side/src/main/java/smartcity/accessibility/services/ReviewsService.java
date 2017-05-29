@@ -22,7 +22,6 @@ import smartcity.accessibility.services.exceptions.UserDoesNotExistException;
 import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
 import smartcity.accessibility.socialnetwork.Review;
 import smartcity.accessibility.socialnetwork.User;
-import smartcity.accessibility.socialnetwork.UserProfile;
 
 @RestController
 public class ReviewsService {
@@ -38,13 +37,12 @@ public class ReviewsService {
 		for(Location l : lstLocation)
 			lstReviews.addAll(l.getReviews());
 		
-		//TODO change when deployable
-		//return lstReviews.toArray(null);
+		return lstReviews.toArray(new Review[0]);
 		
-		Location l = new Location();
-		l.setCoordinates(new LatLng(lat, lng));
-		UserProfile u = new UserProfile("ayyy");
-		return new Review[] { new Review(l, 5, "amazing", u), new Review(l, 3, "so lame bruh", u) };
+//		Location l = new Location();
+//		l.setCoordinates(new LatLng(lat, lng));
+//		UserProfile u = new UserProfile("ayyy");
+//		return new Review[] { new Review(l, 5, "amazing", u), new Review(l, 3, "so lame bruh", u) };
     }
 	
 	@RequestMapping(value = "/reviews", method = RequestMethod.POST, produces = "application/json")
