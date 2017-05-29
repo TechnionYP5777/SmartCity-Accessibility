@@ -6,7 +6,6 @@ import { AdminPage } from '../pages/admin/admin';
 import { LoginService } from '../pages/login/LoginService';
 import { UserPagePage } from '../pages/user-page/user-page';
 import { LoginPage } from '../pages/login/login';
-import { HomePage } from '../pages/home/home';
 import { AlertController,Events } from 'ionic-angular';
 import { MapviewPage } from '../pages/mapview/mapview';
 
@@ -16,7 +15,7 @@ import { MapviewPage } from '../pages/mapview/mapview';
 })
 export class MyApp {
 	@ViewChild(Nav) nav: Nav;
-    rootPage:any = HomePage;
+    rootPage:any = MapviewPage;
 
     isLoggedin : any;
 	isAdmin : any;
@@ -45,7 +44,9 @@ export class MyApp {
 	}
 
 	loginPage(){
-		this.nav.push(LoginPage);
+    if(!(this.nav.getActive().instance instanceof LoginPage)){
+		  this.nav.push(LoginPage);
+    }
 	}
 
   mapPage(){

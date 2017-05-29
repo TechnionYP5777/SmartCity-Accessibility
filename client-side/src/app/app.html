@@ -10,7 +10,7 @@
     </ion-list-header>
   <ion-list>
     <ion-buttons>
-      <button ion-button menuClose (click)="mapPage()">
+      <button ion-button round menuClose (click)="mapPage()">
         <ion-icon name="map"></ion-icon>
         map
       </button>
@@ -18,19 +18,19 @@
     <ion-item-divider>My Account</ion-item-divider>
 
     <ion-buttons>
-      <button ion-button menuClose *ngIf="!isLoggedin" (click)="loginPage()">
+      <button ion-button round menuClose *ngIf="!isLoggedin" (click)="loginPage()">
         <ion-icon name="log-in"></ion-icon>
         login
       </button>
-      <button ion-button menuClose *ngIf="isLoggedin && !isAdmin" (click)="userprofile()">
+      <button ion-button round menuClose *ngIf="isLoggedin && !isAdmin" (click)="userprofile()">
         <ion-icon name="person"></ion-icon>
         user profile
       </button>
-      <button ion-button menuClose *ngIf="isAdmin" (click)="admin()">
+      <button ion-button round menuClose *ngIf="isAdmin" (click)="admin()">
         <ion-icon name="person"></ion-icon>
         Admin
       </button>
-      <button ion-button menuClose *ngIf="isLoggedin" (click)="logout()">
+      <button ion-button round menuClose *ngIf="isLoggedin" (click)="logout()">
         <ion-icon name="log-out"></ion-icon>
         logout
       </button>
