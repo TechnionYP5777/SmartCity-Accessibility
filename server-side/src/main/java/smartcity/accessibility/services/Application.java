@@ -31,7 +31,7 @@ public class Application {
 	
 	public static final LoadingCache<String, UserInfo> tokenToSession = resetSessions();
 	public static final ExtendedMapView mapView = JxMapsFunctionality.getMapView();
-	public static final long expirationLoginTime = 30;
+	public static final long expirationLoginTime = 3;
 	
 	public static void main(String[] args) {
 		Injector injector = Guice.createInjector(new DatabaseModule());

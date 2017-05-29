@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController,Events } from 'ionic-angular';
 import { LoginService } from './LoginService';
 import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
@@ -15,11 +15,13 @@ export class LoginPage {
 		 password: ''
 	};
  
-    constructor(public navCtrl: NavController, public loginservice: LoginService) {}
+    constructor(public navCtrl: NavController, public loginservice: LoginService, public events: Events) {}
   
     login(user) {
         this.loginservice.login(user).then(data => {
             if(data) {
+				setTimeout(() => { this.events.publish('login:updateState'); }, this.loginservice.timeout());
+				this.events.publish('login:updateState');
                 this.navCtrl.setRoot(HomePage);
             } 
 		});

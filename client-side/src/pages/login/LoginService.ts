@@ -38,6 +38,14 @@ export class LoginService {
         return (Date.parse(currDate.toISOString()) < expirationDate);
 	}
     
+	timeout(){
+        var token = JSON.parse(window.sessionStorage.getItem('token'));
+		if(token == null)
+			return;
+        var expirationDate = token.expirationDate;
+		return expirationDate - Date.parse(new Date().toISOString());
+	}
+	
     destroyUserCredentials() {
         this.isLogin = false;
         this.token = null;

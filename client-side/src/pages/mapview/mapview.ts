@@ -1,15 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController,ModalController, Events,AlertController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import { MapClickMenuPage } from '../mapclickmenu/mapclickmenu';
-import { LoginService } from '../login/LoginService';
-import { UserPagePage } from '../user-page/user-page'; 
-import { LoginPage } from '../login/login';
+import { MapClickMenuPage } from '../mapclickmenu/mapclickmenu'; 
 import { ComplexSearchPage } from '../complex-search/complex-search';
-import { AdminPage } from '../admin/admin'; 
 import { SearchService } from './searchService';
 import { navigationManeuverPage } from '../navigation_maneuver/navigation_maneuver';
-import { Constants } from "../constants";
 
 declare var google;  
  
@@ -25,16 +20,12 @@ export class MapviewPage {
   markers : any;
   geolocation: Geolocation;
   marker_curr_location : any;
-  isLoggedin : any;
   searchQuery: any;
-  loginPage = LoginPage;
-  adminPage = AdminPage;
   complexSearchPage = ComplexSearchPage;
   output :  any;
   navigateMarkers : any;
 
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController,public loginService : LoginService, public searchService : SearchService, public events: Events) {
-	    this.isLoggedin = this.loginService.isLoggedIn();
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController, public searchService : SearchService, public events: Events) {
 		this.output = "";
 		this.subscribeToNavigation();
 		this.markers = [];
@@ -83,22 +74,6 @@ export class MapviewPage {
 			});
 	
 	}
-		
-	userprofile(){
-		this.isLoggedin = this.loginService.isLoggedIn();
-		if(!this.isLoggedin)
-			this.presentAlert(Constants.userExpiredMessage);
-		else {
-			var token = JSON.parse(window.sessionStorage.getItem('token'));	
-		    if(token.admin == true)
-				this.navCtrl.push(this.adminPage);
-			else this.navCtrl.push(UserPagePage);
-		}
-	}
-	
-	ionViewDidEnter(){
-	    this.isLoggedin = this.loginService.isLoggedIn();
-    }
   
 	subscribeToNavigation(){
 		this.events.subscribe('navigation:done', (navigationResults,loading) => {
@@ -180,7 +155,7 @@ trackUser() {
 		});
 		
 		var infowindow = new google.maps.InfoWindow({
-		    content: '   you are here'
+		    content: 'you are here'
 	    });
 		
 		this.marker_curr_location.addListener('click', function() {

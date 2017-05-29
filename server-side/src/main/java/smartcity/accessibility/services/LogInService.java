@@ -50,6 +50,12 @@ public class LogInService {
 		return t;
 	}
 
+	@RequestMapping(value = "/logout", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public void logout(@RequestHeader("authToken") String token) {
+			Application.tokenToSession.invalidate(token);
+	}
+
 	static UserInfo getUserInfo(String token) {
 		UserInfo userInfo = null;
 		try {
