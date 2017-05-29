@@ -16,10 +16,11 @@
 // automatically applied to the <body> element in the app.
 
 
-.md .button {
+.button {
   font-weight: bold;
-	font-size: 25px;
-	background-color: color($colors, secondary);
+	font-size: 22px;
+	background-color: color($colors, accent);
+  width: 90%;
 }
 
 .scroll-content {
@@ -28,9 +29,17 @@
 	align-items: center;
 }
 
+.title.title-md {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
 
 ion-content {
-	background-image: url('../assets/img/background.jpg');
+	/*background-image: url('../assets/img/background.jpg');*/
 }
 
 ion-header {
