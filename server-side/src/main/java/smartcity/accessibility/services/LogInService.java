@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
-import smartcity.accessibility.navigation.mapquestcommunication.Latlng;
 import smartcity.accessibility.services.exceptions.SignUpFailed;
 import smartcity.accessibility.services.exceptions.UserDoesNotExistException;
 import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
@@ -49,12 +48,6 @@ public class LogInService {
 		Token t = Token.calcToken(u);
 		Application.tokenToSession.put(t.getToken(), new UserInfo(u));
 		return t;
-	}
-
-	@RequestMapping(value = "/array", method = RequestMethod.POST, produces = "application/json")
-	@ResponseBody
-	public Integer getArray(@RequestBody Latlng[] arr) {
-		return arr.length;
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.POST, produces = "application/json")
