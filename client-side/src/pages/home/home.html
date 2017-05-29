@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-navbar color="dark">
     <ion-buttons left>
   	  <button ion-button menuToggle>
   		    <ion-icon name="menu"></ion-icon>
@@ -14,11 +14,30 @@
 
 
 <ion-content padding>
+  <ion-list>
 
-   <button ion-button round [navPush]="mapviewPage">Go To mapviewPage</button>
-   <button ion-button round [navPush]="addReviewPage">Add Review</button>
-   <button ion-button round [navPush]="showReviews">Show Review</button>
-   <button ion-button round [@flip]="flipState" (click)="toggleFlip()">animation</button>
-
+    <ion-card>
+      <ion-card-header>
+        Hello friend!
+      </ion-card-header>
+      <ion-card-content>
+    		  Welcome to your life.
+          <button ion-button round [navPush]="mapviewPage">Go To mapviewPage</button>
+          <button ion-button round [navPush]="addReviewPage">Add Review</button>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title>
+          Hello friend!
+        </ion-card-title>
+        <ion-card-title>
+          Welcome to your life.
+        </ion-card-title>
+        <button ion-button round [navPush]="showReviews">Show Review</button>
+        <button ion-button round [@flip]="flipState" (click)="toggleFlip()">animation</button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 
 </ion-content>

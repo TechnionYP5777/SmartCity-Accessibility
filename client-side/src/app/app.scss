@@ -20,7 +20,11 @@
   font-weight: bold;
 	font-size: 22px;
 	background-color: color($colors, accent);
-  width: 90%;
+  width: 100%;
+}
+
+.button:hover  {
+  background-color: color($colors, danger) !important;
 }
 
 .scroll-content {
@@ -38,8 +42,30 @@
     text-align: center;
 }
 
+ion-card-header {
+  font-size: 36px;
+  color: color($colors, primary-text) !important;
+}
+
+ion-card-title {
+  font-size: 26px;
+  color: color($colors, primary-text) !important;
+}
+
+ion-card {
+  background-color: color($colors, primary) !important;
+  color: color($colors, primary-text);
+  text-align: center;
+  font-size: 22px;
+}
+
+ion-item {
+  background-color: transparent;
+}
+
 ion-content {
 	/*background-image: url('../assets/img/background.jpg');*/
+  background-color: color($colors, light) !important;
 }
 
 ion-header {
