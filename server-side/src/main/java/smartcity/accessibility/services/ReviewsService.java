@@ -17,7 +17,7 @@ import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
-//import smartcity.accessibility.services.exceptions.LocationDoesNotExistException;
+import smartcity.accessibility.services.exceptions.LocationDoesNotExistException;
 import smartcity.accessibility.services.exceptions.UserDoesNotExistException;
 import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
 import smartcity.accessibility.socialnetwork.Review;
@@ -68,8 +68,8 @@ public class ReviewsService {
 				LocationSubTypes.valueOf(subtype),
 				null).orElse(null);
 		
-		//if(loc == null)
-		//	throw new LocationDoesNotExistException();
+		if(loc == null)
+			throw new LocationDoesNotExistException();
 		
 		//TODO ask Alex if it is enough to do this in order to up/downvote a review
 		for(Review r :loc.getReviews())
