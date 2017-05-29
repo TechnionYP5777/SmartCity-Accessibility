@@ -18,7 +18,7 @@
 
 .button {
   font-weight: bold;
-	font-size: 22px;
+	font-size: 20px;
 	background-color: color($colors, accent);
   width: 95%;
 }
@@ -84,6 +84,10 @@ ion-header {
 	text-shadow: 1px 0 0 #fff;
 }
 
+ion-icon {
+  margin-right: 10px;
+}
+
 ion-buttons {
   text-align: center;
 }
@@ -95,6 +99,11 @@ ion-navbar {
 ion-item {
   padding: 0px;
   margin: 0px;
+}
+
+ion-item-divider {
+  text-align: center;
+  font-size: 20px !important;
 }
 
 
