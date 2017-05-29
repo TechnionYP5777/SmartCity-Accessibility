@@ -5,7 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-navbar color="dark">
     <ion-buttons left>
   	  <button ion-button menuToggle>
   		    <ion-icon name="menu"></ion-icon>
@@ -28,8 +28,10 @@
     <div class="col">
       {{output}}
     </div>
+    <ion-buttons>
+      <button ion-button round (click)="callToComplexSearch()" class="buttons">Advanced Search</button>
+    </ion-buttons>
 
-    <button ion-button round (click)="callToComplexSearch()" class="buttons">Advanced Search</button>
 
   <div #map id="map" data-tap-disabled="true"></div>
 

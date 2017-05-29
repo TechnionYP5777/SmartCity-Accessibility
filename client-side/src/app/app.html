@@ -1,26 +1,29 @@
 <ion-menu [content]="user" persistent=true>
-        <ion-content>
-			<ion-list>
-			    <ion-list-header>
-					Menu
-				 </ion-list-header>
-				<button ion-item menuClose *ngIf="!isLoggedin" (click)="loginPage()">
-				    <ion-icon name="person"></ion-icon>
-					login
-			    </button>
-			    <button ion-item menuClose *ngIf="isLoggedin && !isAdmin" (click)="userprofile()">
-				    <ion-icon name="person"></ion-icon>
-					user profile
-			    </button>
-				<button ion-item menuClose *ngIf="isAdmin" (click)="admin()">
-				    <ion-icon name="person"></ion-icon>
-					Admin
-			    </button>
-				<button ion-item menuClose *ngIf="isLoggedin" (click)="logout()">
-				    <ion-icon name="person"></ion-icon>
-					logout
-			    </button>
-			</ion-list>
-        </ion-content>
+  <ion-header >
+    <ion-toolbar color="dark">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-list background-color="primary">
+    <ion-list-header>
+      Menu
+    </ion-list-header>
+    <button ion-button menuClose *ngIf="!isLoggedin" (click)="loginPage()">
+      <ion-icon name="person"></ion-icon>
+      login
+    </button>
+    <button ion-button menuClose *ngIf="isLoggedin && !isAdmin" (click)="userprofile()">
+      <ion-icon name="person"></ion-icon>
+      user profile
+    </button>
+    <button ion-button menuClose *ngIf="isAdmin" (click)="admin()">
+      <ion-icon name="person"></ion-icon>
+      Admin
+    </button>
+    <button ion-button menuClose *ngIf="isLoggedin" (click)="logout()">
+      <ion-icon name="person"></ion-icon>
+      logout
+    </button>
+  </ion-list>
 </ion-menu>
 <ion-nav #user [root]="rootPage"></ion-nav>
