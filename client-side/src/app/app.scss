@@ -59,8 +59,13 @@ ion-card-title {
 ion-card {
   background-color: color($colors, primary) !important;
   color: color($colors, primary-text);
+  padding: 5px;
   text-align: center;
   font-size: 22px;
+}
+
+ion-list {
+  text-align: center;
 }
 
 ion-item {
