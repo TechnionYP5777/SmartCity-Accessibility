@@ -20,11 +20,11 @@
     <ion-buttons>
       <button ion-button round menuClose *ngIf="!isLoggedin" (click)="loginPage()">
         <ion-icon name="log-in"></ion-icon>
-        login
+        Login
       </button>
       <button ion-button round menuClose *ngIf="isLoggedin && !isAdmin" (click)="userprofile()">
         <ion-icon name="person"></ion-icon>
-        user profile
+        User Profile
       </button>
       <button ion-button round menuClose *ngIf="isAdmin" (click)="admin()">
         <ion-icon name="person-stalker"></ion-icon>
@@ -32,7 +32,7 @@
       </button>
       <button ion-button round menuClose *ngIf="isLoggedin" (click)="logout()">
         <ion-icon name="log-out"></ion-icon>
-        logout
+        Logout
       </button>
     </ion-buttons>
   </ion-list>
