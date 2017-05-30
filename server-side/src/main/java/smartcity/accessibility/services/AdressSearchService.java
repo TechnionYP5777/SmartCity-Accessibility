@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
@@ -22,8 +23,8 @@ public class AdressSearchService {
     public Location searchService(@PathVariable("search") String search) {	
 		
 		try {
-			SearchQuery $ = SearchQuery.adressSearch(search);
-			ExtendedMapView mapView = Application.mapView;
+			ExtendedMapView mapView = JxMapsFunctionality.getMapView();
+			SearchQuery $ = SearchQuery.adressSearch(search, mapView);
 	        SearchQueryResult sqr1 = $.SearchByAddress(mapView);
 	        $.waitOnSearch();
 	        Location location2 = sqr1.getLocations().get(0);

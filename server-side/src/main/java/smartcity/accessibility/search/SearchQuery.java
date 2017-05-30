@@ -29,6 +29,7 @@ import smartcity.accessibility.mapmanagement.LocationBuilder;
  */
 public class SearchQuery {
 	private static final String DefaultQueryName = null;
+	private MapView mapview;
 	public List<Location> places; // the nearby places result
 	public enum SearchStage {
 		NotRunning, Running, Done, Failed;
@@ -49,10 +50,11 @@ public class SearchQuery {
 	boolean isAdress;
 	final AtomicInteger searchStatus;
 
-	protected SearchQuery(String parsedQuery) {
+	protected SearchQuery(String parsedQuery, MapView mapview) {
 		setQueryParts(parsedQuery);
 		searchStatus = new AtomicInteger();
 		SetSearchStatus(SearchStage.NotRunning);
+		this.mapview = mapview;
 	}
 
 	private void setQueryParts(String parsedQuery) {
@@ -80,16 +82,16 @@ public class SearchQuery {
 		return this.queryString;
 	}
 	
-	public static SearchQuery adressSearch(String adress) throws illigalString {
+	public static SearchQuery adressSearch(String adress, MapView mapview) throws illigalString {
 		if(adress.contains(thisIsTheStringSplitter))
 			throw new illigalString();
-		return new SearchQuery(Boolean.toString(true) + thisIsTheStringSplitter + adress + thisIsTheStringSplitter + DefaultQueryName);
+		return new SearchQuery(Boolean.toString(true) + thisIsTheStringSplitter + adress + thisIsTheStringSplitter + DefaultQueryName, mapview);
 	}
 
-	public static SearchQuery TypeSearch(String Type) throws illigalString {
+	public static SearchQuery TypeSearch(String Type, MapView mapview) throws illigalString {
 		if(Type.contains(thisIsTheStringSplitter))
 			throw new illigalString();
-		return new SearchQuery(Boolean.toString(false) + thisIsTheStringSplitter + Type + thisIsTheStringSplitter + DefaultQueryName);
+		return new SearchQuery(Boolean.toString(false) + thisIsTheStringSplitter + Type + thisIsTheStringSplitter + DefaultQueryName, mapview);
 	}
 
 	protected void SetSearchStatus(SearchStage ¢) {
@@ -114,10 +116,9 @@ public class SearchQuery {
 	}
 
 	protected SearchQueryResult Search(String initLocation, double radius) throws illigalString, InterruptedException {
-		MapView mapView1 = JxMapsFunctionality.getMapView();
-        SearchQuery s1 = adressSearch(initLocation);        
-        JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView1);        
-        SearchQueryResult sqr1= s1.SearchByAddress(mapView1);        
+        SearchQuery s1 = adressSearch(initLocation, this.mapview);        
+        JxMapsFunctionality.waitForMapReady((ExtendedMapView) this.mapview);        
+        SearchQueryResult sqr1= s1.SearchByAddress(this.mapview);        
 		s1.waitOnSearch();     
 		return isAdress ? null : typeSearch(sqr1.getLocations().get(0), radius);
 	}
@@ -135,9 +136,9 @@ public class SearchQuery {
 		}
 		MapViewOptions options = new MapViewOptions();
 		options.importPlaces();
-		MapView mapView = JxMapsFunctionality.getMapView();
-		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
-		NearbyPlacesSearch.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations,
+		//MapView mapView = JxMapsFunctionality.getMapView();
+		JxMapsFunctionality.waitForMapReady((ExtendedMapView) this.mapview);
+		NearbyPlacesSearch.findNearbyPlaces(this.mapview, initLocation, radius, kindsOfLocations,
 				 ¢-> {
 						places = ¢;
 						SetSearchStatus(SearchStage.Done);
@@ -209,7 +210,8 @@ public class SearchQuery {
 	}
 
 	public static SearchQuery toQuery(String ¢) {
-		return new SearchQuery(¢);
+		MapView mapView1 = null;
+		return new SearchQuery(¢, mapView1);
 	}
 
 	public static String QueriesList2String(List<SearchQuery> qs) {
@@ -233,7 +235,8 @@ public class SearchQuery {
 	
 	public static SearchQuery makeDummy(String dummyName){
 		String dummyString = Boolean.toString(false) + thisIsTheStringSplitter + "dummdumm" + thisIsTheStringSplitter + "dummdumm";
-		return (new SearchQuery(dummyString)).RenameSearchQuery(dummyName);
+		MapView mapView1 = null;
+		return (new SearchQuery(dummyString, mapView1)).RenameSearchQuery(dummyName);
 	}
 	
 	@Override

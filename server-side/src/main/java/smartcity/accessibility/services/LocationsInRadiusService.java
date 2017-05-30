@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teamdev.jxmaps.LatLng;
+import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.exceptions.illigalString;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
@@ -29,7 +31,8 @@ public class LocationsInRadiusService {
 			@RequestParam("srcLng") Double srcLng) {	
 		//ExtendedMapView mv = LogInService.getUserInfo(token).getMapView();
 		try {
-			SearchQuery sq = SearchQuery.TypeSearch("");
+			MapView mapView1 = JxMapsFunctionality.getMapView();
+			SearchQuery sq = SearchQuery.TypeSearch("", mapView1);
 			Location dummy = new Location();
 			dummy.setCoordinates(new LatLng(srcLat, srcLng));
 			SearchQueryResult sqr = sq.searchByType(dummy, radius);

@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.teamdev.jxmaps.javafx.MapView;
+
 import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.exceptions.illigalString;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.services.exceptions.QueryTypeDoesNotExist;
 //import smartcity.accessibility.socialnetwork.User;
@@ -29,15 +33,15 @@ public class AddSearchQueryService {
     		@RequestParam("query") String query, @RequestParam("queryName") String queryName, @RequestParam("querytype") String querytype){
 		
 		UserInfo userInfo = LogInService.getUserInfo(token);
-
+		ExtendedMapView mapView = JxMapsFunctionality.getMapView();
 		SearchQuery sq = null;
 		try {
 			switch(Integer.parseInt(querytype)){
 				case(adressSearch):
-					sq = SearchQuery.adressSearch(query);
+					sq = SearchQuery.adressSearch(query, mapView);
 					break;
 				case(typeSearch):
-					sq = SearchQuery.TypeSearch(query);
+					sq = SearchQuery.TypeSearch(query, mapView);
 					break;
 				default:
 					throw new QueryTypeDoesNotExist();
