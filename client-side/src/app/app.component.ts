@@ -44,15 +44,15 @@ export class MyApp {
 	}
 
 	loginPage(){
-    if(!(this.nav.getActive().instance instanceof LoginPage)){
-		  this.nav.push(LoginPage);
-    }
+		if(!(this.nav.getActive().instance instanceof LoginPage)){
+			this.nav.push(LoginPage);
+		}
 	}
 
-  mapPage(){
-    if(!(this.nav.getActive().instance instanceof MapviewPage)){
-		  this.nav.push(MapviewPage);
-    }
+	mapPage(){
+		if(!(this.nav.getActive().instance instanceof MapviewPage)){
+			this.nav.push(MapviewPage);
+		}
 	}
 
 	userprofile(){
@@ -63,7 +63,11 @@ export class MyApp {
 		this.nav.push(AdminPage);
 	}
 
-	logoutPage(){
+	logout(){
+		this.loginService.logout().subscribe(()=>
+		{
+			this.updateState();
+		});
 	}
 
 	presentAlert(str) {

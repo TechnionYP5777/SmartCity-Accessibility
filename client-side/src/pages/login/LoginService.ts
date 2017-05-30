@@ -47,7 +47,6 @@ export class LoginService {
 	}
 	
     destroyUserCredentials() {
-        this.isLogin = false;
         this.token = null;
         window.sessionStorage.clear();
     }
@@ -90,7 +89,17 @@ export class LoginService {
     }
     
     logout() {
-        this.destroyUserCredentials();
+		this.destroyUserCredentials();
+		try{
+			var token = JSON.parse(window.sessionStorage.getItem('token')).token;
+		}
+		catch(err){
+			token = "no token";
+		}
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+		headers.append('authToken',token);
+        return  this.http.post(Constants.serverAddress +'/logout', '', {headers: headers});
     }
 	
 	presentAlert(str) {
