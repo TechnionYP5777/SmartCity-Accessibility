@@ -15,7 +15,16 @@ export class ComplexSearchService {
     }
 
 	complexSearch(type, radius, startLocation, threshold) {
-           return this.http.get(Constants.serverAddress + '/complexSearch?type=' + type + '&radius=' + radius + '&startLocation=' + startLocation + '&threshold=' + threshold).map(res=>res.json());
+		try{
+		   var token = JSON.parse(window.sessionStorage.getItem('token')).token;
+		}
+		catch(err){
+			token = "no token";
+		}
+		var headers = new Headers();
+		headers.append('Content-Type', 'application/x-www-form-urlencoded');
+		headers.append('authToken',token);
+           return this.http.get(Constants.serverAddress + '/complexSearch?type=' + type + '&radius=' + radius + '&startLocation=' + startLocation + '&threshold=' + threshold, {headers: headers}).map(res=>res.json());
 	}
 
 }

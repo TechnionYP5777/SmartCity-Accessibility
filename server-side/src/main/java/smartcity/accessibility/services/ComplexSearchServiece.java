@@ -4,6 +4,7 @@ package smartcity.accessibility.services;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,14 +22,15 @@ import smartcity.accessibility.services.exceptions.SearchFailed;
 public class ComplexSearchServiece {
 	@RequestMapping("/complexSearch")
 	@ResponseBody
-	public List<Location> complexSearch(@RequestParam("") String type,
+	public List<Location> complexSearch(@RequestHeader("authToken") String token, @RequestParam("") String type,
 			@RequestParam("radius") Integer radius, @RequestParam("startLocation") String startLoc,
 			@RequestParam("threshold") Integer threshold) {
 
 		SearchQuery $ = null;
 		SearchQueryResult esr;
 		try {
-			ExtendedMapView mapView = JxMapsFunctionality.getMapView();
+			UserInfo userInfo = LogInService.getUserInfo(token);
+			ExtendedMapView mapView = userInfo.getMapView();
 			$ = SearchQuery.TypeSearch(type, mapView);
 			esr = $.searchByType(startLoc, radius);
 		} catch (illigalString | InterruptedException e) {
