@@ -77,6 +77,10 @@ export class MapviewPage {
   
 	subscribeToNavigation(){
 		this.events.subscribe('navigation:done', (navigationResults,loading) => {
+			if(navigationResults == null){
+				loading.dismiss();
+				return;
+			}
 			if(this.navigateMarkers != null){
 				this.navigateMarkers[0].setMap(null);
 				this.navigateMarkers[1].setMap(null);

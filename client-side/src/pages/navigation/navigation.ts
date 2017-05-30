@@ -66,7 +66,7 @@ export class NavigationPage {
 	
 	handleError(err) {
 		this.presentAlert("<p> error is: "+err.error+ "</p> <p> message is: "+ err.message+"</p>");
-		this.events.publish('navigation:done', [],this.loading);
+		this.events.publish('navigation:done', null,this.loading);
     }
 	
 	presentLoadingCustom() {
