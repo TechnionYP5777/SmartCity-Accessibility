@@ -1,6 +1,7 @@
 package smartcity.accessibility.services;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,10 +21,11 @@ import smartcity.accessibility.search.SearchQueryResult;
 public class AdressSearchService {
 	@RequestMapping(value="/simpleSearch/{search}")
 	@ResponseBody
-    public Location searchService(@PathVariable("search") String search) {	
+    public Location searchService(@RequestHeader("authToken") String token, @PathVariable("search") String search) {	
 		
 		try {
-			ExtendedMapView mapView = JxMapsFunctionality.getMapView();
+			UserInfo userInfo = LogInService.getUserInfo(token);
+			ExtendedMapView mapView = userInfo.getMapView();
 			SearchQuery $ = SearchQuery.adressSearch(search, mapView);
 	        SearchQueryResult sqr1 = $.SearchByAddress(mapView);
 	        $.waitOnSearch();

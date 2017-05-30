@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import { Http } from "@angular/http";
+import { Http, Headers } from "@angular/http";
 import { Constants } from "../constants";
 import 'rxjs/add/operator/map';
 
@@ -10,6 +10,15 @@ export class SearchService {
     }
 
 	search(searchQuery) {
-           return this.http.get(Constants.serverAddress +'/simpleSearch/'+searchQuery).map(res=>res.json());
+		try{
+		   var token = JSON.parse(window.sessionStorage.getItem('token')).token;
+		}
+		catch(err){
+			token = "no token";
+		}
+		var headers = new Headers();
+		headers.append('Content-Type', 'application/x-www-form-urlencoded');
+		headers.append('authToken',token);
+           return this.http.get(Constants.serverAddress +'/simpleSearch/'+searchQuery, {headers: headers}).map(res=>res.json());
 	}
 }
