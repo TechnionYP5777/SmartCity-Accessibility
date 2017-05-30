@@ -7,10 +7,16 @@
 -->
 
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="dark">
+    <ion-buttons left>
+  	  <button ion-button menuToggle>
+  		    <ion-icon name="menu"></ion-icon>
+  	  </button>
+    </ion-buttons>
     <ion-title>
       Advanced Search
     </ion-title>
+
   </ion-navbar>
 </ion-header>
 
@@ -19,7 +25,7 @@
 <ion-content>
   <ion-list>
     <ion-item class="inputs">
-      <ion-label class="text">  
+      <ion-label class="text">
 		<ion-icon ios="ios-restaurant" md="md-restaurant"></ion-icon>
 		Type
 	  </ion-label >
@@ -43,7 +49,7 @@
 		<ion-option>5</ion-option>
       </ion-select>
     </ion-item>
-	
+
 	<ion-item class="inputs">
 		<ion-input [(ngModel)] = "radius" type="number" placeholder="Radius" class="text"></ion-input>
     </ion-item>
@@ -52,13 +58,13 @@
 		<ion-input [(ngModel)] = "initLoc"  type="search" placeholder="Initial Location" class="text"></ion-input>
 	</ion-item>
 
-	
+
 	<ion-item class="inputs">
       <ion-label>Use my current location</ion-label>
       <ion-checkbox color="danger" checked="false" class="text"></ion-checkbox>
     </ion-item>
-	
-	<button ion-button icon-left large (click)="callComplexSearch(type, radius, initLoc, minRating)">
+
+	<button ion-button round icon-left (click)="callComplexSearch(type, radius, initLoc, minRating)">
       <ion-icon name='search'></ion-icon>
       Search
     </button>

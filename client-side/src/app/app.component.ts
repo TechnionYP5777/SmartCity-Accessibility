@@ -28,7 +28,7 @@ export class MyApp {
       splashScreen.hide();
     });
     this.isLoggedin = this.loginService.isLoggedIn();
-	this.events.subscribe('login:updateState',() => {
+	   this.events.subscribe('login:updateState',() => {
 		this.updateState();
 	});
   }
@@ -50,9 +50,10 @@ export class MyApp {
 	}
 
 	mapPage(){
-		if(!(this.nav.getActive().instance instanceof MapviewPage)){
-			this.nav.push(MapviewPage);
-		}
+    if(!(this.nav.getActive().instance instanceof MapviewPage)){
+      this.nav.popToRoot();
+    }
+
 	}
 
 	userprofile(){
@@ -78,4 +79,5 @@ export class MyApp {
 		});
 		alert.present();
 	}
+
 }
