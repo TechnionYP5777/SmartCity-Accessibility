@@ -2,17 +2,17 @@ package smartcity.accessibility.services;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teamdev.jxmaps.LatLng;
-import com.teamdev.jxmaps.swing.MapView;
 
 import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.exceptions.illigalString;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
@@ -27,12 +27,13 @@ import smartcity.accessibility.search.SearchQueryResult;
 public class LocationsInRadiusService {
 	private static final double radius = 1;
 	@RequestMapping(value="/locationsInRadius")
-	@ResponseBody public List<Location> getLocationsInRadius(/*@RequestHeader("authToken") String token,*/ @RequestParam("srcLat") Double srcLat,
+	@ResponseBody public List<Location> getLocationsInRadius(@RequestHeader("authToken") String token, @RequestParam("srcLat") Double srcLat,
 			@RequestParam("srcLng") Double srcLng) {	
 		//ExtendedMapView mv = LogInService.getUserInfo(token).getMapView();
 		try {
-			MapView mapView1 = JxMapsFunctionality.getMapView();
-			SearchQuery sq = SearchQuery.TypeSearch("", mapView1);
+			UserInfo userInfo = LogInService.getUserInfo(token);
+			ExtendedMapView mapView = userInfo.getMapView();
+			SearchQuery sq = SearchQuery.TypeSearch("", mapView);
 			Location dummy = new Location();
 			dummy.setCoordinates(new LatLng(srcLat, srcLng));
 			SearchQueryResult sqr = sq.searchByType(dummy, radius);
