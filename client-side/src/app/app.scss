@@ -77,6 +77,10 @@ ion-content {
   background-color: color($colors, light) !important;
 }
 
+.menu-toggle:hover {
+  color: color($colors, accent) !important;
+}
+
 
 ion-header {
 	text-align: center;
