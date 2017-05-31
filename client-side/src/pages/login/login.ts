@@ -25,9 +25,11 @@ export class LoginPage {
 				setTimeout(() => { this.events.publish('login:updateState'); }, this.loginservice.timeout());
 				this.events.publish('login:updateState');
                 this.navCtrl.popToRoot();
-            }
+				this.loading.dismiss();
+            } else{
+				this.loading.dismiss();
+			}
 		});
-		this.loading.dismiss();
     }
     signup() {
         this.navCtrl.push(SignupPage);

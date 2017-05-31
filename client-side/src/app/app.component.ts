@@ -27,12 +27,15 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
-    this.isLoggedin = this.loginService.isLoggedIn();
-	   this.events.subscribe('login:updateState',() => {
+	this.updateState();
+	this.events.subscribe('login:updateState',() => {
 		this.updateState();
 	});
   }
 
+	ngOnChange() {
+		this.updateState();
+	}
     updateState(){
 	    this.isLoggedin = this.loginService.isLoggedIn();
 		if(this.isLoggedin){
