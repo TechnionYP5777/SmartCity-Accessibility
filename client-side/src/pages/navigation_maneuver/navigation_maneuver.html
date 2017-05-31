@@ -9,6 +9,6 @@
 		<ion-list-header>
 			  Route Nerratives:
 		</ion-list-header>
-        <ion-item *ngFor="let nerrative of nerratives" text-wrap>{{nerrative}}</ion-item>
+        <ion-item *ngFor="let n of nerratives" text-wrap (click)=displayImage(n)>{{n.text}}</ion-item>
     </ion-list>
 </ion-content>

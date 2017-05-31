@@ -29,6 +29,7 @@ import { HelpfulUsersPage } from '../pages/helpfulUsers/helpfulUsers';
 import { MostRatedLocsPage } from '../pages/mostRatedLocs/mostRatedLocs';
 import {GetReviewsService} from '../pages/reviews/ReviewsService';
 import { navigationManeuverPage } from '../pages/navigation_maneuver/navigation_maneuver';
+import { nerrativeMapPage } from '../pages/navigation_maneuver/nerrativeMap/nerrativeMap';
 import { LocationsInRadiusService } from '../pages/location-list/LocationsInRadiusService';
 import { AddLocationPage } from '../pages/add-location/add-location';
 import { AddLocationService } from '../pages/add-location/AddLocationService';
@@ -54,7 +55,8 @@ import { AddLocationService } from '../pages/add-location/AddLocationService';
 	navigationManeuverPage,
 	HelpfulUsersPage,
 	AddLocationPage,
-	MostRatedLocsPage
+	MostRatedLocsPage,
+	nerrativeMapPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -79,7 +81,8 @@ import { AddLocationService } from '../pages/add-location/AddLocationService';
 	navigationManeuverPage,
 	HelpfulUsersPage,
 	AddLocationPage,
-	MostRatedLocsPage
+	MostRatedLocsPage,
+	nerrativeMapPage
   ],
   providers: [
     StatusBar,

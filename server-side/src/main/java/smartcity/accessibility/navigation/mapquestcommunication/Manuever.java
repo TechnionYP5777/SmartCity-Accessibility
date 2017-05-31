@@ -8,14 +8,14 @@ package smartcity.accessibility.navigation.mapquestcommunication;
  */
 public class Manuever {
 	private String narrative;
-	private String mapURL;
+	private String mapUrl;
 	
-	public String getMapURL() {
-		return mapURL;
+	public String getMapUrl() {
+		return mapUrl;
 	}
 
-	public void setMapURL(String mapURL) {
-		this.mapURL = mapURL;
+	public void setMapUrl(String mapUrl) {
+		this.mapUrl = mapUrl;
 	}
 
 	public String getNarrative() {
