@@ -52,13 +52,14 @@ ion-card-header {
 }
 
 ion-card-title {
-  font-size: 26px;
-  color: color($colors, primary-text) !important;
+  font-size: 28px !important;
+  color: color($colors, primary) !important;
+  font-family: 'roboto';
+  font-weight: bold;
 }
 
 ion-card {
-  background-color: color($colors, primary) !important;
-  color: color($colors, primary-text);
+  background-color: #FFFFFF;
   padding: 5px;
   text-align: center;
   font-size: 22px;
@@ -69,6 +70,7 @@ ion-list {
 }
 
 ion-item {
+  font-family: 'roboto';
   background-color: transparent;
 }
 
@@ -121,11 +123,13 @@ ion-item-divider {
   font-size: 20px !important;
 }
 
-
+.main-label {
+  color: color($colors, accent) !important;
+}
 
 .card-image {
     width: 50%;
     height: 50%;
-	margin-left: auto;
+	  margin-left: auto;
     margin-right: auto
 }

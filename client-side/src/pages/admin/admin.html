@@ -7,7 +7,7 @@
 <ion-header>
   <ion-navbar color="dark">
     <ion-buttons left>
-  	  <button ion-button menuToggle>
+  	  <button ion-button menuToggle class="menu-toggle">
   		    <ion-icon name="menu"></ion-icon>
   	  </button>
     </ion-buttons>
@@ -20,125 +20,120 @@
 
 <ion-content>
 
-<ion-list>
+  <ion-list>
+    <ion-list-header>
+      Hello {{name}}!
+    </ion-list-header>
 
-	<ion-card>
-	  <img class="card-image" src='../assets/img/Admin.png'/>
-	  <ion-card-content>
-		<ion-card-title class ="cardTitle">
-		  Hello {{name}}!
-		  </ion-card-title>
-		<p class="cardContent">
-		  Welcome to the control panel where you can supervise the app and control it!
-		</p>
-	  </ion-card-content>
-	</ion-card>
-
-
-
-	<ion-grid>
-		<ion-row>
-
-			<ion-col>
-				<ion-card>
-				<img class="card-image" src='../assets/img/helpfulness.png'/>
-				  <ion-card-content>
-					<p class="cardContent">
-					  Details about your helpfulness:<br>
-					  Rating : {{ rating }}<br>
-					  Numer of reviews : {{ numOfReviews }}<br>
-					  Helpfulness: {{ hlp }}<br>
-					</p>
-
-					<img *ngIf="hlp > 0" class="emoji-image" src='../assets/img/great.png'/>
-					<img *ngIf="hlp == 0" class="emoji-image" src='../assets/img/unhelpful.png'/>
-					<img *ngIf="hlp < 0" class="emoji-image" src='../assets/img/bad.png'/>
-
-				  </ion-card-content>
-				</ion-card>
-			</ion-col>
-
-			<ion-col>
-
-				<ion-card>
-				  <ion-card-content>
-					<ion-card-title class ="cardTitle">
-					  Most Helpful Users!
-					  </ion-card-title>
-					<p class="cardContent">
-						  Take a look at the most helpful users to the app:
-					</p>
-
-				     <ion-item class="inputs">
-						<ion-label color="primary" fixed>#users</ion-label>
-						<ion-input [(ngModel)] = "n"  (change)="showUsers(n)" type="number" placeholder="Insert a number between 1 to 20"></ion-input>
-					 </ion-item>
-				  </ion-card-content>
-				</ion-card>
-
-			</ion-col>
-
-		</ion-row>
-
-		<ion-row>
-			<ion-col>
-
-				<ion-card>
-				  <ion-card-content>
-					<ion-card-title class ="cardTitle">
-					  Most Rated Locations! <br>
-					  </ion-card-title>
-					<p class="cardContent">
-						  Take a look at the most rated locations in the app: <br>
-					</p>
-
-				     <ion-item class="inputs">
-						<ion-label color="primary" fixed>#locations</ion-label>
-						<ion-input [(ngModel)] = "numOfLocations" type="number" placeholder="Insert a number between 1 to 20"></ion-input>
-					 </ion-item>
-
-					 <ion-item class="inputs">
-						<ion-label color="primary" fixed>radius</ion-label>
-						<ion-input [(ngModel)] = "radius" type="number" placeholder="Insert the radius in meters"></ion-input>
-					 </ion-item>
-
-					 <ion-item class="inputs">
-						<ion-input [(ngModel)] = "initLoc"  type="search" placeholder="Initial Location" class="text"></ion-input>
-					 </ion-item>
-
-					 <div class="col">
-						<button ion-button class="buttons" (click)="showLocations(numOfLocations, radius, initLoc)">Show Me</button>
-					</div>
+    <!--<ion-card>
+    <img class="card-image" src='../assets/img/Admin.png'/>
+    <ion-card-content>
+    <ion-card-title class ="cardTitle">
+    Hello {{name}}!
+    </ion-card-title>
+    <p class="cardContent">
+    Welcome to the control panel where you can supervise the app and control it!
+    </p>
+    </ion-card-content>
+    </ion-card>-->
 
 
-				  </ion-card-content>
-				</ion-card>
 
-			</ion-col>
-		</ion-row>
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title>
+          <ion-icon name="ribbon"></ion-icon>
+          Your Helpfulness
+          <ion-icon *ngIf="hlp > 0" name="happy"></ion-icon>
+          <ion-icon *ngIf="hlp == 0" name="sad"></ion-icon>
+          <ion-icon *ngIf="hlp < 0" name="sad"></ion-icon>
+        </ion-card-title>
+        <ion-list>
+          <ion-item>
+            <ion-label class="main-label" >Rating </ion-label>
+            <ion-label>{{ rating }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="main-label" >Numer of reviews </ion-label>
+            <ion-label>{{ numOfReviews }}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="main-label" >Helpfulness </ion-label>
+            <ion-label>{{ hlp }}</ion-label>
+          </ion-item>
+        <!--<img *ngIf="hlp > 0" class="emoji-image" src='../assets/img/great.png'/>
+        <img *ngIf="hlp == 0" class="emoji-image" src='../assets/img/unhelpful.png'/>
+        <img *ngIf="hlp < 0" class="emoji-image" src='../assets/img/bad.png'/>-->
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
 
 
-		<ion-row>
-			<ion-col>
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title class ="cardTitle">
+          <ion-icon name="people"></ion-icon>
+          Most Helpful Users
+        </ion-card-title>
 
-				<ion-card>
-				  <ion-card-content>
-					<ion-card-title class ="cardTitle">
-					  General Info
-					  </ion-card-title>
-					<p class="cardContent">
-						  The number of users registered to the app: {{ numOfUsers }}
-					</p>
+        <ion-item class="inputs">
+          <ion-label class="main-label">Amount</ion-label>
+          <ion-input [(ngModel)] = "n" (change)="showUsers(n)" type="number" placeholder="Insert a number between 1 to 20"></ion-input>
+        </ion-item>
+        </ion-card-content>
+    </ion-card>
 
-				  </ion-card-content>
-				</ion-card>
 
-			</ion-col>
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title class ="cardTitle">
+          <ion-icon name="compass"></ion-icon>
+          Top Rated Locations
+        </ion-card-title>
+        <!--<p class="cardContent">
+        Take a look at the most rated locations in the app: <br>
+      </p>-->
 
-		</ion-row>
+        <ion-item class="inputs">
+          <ion-label class="main-label" >Amount</ion-label>
+          <ion-input [(ngModel)] = "numOfLocations" type="number" placeholder="Insert a number between 1 to 20"></ion-input>
+        </ion-item>
 
-	</ion-grid>
+        <ion-item class="inputs">
+          <ion-label class="main-label" >Radius</ion-label>
+          <ion-input [(ngModel)] = "radius" type="number" placeholder="Insert the radius in meters"></ion-input>
+        </ion-item>
 
-</ion-list>
+        <ion-item class="inputs">
+          <ion-label class="main-label" >Start point</ion-label>
+          <ion-input [(ngModel)] = "initLoc"  type="search" placeholder="Initial Location" class="text"></ion-input>
+        </ion-item>
+
+        <ion-buttons>
+          <button ion-button round  (click)="showLocations(numOfLocations, radius, initLoc)">Show Me</button>
+        </ion-buttons>
+
+      </ion-card-content>
+    </ion-card>
+
+
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title class ="cardTitle">
+          <ion-icon name="information-circle"></ion-icon>
+          General Info
+        </ion-card-title>
+
+        <ion-list>
+          <ion-item>
+            <ion-label class="main-label" >Registered Users </ion-label>
+            <ion-label>{{ numOfUsers }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+
+  </ion-list>
 
 </ion-content>
