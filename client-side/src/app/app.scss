@@ -77,6 +77,7 @@ ion-content {
   background-color: color($colors, light) !important;
 }
 
+
 ion-header {
 	text-align: center;
 	background: transparent;
@@ -91,6 +92,11 @@ ion-header {
 
 ion-icon {
   margin-right: 10px;
+}
+
+ion-list-header {
+  background-color: color($colors, primary-light) !important;
+  color: color($colors, primary-text) !important;
 }
 
 ion-buttons {

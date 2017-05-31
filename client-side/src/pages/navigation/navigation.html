@@ -1,13 +1,19 @@
 <ion-header>
+  <ion-navbar color="dark">
+    <!--<ion-buttons left>
+  	  <button ion-button menuToggle>
+  		    <ion-icon name="menu"></ion-icon>
+  	  </button>
+    </ion-buttons>-->
+    <ion-title>
+      Navigation
+    </ion-title>
 
-  <ion-navbar>
-    <ion-title>navigation</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding  class="navigation">
+<ion-content  class="navigation">
 	<ion-list>
 		<ion-list-header>
 		  Navigation Properties
@@ -26,5 +32,7 @@
 		<ion-option>5</ion-option>
       </ion-select>
     </ion-item>
-	<button ion-button (click)="startNavigation()">startNavigation</button>
+    <ion-buttons>
+      <button ion-button round (click)="startNavigation()">startNavigation</button>
+    </ion-buttons>
 </ion-content>
