@@ -3,5 +3,6 @@ cd server-side
 echo "Killing previous server"
 killall screen
 echo "Running server..."
-mvn clean install exec:java -Dexec.mainClass="smartcity.accessibility.services.Application" -Dserver.port=8090
+screen -dmL mvn clean install exec:java -Dexec.mainClass="smartcity.accessibility.services.Application" -Dserver.port=8090
+sleep 5m
 echo "Successs!"
