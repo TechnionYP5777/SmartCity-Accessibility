@@ -32,10 +32,9 @@ export class LocationListPage {
 	}
 
 	cc(locationn){
-		this.youChose = "you chose: " + locationn.name +" at: " + locationn.coordinates.lat + ", " + locationn.coordinates.lng;
-		this.viewCtrl.dismiss();
-		let clickMenu = this.modalCtrl.create(GetReviewsPage, {lat:this.lat,lng:this.lng});
+		let clickMenu = this.modalCtrl.create(GetReviewsPage, {lat:this.lat,lng:this.lng,type:locationn.locationType,subtype:locationn.locationSubType,name:locationn.name});
 		clickMenu.present();
+		this.viewCtrl.dismiss();
 	}
 	
 	addLocation(){
