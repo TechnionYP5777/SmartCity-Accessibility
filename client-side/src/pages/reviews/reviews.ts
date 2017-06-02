@@ -14,11 +14,15 @@ import {AddReviewPage} from '../add-review/add-review';
 export class GetReviewsPage {
   lat : any;
   lng : any;
+  type : any
+  subtype : any
+  name : any
   revs : any;
   loading : any;
   service : any;
   isLoggedin : any;
   token : any;
+  
   
   constructor(public navCtrl: NavController,
    public navParams: NavParams,
@@ -29,8 +33,11 @@ export class GetReviewsPage {
    public alertCtrl: AlertController) {
    
     this.token = window.sessionStorage.getItem('token');
-	this.lat = navParams.get('lat');//35.2;
-	this.lng = navParams.get('lng');//34.2;
+	this.lat = navParams.get('lat');
+	this.lng = navParams.get('lng');
+	this.type = navParams.get('type');
+	this.subtype = navParams.get('subtype');
+	this.name = navParams.get('name');
 	this.service = getreviewsservice;
 	this.isLoggedin = this.loginService.isLoggedIn();
   }
@@ -39,18 +46,18 @@ export class GetReviewsPage {
   ionViewDidLoad() {
 	  
     this.loading = this.loadingController.create({
-      content: "ayyooo loading lmaooo"
+      content: "ayyyy loading lmaooo"
     }); 
 	
 	this.loading.present();
 	
-	 this.service.showMeStuff(this.lat, this.lng).subscribe(data => {
+	 this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype).subscribe(data => {
 		this.revs = data.json();
 		this.loading.dismiss();
     },
     err => {
         this.loading.dismiss();
-        console.log("Oops!");
+        this.presentAlert("Something went wrong");
     });
     
   }
@@ -58,34 +65,42 @@ export class GetReviewsPage {
   like(e, rev){
   	if(this.isLoggedin == true){
   		rev.upvotes++;
-  		this.service.changeRevLikes(rev, 1);
-  	}
+  		this.service.changeRevLikes(rev, 1).then(data => {
+  	 		if(data) {
+  	 			this.navCtrl.pop();
+  	 		}
+  	 	});
+   	}
   	else{
-  		this.presentAlert();
+  		this.presentAlert("Please login to do that!");
   	}
   }
   
   dislike(e, rev){
   	if(this.isLoggedin == true){
   		rev.downvotes++;
-  		this.service.changeRevLikes(rev, -1);
+  		this.service.changeRevLikes(rev, -1).then(data => {
+  	 		if(data) {
+  	 			this.navCtrl.pop();
+  	 		}
+  	 	});
   	}
   	else{
-  		this.presentAlert();
+  		this.presentAlert("Please login to do that!");
   	}
   }
   
-  presentAlert() {
+  presentAlert(str) {
 		let alert = this.alertCtrl.create({
 		  title: 'Error',
-		  subTitle: 'Please login to do that!',
+		  subTitle: str,
 		  buttons: ['OK']
 		});
 		alert.present();
 	}
 	
 	openAddReview(){
-		this.navCtrl.push(AddReviewPage, {lat : this.lat, lng : this.lng});
+		this.navCtrl.push(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
 	}
 
 }

@@ -13,14 +13,14 @@ export class AddReviewService {
     console.log('Hello AddReviewService Provider');
   }
   
-  addreview(rev, lat, lng){
+  addreview(rev, lat, lng, type, subtype){
     try{
 		var token = JSON.parse(window.sessionStorage.getItem('token')).token;
 	}
 	catch(err){
 		token = "no token";
 	}
-    var params = "lat=" + lat + "&lng=" + lng + "&review=" + rev.review + "&score=" + rev.score;
+    var params = "lat=" + lat + "&lng=" + lng  + "&type=" + type + "&subtype=" + subtype + "&review=" + rev.review + "&score=" + rev.score;
   	var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('authToken',token);

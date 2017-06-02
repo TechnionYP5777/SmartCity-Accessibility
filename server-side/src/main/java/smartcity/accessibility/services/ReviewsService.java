@@ -1,6 +1,5 @@
 package smartcity.accessibility.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -29,13 +28,20 @@ public class ReviewsService {
 	@RequestMapping(value = "/reviews", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
     public Review[] showMeStuff(@RequestParam("lat") Double lat,
-    		@RequestParam("lng") Double lng) {
+    		@RequestParam("lng") Double lng,
+			@RequestParam("type") String type,
+			@RequestParam("subtype") String subtype) {
 		
-		List<Location> lstLocation = AbstractLocationManager.instance().getLocation(new LatLng(lat, lng), null);
-		List<Review> lstReviews = new ArrayList<>();
+		Location location = AbstractLocationManager.instance().
+				getLocation(new LatLng(lat, lng),
+				LocationTypes.valueOf(type),
+				LocationSubTypes.valueOf(subtype),
+				null).orElse(null);
 		
-		for(Location l : lstLocation)
-			lstReviews.addAll(l.getReviews());
+		if(location == null)
+			throw new LocationDoesNotExistException();
+		
+		List<Review> lstReviews = location.getReviews();
 		
 		return lstReviews.toArray(new Review[0]);
 		

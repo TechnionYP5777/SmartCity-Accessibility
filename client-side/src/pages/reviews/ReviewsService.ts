@@ -14,8 +14,8 @@ export class GetReviewsService {
     console.log('Hello GetReviewsService Provider');
   }
   
-  showMeStuff(lat, lng){
-	var params = "lat=" + lat + "&lng=" + lng;
+  showMeStuff(lat, lng, type, subtype, name){
+	var params = "lat=" + lat + "&lng=" + lng + "&type=" + type + "&subtype=" + subtype;
 	return this.http.get(Constants.serverAddress +'/reviews?'+params);
   }
   
@@ -34,7 +34,16 @@ export class GetReviewsService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('authToken',token);
     
-  	this.http.post(Constants.serverAddress +'/reviews?', params, {headers: headers});
+    return new Promise(resolve => {
+      	this.http.post(Constants.serverAddress +'/reviews?', params, {headers: headers}).subscribe(data => {
+                if(data.status == 200){
+                	console.log('Review liked successfully!')
+                    resolve(true);
+                }
+                else
+                    resolve(false);
+            });
+        });
   }
 
 }

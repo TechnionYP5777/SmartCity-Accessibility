@@ -28,32 +28,29 @@ public class AddReviewService {
     		@RequestParam("review") String review,
     		@RequestParam("score") String score,
     		@RequestParam("lat") Double lat,
-    		@RequestParam("lng") Double lng) {
+    		@RequestParam("lng") Double lng,
+			@RequestParam("type") String type,
+			@RequestParam("subtype") String subtype) {
 		
 		
 		User u = getUserFromToken(token);
 		if (u == null)
 			throw new UserIsNotLoggedIn();
 		
-		
-		Location l = new Location();
 		LatLng coordinates = new LatLng(lat, lng);
-		l.setCoordinates(coordinates);
+		Location l = AbstractLocationManager.instance().
+				getLocation(coordinates,
+				LocationTypes.valueOf(type),
+				LocationSubTypes.valueOf(subtype),
+				null).orElse(null);
 		
-		//TODO need to change this part
-		l.setLocationType(LocationTypes.Facility);
-		l.setLocationSubType(LocationSubTypes.Restaurant);
-		l.setName("name");
-		
-		if(AbstractLocationManager.instance().getLocation(coordinates, null) == null)
+		if(l == null) //Location "l" doesn't exist
 			AbstractLocationManager.instance().uploadLocation(l, null);
 		
 		
 		Review r = new Review(l, Integer.parseInt(score), review, u.getProfile());
 		
-		AbstractReviewManager.instance().uploadReview(r, null);
-		
-		//TODO pretty pretty finisher    	
+		AbstractReviewManager.instance().uploadReview(r, null);   	
     }
 	
 	//TODO null exception?

@@ -14,6 +14,9 @@ export class AddReviewPage {
   token : any;
   lat : any;
   lng : any;
+  type : any
+  subtype : any
+  name : any
 
   reviewinfo = {
 		 review: '',
@@ -24,6 +27,9 @@ export class AddReviewPage {
     this.token = window.sessionStorage.getItem('token');
 	this.lat = navParams.get('lat');
 	this.lng = navParams.get('lng');
+	this.type = navParams.get('type');
+	this.subtype = navParams.get('subtype');
+	this.name = navParams.get('name');
   }
 
   starClicked(value){
@@ -32,13 +38,14 @@ export class AddReviewPage {
   }
 
   addreview(rev) {
-  	 this.addreviewservice.addreview(rev, this.lat, this.lng).then(data => {
+     if ( rev.score == "" ){
+       rev.score = 0;
+     }
+  	 this.addreviewservice.addreview(rev, this.lat, this.lng, this.type, this.subtype).then(data => {
   	 	if(data) {
   	 		this.navCtrl.pop();
   	 	}
   	 });
-     console.log(rev.review);
-     console.log(rev.score);
    }
 
   ionViewDidLoad() {
