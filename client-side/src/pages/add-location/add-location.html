@@ -1,17 +1,30 @@
+
+
 <ion-header>
-  <ion-navbar>
-    <ion-title>Adding location to ({{lat}},{{lng}})</ion-title>    
+  <ion-navbar color="dark">
+    <!--<ion-buttons left>
+  	  <button ion-button menuToggle>
+  		    <ion-icon name="menu"></ion-icon>
+  	  </button>
+    </ion-buttons>-->
+    <ion-title>
+      Add location
+    </ion-title>
+
   </ion-navbar>
 </ion-header>
 
+
 <ion-content>
-	{{omg}}
 	<ion-list>
+    <ion-list-header>
+      ({{lat}}, {{lng}})
+    </ion-list-header>
 		<ion-item>
 			<ion-input [(ngModel)]="name" type="text" placeholder="Location Name"></ion-input>
 		</ion-item>
 		<ion-item class="inputs">
-		  <ion-label class="text">  
+		  <ion-label class="text">
 			<ion-icon ios="ios-restaurant" md="md-restaurant"></ion-icon>
 			Type
 		  </ion-label >
@@ -21,9 +34,9 @@
 			<ion-option value="hotel">Hotel</ion-option>
 		  </ion-select>
 		</ion-item>
-		
+
 	</ion-list>
-	<button ion-item (click)="addToDataBase()" class="buttons"> done! </button>
+  <ion-buttons>
+	   <button ion-button round (click)="addToDataBase()" class="buttons"> done! </button>
+   </ion-buttons>
 </ion-content>
-
-

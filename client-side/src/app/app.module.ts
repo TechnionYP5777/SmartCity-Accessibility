@@ -1,7 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import {LoginPage} from '../pages/login/login';
 import {AdminPage} from '../pages/admin/admin';
 import {MapviewPage} from '../pages/mapview/mapview';
@@ -37,7 +36,6 @@ import { AddLocationService } from '../pages/add-location/AddLocationService';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
 	LoginPage,
 	MapviewPage,
 	MapClickMenuPage,
@@ -64,7 +62,6 @@ import { AddLocationService } from '../pages/add-location/AddLocationService';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
 	LoginPage,
 	MapviewPage,
 	MapClickMenuPage,

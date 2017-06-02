@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
-import { LoginService } from '../login/LoginService'; 
-import { HomePage } from '../home/home';
+import { LoginService } from '../login/LoginService';
 
 
 @Component({
@@ -14,7 +13,7 @@ export class SignupPage {
 		password: ''
 	};
   constructor(public navCtrl: NavController, public loginService: LoginService, public alertCtrl: AlertController) {}
- 
+
   register(user) {
         this.loginService.signup(user).then(data => {
             if(data) {
@@ -24,7 +23,7 @@ export class SignupPage {
                     buttons: ['ok']
                 });
                 alert.present();
-				this.navCtrl.setRoot(HomePage);
+                this.navCtrl.popToRoot();
             }
     });
 }
