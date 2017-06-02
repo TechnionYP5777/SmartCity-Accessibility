@@ -19,7 +19,7 @@ export class GetReviewsService {
 	return this.http.get(Constants.serverAddress +'/reviews?'+params);
   }
   
-  changeRevLikes(rev, like){
+  changeRevLikes(username, lat, lng, type, subtype, like){
   
   	try{
 		var token = JSON.parse(window.sessionStorage.getItem('token')).token;
@@ -28,7 +28,7 @@ export class GetReviewsService {
 		token = "no token";
 	}
 	
-  	var params = "lat=" + rev.location.coordinates.lat + "&lng=" + rev.location.coordinates.lng + "&type=" + rev.location.locationType + "&subtype=" + rev.location.locationSubType + "&username=" + rev.user.username + "&likes=" + like;
+  	var params = "lat=" + lat + "&lng=" + lng + "&type=" + type + "&subtype=" + subtype + "&username=" + username + "&likes=" + like;
   	
   	var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');

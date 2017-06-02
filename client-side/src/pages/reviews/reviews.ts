@@ -40,32 +40,43 @@ export class GetReviewsPage {
 	this.name = navParams.get('name');
 	this.service = getreviewsservice;
 	this.isLoggedin = this.loginService.isLoggedIn();
+	
+	this.loading = this.loadingController.create({
+      spinner: 'bubbles',
+	  showBackdrop: false,
+	  cssClass: 'loader'
+    }); 
+	
+	this.loading.present();
+	
   }
   
 
   ionViewDidLoad() {
 	  
-    this.loading = this.loadingController.create({
-      content: "ayyyy loading lmaooo"
-    }); 
-	
-	this.loading.present();
+    
 	
 	 this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype).subscribe(data => {
-		this.revs = data.json();
-		this.loading.dismiss();
+		 if(data) {
+			 this.revs = data.json();
+			 this.loading.dismiss();
+			 
+		 } else{
+			this.presentAlert("Something went wrong");
+			this.loading.dismiss();
+		}
     },
     err => {
         this.loading.dismiss();
         this.presentAlert("Something went wrong");
     });
-    
+	    
   }
   
   like(e, rev){
   	if(this.isLoggedin == true){
   		rev.upvotes++;
-  		this.service.changeRevLikes(rev, 1).then(data => {
+  		this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, 1).then(data => {
   	 		if(data) {
   	 			this.navCtrl.pop();
   	 		}
