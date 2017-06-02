@@ -1,14 +1,31 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Adding review to ({{lat}},{{lng}})</ion-title>    
+    <ion-title>Adding review to </ion-title>
   </ion-navbar>
-  
+
 </ion-header>
 
-<ion-content padding>
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-buttons left>
+  	  <button ion-button menuToggle class="menu-toggle">
+  		    <ion-icon name="menu"></ion-icon>
+  	  </button>
+    </ion-buttons>
+    <ion-title>
+      Add Review
+    </ion-title>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
 
 	<ion-list>
+    <ion-list-header>
+      ({{lat}}, {{lng}})
+    </ion-list-header>
 		<ion-item>
 			<ion-label floating>Enter your review here...</ion-label>
           	<ion-input [(ngModel)] = "reviewinfo.review" type="text"></ion-input>
@@ -21,8 +38,10 @@
     			(clicked)="starClicked($event)">
 			</ion-rating>
 		</ion-item>
+    <ion-buttons>
+  	   <button ion-button round (click)="addreview(reviewinfo)">Submit Review</button>
+    </ion-buttons>
 	</ion-list>
 
-	<button ion-button round (click)="addreview(reviewinfo)">Submit Review</button>
 
 </ion-content>
