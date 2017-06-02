@@ -32,7 +32,7 @@ export class LocationListPage {
 	}
 
 	cc(locationn){
-		let clickMenu = this.modalCtrl.create(GetReviewsPage, {lat:this.lat,lng:this.lng,type:locationn.locationType,subtype:locationn.locationSubType,name:locationn.name});
+		let clickMenu = this.modalCtrl.create(GetReviewsPage, {lat:locationn.coordinates.lat,lng:locationn.coordinates.lng,type:locationn.locationType,subtype:locationn.locationSubType,name:locationn.name});
 		clickMenu.present();
 		this.viewCtrl.dismiss();
 	}
