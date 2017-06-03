@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.database.AbstractLocationManager;
+import smartcity.accessibility.database.AbstractReviewManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
@@ -84,6 +85,7 @@ public class ReviewsService {
 				try {
 					if (like > 0) r.upvote(u);
 					else r.downvote(u);
+					AbstractReviewManager.instance().updateReview(r, null);
 				} catch (UnauthorizedAccessException e) {
 					throw new UserIsNotLoggedIn();
 				}
