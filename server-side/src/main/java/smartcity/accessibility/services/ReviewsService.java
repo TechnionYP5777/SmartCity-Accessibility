@@ -75,7 +75,10 @@ public class ReviewsService {
 		if(loc == null)
 			throw new LocationDoesNotExistException();
 		
-		//TODO ask Alex if it is enough to do this in order to up/downvote a review
+		//TODO Why are you trying to upvote all the reviews that are by the same user?  your supposed to upvote\downvote a single review that the user chose
+		//	and then update the gui
+		// double upvotes are taken care of inside ReviewComment, and privileges also, so you only need to try and upvote\downvote, and if it doesnt fail
+		// update gui and db -- Alex
 		for(Review r :loc.getReviews())
 			if (r.getUser().getUsername().equals(username)){
 				try {
