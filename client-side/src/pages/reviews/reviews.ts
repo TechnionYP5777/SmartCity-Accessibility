@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {LoadingController, NavController, NavParams, AlertController} from 'ionic-angular';
+import {LoadingController, NavController, NavParams, AlertController, ModalController, ViewController} from 'ionic-angular';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {GetReviewsService} from './ReviewsService';
@@ -24,7 +24,9 @@ export class GetReviewsPage {
   token : any;
   
   
-  constructor(public navCtrl: NavController,
+  constructor(public viewCtrl: ViewController,
+   public modalCtrl: ModalController,
+   public navCtrl: NavController,
    public navParams: NavParams,
    public http: Http,
    public loadingController: LoadingController,
@@ -47,18 +49,19 @@ export class GetReviewsPage {
 	  
     this.loading = this.presentLoadingCustom();
 	
-	this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype).subscribe(data => {
-		if(data) {
-			this.revs = data.json();
-			this.loading.dismiss();			 
-		} else{
-			this.loading.dismiss();
-			this.presentAlert("Something went wrong");
-		}
-	},
-	err => {
+	this.loading.present().then(() => {
+	
+	    this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype, this.name).subscribe(data => {
+	    	if(data) {
+	    		this.revs = data.json();			 
+	    	} else{
+	    		this.presentAlert("Something went wrong");
+	    	}
+	    },
+	    err => {
+	    	this.presentAlert("Something went wrong");
+	    });
 		this.loading.dismiss();
-		this.presentAlert("Something went wrong");
 	});
 	    
   }
@@ -101,7 +104,9 @@ export class GetReviewsPage {
 	}
 	
 	openAddReview(){
-		this.navCtrl.push(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
+		let clickMenu = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
+		clickMenu.present();
+		this.viewCtrl.dismiss();
 	}
 	
 	presentLoadingCustom() {
@@ -113,7 +118,6 @@ export class GetReviewsPage {
         cssClass: 'loader'
       });
 
-       loading.present();
        return loading;
    }
 

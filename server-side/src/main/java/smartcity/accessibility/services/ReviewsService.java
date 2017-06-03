@@ -29,18 +29,25 @@ public class ReviewsService {
     public Review[] showMeStuff(@RequestParam("lat") Double lat,
     		@RequestParam("lng") Double lng,
 			@RequestParam("type") String type,
-			@RequestParam("subtype") String subtype) {
+			@RequestParam("subtype") String subtype,
+			@RequestParam("name") String name) {
 		
-		Location location = AbstractLocationManager.instance().
+		Location loc = AbstractLocationManager.instance().
 				getLocation(new LatLng(lat, lng),
 				LocationTypes.valueOf(type),
 				LocationSubTypes.valueOf(subtype),
 				null).orElse(null);
 		
-		if(location == null)
-			throw new LocationDoesNotExistException();
+		if(loc == null){ //Location "l" doesn't exist
+			loc = new Location();
+			loc.setCoordinates(new LatLng(lat, lng));
+			loc.setLocationType(LocationTypes.valueOf(type));
+			loc.setLocationSubType(LocationSubTypes.valueOf(subtype));
+			loc.setName(name);
+			AbstractLocationManager.instance().uploadLocation(loc, null);
+		}
 		
-		return location.getReviews().toArray(new Review[0]);
+		return loc.getReviews().toArray(new Review[0]);
     }
 	
 	@RequestMapping(value = "/reviews", method = RequestMethod.POST, produces = "application/json")
@@ -63,9 +70,7 @@ public class ReviewsService {
 				LocationTypes.valueOf(type),
 				LocationSubTypes.valueOf(subtype),
 				null).orElse(null);
-		
-		if(loc == null)
-			throw new LocationDoesNotExistException();
+			
 
 		for(Review r :loc.getReviews())
 			if (r.getUser().getUsername().equals(username)){

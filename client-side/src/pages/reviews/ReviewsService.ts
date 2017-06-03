@@ -14,8 +14,8 @@ export class GetReviewsService {
     console.log('Hello GetReviewsService Provider');
   }
   
-  showMeStuff(lat, lng, type, subtype){
-	var params = "lat=" + lat + "&lng=" + lng + "&type=" + type + "&subtype=" + subtype;
+  showMeStuff(lat, lng, type, subtype, name){
+	var params = "lat=" + lat + "&lng=" + lng + "&type=" + type + "&subtype=" + subtype + "&name=" + name;
 	return this.http.get(Constants.serverAddress +'/reviews?'+params);
   }
   
