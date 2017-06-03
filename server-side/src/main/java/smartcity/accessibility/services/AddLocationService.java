@@ -10,8 +10,6 @@ import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
-import smartcity.accessibility.mapmanagement.Location.LocationTypes;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 
 @RestController

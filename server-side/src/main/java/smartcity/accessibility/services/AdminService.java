@@ -1,6 +1,5 @@
 package smartcity.accessibility.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -13,11 +12,7 @@ import com.teamdev.jxmaps.LatLng;
 
 import smartcity.accessibility.database.AbstractUserProfileManager;
 import smartcity.accessibility.database.LocationManager;
-import smartcity.accessibility.database.ParseDatabase;
-import smartcity.accessibility.database.UserManager;
-import smartcity.accessibility.database.UserProfileManager;
 import smartcity.accessibility.mapmanagement.Location;
-import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
 @RestController
