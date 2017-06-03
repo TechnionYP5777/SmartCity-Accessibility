@@ -45,29 +45,21 @@ export class GetReviewsPage {
 
   ionViewDidLoad() {
 	  
-    this.loading = this.loadingController.create({
-      spinner: 'hide',
-      content: `
-        <div class="custom-spinner-container">
-          <div class="custom-spinner-box">Please wait...</div>
-        </div>`,
-	  dismissOnPageChange: true,
-	  cssClass: 'loader'
-    }); 
+    this.loading = this.presentLoadingCustom();
 	
-	this.loading.present();
-	
-	 this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype).subscribe(data => {
-		 if(data) {
-			 this.revs = data.json();			 
-			 
-		 } else{
+	this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype).subscribe(data => {
+		if(data) {
+			this.revs = data.json();
+			this.loading.dismiss();			 
+		} else{
+			this.loading.dismiss();
 			this.presentAlert("Something went wrong");
 		}
-    },
-    err => {
-        this.presentAlert("Something went wrong");
-    });
+	},
+	err => {
+		this.loading.dismiss();
+		this.presentAlert("Something went wrong");
+	});
 	    
   }
   
@@ -111,5 +103,18 @@ export class GetReviewsPage {
 	openAddReview(){
 		this.navCtrl.push(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
 	}
+	
+	presentLoadingCustom() {
+      let loading = this.loadingController.create({
+        spinner: 'hide',
+        content: `<div class="cssload-container">
+                  <div class="cssload-whirlpool"></div>
+              </div>`,
+        cssClass: 'loader'
+      });
+
+       loading.present();
+       return loading;
+   }
 
 }
