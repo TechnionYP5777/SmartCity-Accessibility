@@ -45,11 +45,6 @@ public class ReviewsService {
 		List<Review> lstReviews = location.getReviews();
 		
 		return lstReviews.toArray(new Review[0]);
-		
-//		Location l = new Location();
-//		l.setCoordinates(new LatLng(lat, lng));
-//		UserProfile u = new UserProfile("ayyy");
-//		return new Review[] { new Review(l, 5, "amazing", u), new Review(l, 3, "so lame bruh", u) };
     }
 	
 	@RequestMapping(value = "/reviews", method = RequestMethod.POST, produces = "application/json")
