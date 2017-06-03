@@ -42,9 +42,7 @@ public class ReviewsService {
 		if(location == null)
 			throw new LocationDoesNotExistException();
 		
-		List<Review> lstReviews = location.getReviews();
-		
-		return lstReviews.toArray(new Review[0]);
+		return location.getReviews().toArray(new Review[0]);
     }
 	
 	@RequestMapping(value = "/reviews", method = RequestMethod.POST, produces = "application/json")
