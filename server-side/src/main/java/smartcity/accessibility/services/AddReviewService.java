@@ -30,7 +30,8 @@ public class AddReviewService {
     		@RequestParam("lat") Double lat,
     		@RequestParam("lng") Double lng,
 			@RequestParam("type") String type,
-			@RequestParam("subtype") String subtype) {
+			@RequestParam("subtype") String subtype,
+			@RequestParam("name") String name) {
 		
 		
 		User u = getUserFromToken(token);
@@ -44,8 +45,14 @@ public class AddReviewService {
 				LocationSubTypes.valueOf(subtype),
 				null).orElse(null);
 		
-		if(l == null) //Location "l" doesn't exist
+		if(l == null){ //Location "l" doesn't exist
+			l = new Location();
+			l.setCoordinates(coordinates);
+			l.setLocationType(LocationTypes.valueOf(type));
+			l.setLocationSubType(LocationSubTypes.valueOf(subtype));
+			l.setName(name);
 			AbstractLocationManager.instance().uploadLocation(l, null);
+		}
 		
 		
 		Review r = new Review(l, Integer.parseInt(score), review, u.getProfile());

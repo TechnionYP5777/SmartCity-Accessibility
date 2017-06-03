@@ -41,7 +41,7 @@ export class AddReviewPage {
      if ( rev.score == "" ){
        rev.score = 0;
      }
-  	 this.addreviewservice.addreview(rev, this.lat, this.lng, this.type, this.subtype).then(data => {
+  	 this.addreviewservice.addreview(rev, this.lat, this.lng, this.type, this.subtype, this.name).then(data => {
   	 	if(data) {
   	 		this.navCtrl.pop();
   	 	}
