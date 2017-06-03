@@ -22,6 +22,7 @@ import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.socialnetwork.BestReviews;
+import smartcity.accessibility.socialnetwork.Review;
 
 /**
  * @author KaplanAlexander
@@ -153,6 +154,9 @@ public class LocationManager extends AbstractLocationManager {
 			} else {
 				logger.debug("location has no segment id, getting others with same field name");
 				l.addReviews(AbstractReviewManager.instance().getReviews(id.get(), null));
+				for ( Review locReview : l.getReviews()){
+					locReview.setLocation(l);
+				}
 			}
 			return Optional.of(l);
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());

@@ -53,6 +53,10 @@ public class Review {
 		isPinned = pinned;
 	}
 
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
 	public boolean isPinned() {
 		return this.isPinned;
 	}
