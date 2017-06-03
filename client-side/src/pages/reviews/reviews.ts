@@ -39,35 +39,33 @@ export class GetReviewsPage {
 	this.subtype = navParams.get('subtype');
 	this.name = navParams.get('name');
 	this.service = getreviewsservice;
-	this.isLoggedin = this.loginService.isLoggedIn();
-	
-	this.loading = this.loadingController.create({
-      spinner: 'bubbles',
-	  showBackdrop: false,
-	  cssClass: 'loader'
-    }); 
-	
-	this.loading.present();
-	
+	this.isLoggedin = this.loginService.isLoggedIn();	
   }
   
 
   ionViewDidLoad() {
 	  
-    
+    this.loading = this.loadingController.create({
+      spinner: 'hide',
+      content: `
+        <div class="custom-spinner-container">
+          <div class="custom-spinner-box">Please wait...</div>
+        </div>`,
+	  dismissOnPageChange: true,
+	  cssClass: 'loader'
+    }); 
+	
+	this.loading.present();
 	
 	 this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype).subscribe(data => {
 		 if(data) {
-			 this.revs = data.json();
-			 this.loading.dismiss();
+			 this.revs = data.json();			 
 			 
 		 } else{
 			this.presentAlert("Something went wrong");
-			this.loading.dismiss();
 		}
     },
     err => {
-        this.loading.dismiss();
         this.presentAlert("Something went wrong");
     });
 	    
@@ -90,7 +88,7 @@ export class GetReviewsPage {
   dislike(e, rev){
   	if(this.isLoggedin == true){
   		rev.downvotes++;
-  		this.service.changeRevLikes(rev, -1).then(data => {
+  		this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, -1).then(data => {
   	 		if(data) {
   	 			this.navCtrl.pop();
   	 		}
