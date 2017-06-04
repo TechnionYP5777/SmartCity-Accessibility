@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
+import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.services.exceptions.SignUpFailed;
 import smartcity.accessibility.services.exceptions.UserDoesNotExistException;
 import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
@@ -67,5 +69,15 @@ public class LogInService {
 			logger.info("getting user from cache failed", e);
 		}
 		return userInfo;
+	}
+	
+	static ExtendedMapView getMapView(String token){
+		try{
+			UserInfo userInfo = getUserInfo(token);
+			return userInfo.getMapView();
+		}catch (UserIsNotLoggedIn e) {
+			return JxMapsFunctionality.getStaticMapView();
+		}
+		
 	}
 }

@@ -31,8 +31,7 @@ public class LocationsInRadiusService {
 			@RequestParam("srcLng") Double srcLng) {	
 		//ExtendedMapView mv = LogInService.getUserInfo(token).getMapView();
 		try {
-			UserInfo userInfo = LogInService.getUserInfo(token);
-			ExtendedMapView mapView = userInfo.getMapView();
+			ExtendedMapView mapView = LogInService.getMapView(token);
 			SearchQuery sq = SearchQuery.TypeSearch("", mapView);
 			Location dummy = new Location();
 			dummy.setCoordinates(new LatLng(srcLat, srcLng));

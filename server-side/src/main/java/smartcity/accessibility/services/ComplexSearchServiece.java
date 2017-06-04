@@ -28,8 +28,7 @@ public class ComplexSearchServiece {
 		SearchQuery $ = null;
 		SearchQueryResult esr;
 		try {
-			UserInfo userInfo = LogInService.getUserInfo(token);
-			ExtendedMapView mapView = userInfo.getMapView();
+			ExtendedMapView mapView = LogInService.getMapView(token);
 			$ = SearchQuery.TypeSearch(type, mapView);
 			esr = $.searchByType(startLoc, radius);
 		} catch (illigalString | InterruptedException e) {

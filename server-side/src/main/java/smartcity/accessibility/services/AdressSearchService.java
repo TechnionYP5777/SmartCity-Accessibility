@@ -23,8 +23,7 @@ public class AdressSearchService {
     public Location searchService(@RequestHeader("authToken") String token, @PathVariable("search") String search) {	
 		
 		try {
-			UserInfo userInfo = LogInService.getUserInfo(token);
-			ExtendedMapView mapView = userInfo.getMapView();
+			ExtendedMapView mapView = LogInService.getMapView(token);
 			SearchQuery $ = SearchQuery.adressSearch(search, mapView);
 	        SearchQueryResult sqr1 = $.SearchByAddress(mapView);
 	        $.waitOnSearch();
