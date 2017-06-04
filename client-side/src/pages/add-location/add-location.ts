@@ -15,15 +15,20 @@ export class AddLocationPage {
   omg : any;
   type: string;
   name: string;
+  notDone: any;
+  thanks: any;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public addLocationService: AddLocationService) {
 	this.lat = navParams.get('lat');
 	this.lng = navParams.get('lng');
 	this.omg = "omg!";
+	this.notDone = true;
+	this.thanks = "Thank You So Much For Contributing To Our Database!"
   }
   
   addToDataBase(){
 		this.omg = this.type;
+		this.notDone = false;
 		this.addLocationService.addLocation(this.name, this.lat, this.lng, this.type);
   }
 

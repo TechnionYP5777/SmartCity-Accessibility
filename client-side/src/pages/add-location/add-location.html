@@ -15,7 +15,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content *ngIf="notDone">
 	<ion-list>
     <ion-list-header>
       ({{lat}}, {{lng}})
@@ -39,4 +39,11 @@
   <ion-buttons>
 	   <button ion-button round (click)="addToDataBase()" class="buttons"> done! </button>
    </ion-buttons>
+</ion-content>
+
+<ion-content *ngIf="!notDone">
+	<ion-item> thanks! </ion-item>
+	<ion-buttons>
+	  <button ion-button round (click)="addToDataBase()" class="buttons"> comment on new location </button>
+	</ion-buttons>
 </ion-content>
