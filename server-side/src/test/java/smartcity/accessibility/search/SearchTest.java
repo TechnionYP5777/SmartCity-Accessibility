@@ -25,7 +25,7 @@ public class SearchTest{
 	 @Ignore 
 	 @Test
      public void test1() throws InterruptedException, illigalString{ 
-     	 MapView mapView = JxMapsFunctionality.getMapView();
+     	 MapView mapView = JxMapsFunctionality.getStaticMapView();
 
          SearchQuery s1 = SearchQuery.adressSearch("Modi'in Yehalom St, 20", mapView),
 				s2 = SearchQuery.adressSearch("Modi'in Yehalom 30", mapView);
@@ -54,7 +54,7 @@ public class SearchTest{
 	 @Category(UnitTests.class)
 	 @Test
 	 public void test2() throws InterruptedException, illigalString{
-		 MapView mapView = JxMapsFunctionality.getMapView();
+		 MapView mapView = JxMapsFunctionality.getStaticMapView();
 		 SearchQuery s1 = SearchQuery.adressSearch("coffee shops", mapView);
 		 
 		 JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
@@ -72,7 +72,7 @@ public class SearchTest{
 	 @Category(UnitTests.class) 
 	 @Test
 	 public void test3() throws InterruptedException, illigalString{
-		 MapView mapView1 = JxMapsFunctionality.getMapView();
+		 MapView mapView1 = JxMapsFunctionality.getStaticMapView();
 
 	        SearchQuery s1 = SearchQuery.adressSearch("Rothschild 22, Rothschild Boulevard, Tel Aviv", mapView1);
 	        

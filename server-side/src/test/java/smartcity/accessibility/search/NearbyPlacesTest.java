@@ -29,7 +29,7 @@ public class NearbyPlacesTest {
 		kindsOfLocations.add("restaurant");
 		Location initLocation = new LocationBuilder().setCoordinates(c).build();
 		new MapViewOptions().importPlaces();
-		MapView mapView = JxMapsFunctionality.getMapView();
+		MapView mapView = JxMapsFunctionality.getStaticMapView();
 		JxMapsFunctionality.waitForMapReady((ExtendedMapView) mapView);
 		NearbyPlacesSearch.findNearbyPlaces(mapView, initLocation, radius, kindsOfLocations, ls -> {
 			System.out.println("the length is : " + ls.size());

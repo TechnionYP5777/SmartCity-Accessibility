@@ -30,7 +30,7 @@ import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView
 public class Application {
 	
 	public static final LoadingCache<String, UserInfo> tokenToSession = resetSessions();
-	public static final ExtendedMapView mapView = JxMapsFunctionality.getMapView();
+	public static final ExtendedMapView mapView = JxMapsFunctionality.getStaticMapView();
 	public static final long expirationLoginTime = 60;
 	
 	public static void main(String[] args) {

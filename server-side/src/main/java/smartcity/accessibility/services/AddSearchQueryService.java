@@ -31,7 +31,7 @@ public class AddSearchQueryService {
     		@RequestParam("query") String query, @RequestParam("queryName") String queryName, @RequestParam("querytype") String querytype){
 		
 		UserInfo userInfo = LogInService.getUserInfo(token);
-		ExtendedMapView mapView = JxMapsFunctionality.getMapView();
+		ExtendedMapView mapView = JxMapsFunctionality.getStaticMapView();
 		SearchQuery sq = null;
 		try {
 			switch(Integer.parseInt(querytype)){

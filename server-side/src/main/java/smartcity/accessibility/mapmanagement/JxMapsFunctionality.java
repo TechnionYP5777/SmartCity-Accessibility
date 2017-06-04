@@ -18,7 +18,7 @@ import com.teamdev.jxmaps.swing.MapView;
 
 public abstract class JxMapsFunctionality {
 
-	public static ExtendedMapView mv;
+	public static ExtendedMapView static_mv;
 
 		public static class ExtendedMapView extends MapView {
 
@@ -55,15 +55,25 @@ public abstract class JxMapsFunctionality {
 		}
 
 	}
-	public static ExtendedMapView getMapView() {
+	public static ExtendedMapView getStaticMapView() {
 		MapViewOptions $ = new MapViewOptions();
 		$.importPlaces();
-		return mv != null ? mv : (mv = new ExtendedMapView($));
+		return static_mv != null ? static_mv : (static_mv = new ExtendedMapView($));
 	}
 
-	public static void DestroyMapView() {
+	public static void DestroyStaticMapView() {
+		static_mv.dispose();
+		static_mv = null;
+	}
+	
+	public static ExtendedMapView getNewMapView() {
+		MapViewOptions $ = new MapViewOptions();
+		$.importPlaces();
+		return new ExtendedMapView($);
+	}
+
+	public static void DestroyMapView(ExtendedMapView mv) {
 		mv.dispose();
-		mv = null;
 	}
 
 	public static void waitForMapReady(ExtendedMapView mv) {

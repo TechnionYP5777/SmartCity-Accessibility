@@ -12,7 +12,7 @@ public class UserInfo {
 	
 	public UserInfo(User u) {
 		this.setUser(u);
-		this.mapView = JxMapsFunctionality.getMapView();
+		this.mapView = JxMapsFunctionality.getNewMapView();
 	}
 
 	public UserInfo() {

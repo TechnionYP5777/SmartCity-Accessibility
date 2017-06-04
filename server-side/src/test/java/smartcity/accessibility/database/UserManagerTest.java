@@ -104,7 +104,7 @@ public class UserManagerTest {
 		assert b != null;
 		
 		List<SearchQuery> l = new ArrayList<SearchQuery>();
-		ExtendedMapView mapView = JxMapsFunctionality.getMapView();
+		ExtendedMapView mapView = JxMapsFunctionality.getStaticMapView();
 		l.add(SearchQuery.TypeSearch("cafe", mapView));
 		try {
 			UserManager.updatefavouriteQueries(b, l);
@@ -148,7 +148,7 @@ public class UserManagerTest {
 		} catch (UsernameAlreadyTakenException e) {
 			fail();
 		}
-		 MapView mapView1 = JxMapsFunctionality.getMapView();
+		 MapView mapView1 = JxMapsFunctionality.getStaticMapView();
 		b.addSearchQuery(SearchQuery.TypeSearch("cafe", mapView1), "in case I feel thirsty!");
 		
 		try {
