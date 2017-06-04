@@ -42,8 +42,14 @@
 </ion-content>
 
 <ion-content *ngIf="!notDone">
-	<ion-item> thanks! </ion-item>
-	<ion-buttons>
-	  <button ion-button round (click)="addToDataBase()" class="buttons"> comment on new location </button>
-	</ion-buttons>
+	<ion-list>
+		<ion-list-header>
+		  thank you!
+		</ion-list-header>
+		<div text-center>
+		Thank You For Your Contribution!
+		</div>		
+		<button ion-button round (click)="exit()" class="buttons"> comment on new location </button>
+		<button ion-button round (click)="exit()" class="buttons"> return to map </button>
+	</ion-list>
 </ion-content>

@@ -38,8 +38,8 @@ export class LocationListPage {
 	}
 	
 	addLocation(){
-		this.viewCtrl.dismiss();
 		let clickMenu = this.modalCtrl.create(AddLocationPage,{lat:this.lat,lng:this.lng});
 		clickMenu.present();
+		this.viewCtrl.dismiss();
 	}
 }
