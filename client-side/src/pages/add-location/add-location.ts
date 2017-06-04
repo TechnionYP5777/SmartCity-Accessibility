@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { NavController, NavParams, ViewController, AlertController  } from 'ionic-angular';
 import { AddLocationService } from './AddLocationService';
 
 
@@ -16,25 +16,36 @@ export class AddLocationPage {
   type: string;
   name: string;
   notDone: any;
-  thanks: any;
   
-  constructor(public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public addLocationService: AddLocationService) {
+  constructor(public alertCtrl: AlertController, public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public addLocationService: AddLocationService) {
 	this.lat = navParams.get('lat');
 	this.lng = navParams.get('lng');
 	this.omg = "omg!";
 	this.notDone = true;
-	this.thanks = "Thank You So Much For Contributing To Our Database!"
+	this.type = "";
+	this.name = "";
   }
   
   addToDataBase(){
-		this.omg = this.type;
-		this.notDone = false;
-		this.addLocationService.addLocation(this.name, this.lat, this.lng, this.type);
+		if(this.type == "" || this.name == ""){
+			this.presentAlert();
+		}else{
+			this.notDone = false;
+			this.addLocationService.addLocation(this.name, this.lat, this.lng, this.type);	
+		}	
   }
   
   exit(){
 	  this.viewCtrl.dismiss();
   }
+  
+  presentAlert() {
+  let alert = this.alertCtrl.create({
+    title: 'Please fill all of the fields first!',
+    buttons: ['OK']
+  });
+  alert.present(alert);
+}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddReviewPage');
