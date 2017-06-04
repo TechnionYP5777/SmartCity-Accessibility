@@ -17,7 +17,7 @@ public class AddLocationService {
 
 	@RequestMapping(value = "/addLocation", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public void getLocationsInRadius(@RequestParam("name") String name, @RequestParam("srcLat") Double srcLat,
+	public Location getLocationsInRadius(@RequestParam("name") String name, @RequestParam("srcLat") Double srcLat,
 			@RequestParam("srcLng") Double srcLng, @RequestParam("type") String sstype) {
 		
 		String stype = Capitilize(sstype); 
@@ -26,7 +26,12 @@ public class AddLocationService {
 		
 		Location dummy = new LocationBuilder().setCoordinates(new LatLng(srcLat, srcLng)).setName(name)
 				.setType(type).setSubType(subtype).build();
-		AbstractLocationManager.instance().uploadLocation(dummy, s -> {});
+		try{
+			AbstractLocationManager.instance().uploadLocation(dummy, null);
+			return dummy;
+		}catch(Exception e){
+			return null;
+		}
 	}
 
 	private String Capitilize(String sstype) {

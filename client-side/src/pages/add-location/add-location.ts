@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import { NavController, NavParams, ViewController, AlertController  } from 'ionic-angular';
+import { NavController, NavParams, ViewController, AlertController, ModalController} from 'ionic-angular';
 import { AddLocationService } from './AddLocationService';
+import { GetReviewsPage } from '../reviews/reviews'; 
 
 
 @Component({
@@ -16,22 +17,28 @@ export class AddLocationPage {
   type: string;
   name: string;
   notDone: any;
+  retType: any;
+  retSubType: any;
   
-  constructor(public alertCtrl: AlertController, public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public addLocationService: AddLocationService) {
+  constructor(public alertCtrl: AlertController, public modalCtrl: ModalController, public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public addLocationService: AddLocationService) {
 	this.lat = navParams.get('lat');
 	this.lng = navParams.get('lng');
-	this.omg = "omg!";
 	this.notDone = true;
+	this.retType = "";
+	this.retSubType = ""
 	this.type = "";
 	this.name = "";
   }
   
   addToDataBase(){
 		if(this.type == "" || this.name == ""){
-			this.presentAlert();
+			this.presentAlert('Please fill all of the fields first!');
 		}else{
 			this.notDone = false;
-			this.addLocationService.addLocation(this.name, this.lat, this.lng, this.type);	
+			this.addLocationService.addLocation(this.name, this.lat, this.lng, this.type).subscribe(data => {	
+				this.retType = data.locationType;
+				this.retSubType = data.locationSubType;
+			});
 		}	
   }
   
@@ -39,16 +46,25 @@ export class AddLocationPage {
 	  this.viewCtrl.dismiss();
   }
   
-  presentAlert() {
+  presentAlert(string) {
   let alert = this.alertCtrl.create({
-    title: 'Please fill all of the fields first!',
+    title: string,
     buttons: ['OK']
   });
   alert.present(alert);
 }
 
+  openLocationTab(location){
+	 if(this.retType == "" || this.retSubType == ""){
+		 this.presentAlert('please wait for uploading to complete');
+	 }else{
+		let clickMenu = this.modalCtrl.create(GetReviewsPage, {lat:this.lat,lng:this.lng,type:this.retType,subtype:this.retSubType,name:this.name});
+		clickMenu.present();
+		this.viewCtrl.dismiss(); 	 
+	 }
+	 
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddReviewPage');
   }
-
 }

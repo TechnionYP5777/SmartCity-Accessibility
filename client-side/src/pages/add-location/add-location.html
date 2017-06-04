@@ -48,8 +48,9 @@
 		</ion-list-header>
 		<div text-center>
 		Thank You For Your Contribution!
-		</div>		
-		<button ion-button round (click)="exit()" class="buttons"> comment on new location </button>
+		</div>	
+		{{location}}
+		<button ion-button round (click)="openLocationTab()" class="buttons"> comment on new location </button>
 		<button ion-button round (click)="exit()" class="buttons"> return to map </button>
 	</ion-list>
 </ion-content>
