@@ -36,7 +36,7 @@ public class UserInformationService {
 				//new UserImpl("NAME", "PASS", User.Privilege.RegularUser);
 		try {
 			ExtendedMapView mapView = JxMapsFunctionality.getStaticMapView();
-			ui.addSearchQuery(SearchQuery.adressSearch("yehalom 70", mapView), "home");
+			ui.addSearchQuery(SearchQuery.adressSearch("yehalom 70"), "home");
 		} catch (illigalString e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

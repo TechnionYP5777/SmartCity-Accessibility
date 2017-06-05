@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import smartcity.accessibility.mapmanagement.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.mapmanagement.Location;
@@ -40,8 +40,8 @@ public abstract class Navigation {
 	public static RouteResponse getRoute(Location source, Location destination, Integer accessibilityThreshold)
 			throws CommunicationFailed {
 		List<MapSegment> segmentsToAvoid = getSegmentsToAvoid(source, destination, accessibilityThreshold);
-		Latlng from = new Latlng(source.getCoordinates().getLat(), source.getCoordinates().getLng());
-		Latlng to = new Latlng(destination.getCoordinates().getLat(), destination.getCoordinates().getLng());
+		Latlng from = new Latlng(source.getCoordinates().lat, source.getCoordinates().lng);
+		Latlng to = new Latlng(destination.getCoordinates().lat, destination.getCoordinates().lng);
 		Route route = getRouteFromMapQuest(from, to, segmentsToAvoid);
 		Double[] shapePointsArr = route.getShape().getShapePoints();
 		Latlng[] latlng = new Latlng[shapePointsArr.length / 2];
@@ -87,7 +87,7 @@ public abstract class Navigation {
 				source.getCoordinates(), destination.getCoordinates(), accessibilityThreshold, null);
 		List<MapSegment> l = new ArrayList<>();
 		for (LatLng ¢ : locationsToAvoid)
-			l.add(getMapSegmentOfLatLng(¢.getLat(), ¢.getLng()));
+			l.add(getMapSegmentOfLatLng(¢.lat, ¢.lng));
 		return l;
 	}
 

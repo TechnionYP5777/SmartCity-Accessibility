@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.teamdev.jxmaps.Map;
 
 import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.exceptions.EmptySearchQuery;
@@ -17,7 +16,6 @@ import smartcity.accessibility.socialnetwork.BestReviews;
  */
 public class SearchQueryResult {
 
-	Map map;
 	private List<Location> locations;
 
 	SearchQueryResult(List<Location> c) {

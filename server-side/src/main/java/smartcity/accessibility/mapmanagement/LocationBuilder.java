@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import smartcity.accessibility.mapmanagement.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;

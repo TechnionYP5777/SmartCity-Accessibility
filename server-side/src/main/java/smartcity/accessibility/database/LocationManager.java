@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.inject.Inject;
-import smartcity.accessibility.mapmanagement.LatLng;
+import com.google.maps.model.LatLng;
 
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
@@ -48,7 +48,7 @@ public class LocationManager extends AbstractLocationManager {
 
 	public static Map<String, Object> toMap(Location l) {
 		Map<String, Object> map = new HashMap<>();
-		map.put(LOCATION_FIELD_NAME, new ParseGeoPoint(l.getCoordinates().getLat(), l.getCoordinates().getLng()));
+		map.put(LOCATION_FIELD_NAME, new ParseGeoPoint(l.getCoordinates().lat, l.getCoordinates().lng));
 		map.put(TYPE_FIELD_NAME, l.getLocationType().toString());
 		map.put(SUB_TYPE_FIELD_NAME, l.getLocationSubType().toString());
 		map.put(NAME_FIELD_NAME, l.getName());
@@ -74,7 +74,7 @@ public class LocationManager extends AbstractLocationManager {
 		logger.info("getting id of location {} {} {}", coordinates, locType, locSubType);
 		Flowable<Optional<String>> res = Flowable.fromCallable(() -> {
 			Map<String, Object> m = new HashMap<>();
-			m.put(LOCATION_FIELD_NAME, new ParseGeoPoint(coordinates.getLat(), coordinates.getLng()));
+			m.put(LOCATION_FIELD_NAME, new ParseGeoPoint(coordinates.lat, coordinates.lng));
 			m.put(TYPE_FIELD_NAME, locType.toString());
 			m.put(SUB_TYPE_FIELD_NAME, locSubType.toString());
 			List<Map<String, Object>> locs = db.get(DATABASE_CLASS, m);
@@ -116,7 +116,7 @@ public class LocationManager extends AbstractLocationManager {
 		logger.info("getting locations with coordinates {}", coordinates);
 		Flowable<List<Location>> res = Flowable.fromCallable(() -> {
 			Map<String, Object> m = new HashMap<>();
-			m.put(LOCATION_FIELD_NAME, new ParseGeoPoint(coordinates.getLat(), coordinates.getLng()));
+			m.put(LOCATION_FIELD_NAME, new ParseGeoPoint(coordinates.lat, coordinates.lng));
 			List<Map<String, Object>> locsMap = db.get(DATABASE_CLASS, m);
 			logger.debug("db.get returned {}", locsMap.toString());
 			List<Location> locs = new ArrayList<>();
@@ -166,7 +166,7 @@ public class LocationManager extends AbstractLocationManager {
 	@Override
 	public List<Location> getLocationsAround(LatLng l, double distance, ICallback<List<Location>> callback) {
 		Flowable<List<Location>> res = Flowable.fromCallable(() -> {
-			List<Map<String, Object>> mapList = db.get(DATABASE_CLASS, LOCATION_FIELD_NAME, l.getLat(), l.getLng(),
+			List<Map<String, Object>> mapList = db.get(DATABASE_CLASS, LOCATION_FIELD_NAME, l.lat, l.lng,
 					distance);
 			return mapList.stream().map(m -> {
 				Location ml = fromMap(m);
@@ -215,11 +215,11 @@ public class LocationManager extends AbstractLocationManager {
 	}
 
 	private LatLng getCenter(LatLng p1, LatLng p2) {
-		double dLon = Math.toRadians(p2.getLng() - p1.getLng());
+		double dLon = Math.toRadians(p2.lng - p1.lng);
 
-		double lat1 = Math.toRadians(p1.getLat());
-		double lat2 = Math.toRadians(p2.getLat());
-		double lon1 = Math.toRadians(p1.getLng());
+		double lat1 = Math.toRadians(p1.lat);
+		double lat2 = Math.toRadians(p2.lat);
+		double lon1 = Math.toRadians(p1.lng);
 
 		double bx = Math.cos(lat2) * Math.cos(dLon);
 		double by = Math.cos(lat2) * Math.sin(dLon);
@@ -232,10 +232,10 @@ public class LocationManager extends AbstractLocationManager {
 	}
 
 	private double distance(LatLng p1, LatLng p2) {
-		double lat1 = p1.getLat();
-		double lat2 = p2.getLat();
-		double lng1 = p1.getLng();
-		double lng2 = p2.getLng();
+		double lat1 = p1.lat;
+		double lat2 = p2.lat;
+		double lng1 = p1.lng;
+		double lng2 = p2.lng;
 		double earthRadius = 6371; // in km
 		double dLat = Math.toRadians(lat2 - lat1);
 		double dLng = Math.toRadians(lng2 - lng1);

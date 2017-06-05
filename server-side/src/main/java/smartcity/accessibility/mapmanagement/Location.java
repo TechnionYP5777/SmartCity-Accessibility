@@ -10,7 +10,7 @@ import org.parse4j.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import smartcity.accessibility.mapmanagement.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.socialnetwork.BestReviews;
@@ -175,7 +175,7 @@ public class Location {
 	
 	@Override
 	public int hashCode() {
-		return Double.hashCode(coordinates.getLat())+Double.hashCode(coordinates.getLng());
+		return Double.hashCode(coordinates.lat)+Double.hashCode(coordinates.lng);
 	}
 
 	public LocationTypes getLocationType() {

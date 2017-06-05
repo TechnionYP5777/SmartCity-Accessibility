@@ -30,7 +30,7 @@ public class ComplexSearchServiece {
 		try {
 			ExtendedMapView mapView = LogInService.getMapView(token);
 			synchronized(mapView){
-			$ = SearchQuery.TypeSearch(type, mapView);
+			$ = SearchQuery.TypeSearch(type);
 			esr = $.searchByType(startLoc, radius);
 			}
 		} catch (illigalString | InterruptedException e) {

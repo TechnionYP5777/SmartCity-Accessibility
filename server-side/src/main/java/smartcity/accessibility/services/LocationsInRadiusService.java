@@ -33,7 +33,7 @@ public class LocationsInRadiusService {
 		try {
 			ExtendedMapView mapView = LogInService.getMapView(token);
 			synchronized(mapView){
-				SearchQuery sq = SearchQuery.TypeSearch("", mapView);
+				SearchQuery sq = SearchQuery.TypeSearch("");
 				Location dummy = new Location();
 				dummy.setCoordinates(new LatLng(srcLat, srcLng));
 				SearchQueryResult sqr = sq.searchByType(dummy, radius);

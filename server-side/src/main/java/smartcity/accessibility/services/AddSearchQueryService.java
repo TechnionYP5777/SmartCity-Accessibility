@@ -36,10 +36,10 @@ public class AddSearchQueryService {
 		try {
 			switch(Integer.parseInt(querytype)){
 				case(adressSearch):
-					sq = SearchQuery.adressSearch(query, mapView);
+					sq = SearchQuery.adressSearch(query);
 					break;
 				case(typeSearch):
-					sq = SearchQuery.TypeSearch(query, mapView);
+					sq = SearchQuery.TypeSearch(query);
 					break;
 				default:
 					throw new QueryTypeDoesNotExist();

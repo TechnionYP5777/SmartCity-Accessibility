@@ -26,7 +26,7 @@ public class AdressSearchService {
 		try {
 			ExtendedMapView mapView = LogInService.getMapView(token);
 			synchronized(mapView){
-				SearchQuery $ = SearchQuery.adressSearch(search, mapView);
+				SearchQuery $ = SearchQuery.adressSearch(search);
 		        SearchQueryResult sqr1 = $.SearchByAddress(mapView);
 		        $.waitOnSearch();
 		        Location location2 = sqr1.getLocations().get(0);
