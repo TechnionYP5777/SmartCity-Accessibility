@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController,ModalController, Events,AlertController } from 'ionic-angular';
+import { NavController,ModalController, Events,AlertController, LoadingController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { MapClickMenuPage } from '../mapclickmenu/mapclickmenu'; 
 import { ComplexSearchPage } from '../complex-search/complex-search';
@@ -24,8 +24,9 @@ export class MapviewPage {
   complexSearchPage = ComplexSearchPage;
   output :  any;
   navigateMarkers : any;
+  loading : any;
 
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController,public modalCtrl: ModalController, public searchService : SearchService, public events: Events) {
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public alertCtrl: AlertController,public modalCtrl: ModalController, public searchService : SearchService, public events: Events) {
 		this.output = "";
 		this.subscribeToNavigation();
 		this.markers = [];
@@ -56,10 +57,12 @@ export class MapviewPage {
     }
 	
     callSearch(searchQuery) {
+		this.presentLoadingCustom();
 	    this.searchService.search(searchQuery).subscribe(data => {
 			this.addMarker([data.coordinates]);
 			this.map.setCenter(data.coordinates);
 		});
+		this.loading.dismiss();
     }
 	
 	callToComplexSearch() {
@@ -170,4 +173,13 @@ trackUser() {
       console.log(err);
     });	
 }  
+
+presentLoadingCustom() {
+            this.loading = this.loadingCtrl.create({
+            spinner: 'bubbles',
+		    showBackdrop: false,
+		    cssClass: 'loader'
+        });
+        this.loading.present();
+    }
 }
