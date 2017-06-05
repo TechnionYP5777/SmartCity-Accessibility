@@ -3,7 +3,7 @@ package smartcity.accessibility.search;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.teamdev.jxmaps.LatLng;
+import smartcity.accessibility.mapmanagement.LatLng;
 import com.teamdev.jxmaps.Map;
 import com.teamdev.jxmaps.PlaceNearbySearchCallback;
 import com.teamdev.jxmaps.PlaceResult;

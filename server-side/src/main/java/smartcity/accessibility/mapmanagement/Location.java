@@ -10,7 +10,7 @@ import org.parse4j.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.teamdev.jxmaps.LatLng;
+import smartcity.accessibility.mapmanagement.LatLng;
 
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.socialnetwork.BestReviews;

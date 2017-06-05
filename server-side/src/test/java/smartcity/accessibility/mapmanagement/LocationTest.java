@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.parse4j.ParseException;
 
-import com.teamdev.jxmaps.LatLng;
+import smartcity.accessibility.mapmanagement.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.socialnetwork.Review;
