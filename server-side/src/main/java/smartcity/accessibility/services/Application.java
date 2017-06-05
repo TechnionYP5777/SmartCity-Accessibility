@@ -9,20 +9,16 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-
-
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
+import jersey.repackaged.com.google.common.cache.CacheBuilder;
+import jersey.repackaged.com.google.common.cache.CacheLoader;
+import jersey.repackaged.com.google.common.cache.LoadingCache;
 import smartcity.accessibility.database.DatabaseModule;
 import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.database.ReviewManager;
 import smartcity.accessibility.database.UserProfileManager;
-import jersey.repackaged.com.google.common.cache.CacheBuilder;
-import jersey.repackaged.com.google.common.cache.CacheLoader;
-import jersey.repackaged.com.google.common.cache.LoadingCache;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 /**
  * @author yael
  */
@@ -30,7 +26,6 @@ import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView
 public class Application {
 	
 	public static final LoadingCache<String, UserInfo> tokenToSession = resetSessions();
-	public static final ExtendedMapView mapView = JxMapsFunctionality.getStaticMapView();
 	public static final long expirationLoginTime = 60;
 	
 	public static void main(String[] args) {

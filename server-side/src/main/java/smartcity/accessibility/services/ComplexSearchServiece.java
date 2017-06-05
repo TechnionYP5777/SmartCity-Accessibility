@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import smartcity.accessibility.exceptions.EmptySearchQuery;
 import smartcity.accessibility.exceptions.illigalString;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
@@ -28,11 +27,8 @@ public class ComplexSearchServiece {
 		SearchQuery $ = null;
 		SearchQueryResult esr;
 		try {
-			ExtendedMapView mapView = LogInService.getMapView(token);
-			synchronized(mapView){
 			$ = SearchQuery.TypeSearch(type);
 			esr = $.searchByType(startLoc, radius);
-			}
 		} catch (illigalString | InterruptedException e) {
 			throw new SearchFailed("illegal strings");
 		}

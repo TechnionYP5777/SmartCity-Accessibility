@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.exceptions.illigalString;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.services.exceptions.QueryTypeDoesNotExist;
 //import smartcity.accessibility.socialnetwork.User;
@@ -31,7 +29,6 @@ public class AddSearchQueryService {
     		@RequestParam("query") String query, @RequestParam("queryName") String queryName, @RequestParam("querytype") String querytype){
 		
 		UserInfo userInfo = LogInService.getUserInfo(token);
-		ExtendedMapView mapView = JxMapsFunctionality.getStaticMapView();
 		SearchQuery sq = null;
 		try {
 			switch(Integer.parseInt(querytype)){

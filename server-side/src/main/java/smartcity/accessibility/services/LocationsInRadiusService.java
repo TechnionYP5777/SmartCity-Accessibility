@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import smartcity.accessibility.mapmanagement.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.exceptions.illigalString;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
@@ -26,27 +25,27 @@ import smartcity.accessibility.search.SearchQueryResult;
 @RestController
 public class LocationsInRadiusService {
 	private static final double radius = 0.001;
-	@RequestMapping(value="/locationsInRadius")
-	@ResponseBody public List<Location> getLocationsInRadius(@RequestHeader("authToken") String token, @RequestParam("srcLat") Double srcLat,
-			@RequestParam("srcLng") Double srcLng) {	
-		//ExtendedMapView mv = LogInService.getUserInfo(token).getMapView();
+
+	@RequestMapping(value = "/locationsInRadius")
+	@ResponseBody
+	public List<Location> getLocationsInRadius(@RequestHeader("authToken") String token,
+			@RequestParam("srcLat") Double srcLat, @RequestParam("srcLng") Double srcLng) {
+		// ExtendedMapView mv = LogInService.getUserInfo(token).getMapView();
 		try {
-			ExtendedMapView mapView = LogInService.getMapView(token);
-			synchronized(mapView){
-				SearchQuery sq = SearchQuery.TypeSearch("");
-				Location dummy = new Location();
-				dummy.setCoordinates(new LatLng(srcLat, srcLng));
-				SearchQueryResult sqr = sq.searchByType(dummy, radius);
-				List<Location> retVal = AbstractLocationManager.instance().getLocationsAround(new LatLng(srcLat, srcLng), radius, null);	
-				sq.waitOnSearch();
-				retVal.addAll(sqr.getLocations());
-				return retVal;	
-			}
+			SearchQuery sq = SearchQuery.TypeSearch("");
+			Location dummy = new Location();
+			dummy.setCoordinates(new LatLng(srcLat, srcLng));
+			SearchQueryResult sqr = sq.searchByType(dummy, radius);
+			List<Location> retVal = AbstractLocationManager.instance().getLocationsAround(new LatLng(srcLat, srcLng),
+					radius, null);
+			sq.waitOnSearch();
+			retVal.addAll(sqr.getLocations());
+			return retVal;
 		} catch (illigalString | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
-		} 
+		}
 	}
 
 }

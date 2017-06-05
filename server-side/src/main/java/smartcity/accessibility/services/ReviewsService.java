@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.maps.model.LatLng;
+
 import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.database.AbstractReviewManager;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
-import smartcity.accessibility.mapmanagement.LatLng;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
