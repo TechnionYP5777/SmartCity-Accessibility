@@ -28,6 +28,7 @@ export class AddLocationPage {
 	this.retSubType = ""
 	this.type = "";
 	this.name = "";
+	this.loading = "";
   }
   
   addToDataBase(){
@@ -38,6 +39,12 @@ export class AddLocationPage {
 			this.addLocationService.addLocation(this.name, this.lat, this.lng, this.type).subscribe(data => {	
 				this.retType = data.locationType;
 				this.retSubType = data.locationSubType;
+				if(this.loading == ""){
+					;
+				}else{
+					this.loading.dismiss();	
+					this.openLocationTab();
+				}
 			});
 		}	
   }
@@ -54,9 +61,9 @@ export class AddLocationPage {
   alert.present(alert);
 }
 
-  openLocationTab(location){
+  openLocationTab(){
 	 if(this.retType == "" || this.retSubType == ""){
-		 this.presentAlert('please wait for uploading to complete');
+		 this.presentLoadingCustom();
 	 }else{
 		let clickMenu = this.modalCtrl.create(GetReviewsPage, {lat:this.lat,lng:this.lng,type:this.retType,subtype:this.retSubType,name:this.name});
 		clickMenu.present();
