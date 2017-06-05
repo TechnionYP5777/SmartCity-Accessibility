@@ -22,14 +22,16 @@ public class AdressSearchService {
 	@ResponseBody
     public Location searchService(@RequestHeader("authToken") String token, @PathVariable("search") String search) {	
 		
+		
 		try {
 			ExtendedMapView mapView = LogInService.getMapView(token);
-			SearchQuery $ = SearchQuery.adressSearch(search, mapView);
-	        SearchQueryResult sqr1 = $.SearchByAddress(mapView);
-	        $.waitOnSearch();
-	        Location location2 = sqr1.getLocations().get(0);
-	        return location2;
-	     
+			synchronized(mapView){
+				SearchQuery $ = SearchQuery.adressSearch(search, mapView);
+		        SearchQueryResult sqr1 = $.SearchByAddress(mapView);
+		        $.waitOnSearch();
+		        Location location2 = sqr1.getLocations().get(0);
+		        return location2;	
+			}
 		} catch (illigalString | InterruptedException e) {
 			return null;
 		}

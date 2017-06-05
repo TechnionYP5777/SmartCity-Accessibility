@@ -32,14 +32,16 @@ public class LocationsInRadiusService {
 		//ExtendedMapView mv = LogInService.getUserInfo(token).getMapView();
 		try {
 			ExtendedMapView mapView = LogInService.getMapView(token);
-			SearchQuery sq = SearchQuery.TypeSearch("", mapView);
-			Location dummy = new Location();
-			dummy.setCoordinates(new LatLng(srcLat, srcLng));
-			SearchQueryResult sqr = sq.searchByType(dummy, radius);
-			List<Location> retVal = AbstractLocationManager.instance().getLocationsAround(new LatLng(srcLat, srcLng), radius, null);	
-			sq.waitOnSearch();
-			retVal.addAll(sqr.getLocations());
-			return retVal;
+			synchronized(mapView){
+				SearchQuery sq = SearchQuery.TypeSearch("", mapView);
+				Location dummy = new Location();
+				dummy.setCoordinates(new LatLng(srcLat, srcLng));
+				SearchQueryResult sqr = sq.searchByType(dummy, radius);
+				List<Location> retVal = AbstractLocationManager.instance().getLocationsAround(new LatLng(srcLat, srcLng), radius, null);	
+				sq.waitOnSearch();
+				retVal.addAll(sqr.getLocations());
+				return retVal;	
+			}
 		} catch (illigalString | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

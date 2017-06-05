@@ -29,8 +29,10 @@ public class ComplexSearchServiece {
 		SearchQueryResult esr;
 		try {
 			ExtendedMapView mapView = LogInService.getMapView(token);
+			synchronized(mapView){
 			$ = SearchQuery.TypeSearch(type, mapView);
 			esr = $.searchByType(startLoc, radius);
+			}
 		} catch (illigalString | InterruptedException e) {
 			throw new SearchFailed("illegal strings");
 		}
