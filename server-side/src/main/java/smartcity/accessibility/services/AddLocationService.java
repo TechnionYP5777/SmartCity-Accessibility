@@ -11,10 +11,11 @@ import com.teamdev.jxmaps.LatLng;
 import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
+import smartcity.accessibility.services.exceptions.AddLocationFailed;
 
 @RestController
 public class AddLocationService {
-
+	private static final String failedResult = "{}"; 
 	@RequestMapping(value = "/addLocation", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public Location getLocationsInRadius(@RequestParam("name") String name, @RequestParam("srcLat") Double srcLat,
@@ -27,10 +28,13 @@ public class AddLocationService {
 		Location dummy = new LocationBuilder().setCoordinates(new LatLng(srcLat, srcLng)).setName(name)
 				.setType(type).setSubType(subtype).build();
 		try{
-			AbstractLocationManager.instance().uploadLocation(dummy, null);
+			String res = AbstractLocationManager.instance().uploadLocation(dummy, null);
+			if(res == null){
+				throw new AddLocationFailed();
+			}
 			return dummy;
 		}catch(Exception e){
-			return null;
+			throw new AddLocationFailed();
 		}
 	}
 

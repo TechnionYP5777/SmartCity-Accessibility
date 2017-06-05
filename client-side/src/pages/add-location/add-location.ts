@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { NavController, NavParams, ViewController, AlertController, ModalController} from 'ionic-angular';
+import { NavController, NavParams, ViewController, AlertController, ModalController, LoadingController} from 'ionic-angular';
 import { AddLocationService } from './AddLocationService';
 import { GetReviewsPage } from '../reviews/reviews'; 
 
@@ -19,8 +19,8 @@ export class AddLocationPage {
   notDone: any;
   retType: any;
   retSubType: any;
-  
-  constructor(public alertCtrl: AlertController, public modalCtrl: ModalController, public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public addLocationService: AddLocationService) {
+  loading : any;
+  constructor(public alertCtrl: AlertController, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public addLocationService: AddLocationService) {
 	this.lat = navParams.get('lat');
 	this.lng = navParams.get('lng');
 	this.notDone = true;
@@ -67,4 +67,13 @@ export class AddLocationPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddReviewPage');
   }
+  
+  presentLoadingCustom() {
+            this.loading = this.loadingCtrl.create({
+            spinner: 'bubbles',
+		    showBackdrop: false,
+		    cssClass: 'loader'
+        });
+        this.loading.present();
+    }
 }
