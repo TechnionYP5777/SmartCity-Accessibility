@@ -45,6 +45,9 @@ export class AddLocationPage {
 					this.loading.dismiss();	
 					this.openLocationTab();
 				}
+			}, err => {
+				this.notDone = true;
+				this.presentAlert(err.json().message);
 			});
 		}	
   }
