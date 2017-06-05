@@ -1,12 +1,13 @@
 package smartcity.accessibility.socialnetwork;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import smartcity.accessibility.mapmanagement.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;

@@ -22,7 +22,7 @@ import org.parse4j.ParseGeoPoint;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import smartcity.accessibility.mapmanagement.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.exceptions.ObjectNotFoundException;
@@ -72,7 +72,7 @@ public class LocationManagerTest {
 	@Test
 	@Category(UnitTests.class)
 	public void testGetId() {
-		Optional<String> id = lm.getId(new LatLng(), LocationTypes.Coordinate, LocationSubTypes.Default, null);
+		Optional<String> id = lm.getId(new LatLng(0.0,0.0), LocationTypes.Coordinate, LocationSubTypes.Default, null);
 		assertEquals(true, id.isPresent());
 		assertEquals("MY_ID", id.get());
 	}
@@ -80,7 +80,7 @@ public class LocationManagerTest {
 	@Test
 	@Category(UnitTests.class)
 	public void testUpload() {
-		Location ml = new LocationBuilder().setCoordinates(new LatLng()).setName("asd")
+		Location ml = new LocationBuilder().setCoordinates(new LatLng(0.0,0.0)).setName("asd")
 				.setType(LocationTypes.Coordinate).setSubType(LocationSubTypes.Default).setCoordinates(1, 1).build();
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyMap())).thenReturn(new ArrayList<Map<String, Object>>());
 		String res = lm.uploadLocation(ml, null);
@@ -92,7 +92,7 @@ public class LocationManagerTest {
 	@Test
 	@Category(UnitTests.class)
 	public void testGetLocation() {
-		List<Location> res = lm.getLocation(new LatLng(), null);
+		List<Location> res = lm.getLocation(new LatLng(0.0,0.0), null);
 		assertEquals(2, res.size());
 		Location lres = res.get(0);
 		assertEquals("name", lres.getName());
@@ -113,7 +113,7 @@ public class LocationManagerTest {
 	@Test
 	@Category(UnitTests.class)
 	public void testGetLocationSingle() throws ObjectNotFoundException {
-		Location res = lm.getLocation(new LatLng(), LocationTypes.Coordinate, LocationSubTypes.Default, null).get();
+		Location res = lm.getLocation(new LatLng(0.0,0.0), LocationTypes.Coordinate, LocationSubTypes.Default, null).get();
 		Map<String, Object> mres = LocationManager.toMap(res);
 		assertEquals(m.get(LocationManager.NAME_FIELD_NAME), mres.get(LocationManager.NAME_FIELD_NAME));
 		assertEquals(m.get(LocationManager.TYPE_FIELD_NAME), mres.get(LocationManager.TYPE_FIELD_NAME));
@@ -165,19 +165,19 @@ public class LocationManagerTest {
 	@Test
 	@Category(UnitTests.class)
 	public void testGetNonAccessibleLocationsInRadius() {
-		List<LatLng> ll = lm.getNonAccessibleLocationsInRadius(new LatLng(), new LatLng(), 3, null);
+		List<LatLng> ll = lm.getNonAccessibleLocationsInRadius(new LatLng(0.0,0.0), new LatLng(0.0,0.0), 3, null);
 		assertEquals(2, ll.size());
 		LatLng loc = ll.get(0);
-		assertEquals(1, (int) loc.getLat());
-		assertEquals(1, (int) loc.getLng());
-		ll = lm.getNonAccessibleLocationsInRadius(new LatLng(), new LatLng(), 5, null);
+		assertEquals(1, (int) loc.lat);
+		assertEquals(1, (int) loc.lng);
+		ll = lm.getNonAccessibleLocationsInRadius(new LatLng(0.0,0.0), new LatLng(0.0,0.0), 5, null);
 		assertEquals(0, ll.size());
 	}
 
 	@Test
 	@Category(UnitTests.class)
 	public void testGetTopRated() {
-		List<Location> ll = lm.getTopRated(new LatLng(), 1, 1, null);
+		List<Location> ll = lm.getTopRated(new LatLng(0.0,0.0), 1, 1, null);
 		assertEquals(1, ll.size());
 	}
 

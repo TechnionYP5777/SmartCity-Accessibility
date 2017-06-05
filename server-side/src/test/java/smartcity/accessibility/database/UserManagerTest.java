@@ -12,14 +12,10 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
-import com.teamdev.jxmaps.swing.MapView;
-
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
 import smartcity.accessibility.exceptions.illigalString;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.socialnetwork.User;
 import smartcity.accessibility.socialnetwork.UserProfile;
@@ -104,7 +100,6 @@ public class UserManagerTest {
 		assert b != null;
 		
 		List<SearchQuery> l = new ArrayList<SearchQuery>();
-		ExtendedMapView mapView = JxMapsFunctionality.getStaticMapView();
 		l.add(SearchQuery.TypeSearch("cafe"));
 		try {
 			UserManager.updatefavouriteQueries(b, l);
@@ -148,7 +143,6 @@ public class UserManagerTest {
 		} catch (UsernameAlreadyTakenException e) {
 			fail();
 		}
-		 MapView mapView1 = JxMapsFunctionality.getStaticMapView();
 		b.addSearchQuery(SearchQuery.TypeSearch("cafe"), "in case I feel thirsty!");
 		
 		try {

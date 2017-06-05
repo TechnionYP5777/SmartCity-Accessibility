@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.parse4j.ParseException;
 
-import smartcity.accessibility.mapmanagement.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.socialnetwork.Review;
