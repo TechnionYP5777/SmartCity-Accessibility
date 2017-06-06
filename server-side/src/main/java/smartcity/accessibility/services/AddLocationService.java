@@ -21,7 +21,7 @@ public class AddLocationService {
 	public Location getLocationsInRadius(@RequestParam("name") String name, @RequestParam("srcLat") Double srcLat,
 			@RequestParam("srcLng") Double srcLng, @RequestParam("type") String sstype) {
 		
-		String stype = Capitilize(sstype); 
+		String stype = sstype.toUpperCase(); 
 		Location.LocationSubTypes subtype = Location.LocationSubTypes.valueOf(stype);
 		Location.LocationTypes type = subtype.getParentype();
 		
