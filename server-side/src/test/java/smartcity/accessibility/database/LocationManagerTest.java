@@ -72,7 +72,7 @@ public class LocationManagerTest {
 	@Test
 	@Category(UnitTests.class)
 	public void testGetId() {
-		Optional<String> id = lm.getId(new LatLng(0.0,0.0), LocationTypes.Coordinate, LocationSubTypes.Default, null);
+		Optional<String> id = lm.getId(new LatLng(0.0,0.0), LocationTypes.Coordinate, LocationSubTypes.DEFAULT, null);
 		assertEquals(true, id.isPresent());
 		assertEquals("MY_ID", id.get());
 	}
@@ -81,7 +81,7 @@ public class LocationManagerTest {
 	@Category(UnitTests.class)
 	public void testUpload() {
 		Location ml = new LocationBuilder().setCoordinates(new LatLng(0.0,0.0)).setName("asd")
-				.setType(LocationTypes.Coordinate).setSubType(LocationSubTypes.Default).setCoordinates(1, 1).build();
+				.setType(LocationTypes.Coordinate).setSubType(LocationSubTypes.DEFAULT).setCoordinates(1, 1).build();
 		Mockito.when(db.get(Mockito.anyString(), Mockito.anyMap())).thenReturn(new ArrayList<Map<String, Object>>());
 		String res = lm.uploadLocation(ml, null);
 		Mockito.verify(db).put(Mockito.anyString(), Mockito.anyMap());
@@ -113,7 +113,7 @@ public class LocationManagerTest {
 	@Test
 	@Category(UnitTests.class)
 	public void testGetLocationSingle() throws ObjectNotFoundException {
-		Location res = lm.getLocation(new LatLng(0.0,0.0), LocationTypes.Coordinate, LocationSubTypes.Default, null).get();
+		Location res = lm.getLocation(new LatLng(0.0,0.0), LocationTypes.Coordinate, LocationSubTypes.DEFAULT, null).get();
 		Map<String, Object> mres = LocationManager.toMap(res);
 		assertEquals(m.get(LocationManager.NAME_FIELD_NAME), mres.get(LocationManager.NAME_FIELD_NAME));
 		assertEquals(m.get(LocationManager.TYPE_FIELD_NAME), mres.get(LocationManager.TYPE_FIELD_NAME));
@@ -137,7 +137,7 @@ public class LocationManagerTest {
 		segmentList.add(m2);
 		segmentList.add(m3);
 		Mockito.when(db.get(LocationManager.DATABASE_CLASS, mSegment)).thenReturn(segmentList);
-		Location res = lm.getLocation(new LatLng(2,2), LocationTypes.Street, LocationSubTypes.Default, null).get();
+		Location res = lm.getLocation(new LatLng(2,2), LocationTypes.Street, LocationSubTypes.DEFAULT, null).get();
 		Map<String, Object> mres = LocationManager.toMap(res);
 		assertEquals(m2.get(LocationManager.NAME_FIELD_NAME), mres.get(LocationManager.NAME_FIELD_NAME));
 		assertEquals(m2.get(LocationManager.TYPE_FIELD_NAME), mres.get(LocationManager.TYPE_FIELD_NAME));

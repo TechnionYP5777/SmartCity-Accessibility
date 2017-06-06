@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.maps.model.LatLng;
+import com.google.maps.model.PlaceType;
 
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.socialnetwork.BestReviews;
@@ -32,7 +33,7 @@ public class Location {
 	private LocationSubTypes locationSubType;
 	private String segmentId;
 	private int rating;
-	
+
 	public Location() {
 		reviews = new ArrayList<>();
 		this.coordinates = null;
@@ -70,15 +71,15 @@ public class Location {
 	public String getName() {
 		return this.name;
 	}
-	
+
 	public void setRating() {
 		this.rating = this.getTotalRating();
 	}
-	
+
 	public int getRating() {
 		return this.rating;
 	}
-	
+
 	public String getSegmentId() {
 		return segmentId;
 	}
@@ -100,7 +101,7 @@ public class Location {
 		score = (new BestReviews(i, this)).getTotalRatingByAvg();
 		return new Score(score);
 	}
-	
+
 	/*
 	 * This is the method we should use to check the total rating of a location.
 	 */
@@ -109,13 +110,12 @@ public class Location {
 			return Score.getMaxScore();
 		return (new BestReviews(this)).getTotalRatingByAvg();
 	}
-	
 
 	public LatLng getCoordinates() {
 		return this.coordinates;
 	}
-	
-	public void addReviews(Collection<Review> revs){
+
+	public void addReviews(Collection<Review> revs) {
 		reviews.addAll(revs);
 	}
 
@@ -163,7 +163,7 @@ public class Location {
 			return review;
 		logger.error("This review doesn't exist in current location! {}", this.coordinates);
 		return null;
-		
+
 	}
 
 	@Override
@@ -172,10 +172,10 @@ public class Location {
 				&& ((Location) o).locationSubType.equals(locationSubType)
 				&& ((Location) o).locationType.equals(locationType);
 	}
-	
+
 	@Override
 	public int hashCode() {
-		return Double.hashCode(coordinates.lat)+Double.hashCode(coordinates.lng);
+		return Double.hashCode(coordinates.lat) + Double.hashCode(coordinates.lng);
 	}
 
 	public LocationTypes getLocationType() {
@@ -185,39 +185,39 @@ public class Location {
 	public LocationSubTypes getLocationSubType() {
 		return locationSubType;
 	}
-	
+
 	public enum LocationSubTypes {
-		Restaurant, Hotel, Cafe, Default;
-		
-		public String getSearchType(){
-				switch(this){
-				case Default:
-					return "";
-				case Hotel:
-					return "Hotel";
-				case Restaurant:
-					return "Restaurant";
-				case Cafe:
-					return "Cafe";
-				default:
-					break;
+		RESTAURANT, HOTEL, CAFE, DEFAULT;
+
+		public String getSearchType() {
+			switch (this) {
+			case DEFAULT:
+				return PlaceType.STORE.toString().toUpperCase();
+			case HOTEL:
+				return PlaceType.LODGING.toString().toUpperCase();
+			case RESTAURANT:
+				return PlaceType.RESTAURANT.toString().toUpperCase();
+			case CAFE:
+				return PlaceType.CAFE.toString().toUpperCase();
+			default:
+				break;
 			}
-				return null;
+			return null;
 		}
-		
-		public LocationTypes getParentype(){
+
+		public LocationTypes getParentype() {
 			for (LocationTypes lt : LocationTypes.values()) {
-				if(lt.subTypes.contains(this)){
+				if (lt.subTypes.contains(this)) {
 					return lt;
 				}
-			} 
+			}
 			return null;
 		}
 	}
 
 	public enum LocationTypes {
-		Coordinate(LocationSubTypes.Default), Facility(LocationSubTypes.Restaurant, LocationSubTypes.Hotel,
-				LocationSubTypes.Cafe, LocationSubTypes.Default), Street(LocationSubTypes.Default);
+		Coordinate(LocationSubTypes.DEFAULT), Facility(LocationSubTypes.RESTAURANT, LocationSubTypes.HOTEL,
+				LocationSubTypes.CAFE, LocationSubTypes.DEFAULT), Street(LocationSubTypes.DEFAULT);
 
 		private List<LocationSubTypes> subTypes = new ArrayList<>();
 
@@ -225,11 +225,11 @@ public class Location {
 			for (LocationSubTypes st : s)
 				subTypes.add(st);
 		}
-		
+
 		public List<LocationSubTypes> getSubTypes() {
 			return Collections.unmodifiableList(subTypes);
 		}
-		
+
 	}
 
 }

@@ -24,7 +24,7 @@ import smartcity.accessibility.search.SearchQueryResult;
 //localhost:8090/locationsInRadius?srcLat=39.9129266808733&srcLng=-104.7956711
 @RestController
 public class LocationsInRadiusService {
-	private static final double radius = 0.001;
+	private static final double radius = 0.05;
 
 	@RequestMapping(value = "/locationsInRadius")
 	@ResponseBody
@@ -35,7 +35,7 @@ public class LocationsInRadiusService {
 			SearchQuery sq = SearchQuery.TypeSearch("");
 			Location dummy = new Location();
 			dummy.setCoordinates(new LatLng(srcLat, srcLng));
-			SearchQueryResult sqr = sq.searchByType(dummy, radius);
+			SearchQueryResult sqr = sq.searchByType(dummy, (int)(radius*1000));
 			List<Location> retVal = AbstractLocationManager.instance().getLocationsAround(new LatLng(srcLat, srcLng),
 					radius, null);
 			sq.waitOnSearch();

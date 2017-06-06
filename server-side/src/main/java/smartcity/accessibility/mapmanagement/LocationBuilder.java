@@ -23,7 +23,7 @@ public class LocationBuilder {
 	public LocationBuilder(){
 		l = new Location();
 		l.setLocationType(LocationTypes.Coordinate);
-		l.setLocationSubType(LocationSubTypes.Default);
+		l.setLocationSubType(LocationSubTypes.DEFAULT);
 	}
 	
 	public Location build(){

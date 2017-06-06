@@ -21,8 +21,9 @@
         </encoder>
     </appender>
 
-    <root level="info" additivity="false">
+    <root level="debug" additivity="false">
         <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
     </root>
 	
 	<logger name="org.parse4j" level="OFF" />

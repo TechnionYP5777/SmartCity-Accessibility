@@ -9,6 +9,7 @@ import org.junit.experimental.categories.Category;
 import org.parse4j.ParseException;
 
 import com.google.maps.model.LatLng;
+import com.google.maps.model.PlaceType;
 
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.socialnetwork.Review;
@@ -79,6 +80,13 @@ public class LocationTest {
 		assertEquals(l.getRating(2).getScore(),3);
 		assertEquals(l.getRating(5).getScore(), 3);
 		
+	}
+	
+	@Test
+	@Category(UnitTests.class)
+	public void subTypeTest() {
+		PlaceType r = PlaceType.valueOf(Location.LocationSubTypes.RESTAURANT.getSearchType());
+		assertEquals(PlaceType.RESTAURANT, r);
 	}
 
 	

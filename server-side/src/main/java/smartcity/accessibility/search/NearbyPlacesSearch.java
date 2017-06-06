@@ -47,11 +47,11 @@ public class NearbyPlacesSearch {
 	 *            - a callback which gets a list of nearby places and does a
 	 *            desired operation with it in the "done" method
 	 */
-	public static void findNearbyPlaces(Location initLocation, double radius, List<String> kindsOfLocations,
+	public static void findNearbyPlaces(Location initLocation, int radius, List<String> kindsOfLocations,
 			ICallback<List<Location>> c) {
 		GeoApiContext context = SearchQuery.getContext();
 		List<PlaceType> l = kindsOfLocations.stream().map(PlaceType::valueOf).collect(Collectors.toList());
-		NearbySearchRequest nsr = new NearbySearchRequest(context).radius((int) radius)
+		NearbySearchRequest nsr = new NearbySearchRequest(context).radius( radius)
 				.location(initLocation.getCoordinates()).type(l.toArray(new PlaceType[l.size()]));
 		nsr.setCallback(new Callback<PlacesSearchResponse>() {
 			@Override

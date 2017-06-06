@@ -26,8 +26,9 @@ public class ComplexSearchServiece {
 
 		SearchQuery $ = null;
 		SearchQueryResult esr;
+		
 		try {
-			$ = SearchQuery.TypeSearch(type);
+			$ = SearchQuery.TypeSearch(Location.LocationSubTypes.valueOf(type.toUpperCase()).getSearchType());
 			esr = $.searchByType(startLoc, radius);
 		} catch (illigalString | InterruptedException e) {
 			throw new SearchFailed("illegal strings");

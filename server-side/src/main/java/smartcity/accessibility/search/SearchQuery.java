@@ -154,18 +154,18 @@ public class SearchQuery {
 		return !isAdress ? null : adressSearch(null, latlng);
 	}
 
-	protected SearchQueryResult Search(Location initLocation, double radius) {
+	protected SearchQueryResult Search(Location initLocation, int radius) {
 		return isAdress ? null : typeSearch(initLocation, radius);
 	}
 
-	protected SearchQueryResult Search(String initLocation, double radius) throws illigalString, InterruptedException {
+	protected SearchQueryResult Search(String initLocation, int radius) throws illigalString, InterruptedException {
 		SearchQuery s1 = adressSearch(initLocation);
 		SearchQueryResult sqr1 = s1.SearchByAddress();
 		s1.waitOnSearch();
 		return isAdress ? null : typeSearch(sqr1.getLocations().get(0), radius);
 	}
 
-	private SearchQueryResult typeSearch(Location initLocation, double radius) {
+	private SearchQueryResult typeSearch(Location initLocation, int radius) {
 		SetSearchStatus(SearchStage.Running);
 		List<String> kindsOfLocations = new ArrayList<>();
 		if (queryString.equals("")) {
@@ -175,6 +175,7 @@ public class SearchQuery {
 		} else {
 			kindsOfLocations.add(queryString);
 		}
+		logger.debug("finding nearby places with {}, radius {}, kinds {}", initLocation, radius, kindsOfLocations);
 		NearbyPlacesSearch.findNearbyPlaces(initLocation, radius, kindsOfLocations, res -> {
 			places = res;
 			SetSearchStatus(SearchStage.Done);
@@ -237,11 +238,11 @@ public class SearchQuery {
 		return Search(c);
 	}
 
-	public SearchQueryResult searchByType(Location initLocation, double radius) {
+	public SearchQueryResult searchByType(Location initLocation, int radius) {
 		return Search(initLocation, radius);
 	}
 
-	public SearchQueryResult searchByType(String initLocation, double radius)
+	public SearchQueryResult searchByType(String initLocation, int radius)
 			throws illigalString, InterruptedException {
 		return Search(initLocation, radius);
 	}
