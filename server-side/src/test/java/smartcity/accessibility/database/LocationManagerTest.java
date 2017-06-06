@@ -185,7 +185,7 @@ public class LocationManagerTest {
 		db = Mockito.mock(Database.class);
 		m = new HashMap<>();
 		m.put(LocationManager.NAME_FIELD_NAME, "name");
-		m.put(LocationManager.SUB_TYPE_FIELD_NAME, "Default");
+		m.put(LocationManager.SUB_TYPE_FIELD_NAME, "DEFAULT");
 		m.put(LocationManager.TYPE_FIELD_NAME, "Coordinate");
 		m.put(LocationManager.LOCATION_FIELD_NAME, new ParseGeoPoint(1, 1));
 		m.put(LocationManager.ID_FIELD_NAME, "MY_ID");
@@ -194,7 +194,7 @@ public class LocationManagerTest {
 		l.add(m);
 		m2 = new HashMap<>();
 		m2.put(LocationManager.NAME_FIELD_NAME, "name2");
-		m2.put(LocationManager.SUB_TYPE_FIELD_NAME, "Default");
+		m2.put(LocationManager.SUB_TYPE_FIELD_NAME, "DEFAULT");
 		m2.put(LocationManager.TYPE_FIELD_NAME, "Street");
 		m2.put(LocationManager.LOCATION_FIELD_NAME, new ParseGeoPoint(2, 2));
 		m2.put(LocationManager.ID_FIELD_NAME, "MY_ID2");
@@ -203,7 +203,7 @@ public class LocationManagerTest {
 
 		m3 = new HashMap<>();
 		m3.put(LocationManager.NAME_FIELD_NAME, "name3");
-		m3.put(LocationManager.SUB_TYPE_FIELD_NAME, "Default");
+		m3.put(LocationManager.SUB_TYPE_FIELD_NAME, "DEFAULT");
 		m3.put(LocationManager.TYPE_FIELD_NAME, "Street");
 		m3.put(LocationManager.LOCATION_FIELD_NAME, new ParseGeoPoint(3, 3));
 		m3.put(LocationManager.ID_FIELD_NAME, "MY_ID3");
