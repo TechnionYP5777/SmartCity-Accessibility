@@ -78,8 +78,13 @@
 
         <ion-item class="inputs">
           <ion-label class="main-label">Amount</ion-label>
-          <ion-input [(ngModel)] = "n" (change)="showUsers(n)" type="number" placeholder="Insert a number between 1 to 20"></ion-input>
+          <ion-input [(ngModel)] = "n" type="number" placeholder="Insert a number between 1 to 20"></ion-input>
         </ion-item>
+		
+		 <ion-buttons>
+          <button ion-button round (click)="showUsers(n)">Show Me</button>
+        </ion-buttons>
+		
         </ion-card-content>
     </ion-card>
 

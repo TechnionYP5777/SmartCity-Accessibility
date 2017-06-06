@@ -46,7 +46,7 @@ export class AdminPage {
 	  this.presentLoadingCustom();
   }
   
-presentLoadingCustom() {
+	presentLoadingCustom() {
             this.loading = this.loadingCtrl.create({
             spinner: 'bubbles',
 		    showBackdrop: false,
