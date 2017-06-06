@@ -1,1 +1,0 @@
-web: mvn -f server-side/pom.xml clean install exec:java -Dexec.mainClass="smartcity.accessibility.services.Application" -Dserver.port=8090 -DskipTests
