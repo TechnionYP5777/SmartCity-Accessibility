@@ -1,0 +1,7 @@
+<project>
+	<artifactId>root</artifactId>
+	<packaging>pom</packaginf>
+	<modules>
+		<module>server-side</module>
+	</modules>
+</project>
