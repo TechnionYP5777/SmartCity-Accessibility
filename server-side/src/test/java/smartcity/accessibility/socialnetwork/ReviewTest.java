@@ -33,7 +33,7 @@ public class ReviewTest {
 	@Test
 	@Category(UnitTests.class)
 	public void getLocationTest() {
-		assert(r1.getLocation().getCoordinates().equals(new LatLng(39.750307, -104.999472)));
+		assertEquals(new LatLng(39.75030700, -104.99947200).toString(),r1.getLocation().getCoordinates().toString());
 	}
 	
 	@Test

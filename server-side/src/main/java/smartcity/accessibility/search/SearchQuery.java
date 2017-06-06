@@ -15,11 +15,10 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.GeocodingApiRequest;
 import com.google.maps.PendingResult.Callback;
-
-import smartcity.accessibility.exceptions.illigalString;
-
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
+
+import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
@@ -29,7 +28,7 @@ import smartcity.accessibility.mapmanagement.LocationBuilder;
  */
 public class SearchQuery {
 	private static final String DefaultQueryName = null;
-	private static final String API_KEY = "AIzaSyBBhSkyAqU3-GqrYXrKoH87i9tZOZhsLLg";
+	private static final String API_KEY = "AIzaSyAxFHT3dheK_oTyQu6lERytdi83uaqg5m8";
 	private static Logger logger = LoggerFactory.getLogger(SearchQuery.class);
 	private static final GeoApiContext context;
 	public List<Location> places; // the nearby places result

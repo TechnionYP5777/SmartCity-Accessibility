@@ -51,7 +51,7 @@ public class LocationTest {
 	@Test
 	@Category(UnitTests.class)
 	public void getCoordinatesTest() {
-		assert (l.getCoordinates().equals(new LatLng(31.90588, 34.997571)));
+		assertEquals(new LatLng(31.90588000, 34.99757100).toString(),l.getCoordinates().toString());
 	}
 
 	@Test

@@ -53,12 +53,12 @@ public class NearbyPlacesSearch {
 		List<PlaceType> l = kindsOfLocations.stream().map(PlaceType::valueOf).collect(Collectors.toList());
 		NearbySearchRequest nsr = new NearbySearchRequest(context).radius((int) radius)
 				.location(initLocation.getCoordinates()).type(l.toArray(new PlaceType[l.size()]));
-
 		nsr.setCallback(new Callback<PlacesSearchResponse>() {
 			@Override
 			public void onResult(PlacesSearchResponse arg0) {
 				ArrayList<Location> ret = new ArrayList<>();
 				PlacesSearchResult[] rs = arg0.results;
+				logger.info("got {} results", rs.length);
 				for (int i = 0; i < rs.length; ++i) {
 					PlacesSearchResult result = rs[i];
 					LatLng l = result.geometry.location;

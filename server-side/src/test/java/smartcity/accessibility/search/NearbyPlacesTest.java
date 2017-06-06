@@ -20,9 +20,9 @@ public class NearbyPlacesTest {
 	@Category(NetworkTests.class)
 	public void nearByPlacesTest() {
 		LatLng c = new LatLng(31.90588, 34.997571); // Modi'in Yehalom St, 20
-		double radius = 1000000;
+		double radius = 10000;
 		ArrayList<String> kindsOfLocations = new ArrayList<String>();
-		kindsOfLocations.add("restaurant");
+		kindsOfLocations.add("RESTAURANT");
 		Location initLocation = new LocationBuilder().setCoordinates(c).build();
 		NearbyPlacesSearch.findNearbyPlaces(initLocation, radius, kindsOfLocations, ls -> {
 			System.out.println("the length is : " + ls.size());
