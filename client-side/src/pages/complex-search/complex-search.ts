@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams , Events, AlertController} from 'ionic-angular';
+import { NavController, NavParams , Events, AlertController, LoadingController} from 'ionic-angular';
 import {ComplexSearchService} from './complexSearchService';
 import { SearchService } from '../mapview/searchService';
 
@@ -18,13 +18,17 @@ export class ComplexSearchPage {
   gender: string;
   minRating: number;
   raduis: number;
+  loading: any;
   music: string;
   initLoc: string;
   output: any;
   callback: any;
   startLocationCoordinates: any;
 
-  constructor(public events: Events, public searchService: SearchService,public navCtrl: NavController, public navParams: NavParams, public complexSearchService : ComplexSearchService, public alertCtrl: AlertController) {
+  constructor(public events: Events, public searchService: SearchService,
+				public navCtrl: NavController, public navParams: NavParams,
+				public complexSearchService : ComplexSearchService,
+				public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     
   }
 
@@ -37,6 +41,7 @@ export class ComplexSearchPage {
   }
 
   callComplexSearch(type, radius, initLoc, minRating) {
+	  this.presentLoadingCustom();
 		this.searchService.search(initLoc).subscribe(
 			data => {
 				this.startLocationCoordinates = data.coordinates;
@@ -49,6 +54,7 @@ export class ComplexSearchPage {
 			
 			this.events.publish('complexSearch:pressed', data, this.startLocationCoordinates);
         });
+		this.loading.dismiss();
 		this.navCtrl.pop();
 
 	
@@ -65,5 +71,14 @@ export class ComplexSearchPage {
 	
 	handleError(err) {
 		this.presentAlert("error is: " + err.error + " message is: " + err.message);
+    }
+	
+	presentLoadingCustom() {
+            this.loading = this.loadingCtrl.create({
+            spinner: 'bubbles',
+		    showBackdrop: false,
+		    cssClass: 'loader'
+        });
+        this.loading.present();
     }
 }
