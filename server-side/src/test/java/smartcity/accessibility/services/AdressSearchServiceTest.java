@@ -1,5 +1,6 @@
 package smartcity.accessibility.services;
 
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -11,6 +12,9 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.util.Assert;
+
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.AbstractUserProfileManager;
@@ -46,4 +50,14 @@ public class AdressSearchServiceTest extends ServiceTest{
 		Assert.assertTrue(res.contains(":31.906953"));
 		Assert.assertTrue(res.contains("Yahalom St 70, Modi'in-Maccabim-Re'ut, Israel"));*/
 	}
+	
+	@SuppressWarnings("deprecation")
+	@Test
+	@Category(UnitTests.class)
+	public void banana() throws Exception {
+	/*	String res = AdressSearchService.getAdress(new LatLng(40.714224,-73.961452));
+		Assert.assertEquals("277 Bedford Ave, Brooklyn, NY 11211, USA", res);*/
+	}
+	
+	
 }

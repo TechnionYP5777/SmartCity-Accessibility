@@ -3,6 +3,7 @@ import { NavController, NavParams , ModalController, ViewController} from 'ionic
 import { LocationsInRadiusService } from './LocationsInRadiusService';
 import { AddLocationPage } from '../add-location/add-location';
 import { GetReviewsPage } from '../reviews/reviews'; 
+import { SearchService } from '../mapview/searchService';
 
 @Component({
   selector: 'page-location-list',
@@ -17,12 +18,18 @@ export class LocationListPage {
 	location: any;
 	pleaseWait: any;
 	index: any;
-	constructor(public viewCtrl: ViewController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public locationsInRadius: LocationsInRadiusService) {
+	adress: any;
+	
+	constructor(public viewCtrl: ViewController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public locationsInRadius: LocationsInRadiusService, public searchService : SearchService) {
 		this.lat = navParams.get('lat');
 		this.lng = navParams.get('lng');	
 		this.output = "Calculating...";
 		this.pleaseWait = true;
 		this.locations = [];
+		this.adress = "";
+		this.searchService.getAdress(this.lat, this.lng).subscribe(data => {	
+			this.adress = data.res;
+		});
 		this.locationsInRadius.GetLocationsInRadiusFrom(this.lat, this.lng).subscribe(data => {	
 			for(var count = 0; count < data.length; count++){
 				this.locations[count] = data[count];

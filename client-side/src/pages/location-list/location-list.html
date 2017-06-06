@@ -15,8 +15,11 @@
 <ion-content *ngIf="!pleaseWait">
 	<ion-list>
 		<ion-list-header>
-		  Location in radius from: {{lat}}, lng: {{lng}}
+		  Location in radius from: {{adress}}:{{lat}},{{lng}}
 		</ion-list-header>
+		<div text-center>
+		locations at: {{adress}}
+		</div>	
         <button ion-item *ngFor="let location of locations" (click)="cc(location)" class="buttons">{{location.name}}</button>
 		<button ion-button round (click)="addLocation()" class="buttons"> add new location </button>
 	</ion-list>
