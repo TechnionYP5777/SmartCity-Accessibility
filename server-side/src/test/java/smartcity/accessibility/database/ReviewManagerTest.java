@@ -19,7 +19,7 @@ import org.mockito.Mockito;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.teamdev.jxmaps.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.exceptions.ObjectNotFoundException;
@@ -182,7 +182,7 @@ public class ReviewManagerTest {
 		lr.add(rev1);
 		Location sample = new LocationBuilder()
 				.addReviews(lr)
-				.setCoordinates(new LatLng())
+				.setCoordinates(new LatLng(0.0,0.0))
 				.setName("Hello")
 				.build();
 		

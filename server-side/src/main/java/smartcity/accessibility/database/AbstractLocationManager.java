@@ -3,7 +3,7 @@ package smartcity.accessibility.database;
 import java.util.List;
 import java.util.Optional;
 
-import com.teamdev.jxmaps.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.mapmanagement.Location;

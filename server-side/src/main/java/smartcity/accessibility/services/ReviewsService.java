@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.teamdev.jxmaps.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.database.AbstractReviewManager;
@@ -15,7 +15,6 @@ import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
-import smartcity.accessibility.services.exceptions.LocationDoesNotExistException;
 import smartcity.accessibility.services.exceptions.UserDoesNotExistException;
 import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
 import smartcity.accessibility.socialnetwork.Review;

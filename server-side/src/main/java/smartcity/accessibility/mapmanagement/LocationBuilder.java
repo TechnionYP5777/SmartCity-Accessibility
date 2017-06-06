@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.teamdev.jxmaps.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
@@ -23,7 +23,7 @@ public class LocationBuilder {
 	public LocationBuilder(){
 		l = new Location();
 		l.setLocationType(LocationTypes.Coordinate);
-		l.setLocationSubType(LocationSubTypes.Default);
+		l.setLocationSubType(LocationSubTypes.DEFAULT);
 	}
 	
 	public Location build(){

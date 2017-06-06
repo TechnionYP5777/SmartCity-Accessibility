@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.teamdev.jxmaps.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.mapmanagement.Location;
@@ -15,7 +15,7 @@ import smartcity.accessibility.services.exceptions.AddLocationFailed;
 
 @RestController
 public class AddLocationService {
-	private static final String failedResult = "{}"; 
+	//private static final String failedResult = "{}"; 
 	@RequestMapping(value = "/addLocation", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public Location getLocationsInRadius(@RequestParam("name") String name, @RequestParam("srcLat") Double srcLat,

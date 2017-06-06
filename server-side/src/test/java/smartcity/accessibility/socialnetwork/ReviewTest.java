@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.teamdev.jxmaps.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.mapmanagement.LocationBuilder;;
@@ -33,7 +33,7 @@ public class ReviewTest {
 	@Test
 	@Category(UnitTests.class)
 	public void getLocationTest() {
-		assert(r1.getLocation().getCoordinates().equals(new LatLng(39.750307, -104.999472)));
+		assertEquals(new LatLng(39.75030700, -104.99947200).toString(),r1.getLocation().getCoordinates().toString());
 	}
 	
 	@Test

@@ -10,7 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import com.teamdev.jxmaps.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
@@ -36,7 +36,7 @@ public class BestReviewsTest {
 		u2 = UserBuilder.RegularUser("Koral2", "123", "");
 		u3 = UserBuilder.Admin("Simba", "355", "");
 		LatLng c = new LatLng(39.750307, -104.999472);
-		l = new LocationBuilder().setCoordinates(c.getLat(), c.getLng()).build();
+		l = new LocationBuilder().setCoordinates(c.lat, c.lng).build();
 		r1 = new Review(l, Score.getMinScore(), "very unaccessible place!", u1.getProfile());
 		r2 = new Review(l, 2, "middle accessibility level", u2.getProfile());
 		r3 = new Review(l, Score.getMaxScore(), "high accessibility level", u3.getProfile());

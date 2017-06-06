@@ -5,12 +5,14 @@ import java.util.concurrent.ExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.exceptions.UsernameAlreadyTakenException;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.services.exceptions.SignUpFailed;
 import smartcity.accessibility.services.exceptions.UserDoesNotExistException;
 import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
@@ -71,13 +73,4 @@ public class LogInService {
 		return userInfo;
 	}
 	
-	static ExtendedMapView getMapView(String token){
-		try{
-			UserInfo userInfo = getUserInfo(token);
-			return userInfo.getMapView();
-		}catch (UserIsNotLoggedIn e) {
-			return JxMapsFunctionality.getStaticMapView();
-		}
-		
-	}
 }

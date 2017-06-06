@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.teamdev.jxmaps.LatLng;
+import com.google.maps.model.LatLng;
 
 import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.exceptions.illigalString;
-import smartcity.accessibility.mapmanagement.JxMapsFunctionality.ExtendedMapView;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.search.SearchQuery;
@@ -29,24 +28,24 @@ import smartcity.accessibility.search.SearchQueryResult;
 //localhost:8090/locationsInRadius?srcLat=39.9129266808733&srcLng=-104.7956711
 @RestController
 public class LocationsInRadiusService {
-	private static final double Radius = 0.001;
-	@RequestMapping(value="/locationsInRadius")
-	@ResponseBody public List<Location> getLocationsInRadius(@RequestHeader("authToken") String token, @RequestParam("srcLat") Double srcLat,
-			@RequestParam("srcLng") Double srcLng) {	
+	private static final double RADIUS = 0.05;
+
+	@RequestMapping(value = "/locationsInRadius")
+	@ResponseBody
+	public List<Location> getLocationsInRadius(@RequestHeader("authToken") String token,
+			@RequestParam("srcLat") Double srcLat, @RequestParam("srcLng") Double srcLng) {
 		try {
-			ExtendedMapView mapView = LogInService.getMapView(token);
-			synchronized(mapView){
-				SearchQuery sq = SearchQuery.TypeSearch("", mapView);
-				Location dummy = new Location();
-				dummy.setCoordinates(new LatLng(srcLat, srcLng));
-				SearchQueryResult sqr = sq.searchByType(dummy, Radius);
-				List<Location> retVal = AbstractLocationManager.instance().getLocationsAround(new LatLng(srcLat, srcLng), Radius, null);	
-				sq.waitOnSearch();
-				return preferDBLocations(sqr.getLocations(), retVal);
-			}
+			SearchQuery sq = SearchQuery.TypeSearch("");
+			Location dummy = new Location();
+			dummy.setCoordinates(new LatLng(srcLat, srcLng));
+			SearchQueryResult sqr = sq.searchByType(dummy, (int)(RADIUS*1000));
+			List<Location> retVal = AbstractLocationManager.instance().getLocationsAround(new LatLng(srcLat, srcLng),
+					RADIUS, null);
+			sq.waitOnSearch();
+			return preferDBLocations(sqr.getLocations(), retVal);
 		} catch (illigalString | InterruptedException e) {
-			return null;
-		} 
+			return new ArrayList<>();
+		}
 	}
 	
 	List<Location> preferDBLocations(List<Location> fromGM, List<Location> fromDB){
@@ -56,7 +55,7 @@ public class LocationsInRadiusService {
 			@Override
 			public Location apply(Location arg0) {
 				return new LocationBuilder().setCoordinates(arg0.getCoordinates()).setName(arg0.getName())
-				.setType(Location.LocationTypes.Coordinate).setSubType(Location.LocationSubTypes.Default).build();
+				.setType(Location.LocationTypes.Coordinate).setSubType(Location.LocationSubTypes.DEFAULT).build();
 			}
         });
 		List<Location> retVal = new ArrayList<>();
