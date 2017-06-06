@@ -43,6 +43,7 @@ export class AdminPage {
   showLocations(numOfLocations, radius, initLoc) {
 	  let locations = this.modalCtrl.create(MostRatedLocsPage,{n: numOfLocations, r: radius, l: initLoc});
 	  locations.present();
+	  this.presentLoadingCustom();
   }
   
 presentLoadingCustom() {

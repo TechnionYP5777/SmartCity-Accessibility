@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams, ModalController,App, ViewController, AlertController } from 'ionic-angular';
+import { NavParams, ModalController,App, ViewController, AlertController, Events } from 'ionic-angular';
 import { LocationListPage } from '../location-list/location-list';
 import { AdminService } from '../admin/adminService';
 import { SearchService } from '../mapview/searchService';
@@ -19,7 +19,7 @@ export class MostRatedLocsPage {
    constructor(public viewCtrl: ViewController,public appCtrl: App, 
 			public navParams: NavParams,public modalCtrl: ModalController,
 			public adminService : AdminService, public alertCtrl: AlertController,
-			public searchService: SearchService) {
+			public searchService: SearchService, public events: Events) {
 	this.num = navParams.get('n');
 	this.radius = navParams.get('r');
 	this.initLoc = navParams.get('l');
@@ -38,6 +38,7 @@ export class MostRatedLocsPage {
 		while(this.coordinates == null){continue;}
 	   this.adminService.mostRatedLocs(this.radius, this.num, this.coordinates.lat, this.coordinates.lng).subscribe(data => {
 		  this.locations = data;
+		  this.events.publish('gotResults');
 	  });
 	 
   }
