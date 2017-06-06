@@ -1,6 +1,6 @@
 <project>
 	<artifactId>root</artifactId>
-	<packaging>pom</packaginf>
+	<packaging>pom</packaging>
 	<modules>
 		<module>server-side</module>
 	</modules>
