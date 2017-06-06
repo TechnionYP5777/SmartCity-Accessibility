@@ -22,7 +22,6 @@
     </appender>
 
     <root level="info" additivity="false">
-        <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>
 	
