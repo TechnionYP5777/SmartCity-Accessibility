@@ -216,8 +216,8 @@ public class Location {
 	}
 
 	public enum LocationTypes {
-		Coordinate(LocationSubTypes.DEFAULT), Facility(LocationSubTypes.RESTAURANT, LocationSubTypes.HOTEL,
-				LocationSubTypes.CAFE, LocationSubTypes.DEFAULT), Street(LocationSubTypes.DEFAULT);
+		COORDINATE(LocationSubTypes.DEFAULT), FACILITY(LocationSubTypes.RESTAURANT, LocationSubTypes.HOTEL,
+				LocationSubTypes.CAFE, LocationSubTypes.DEFAULT), STREET(LocationSubTypes.DEFAULT);
 
 		private List<LocationSubTypes> subTypes = new ArrayList<>();
 

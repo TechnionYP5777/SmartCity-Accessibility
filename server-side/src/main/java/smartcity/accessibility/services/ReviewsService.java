@@ -33,15 +33,15 @@ public class ReviewsService {
 		
 		Location loc = AbstractLocationManager.instance().
 				getLocation(new LatLng(lat, lng),
-				LocationTypes.valueOf(type),
-				LocationSubTypes.valueOf(subtype),
+				LocationTypes.valueOf(type.toUpperCase()),
+				LocationSubTypes.valueOf(subtype.toUpperCase()),
 				null).orElse(null);
 		
 		if(loc == null){ //Location "l" doesn't exist
 			loc = new Location();
 			loc.setCoordinates(new LatLng(lat, lng));
-			loc.setLocationType(LocationTypes.valueOf(type));
-			loc.setLocationSubType(LocationSubTypes.valueOf(subtype));
+			loc.setLocationType(LocationTypes.valueOf(type.toUpperCase()));
+			loc.setLocationSubType(LocationSubTypes.valueOf(subtype.toUpperCase()));
 			loc.setName(name);
 			AbstractLocationManager.instance().uploadLocation(loc, null);
 		}
@@ -66,8 +66,8 @@ public class ReviewsService {
 		LatLng coords = new LatLng(lat, lng);
 		Location loc = AbstractLocationManager.instance().getLocation(
 				coords,
-				LocationTypes.valueOf(type),
-				LocationSubTypes.valueOf(subtype),
+				LocationTypes.valueOf(type.toUpperCase()),
+				LocationSubTypes.valueOf(subtype.toUpperCase()),
 				null).orElse(null);
 			
 

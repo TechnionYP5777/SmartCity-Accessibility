@@ -55,7 +55,7 @@ public class LocationsInRadiusService {
 			@Override
 			public Location apply(Location arg0) {
 				return new LocationBuilder().setCoordinates(arg0.getCoordinates()).setName(arg0.getName())
-				.setType(Location.LocationTypes.Coordinate).setSubType(Location.LocationSubTypes.DEFAULT).build();
+				.setType(Location.LocationTypes.COORDINATE).setSubType(Location.LocationSubTypes.DEFAULT).build();
 			}
         });
 		List<Location> retVal = new ArrayList<>();

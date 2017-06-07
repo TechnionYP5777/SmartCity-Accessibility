@@ -41,15 +41,15 @@ public class AddReviewService {
 		LatLng coordinates = new LatLng(lat, lng);
 		Location l = AbstractLocationManager.instance().
 				getLocation(coordinates,
-				LocationTypes.valueOf(type),
-				LocationSubTypes.valueOf(subtype),
+				LocationTypes.valueOf(type.toUpperCase()),
+				LocationSubTypes.valueOf(subtype.toUpperCase()),
 				null).orElse(null);
 		
 		if(l == null){ //Location "l" doesn't exist
 			l = new Location();
 			l.setCoordinates(coordinates);
-			l.setLocationType(LocationTypes.valueOf(type));
-			l.setLocationSubType(LocationSubTypes.valueOf(subtype));
+			l.setLocationType(LocationTypes.valueOf(type.toUpperCase()));
+			l.setLocationSubType(LocationSubTypes.valueOf(subtype.toUpperCase()));
 			l.setName(name);
 			AbstractLocationManager.instance().uploadLocation(l, null);
 		}

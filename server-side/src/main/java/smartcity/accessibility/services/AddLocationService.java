@@ -38,7 +38,7 @@ public class AddLocationService {
 		}
 	}
 
-	private String Capitilize(String sstype) {
+	/*private String Capitilize(String sstype) {
 		return sstype.substring(0, 1).toUpperCase() + sstype.substring(1);
-	}
+	} unused, put it in comment -- Alex*/
 }

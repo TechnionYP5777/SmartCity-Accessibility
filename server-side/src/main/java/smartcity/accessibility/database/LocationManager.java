@@ -59,8 +59,8 @@ public class LocationManager extends AbstractLocationManager {
 	public static Location fromMap(Map<String, Object> m) {
 		LocationBuilder lb = new LocationBuilder();
 		lb.setName(m.get(NAME_FIELD_NAME).toString());
-		lb.setType(LocationTypes.valueOf(m.get(TYPE_FIELD_NAME).toString()));
-		lb.setSubType(LocationSubTypes.valueOf(m.get(SUB_TYPE_FIELD_NAME).toString()));
+		lb.setType(LocationTypes.valueOf(m.get(TYPE_FIELD_NAME).toString().toUpperCase()));
+		lb.setSubType(LocationSubTypes.valueOf(m.get(SUB_TYPE_FIELD_NAME).toString().toUpperCase()));
 		ParseGeoPoint pgp = (ParseGeoPoint) m.get(LOCATION_FIELD_NAME);
 		lb.setCoordinates(pgp.getLatitude(), pgp.getLongitude());
 		if (!"".equals(m.get(SEGMENT_ID_FIELD_NAME)))

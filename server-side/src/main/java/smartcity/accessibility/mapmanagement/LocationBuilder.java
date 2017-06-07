@@ -22,12 +22,12 @@ public class LocationBuilder {
 
 	public LocationBuilder(){
 		l = new Location();
-		l.setLocationType(LocationTypes.Coordinate);
+		l.setLocationType(LocationTypes.COORDINATE);
 		l.setLocationSubType(LocationSubTypes.DEFAULT);
 	}
 	
 	public Location build(){
-		if (l.getLocationType().equals(LocationTypes.Street) && l.getSegmentId() == null) {
+		if (l.getLocationType().equals(LocationTypes.STREET) && l.getSegmentId() == null) {
 			logger.error("cannot build locaiton of type street with no segmentId");
 			return null;
 		}
