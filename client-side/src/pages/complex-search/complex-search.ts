@@ -41,6 +41,14 @@ export class ComplexSearchPage {
   }
 
   callComplexSearch(type, radius, initLoc, minRating) {
+	  if (radius < 0) {
+			this.presentAlert('radius must be a positive number');
+			return;
+	  }
+	  if (!initLoc) {
+			this.presentAlert('You did not entered any initial location');
+			return;
+	  }
 	  this.presentLoadingCustom();
 		this.searchService.search(initLoc).subscribe(
 			data => {
@@ -70,7 +78,7 @@ export class ComplexSearchPage {
 	}
 	
 	handleError(err) {
-		this.presentAlert("error is: " + err.error + " message is: " + err.message);
+		this.presentAlert("error: " + err.message);
     }
 	
 	presentLoadingCustom() {

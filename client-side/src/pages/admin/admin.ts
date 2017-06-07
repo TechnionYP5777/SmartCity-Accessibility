@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, NavParams, LoadingController, Events } from 'ionic-angular';
+import { NavController, ModalController, NavParams, LoadingController, Events, AlertController } from 'ionic-angular';
 import { HelpfulUsersPage } from '../helpfulUsers/helpfulUsers';
 import { MostRatedLocsPage } from '../mostRatedLocs/mostRatedLocs';
 import { AdminService } from './adminService';
@@ -22,7 +22,8 @@ export class AdminPage {
   
   constructor(public navCtrl: NavController, public navParams: NavParams,
 			  public adminService : AdminService, public modalCtrl: ModalController,
-			  public loadingCtrl: LoadingController, public events: Events) {
+			  public loadingCtrl: LoadingController, public events: Events,
+			  public alertCtrl: AlertController) {
 		this.adminService.getUserProfile().subscribe(data => {
 			this.name = data.username;
 			this.rating=data.rating;
@@ -35,6 +36,9 @@ export class AdminPage {
   }
   
   showUsers(n) {
+	  if (n < 0) {
+			throw new RangeError('Parameter must be above ' + n);
+	  }
 	  let users = this.modalCtrl.create(HelpfulUsersPage,{num: n});
 	  users.present();
 	  this.presentLoadingCustom();
@@ -55,4 +59,18 @@ export class AdminPage {
         this.loading.present();
 		 this.events.subscribe('gotResults', () => this.loading.dismiss() );
    }
+   
+   
+   presentAlert(str) {
+		let alert = this.alertCtrl.create({
+		  title: 'Alert',
+		  subTitle: str,
+		  buttons: ['OK']
+		});
+		alert.present();
+	}
+	
+	handleError(err) {
+		this.presentAlert("error is: " + err.error + " message is: " + err.message);
+    }
 }
