@@ -10,21 +10,28 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class ComplexSearchService {
+	headers: any;
 	constructor(public http: Http) {
         this.http = http;
-    }
-
-	complexSearch(type, radius, startLocation, threshold) {
 		try{
 		   var token = JSON.parse(window.sessionStorage.getItem('token')).token;
 		}
 		catch(err){
 			token = "no token";
 		}
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/x-www-form-urlencoded');
-		headers.append('authToken',token);
-           return this.http.get(Constants.serverAddress + '/complexSearch?type=' + type + '&radius=' + radius + '&startLocation=' + startLocation + '&threshold=' + threshold, {headers: headers}).map(res=>res.json());
+		this.headers = new Headers();
+		this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
+		this.headers.append('authToken',token);
+    }
+
+	complexSearchAddress(type, radius, startLocation, threshold) {	
+           return this.http.get(Constants.serverAddress + '/complexSearchAddress?type=' + type + '&radius=' + radius + '&startLocation=' + startLocation + '&threshold=' + threshold, {headers: this.headers}).map(res=>res.json());
 	}
+	
+	complexSearchCoords(type, radius, startLocation, threshold) {	
+           return this.http.get(Constants.serverAddress + '/complexSearchCoords?type=' + type + '&radius=' + radius + '&lat=' + startLocation.lat + '&lng=' + startLocation.lng + '&threshold=' + threshold, {headers: this.headers}).map(res=>res.json());
+	}
+	
+	
 
 }

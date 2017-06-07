@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, NavParams , Events, AlertController, LoadingController} from 'ionic-angular';
 import {ComplexSearchService} from './complexSearchService';
 import { SearchService } from '../mapview/searchService';
+import { Geolocation } from '@ionic-native/geolocation';
+
+declare var google;  
 
 /*
   Generated class for the ComplexSearch page.
@@ -24,7 +27,8 @@ export class ComplexSearchPage {
   output: any;
   callback: any;
   startLocationCoordinates: any;
-
+  useCurrLoc: any = false;
+  geolocation : any;
   constructor(public events: Events, public searchService: SearchService,
 				public navCtrl: NavController, public navParams: NavParams,
 				public complexSearchService : ComplexSearchService,
@@ -45,27 +49,57 @@ export class ComplexSearchPage {
 			this.presentAlert('radius must be a positive number');
 			return;
 	  }
-	  if (!initLoc) {
-			this.presentAlert('You did not entered any initial location');
-			return;
+	  
+	  if (this.useCurrLoc) {
+			this.coordsComplexSearch(type, radius, minRating);
+	  } else {
+			this.addressComplexSearch(type, radius, initLoc, minRating);
+	  }
+	 
+
+	
+   }
+   
+   coordsComplexSearch(type, radius, minRating) {
+		this.presentLoadingCustom();
+		this.geolocation = new Geolocation();
+		this.geolocation.getCurrentPosition().then((position) => {
+			this.startLocationCoordinates = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			this.complexSearchService.complexSearchCoords(type, radius, this.startLocationCoordinates, minRating).subscribe(data => {
+			
+			this.events.publish('complexSearch:pressed', data, this.startLocationCoordinates);
+			});
+			this.loading.dismiss();
+			this.navCtrl.pop();
+		}, (err) => {
+			console.log(err);
+		});
+		
+		
+   }
+   
+   addressComplexSearch(type, radius, initLoc, minRating){
+	 if (!initLoc) {
+		this.presentAlert('You did not entered any initial location');
+		return;
 	  }
 	  this.presentLoadingCustom();
+	  
 		this.searchService.search(initLoc).subscribe(
-			data => {
-				this.startLocationCoordinates = data.coordinates;
-			}
-			, err => {
-				this.handleError(err.json());
-			}
-		);
-	    this.complexSearchService.complexSearch(type, radius, initLoc, minRating).subscribe(data => {
+		data => {
+			this.startLocationCoordinates = data.coordinates;
+		}
+		, err => {
+			this.handleError(err.json());
+		}
+	);
+	 
+	    this.complexSearchService.complexSearchAddress(type, radius, initLoc, minRating).subscribe(data => {
 			
 			this.events.publish('complexSearch:pressed', data, this.startLocationCoordinates);
         });
 		this.loading.dismiss();
 		this.navCtrl.pop();
-
-	
    }
    
    presentAlert(str) {
@@ -89,4 +123,5 @@ export class ComplexSearchPage {
         });
         this.loading.present();
     }
+	
 }

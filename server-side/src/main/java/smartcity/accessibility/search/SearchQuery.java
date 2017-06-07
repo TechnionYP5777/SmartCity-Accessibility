@@ -165,7 +165,7 @@ public class SearchQuery {
 		return isAdress ? null : typeSearch(sqr1.getLocations().get(0), radius);
 	}
 
-	private SearchQueryResult typeSearch(Location initLocation, int radius) {
+	public SearchQueryResult typeSearch(Location initLocation, int radius) {
 		SetSearchStatus(SearchStage.Running);
 		List<String> kindsOfLocations = new ArrayList<>();
 		if (queryString.equals("")) {
