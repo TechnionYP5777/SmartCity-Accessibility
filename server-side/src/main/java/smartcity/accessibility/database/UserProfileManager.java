@@ -1,11 +1,20 @@
 package smartcity.accessibility.database;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.imageio.ImageIO;
+
+import org.parse4j.ParseException;
+import org.parse4j.ParseFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +35,8 @@ public class UserProfileManager extends AbstractUserProfileManager {
 	public static final String USERNAME_FIELD = "username";
 	public static final String DATABASE_CLASS = "UserProfile";
 	public static final String ID_FIELD_NAME = "objectId";
+	public static final String PROFILE_IMAGE = "profileImg";
+
 	private static Logger logger = LoggerFactory.getLogger(UserProfileManager.class);
 	private Database db;
 
@@ -39,13 +50,54 @@ public class UserProfileManager extends AbstractUserProfileManager {
 		m.put(USERNAME_FIELD, u.getUsername());
 		m.put(RATING_FIELD, u.getRating());
 		m.put(NUM_OF_REVIEWS_FIELD, u.getNumOfReviews());
+		putProfileImage(u, m);
 		return m;
+	}
+
+	/**
+	 * @author yael
+	 */
+	private static void putProfileImage(UserProfile u, Map<String, Object> m) {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			ImageIO.write(u.getProfileImg(), "png", baos);
+			baos.flush();
+			byte[] imageInByte = baos.toByteArray();
+			baos.close();
+			ParseFile profileImg = new ParseFile("image_profile", imageInByte);
+			profileImg.save();
+			m.put(PROFILE_IMAGE, profileImg);
+		} catch (IOException | ParseException e) {
+			m.put(PROFILE_IMAGE, null);
+		}
+	}
+
+	/**
+	 * @author yael
+	 */
+	private static void getProfileImage(Map<String, Object> m, UserProfile u) {
+		ParseFile profileImgFile = (ParseFile) m.get(PROFILE_IMAGE);
+		try {
+			profileImgFile.save();
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			byte[] img = profileImgFile.getData();
+			InputStream in = new ByteArrayInputStream(img);
+			BufferedImage profileImg = ImageIO.read(in);
+			u.setProfileImg(profileImg);
+		} catch (ParseException | IOException e) {
+			u.setProfileImg(null);
+		}
 	}
 
 	public static UserProfile fromMap(Map<String, Object> m) {
 		UserProfile u = new UserProfile(m.get(USERNAME_FIELD).toString());
 		u.getHelpfulness().setRating((int) m.get(RATING_FIELD));
 		u.getHelpfulness().setNumOfReviews((int) m.get(NUM_OF_REVIEWS_FIELD));
+		getProfileImage(m, u);
 		logger.info("got review with username {} raintg {} numOfReviews {}", m.get(USERNAME_FIELD), m.get(RATING_FIELD),
 				m.get(NUM_OF_REVIEWS_FIELD));
 		return u;

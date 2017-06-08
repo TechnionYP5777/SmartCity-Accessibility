@@ -1,5 +1,11 @@
 package smartcity.accessibility.socialnetwork;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 /**
  * @author KaplanAlexander
  *
@@ -8,10 +14,23 @@ public class UserProfile {
 
 	private final String username;
 	private Helpfulness hlp;
+	private BufferedImage profileImg;
+
+	public BufferedImage getProfileImg() {
+		return profileImg;
+	}
+
+	public void setProfileImg(BufferedImage profileImg) {
+		this.profileImg = profileImg;
+	}
 
 	public UserProfile(String username) {
 		this.username = username;
 		hlp = new Helpfulness();
+		try {
+			this.profileImg = ImageIO.read(new File("res/profileImgDef.png"));
+		} catch (IOException e) {
+		}
 	}
 
 	public String getUsername() {
@@ -83,5 +102,4 @@ public class UserProfile {
 			return false;
 		return true;
 	}
-
 }
