@@ -117,6 +117,7 @@ public class UserProfileManagerTest {
 		m.put(UserProfileManager.USERNAME_FIELD, "alexaxa");
 		m.put(UserProfileManager.RATING_FIELD, 25);
 		m.put(UserProfileManager.NUM_OF_REVIEWS_FIELD, 5);
+		m.put(UserProfileManager.PROFILE_IMAGE, null);
 		m_noid = new HashMap<>(m);
 		m_noid.remove(UserProfileManager.ID_FIELD_NAME);
 		List<Map<String, Object>> l = new ArrayList<>();
