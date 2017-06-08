@@ -20,7 +20,11 @@ public class UserInformationService {
 	@RequestMapping(value="/userInfo/name")
 	@ResponseBody public UserProfile getUserInfoName(@RequestHeader("authToken") String token) {	
 		UserInfo userInfo = LogInService.getUserInfo(token);
-		return userInfo.getUser().getProfile();
+		UserProfile up =  userInfo.getUser().getProfile();
+		UserProfile copyUserProfile = new UserProfile(up.getUsername());
+		copyUserProfile.setHelpfulness(up.getHelpfulness());
+		copyUserProfile.setProfileImg(null);
+		return copyUserProfile;
 	}
 	
 	@RequestMapping(value="/userInfo/JSONEXAMPLE")
