@@ -3,6 +3,7 @@ package smartcity.accessibility.database;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -76,20 +77,21 @@ public class UserProfileManager extends AbstractUserProfileManager {
 	 * @author yael
 	 */
 	private static void getProfileImage(Map<String, Object> m, UserProfile u) {
-		ParseFile profileImgFile = (ParseFile) m.get(PROFILE_IMAGE);
 		try {
+			ParseFile profileImgFile = (ParseFile) m.get(PROFILE_IMAGE);
+			if(profileImgFile == null){
+				return;
+			}
 			profileImgFile.save();
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
 			byte[] img = profileImgFile.getData();
-			InputStream in = new ByteArrayInputStream(img);
-			BufferedImage profileImg = ImageIO.read(in);
-			u.setProfileImg(profileImg);
+			if (img != null) {
+				InputStream in = new ByteArrayInputStream(img);
+				BufferedImage profileImg = ImageIO.read(in);
+				u.setProfileImg(profileImg);
+			} else {
+				u.setProfileImg(ImageIO.read(new File("res/profileImgDef.png")));
+			}
 		} catch (ParseException | IOException e) {
-			u.setProfileImg(null);
 		}
 	}
 
