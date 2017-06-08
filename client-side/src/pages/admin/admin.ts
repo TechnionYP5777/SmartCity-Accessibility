@@ -37,7 +37,8 @@ export class AdminPage {
   
   showUsers(n) {
 	  if (n < 0) {
-			throw new RangeError('Parameter must be above ' + n);
+			this.presentAlert('Parameter must be a positive number');
+			return;
 	  }
 	  let users = this.modalCtrl.create(HelpfulUsersPage,{num: n});
 	  users.present();
@@ -45,6 +46,14 @@ export class AdminPage {
   }
   
   showLocations(numOfLocations, radius, initLoc) {
+	  if (numOfLocations < 0 ) {
+		  this.presentAlert('The number of locations must be a positive number');
+		  return;
+	  }
+	  if (radius < 0 ) {
+		  this.presentAlert('The radius must be a positive number');
+		  return;
+	  }
 	  let locations = this.modalCtrl.create(MostRatedLocsPage,{n: numOfLocations, r: radius, l: initLoc});
 	  locations.present();
 	  this.presentLoadingCustom();

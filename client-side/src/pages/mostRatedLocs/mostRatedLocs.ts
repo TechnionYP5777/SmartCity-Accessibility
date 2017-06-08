@@ -31,8 +31,12 @@ export class MostRatedLocsPage {
 			this.coordinates = data.coordinates;
 			this.adminService.mostRatedLocs(this.radius, this.num, this.coordinates.lat, this.coordinates.lng).subscribe(data => {
 			  this.locations = data;
+			}, err => {
+			this.handleError(err.json());
 			});
 			
+		} , err => {
+			this.handleError(err.json());
 		});
 		
 		while(this.coordinates == null){continue;}

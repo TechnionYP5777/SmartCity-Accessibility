@@ -67,7 +67,7 @@ export class ComplexSearchPage {
 			this.startLocationCoordinates = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 			this.complexSearchService.complexSearchCoords(type, radius, this.startLocationCoordinates, minRating).subscribe(data => {
 			
-			this.events.publish('complexSearch:pressed', data, this.startLocationCoordinates);
+				this.events.publish('complexSearch:pressed', data, this.startLocationCoordinates);
 			});
 			this.loading.dismiss();
 			this.navCtrl.pop();
