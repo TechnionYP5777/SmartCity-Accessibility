@@ -59,7 +59,7 @@ public class ReviewsService {
     		@RequestParam("username") String username,
     		@RequestParam("likes") Integer like){
 		
-		User u = AddReviewService.getUserFromToken(token);
+		User u = LogInService.getUserInfo(token).getUser();
 		if (u == null)
 			throw new UserDoesNotExistException();
 		
