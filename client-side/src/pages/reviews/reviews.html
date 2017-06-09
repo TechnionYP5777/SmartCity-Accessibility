@@ -26,7 +26,14 @@
 				{{rev.user.username}}
 			</ion-card-title>
 			<ion-card-content>
-				<p>Location score: {{rev.rating.score}}</p>
+				<p><ion-item>
+						<ion-rating
+							[numStars]="5"
+							[readOnly]="true"
+							[value]="rev.rating.score">
+						</ion-rating>
+					</ion-item>
+				</p>
 				<p>{{rev.content}}</p>
 			</ion-card-content>
 			<ion-row>
