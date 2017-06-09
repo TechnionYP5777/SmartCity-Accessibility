@@ -6,6 +6,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author KaplanAlexander
  *
@@ -15,6 +18,8 @@ public class UserProfile {
 	private final String username;
 	private Helpfulness hlp;
 	private BufferedImage profileImg;
+
+	private static Logger logger = LoggerFactory.getLogger(UserProfile.class);
 
 	public BufferedImage getProfileImg() {
 		return profileImg;
@@ -30,6 +35,7 @@ public class UserProfile {
 		try {
 			this.profileImg = ImageIO.read(new File("res/profileImgDef.png"));
 		} catch (IOException e) {
+			logger.info("failed to read default profile image", e);
 		}
 	}
 

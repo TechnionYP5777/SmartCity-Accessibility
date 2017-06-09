@@ -69,6 +69,7 @@ public class UserProfileManager extends AbstractUserProfileManager {
 			profileImg.save();
 			m.put(PROFILE_IMAGE, profileImg);
 		} catch (IOException | ParseException e) {
+			logger.info("failed to put profile image in db",e);
 			m.put(PROFILE_IMAGE, null);
 		}
 	}
@@ -92,6 +93,7 @@ public class UserProfileManager extends AbstractUserProfileManager {
 				u.setProfileImg(ImageIO.read(new File("res/profileImgDef.png")));
 			}
 		} catch (ParseException | IOException e) {
+			logger.info("failed to get profile image from db",e);
 		}
 	}
 
