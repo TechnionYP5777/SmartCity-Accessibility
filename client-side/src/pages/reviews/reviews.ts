@@ -72,8 +72,7 @@ export class GetReviewsPage {
 	
 	
 	this.getPinnedToFront();
-	
-	
+		
 	if(this.isLoggedin){
 		this.userInformationService.getUserProfile().subscribe(data => {
 			this.username = data.username;
@@ -88,6 +87,9 @@ export class GetReviewsPage {
 	
 	like_dislike(e, toUpdate, rev, like){
 		if(this.isLoggedin == true){
+			/*if(this.checkAlreadyLiked(rev, like)){
+				return;
+			}*/
 			toUpdate++;
 			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, like).then(data => {
 				if(data) {
@@ -104,6 +106,15 @@ export class GetReviewsPage {
 		let clickMenu = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
 		clickMenu.present();
 		this.viewCtrl.dismiss();
+	}
+	
+	checkAlreadyLiked(rev, like){
+		if(like > 0){
+			
+		}
+		else{
+			
+		}
 	}
 	
 	userWroteReview(){
