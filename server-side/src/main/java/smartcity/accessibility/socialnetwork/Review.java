@@ -30,7 +30,9 @@ public class Review {
 	public Review(Location l, int r, String c, UserProfile u) {
 		this.rating = new Score(r);
 		this.content = c;
-		this.user = u;
+		this.user = new UserProfile(u.getUsername());
+		this.user.setHelpfulness(u.getHelpfulness());
+		this.user.setProfileImg(null);
 		this.isPinned = false;
 		u.addReview();
 		this.location = l;
