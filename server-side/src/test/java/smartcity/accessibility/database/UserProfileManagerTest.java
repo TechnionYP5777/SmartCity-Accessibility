@@ -2,10 +2,16 @@ package smartcity.accessibility.database;
 
 import static org.junit.Assert.assertEquals;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -14,6 +20,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.parse4j.ParseException;
+import org.parse4j.ParseFile;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
@@ -30,11 +38,10 @@ public class UserProfileManagerTest {
 	private static Map<String, Object> m_noid;
 	private static UserProfile user1;
 	protected static Database db;
-	
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		
+
 	}
 
 	@AfterClass
@@ -52,16 +59,22 @@ public class UserProfileManagerTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-	
-	@Test(timeout=500)
+
+	@Test(timeout = 500)
 	@Category(UnitTests.class)
 	public void testBackgroundCalls() throws UserNotFoundException {
-		assertEquals(null, manager.get("a", c->{}));
-		assertEquals(false, manager.put(new UserProfile("a"), c->{}));
-		assertEquals(false, manager.update(new UserProfile("a"), c->{}));
-		assertEquals(false, manager.delete(new UserProfile("a"), c->{}));
-		assertEquals(0, manager.userCount(c -> {}).intValue());
-		assertEquals(0, manager.mostHelpful(123, c->{}).size());
+		assertEquals(null, manager.get("a", c -> {
+		}));
+		assertEquals(false, manager.put(new UserProfile("a"), c -> {
+		}));
+		assertEquals(false, manager.update(new UserProfile("a"), c -> {
+		}));
+		assertEquals(false, manager.delete(new UserProfile("a"), c -> {
+		}));
+		assertEquals(0, manager.userCount(c -> {
+		}).intValue());
+		assertEquals(0, manager.mostHelpful(123, c -> {
+		}).size());
 	}
 
 	@Test
@@ -72,28 +85,28 @@ public class UserProfileManagerTest {
 		assertEquals(5, pf.getNumOfReviews());
 		assertEquals("alexaxa", pf.getUsername());
 	}
-	
+
 	@Test
 	@Category(UnitTests.class)
 	public void testPut() {
 		assertEquals(true, manager.put(user1, null));
 		Mockito.verify(db).put(UserProfileManager.DATABASE_CLASS, m_noid);
 	}
-	
+
 	@Test
 	@Category(UnitTests.class)
 	public void testUpdate() {
 		assertEquals(true, manager.update(user1, null));
 		Mockito.verify(db).update(UserProfileManager.DATABASE_CLASS, "MY_ID", m_noid);
 	}
-	
+
 	@Test
 	@Category(UnitTests.class)
 	public void testDelete() {
 		assertEquals(true, manager.delete(user1, null));
 		Mockito.verify(db).delete(UserProfileManager.DATABASE_CLASS, "MY_ID");
 	}
-	
+
 	@Test
 	@Category(UnitTests.class)
 	public void testMostHelpful() {
@@ -101,7 +114,7 @@ public class UserProfileManagerTest {
 		assertEquals(1, lu.size());
 		Mockito.verify(db).getHighestBy(UserProfileManager.DATABASE_CLASS, UserProfileManager.RATING_FIELD, 1);
 	}
-	
+
 	@Test
 	@Category(UnitTests.class)
 	public void testCount() {
@@ -109,8 +122,7 @@ public class UserProfileManagerTest {
 		Mockito.verify(db).countEntries(UserProfileManager.DATABASE_CLASS);
 	}
 
-	
-	public static void setUpMock(){
+	public static void setUpMock() {
 		db = Mockito.mock(Database.class);
 		m = new HashMap<>();
 		m.put(UserProfileManager.ID_FIELD_NAME, "MY_ID");
@@ -118,6 +130,20 @@ public class UserProfileManagerTest {
 		m.put(UserProfileManager.RATING_FIELD, 25);
 		m.put(UserProfileManager.NUM_OF_REVIEWS_FIELD, 5);
 		m.put(UserProfileManager.PROFILE_IMAGE, null);
+
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			BufferedImage imgProfileDefault = ImageIO.read(new File("res/profileImgDef.png"));
+			ImageIO.write(imgProfileDefault, "png", baos);
+			baos.flush();
+			byte[] imageInByte = baos.toByteArray();
+			baos.close();
+			ParseFile profileImg = new ParseFile("image_profile", imageInByte);
+			profileImg.save();
+			m.put(UserProfileManager.PROFILE_IMAGE, profileImg);
+		} catch (IOException | ParseException e) {
+		}
+
 		m_noid = new HashMap<>(m);
 		m_noid.remove(UserProfileManager.ID_FIELD_NAME);
 		List<Map<String, Object>> l = new ArrayList<>();
@@ -127,13 +153,13 @@ public class UserProfileManagerTest {
 		Mockito.when(db.delete(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		Mockito.when(db.getHighestBy(Mockito.anyString(), Mockito.anyString(), Mockito.anyInt())).thenReturn(l);
 		Mockito.when(db.countEntries(Mockito.anyString())).thenReturn(1);
-		
+
 		m_not = new HashMap<>();
-		m_not.put(UserProfileManager.USERNAME_FIELD, "I_DONT_EXIST");	
+		m_not.put(UserProfileManager.USERNAME_FIELD, "I_DONT_EXIST");
 		Mockito.when(db.get(UserProfileManager.DATABASE_CLASS, m_not)).thenReturn(new ArrayList<>());
 		user1 = UserProfileManager.fromMap(m);
 	}
-	
+
 	public static class DatabaseTestModule extends AbstractModule {
 		@Override
 		protected void configure() {
