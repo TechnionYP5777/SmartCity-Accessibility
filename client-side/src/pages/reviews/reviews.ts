@@ -73,6 +73,7 @@ export class GetReviewsPage {
 			//this.userWroteReview();
 	}
 	
+	//this.getPinnedToFront();
 	
 	this.loading.dismiss();
 	    
@@ -103,9 +104,18 @@ export class GetReviewsPage {
 			if(rev.user.username == this.username){
 				this.userHasReview = true;
 				this.userReview = rev;
+				this.revs = this.revs.filter(obj => obj !== rev);
 				break;
 			}
 		}
+	}
+	
+	getPinnedToFront(){
+		let pinnedrevs = this.revs.filter(rev => rev.isPinned == true);
+		this.revs = this.revs.filter(rev => rev.isPinned !== true);
+		pinnedrevs.concat(this.revs);
+		this.revs = pinnedrevs;
+		
 	}
 	
 	presentAlert(str) {
