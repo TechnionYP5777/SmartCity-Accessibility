@@ -21,7 +21,11 @@ export class GetReviewsPage {
   loading : any;
   service : any;
   isLoggedin : any;
+  userHasReview : any;
   token : any;
+  username : any;
+  userReview : any;
+  
   
   
   constructor(public viewCtrl: ViewController,
@@ -42,6 +46,7 @@ export class GetReviewsPage {
 	this.name = navParams.get('name');
 	this.service = getreviewsservice;
 	this.isLoggedin = this.loginService.isLoggedIn();	
+	this.userHasReview = false;
   }
   
 
@@ -50,7 +55,7 @@ export class GetReviewsPage {
     this.loading = this.presentLoadingCustom();
 	
 	this.loading.present().then(() => {
-	
+		
 	    this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype, this.name).subscribe(data => {
 	    	if(data) {
 	    		this.revs = data.json();			 
@@ -61,52 +66,69 @@ export class GetReviewsPage {
 	    err => {
 	    	this.presentAlert("Something went wrong");
 	    });
-		this.loading.dismiss();
 	});
+	
+	if(isLoggedin){
+			//username = 
+			//this.userWroteReview();
+	}
+	
+	
+	this.loading.dismiss();
 	    
   }
   
-  like(e, rev){
-  	if(this.isLoggedin == true){
-  		rev.upvotes++;
-  		this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, 1).then(data => {
-  	 		if(data) {
-  	 			this.navCtrl.pop();
-  	 		}
-  	 	});
-   	}
-  	else{
-  		this.presentAlert("Please login to do that!");
-  	}
-  }
+	like(e, rev){
+		if(this.isLoggedin == true){
+			rev.upvotes++;
+			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, 1).then(data => {
+				if(data) {
+					this.navCtrl.pop();
+				}
+			});
+		}
+		else{
+			this.presentAlert("Please login to do that!");
+		}
+	}
   
-  dislike(e, rev){
-  	if(this.isLoggedin == true){
-  		rev.downvotes++;
-  		this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, -1).then(data => {
-  	 		if(data) {
-  	 			this.navCtrl.pop();
-  	 		}
-  	 	});
-  	}
-  	else{
-  		this.presentAlert("Please login to do that!");
-  	}
-  }
-  
-  presentAlert(str) {
-		let alert = this.alertCtrl.create({
-		  title: 'Error',
-		  subTitle: str,
-		  buttons: ['OK']
-		});
-		alert.present();
+	dislike(e, rev){
+		if(this.isLoggedin == true){
+			rev.downvotes++;
+			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, -1).then(data => {
+				if(data) {
+					this.navCtrl.pop();
+				}
+			});
+		}
+		else{
+			this.presentAlert("Please login to do that!");
+		}
 	}
 	
 	openAddReview(){
 		let clickMenu = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
 		clickMenu.present();
 		this.viewCtrl.dismiss();
+	}
+	
+	userWroteReview(){
+		for(rev in this.revs){
+			if(rev.user.username == this.username){
+				userHasReview = true;
+				userReview = rev;
+				break;
+			}
+		}
+	}
+	
+	presentAlert(str) {
+		let alert = this.alertCtrl.create({
+		  title: 'Error',
+		  subTitle: str,
+		  buttons: ['OK']
+		});
+		alert.present();
 	}
 	
 	presentLoadingCustom() {
