@@ -68,12 +68,15 @@ export class GetReviewsPage {
 	    });
 	});
 	
+	
+	this.getPinnedToFront();
+	
+	
 	if(this.isLoggedin){
 			//username = 
 			//this.userWroteReview();
-	}
-	
-	//this.getPinnedToFront();
+			//this.userReviewFirst()
+	}	
 	
 	this.loading.dismiss();
 	    
@@ -108,6 +111,12 @@ export class GetReviewsPage {
 				break;
 			}
 		}
+	}
+	
+	userReviewFirst(){
+		let temp = [this.userReview];
+		temp.concat(this.revs);
+		this.revs = temp;
 	}
 	
 	getPinnedToFront(){
