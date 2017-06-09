@@ -77,16 +77,8 @@ export class GetReviewsPage {
 	this.loading.dismiss();
 	    
   }
-  
-	like(e, rev){
-		this.like_dislike(rev.upvotes, rev, 1);
-	}
-  
-	dislike(e, rev){
-		this.like_dislike(rev.downvotes, rev, -1);
-	}
 	
-	like_dislike(toUpdate, rev, like){
+	like_dislike(e, toUpdate, rev, like){
 		if(this.isLoggedin == true){
 			toUpdate++;
 			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, like).then(data => {
