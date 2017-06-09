@@ -114,9 +114,11 @@ export class GetReviewsPage {
 	}
 	
 	userReviewFirst(){
-		let temp = [this.userReview];
-		temp.concat(this.revs);
-		this.revs = temp;
+		if(this.userHasReview){
+			let temp = [this.userReview];
+			temp.concat(this.revs);
+			this.revs = temp;
+		}
 	}
 	
 	getPinnedToFront(){
