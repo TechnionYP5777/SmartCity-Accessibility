@@ -68,7 +68,7 @@ export class GetReviewsPage {
 	    });
 	});
 	
-	if(isLoggedin){
+	if(this.isLoggedin){
 			//username = 
 			//this.userWroteReview();
 	}
@@ -79,23 +79,17 @@ export class GetReviewsPage {
   }
   
 	like(e, rev){
-		if(this.isLoggedin == true){
-			rev.upvotes++;
-			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, 1).then(data => {
-				if(data) {
-					this.navCtrl.pop();
-				}
-			});
-		}
-		else{
-			this.presentAlert("Please login to do that!");
-		}
+		this.like_dislike(rev.upvotes, rev, 1);
 	}
   
 	dislike(e, rev){
+		this.like_dislike(rev.downvotes, rev, -1);
+	}
+	
+	like_dislike(toUpdate, rev, like){
 		if(this.isLoggedin == true){
-			rev.downvotes++;
-			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, -1).then(data => {
+			toUpdate++;
+			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, like).then(data => {
 				if(data) {
 					this.navCtrl.pop();
 				}
@@ -113,10 +107,10 @@ export class GetReviewsPage {
 	}
 	
 	userWroteReview(){
-		for(rev in this.revs){
+		for(let rev of this.revs){
 			if(rev.user.username == this.username){
-				userHasReview = true;
-				userReview = rev;
+				this.userHasReview = true;
+				this.userReview = rev;
 				break;
 			}
 		}
