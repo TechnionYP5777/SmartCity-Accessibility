@@ -43,7 +43,7 @@ export class AddReviewPage {
      }
   	 this.addreviewservice.addreview(rev, this.lat, this.lng, this.type, this.subtype, this.name).then(data => {
   	 	if(data) {
-  	 		this.navCtrl.pop();
+  	 		this.navCtrl.popToRoot();
   	 	}
   	 });
    }

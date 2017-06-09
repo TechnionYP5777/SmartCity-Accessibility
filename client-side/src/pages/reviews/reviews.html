@@ -26,13 +26,7 @@
 				{{rev.user.username}}
 			</ion-card-title>
 			<ion-card-content>
-				<p><ion-item>
-						<ion-rating
-							[numStars]="5"
-							[readOnly]="true"
-							[value]="rev.rating.score">
-						</ion-rating>
-					</ion-item>
+				<p>{{rev.rating.score}}
 				</p>
 				<p>{{rev.content}}</p>
 			</ion-card-content>
