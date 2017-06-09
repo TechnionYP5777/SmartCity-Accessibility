@@ -18,6 +18,9 @@
     <ion-list-header>
       {{name}}, ({{lat}}, {{lng}})
     </ion-list-header>
+    	<ion-buttons>
+      		<button ion-button round *ngIf="isLoggedin" (click)="openAddReview()">Create Review</button>
+    	</ion-buttons>
 		<ion-card *ngFor="let rev of revs">
 			<ion-card-title>
 				{{rev.user.username}}
@@ -41,9 +44,6 @@
 				</ion-col>
 			</ion-row>
 		</ion-card>
-    <ion-buttons>
-      <button ion-button round *ngIf="isLoggedin" (click)="openAddReview()">Create Review</button>
-    </ion-buttons>
   </ion-list>
 
 </ion-content>
