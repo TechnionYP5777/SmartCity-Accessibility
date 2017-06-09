@@ -56,19 +56,20 @@ export class GetReviewsPage {
 	  
     this.loading = this.presentLoadingCustom();
 	
-	this.loading.present().then(() => {
-		
-	    this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype, this.name).subscribe(data => {
+	this.loading.present();
+	this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype, this.name).subscribe(data => {
 	    	if(data) {
 	    		this.revs = data.json();			 
 	    	} else{
 	    		this.presentAlert("Something went wrong");
 	    	}
+			this.loading.dismiss();
 	    },
 	    err => {
 	    	this.presentAlert("Something went wrong");
-	    });
+			this.loading.dismiss();
 	});
+
 	
 	
 	this.getPinnedToFront();
@@ -81,7 +82,7 @@ export class GetReviewsPage {
 		this.userReviewFirst()
 	}	
 	
-	this.loading.dismiss();
+	
 	    
   }
 	
