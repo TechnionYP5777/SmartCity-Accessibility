@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import {GetReviewsService} from './ReviewsService';
 import { LoginService } from '../login/LoginService';
 import {AddReviewPage} from '../add-review/add-review';
+import { UserInformationService } from '../user-page/userInformationService';
 
 @Component({
   selector: 'page-get-reviews',
@@ -21,7 +22,11 @@ export class GetReviewsPage {
   loading : any;
   service : any;
   isLoggedin : any;
+  userHasReview : any;
   token : any;
+  username : any;
+  userReview : any;
+  
   
   
   constructor(public viewCtrl: ViewController,
@@ -32,7 +37,8 @@ export class GetReviewsPage {
    public loadingController: LoadingController,
    public getreviewsservice: GetReviewsService,
    public loginService : LoginService,
-   public alertCtrl: AlertController) {
+   public alertCtrl: AlertController,
+   public userInformationService : UserInformationService) {
    
     this.token = window.sessionStorage.getItem('token');
 	this.lat = navParams.get('lat');
@@ -42,6 +48,7 @@ export class GetReviewsPage {
 	this.name = navParams.get('name');
 	this.service = getreviewsservice;
 	this.isLoggedin = this.loginService.isLoggedIn();	
+	this.userHasReview = false;
   }
   
 
@@ -50,7 +57,7 @@ export class GetReviewsPage {
     this.loading = this.presentLoadingCustom();
 	
 	this.loading.present().then(() => {
-	
+		
 	    this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype, this.name).subscribe(data => {
 	    	if(data) {
 	    		this.revs = data.json();			 
@@ -61,52 +68,89 @@ export class GetReviewsPage {
 	    err => {
 	    	this.presentAlert("Something went wrong");
 	    });
-		this.loading.dismiss();
 	});
+	
+	
+	this.getPinnedToFront();
+		
+	if(this.isLoggedin){
+		this.userInformationService.getUserProfile().subscribe(data => {
+			this.username = data.username;
+		});
+		this.userWroteReview();
+		this.userReviewFirst()
+	}	
+	
+	this.loading.dismiss();
 	    
   }
-  
-  like(e, rev){
-  	if(this.isLoggedin == true){
-  		rev.upvotes++;
-  		this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, 1).then(data => {
-  	 		if(data) {
-  	 			this.navCtrl.pop();
-  	 		}
-  	 	});
-   	}
-  	else{
-  		this.presentAlert("Please login to do that!");
-  	}
-  }
-  
-  dislike(e, rev){
-  	if(this.isLoggedin == true){
-  		rev.downvotes++;
-  		this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, -1).then(data => {
-  	 		if(data) {
-  	 			this.navCtrl.pop();
-  	 		}
-  	 	});
-  	}
-  	else{
-  		this.presentAlert("Please login to do that!");
-  	}
-  }
-  
-  presentAlert(str) {
-		let alert = this.alertCtrl.create({
-		  title: 'Error',
-		  subTitle: str,
-		  buttons: ['OK']
-		});
-		alert.present();
+	
+	like_dislike(e, toUpdate, rev, like){
+		if(this.isLoggedin == true){
+			/*if(this.checkAlreadyLiked(rev, like)){
+				return;
+			}*/
+			toUpdate++;
+			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, like).then(data => {
+				if(data) {
+					this.navCtrl.pop();
+				}
+			});
+		}
+		else{
+			this.presentAlert("Please login to do that!");
+		}
 	}
 	
 	openAddReview(){
 		let clickMenu = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
 		clickMenu.present();
 		this.viewCtrl.dismiss();
+	}
+	
+	checkAlreadyLiked(rev, like){
+		if(like > 0){
+			
+		}
+		else{
+			
+		}
+	}
+	
+	userWroteReview(){
+		for(let rev of this.revs){
+			if(rev.user.username == this.username){
+				this.userHasReview = true;
+				this.userReview = rev;
+				this.revs = this.revs.filter(obj => obj !== rev);
+				break;
+			}
+		}
+	}
+	
+	userReviewFirst(){
+		if(this.userHasReview){
+			let temp = [this.userReview];
+			temp.concat(this.revs);
+			this.revs = temp;
+		}
+	}
+	
+	getPinnedToFront(){
+		let pinnedrevs = this.revs.filter(rev => rev.isPinned == true);
+		this.revs = this.revs.filter(rev => rev.isPinned !== true);
+		pinnedrevs.concat(this.revs);
+		this.revs = pinnedrevs;
+		
+	}
+	
+	presentAlert(str) {
+		let alert = this.alertCtrl.create({
+		  title: 'Error',
+		  subTitle: str,
+		  buttons: ['OK']
+		});
+		alert.present();
 	}
 	
 	presentLoadingCustom() {

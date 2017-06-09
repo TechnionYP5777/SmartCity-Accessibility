@@ -34,7 +34,7 @@ public class AddReviewService {
 			@RequestParam("name") String name) {
 		
 		
-		User u = getUserFromToken(token);
+		User u = LogInService.getUserInfo(token).getUser();
 		if (u == null)
 			throw new UserIsNotLoggedIn();
 		
@@ -59,15 +59,4 @@ public class AddReviewService {
 		
 		AbstractReviewManager.instance().uploadReview(r, null);   	
     }
-	
-	//TODO null exception?
-	public static User getUserFromToken(String token){
-		UserInfo userInfo = null;
-		try {
-			userInfo = Application.tokenToSession.get(token);
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-		return userInfo.getUser();
-	}
 }
