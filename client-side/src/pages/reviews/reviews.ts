@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import {GetReviewsService} from './ReviewsService';
 import { LoginService } from '../login/LoginService';
 import {AddReviewPage} from '../add-review/add-review';
+import { UserInformationService } from '../user-page/userInformationService';
 
 @Component({
   selector: 'page-get-reviews',
@@ -36,7 +37,8 @@ export class GetReviewsPage {
    public loadingController: LoadingController,
    public getreviewsservice: GetReviewsService,
    public loginService : LoginService,
-   public alertCtrl: AlertController) {
+   public alertCtrl: AlertController,
+   public userInformationService : UserInformationService) {
    
     this.token = window.sessionStorage.getItem('token');
 	this.lat = navParams.get('lat');
@@ -73,9 +75,11 @@ export class GetReviewsPage {
 	
 	
 	if(this.isLoggedin){
-			//username = 
-			//this.userWroteReview();
-			//this.userReviewFirst()
+		this.userInformationService.getUserProfile().subscribe(data => {
+			this.username = data.username;
+		});
+		this.userWroteReview();
+		this.userReviewFirst()
 	}	
 	
 	this.loading.dismiss();
