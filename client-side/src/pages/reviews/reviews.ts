@@ -92,12 +92,13 @@ export class GetReviewsPage {
 	});	
   }
 	
-	like_dislike(e, toUpdate, rev, like){
+	like_dislike(e, rev, like){
 		if(this.isLoggedin == true){
 			/*if(this.checkAlreadyLiked(rev, like)){
 				return;
 			}*/
-			toUpdate++;
+			if(like>0) rev.upvotes++;
+			else rev.downvotes++;
 			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, like).then(data => {
 				if(data) {
 					this.navCtrl.pop();

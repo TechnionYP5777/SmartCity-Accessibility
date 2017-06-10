@@ -43,13 +43,13 @@
 			</ion-card-content>
 			<ion-row>
 				<ion-col>
-					<button ion-button icon-left small round (click)="like_dislike($event, rev.upvotes, rev, 1)">
+					<button ion-button icon-left small round (click)="like_dislike($event, rev, 1)">
 						<ion-icon name="thumbs-up"></ion-icon>
 						<div>{{rev.upvotes}}</div>
 					</button>
 				</ion-col>
 				<ion-col>
-					<button ion-button icon-left small round (click)="like_dislike($event, rev.downvotes, rev, -1)">
+					<button ion-button icon-left small round (click)="like_dislike($event, rev, -1)">
 						<ion-icon name="thumbs-down"></ion-icon>
 						<div>{{rev.downvotes}}</div>
 					</button>
