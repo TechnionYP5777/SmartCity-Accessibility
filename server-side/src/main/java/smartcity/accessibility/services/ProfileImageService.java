@@ -31,7 +31,7 @@ public class ProfileImageService {
 		try {
 			BufferedImage image = ImageIO.read(new File("")); // TODO get image
 																// instead of ""
-			ImageIO.write(image, "jpeg", pngOutputStream);
+			ImageIO.write(image, "png", pngOutputStream);
 		} catch (IllegalArgumentException e) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			logger.info("problem reading image",e);
