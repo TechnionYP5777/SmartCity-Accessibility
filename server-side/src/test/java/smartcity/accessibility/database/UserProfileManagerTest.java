@@ -131,19 +131,6 @@ public class UserProfileManagerTest {
 		m.put(UserProfileManager.NUM_OF_REVIEWS_FIELD, 5);
 		m.put(UserProfileManager.PROFILE_IMAGE, null);
 
-		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			BufferedImage imgProfileDefault = ImageIO.read(new File("res/profileImgDef.png"));
-			ImageIO.write(imgProfileDefault, "png", baos);
-			baos.flush();
-			byte[] imageInByte = baos.toByteArray();
-			baos.close();
-			ParseFile profileImg = new ParseFile("image_profile", imageInByte);
-			profileImg.save();
-			m.put(UserProfileManager.PROFILE_IMAGE, profileImg);
-		} catch (IOException | ParseException e) {
-		}
-
 		m_noid = new HashMap<>(m);
 		m_noid.remove(UserProfileManager.ID_FIELD_NAME);
 		List<Map<String, Object>> l = new ArrayList<>();

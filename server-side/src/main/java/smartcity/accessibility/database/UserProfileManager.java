@@ -3,7 +3,6 @@ package smartcity.accessibility.database;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -59,6 +58,10 @@ public class UserProfileManager extends AbstractUserProfileManager {
 	 * @author yael
 	 */
 	private static void putProfileImage(UserProfile u, Map<String, Object> m) {
+		if(u.getProfileImg() == null){
+			m.put(PROFILE_IMAGE, null);
+			return;
+		}
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 			ImageIO.write(u.getProfileImg(), "png", baos);
@@ -78,6 +81,10 @@ public class UserProfileManager extends AbstractUserProfileManager {
 	 * @author yael
 	 */
 	private static void getProfileImage(Map<String, Object> m, UserProfile u) {
+		if(m.get(PROFILE_IMAGE)== null){
+			u.setProfileImg(null);
+			return;
+		}
 		try {
 			ParseFile profileImgFile = (ParseFile) m.get(PROFILE_IMAGE);
 			if(profileImgFile == null){
@@ -90,7 +97,7 @@ public class UserProfileManager extends AbstractUserProfileManager {
 				BufferedImage profileImg = ImageIO.read(in);
 				u.setProfileImg(profileImg);
 			} else {
-				u.setProfileImg(ImageIO.read(new File("res/profileImgDef.png")));
+				u.setProfileImg(null);
 			}
 		} catch (ParseException | IOException e) {
 			logger.info("failed to get profile image from db",e);
