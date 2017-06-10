@@ -138,7 +138,7 @@ export class GetReviewsPage {
 	userReviewFirst(){
 		if(this.userHasReview){
 			let temp = [this.userReview];
-			temp.concat(this.revs);
+			temp = temp.concat(this.revs);
 			this.revs = temp;
 		}
 	}
