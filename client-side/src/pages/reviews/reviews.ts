@@ -26,6 +26,7 @@ export class GetReviewsPage {
   token : any;
   username : any;
   userReview : any;
+  ready : any;
   
   
   
@@ -49,6 +50,9 @@ export class GetReviewsPage {
 	this.service = getreviewsservice;
 	this.isLoggedin = this.loginService.isLoggedIn();	
 	this.userHasReview = false;
+	this.revs  = [];
+	this.username = '';
+	this.ready = false;
   }
   
 
@@ -59,31 +63,33 @@ export class GetReviewsPage {
 	this.loading.present();
 	this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype, this.name).subscribe(data => {
 	    	if(data) {
-	    		this.revs = data.json();			 
+	    		this.revs = data.json();
+				
+				this.getPinnedToFront();
+	
+				if(this.isLoggedin){
+					this.userInformationService.getUserProfile().subscribe(data => {
+						if(data){
+							this.username = data.username;
+							this.userWroteReview();
+							this.userReviewFirst();
+						} else{
+							this.presentAlert("Something went wrong");
+						}
+						
+					});					
+				}
+				this.loading.dismiss();
+				this.ready = true;
 	    	} else{
+				this.loading.dismiss();
 	    		this.presentAlert("Something went wrong");
 	    	}
-			this.loading.dismiss();
 	    },
 	    err => {
 	    	this.presentAlert("Something went wrong");
 			this.loading.dismiss();
-	});
-
-	
-	
-	this.getPinnedToFront();
-		
-	if(this.isLoggedin){
-		this.userInformationService.getUserProfile().subscribe(data => {
-			this.username = data.username;
-		});
-		this.userWroteReview();
-		this.userReviewFirst()
-	}	
-	
-	
-	    
+	});	
   }
 	
 	like_dislike(e, toUpdate, rev, like){
@@ -140,9 +146,8 @@ export class GetReviewsPage {
 	getPinnedToFront(){
 		let pinnedrevs = this.revs.filter(rev => rev.isPinned == true);
 		this.revs = this.revs.filter(rev => rev.isPinned !== true);
-		pinnedrevs.concat(this.revs);
+		pinnedrevs = pinnedrevs.concat(this.revs);
 		this.revs = pinnedrevs;
-		
 	}
 	
 	presentAlert(str) {
@@ -156,7 +161,7 @@ export class GetReviewsPage {
 	
 	presentLoadingCustom() {
       let loading = this.loadingController.create({
-        spinner: 'hide',
+		dismissOnPageChange: true,
         content: `<div class="cssload-container">
                   <div class="cssload-whirlpool"></div>
               </div>`,

@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-navbar color="dark">
     <!--<ion-buttons left>
@@ -19,7 +18,7 @@
       {{name}}, ({{lat}}, {{lng}})
     </ion-list-header>
     	<ion-buttons>
-      		<button ion-button round *ngIf="isLoggedin && !userHasReview" (click)="openAddReview()">Create Review</button>
+      		<button ion-button round *ngIf="isLoggedin && !userHasReview && ready" (click)="openAddReview()">Create Review</button>
     	</ion-buttons>
 		<ion-card *ngFor="let rev of revs">
 			<ion-card-title>
