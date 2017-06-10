@@ -26,11 +26,11 @@ public class ProfileImageService {
 	private static Logger logger = LoggerFactory.getLogger(ProfileImageService.class);
 
 	@RequestMapping(value = "/profileImg", method = RequestMethod.GET)
-	public void getImageNerrative(HttpServletResponse response, @RequestParam String UserName) throws IOException {
+	public void getImageNerrative(HttpServletResponse response, @RequestParam("userName") String UserName) throws IOException {
 		ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
 		try {
-			BufferedImage image = ImageIO.read(new File("")); // TODO get image
-																// instead of ""
+			BufferedImage image = ImageIO.read(new File("res/profileImgDef.png")); // TODO get image
+																// instead of default image
 			ImageIO.write(image, "png", pngOutputStream);
 		} catch (IllegalArgumentException e) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
