@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list no-lines>
     <ion-list-header>
       {{name}}, ({{lat}}, {{lng}})
     </ion-list-header>
@@ -25,7 +25,19 @@
 				{{rev.user.username}}
 			</ion-card-title>
 			<ion-card-content>
-				<p>{{rev.rating.score}}
+				<p>
+					<ion-item>
+  						<ion-icon *ngIf="rev.rating.score>=1" name="star"></ion-icon>
+  						<ion-icon *ngIf="rev.rating.score>=2" name="star"></ion-icon>
+  						<ion-icon *ngIf="rev.rating.score>=3" name="star"></ion-icon>
+  						<ion-icon *ngIf="rev.rating.score>=4" name="star"></ion-icon>
+  						<ion-icon *ngIf="rev.rating.score>=5" name="star"></ion-icon>
+  						<ion-icon *ngIf="rev.rating.score==0" name="star-outline"></ion-icon>
+  						<ion-icon *ngIf="rev.rating.score<=1" name="star-outline"></ion-icon>
+  						<ion-icon *ngIf="rev.rating.score<=2" name="star-outline"></ion-icon>
+  						<ion-icon *ngIf="rev.rating.score<=3" name="star-outline"></ion-icon>
+  						<ion-icon *ngIf="rev.rating.score<=4" name="star-outline"></ion-icon>
+					</ion-item>
 				</p>
 				<p>{{rev.content}}</p>
 			</ion-card-content>
