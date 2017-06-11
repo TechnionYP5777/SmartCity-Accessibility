@@ -94,9 +94,9 @@ export class GetReviewsPage {
 	
 	like_dislike(e, rev, like){
 		if(this.isLoggedin == true){
-			/*if(this.checkAlreadyLiked(rev, like)){
+			if(this.checkAlreadyLiked(rev, like)){
 				return;
-			}*/
+			}
 			if(like>0) rev.upvotes++;
 			else rev.downvotes++;
 			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, like).then(data => {
@@ -117,11 +117,9 @@ export class GetReviewsPage {
 	}
 	
 	checkAlreadyLiked(rev, like){
-		if(like > 0){
-			
-		}
-		else{
-			
+		for(let comm of rev.comments){
+			if(comm.commentator.username == this.username && comm.rating == like) return true;
+			else return false
 		}
 	}
 	
