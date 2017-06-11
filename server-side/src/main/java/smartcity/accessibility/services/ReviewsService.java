@@ -73,6 +73,7 @@ public class ReviewsService {
 
 		for(Review r :loc.getReviews())
 			if (r.getUser().getUsername().equals(username)){
+				r.setLocation(loc);
 				try {
 					if (like > 0) r.upvote(u);
 					else r.downvote(u);
