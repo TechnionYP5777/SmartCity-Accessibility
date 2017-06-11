@@ -5,8 +5,10 @@ package smartcity.accessibility.search;
  *
  */
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import com.google.maps.PendingResult.Callback;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 
+import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
@@ -187,6 +190,11 @@ public class SearchQuery {
 		} catch (InterruptedException e) {
 			logger.error("type search wait interrupted {}", e);
 		}
+		List<Location> locationsFromDB =LocationManager.instance().getLocationsAround(
+				initLocation.getCoordinates(), radius, null).
+				stream().filter(l -> l.getLocationSubType().getSearchType().equals(queryString))
+				.collect(Collectors.toList()); 
+		places.addAll(locationsFromDB);
 		return new SearchQueryResult(places);
 	}
 
