@@ -50,7 +50,7 @@ public class ComplexSearchServiece {
 	
 	@RequestMapping("/complexSearchCoords")
 	@ResponseBody
-	public List<Location> complexSearchCoords(@RequestHeader("authToken") String token, @RequestParam("") String type,
+	public List<Location> complexSearchCoords(@RequestHeader("authToken") String token, @RequestParam("type") String type,
 			@RequestParam("radius") Integer radius, @RequestParam("lat") Double lat, @RequestParam("lng") Double lng,
 			@RequestParam("threshold") Integer threshold) {
 
