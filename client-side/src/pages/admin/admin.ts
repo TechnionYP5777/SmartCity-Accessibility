@@ -15,10 +15,10 @@ export class AdminPage {
   output :  any;
   name: any;
   rating: any;
-  numOfReviews: any;
   hlp: any;
   loading: any;
   numOfUsers: any = -1;
+  numOfReviews: any = -1;
   
   constructor(public navCtrl: NavController, public navParams: NavParams,
 			  public adminService : AdminService, public modalCtrl: ModalController,
@@ -36,7 +36,7 @@ export class AdminPage {
   }
   
   showUsers(n) {
-	  if (n < 0) {
+	  if (n <= 0 || n == null) {
 			this.presentAlert('Parameter must be a positive number');
 			return;
 	  }
@@ -46,11 +46,11 @@ export class AdminPage {
   }
   
   showLocations(numOfLocations, radius, initLoc) {
-	  if (numOfLocations < 0 ) {
+	  if (numOfLocations <= 0 || numOfLocations == null) {
 		  this.presentAlert('The number of locations must be a positive number');
 		  return;
 	  }
-	  if (radius < 0 ) {
+	  if (radius <= 0 || radius == null) {
 		  this.presentAlert('The radius must be a positive number');
 		  return;
 	  }
