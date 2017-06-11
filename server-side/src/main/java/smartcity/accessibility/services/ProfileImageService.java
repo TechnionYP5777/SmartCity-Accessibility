@@ -1,10 +1,9 @@
 package smartcity.accessibility.services;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import smartcity.accessibility.database.AbstractUserProfileManager;
 
 /**
  * 
@@ -56,7 +57,7 @@ public class ProfileImageService {
 	}
 
 	@RequestMapping(value = "/uploadProfileImg", method = RequestMethod.POST)
-	public void uploadProfileImg(@RequestParam("img") MultipartFile img) {
+	public void uploadProfileImg(@RequestParam("img") MultipartFile img, @RequestParam("authToken") String token) {
 		if (!img.isEmpty()) {
 			byte[] bytes = null;
 			try {
@@ -64,11 +65,14 @@ public class ProfileImageService {
 			} catch (IOException e) {
 				logger.info("problem in image to byte array", e);
 			}
-			try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("img")))){
-				stream.write(bytes);
+			try (ByteArrayInputStream stream = new ByteArrayInputStream(bytes)) {
+				UserInfo userInfo = LogInService.getUserInfo(token);
+				BufferedImage profileImg = ImageIO.read(stream);
+				userInfo.getUser().getProfile().setProfileImg(profileImg);
+				 AbstractUserProfileManager.instance().update(userInfo.getUser().getProfile(), null);
 			} catch (IOException e) {
-				logger.info("problem in writing byte array to stream",e);
-			} 
-		} 
+				logger.info("problem in writing byte array to stream", e);
+			}
+		}
 	}
 }
