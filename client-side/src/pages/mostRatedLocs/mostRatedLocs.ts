@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavParams, ModalController,App, ViewController, AlertController, Events } from 'ionic-angular';
-import { LocationListPage } from '../location-list/location-list';
 import { AdminService } from '../admin/adminService';
 import { SearchService } from '../mapview/searchService';
 

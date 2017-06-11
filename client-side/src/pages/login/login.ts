@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, Events, LoadingController } from 'ionic-angular';
 import { LoginService } from './LoginService';
 import { SignupPage } from '../signup/signup';
-import { MapviewPage } from '../mapview/mapview';
 
 @Component({
   selector: 'page-login',
