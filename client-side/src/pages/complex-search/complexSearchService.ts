@@ -29,7 +29,7 @@ export class ComplexSearchService {
 	}
 	
 	complexSearchCoords(type, radius, startLocation, threshold) {	
-           return this.http.get(Constants.serverAddress + '/complexSearchCoords?type=' + type + '&radius=' + radius + '&lat=' + startLocation.lat + '&lng=' + startLocation.lng + '&threshold=' + threshold, {headers: this.headers}).map(res=>res.json());
+           return this.http.get(Constants.serverAddress + '/complexSearchCoords?type=' + type + '&radius=' + radius + '&lat=' + startLocation.latitude + '&lng=' + startLocation.longitude + '&threshold=' + threshold, {headers: this.headers}).map(res=>res.json());
 	}
 	
 	

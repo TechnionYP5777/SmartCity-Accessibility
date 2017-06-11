@@ -17,9 +17,9 @@ declare var google;
   templateUrl: 'complex-search.html'
 })
 export class ComplexSearchPage {
-  type: string;
+  type: string = "restaurant";
   gender: string;
-  minRating: number;
+  minRating: number = 1;
   raduis: number;
   loading: any;
   music: string;
@@ -65,8 +65,7 @@ export class ComplexSearchPage {
 		this.geolocation = new Geolocation();
 		this.geolocation.getCurrentPosition().then((position) => {
 			this.startLocationCoordinates = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-			this.complexSearchService.complexSearchCoords(type, radius, this.startLocationCoordinates, minRating).subscribe(data => {
-			
+			this.complexSearchService.complexSearchCoords(type, radius, position.coords, minRating).subscribe(data => {
 				this.events.publish('complexSearch:pressed', data, this.startLocationCoordinates);
 			});
 			this.loading.dismiss();
