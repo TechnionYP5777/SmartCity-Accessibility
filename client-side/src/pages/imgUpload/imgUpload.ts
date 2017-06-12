@@ -33,7 +33,7 @@ export class ImgUploadPage {
       saveToPhotoAlbum: true
     }).then(imageData => {
       this.myPhoto = imageData;
- //     this.uploadPhoto(imageData);
+      this.uploadPhoto(imageData);
     }, error => {
       this.error = JSON.stringify(error);
     });
@@ -47,12 +47,14 @@ export class ImgUploadPage {
       encodingType: this.camera.EncodingType.PNG,
     }).then(imageData => {
       this.myPhoto = imageData;
-//      this.uploadPhoto(imageData);
+      this.uploadPhoto(imageData);
     }, error => {
       this.error = JSON.stringify(error);
     });
   }
   
-
+  uploadPhoto(imageData) {
+	  //TO IMPLEMENT
+  }
   
 }
