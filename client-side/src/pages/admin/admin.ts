@@ -3,6 +3,7 @@ import { NavController, ModalController, NavParams, LoadingController, Events, A
 import { HelpfulUsersPage } from '../helpfulUsers/helpfulUsers';
 import { MostRatedLocsPage } from '../mostRatedLocs/mostRatedLocs';
 import { AdminService } from './adminService';
+import { Constants } from "../constants";
 
 @Component({
   selector: 'page-admin',
@@ -19,6 +20,7 @@ export class AdminPage {
   loading: any;
   numOfUsers: any = -1;
   numOfReviews: any = -1;
+  serverAddress: any = Constants.serverAddress;
   
   constructor(public navCtrl: NavController, public navParams: NavParams,
 			  public adminService : AdminService, public modalCtrl: ModalController,
