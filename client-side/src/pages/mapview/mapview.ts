@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController,ModalController, Events,AlertController, LoadingController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { ImgUploadPage } from '../imgUpload/imgUpload';
 import { MapClickMenuPage } from '../mapclickmenu/mapclickmenu'; 
 import { ComplexSearchPage } from '../complex-search/complex-search';
 import { SearchService } from './searchService';
@@ -76,6 +77,10 @@ export class MapviewPage {
 				this.map.setCenter(initLocation);
 			});
 	
+	}
+	
+	imgUpload() {
+		this.navCtrl.push(ImgUploadPage);
 	}
   
 	subscribeToNavigation(){
