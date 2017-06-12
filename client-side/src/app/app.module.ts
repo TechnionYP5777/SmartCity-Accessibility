@@ -3,6 +3,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import {LoginPage} from '../pages/login/login';
 import {AdminPage} from '../pages/admin/admin';
+import {ImgUploadPage} from '../pages/imgUpload/imgUpload';
 import {MapviewPage} from '../pages/mapview/mapview';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -12,6 +13,7 @@ import {SignupPage} from '../pages/signup/signup';
 import {UserPagePage} from '../pages/user-page/user-page';
 import {LoginService} from '../pages/login/LoginService';
 import {AdminService} from '../pages/admin/adminService';
+import {ImgUploadService} from '../pages/imgUpload/imgUploadService';
 import {NavigationService} from '../pages/navigation/navigationService';
 import { NavigationPage } from '../pages/navigation/navigation';
 import { AddReviewService } from '../pages/add-review/AddReviewService';
@@ -54,7 +56,8 @@ import { AddLocationService } from '../pages/add-location/AddLocationService';
 	HelpfulUsersPage,
 	AddLocationPage,
 	MostRatedLocsPage,
-	nerrativeMapPage
+	nerrativeMapPage,
+	ImgUploadPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -79,7 +82,8 @@ import { AddLocationService } from '../pages/add-location/AddLocationService';
 	HelpfulUsersPage,
 	AddLocationPage,
 	MostRatedLocsPage,
-	nerrativeMapPage
+	nerrativeMapPage,
+	ImgUploadPage
   ],
   providers: [
     StatusBar,
@@ -94,7 +98,8 @@ import { AddLocationService } from '../pages/add-location/AddLocationService';
 	AdminService,
 	GetReviewsService,
 	LocationsInRadiusService,
-	AddLocationService
+	AddLocationService,
+	ImgUploadService
   ]
 })
 export class AppModule {}
