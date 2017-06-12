@@ -34,6 +34,8 @@ import { nerrativeMapPage } from '../pages/navigation_maneuver/nerrativeMap/nerr
 import { LocationsInRadiusService } from '../pages/location-list/LocationsInRadiusService';
 import { AddLocationPage } from '../pages/add-location/add-location';
 import { AddLocationService } from '../pages/add-location/AddLocationService';
+import { File } from '@ionic-native/file';
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -99,7 +101,9 @@ import { AddLocationService } from '../pages/add-location/AddLocationService';
 	GetReviewsService,
 	LocationsInRadiusService,
 	AddLocationService,
-	ImgUploadService
+	ImgUploadService,
+	File,
+    Camera
   ]
 })
 export class AppModule {}
