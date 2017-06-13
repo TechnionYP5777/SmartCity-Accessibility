@@ -57,7 +57,7 @@ public class ProfileImageService {
 	}
 
 	@RequestMapping(value = "/uploadProfileImg", method = RequestMethod.POST)
-	public void uploadProfileImg(@RequestParam("img") MultipartFile img, @RequestParam("authToken") String token) {
+	public void uploadProfileImg(@RequestParam("img") MultipartFile img, @RequestHeader("authToken") String token) {
 		if (!img.isEmpty()) {
 			byte[] bytes = null;
 			try {
