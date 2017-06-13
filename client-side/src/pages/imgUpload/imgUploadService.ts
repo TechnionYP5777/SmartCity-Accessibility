@@ -22,7 +22,7 @@ export class ImgUploadService {
     }
 
 	public upload(formData: FormData) {
-	  return this.http.post("http://192.168.178.20:8080/upload", formData)
+	  return this.http.post(Constants.serverAddres + '/uploadProfileImg?img=' + formData, {headers: this.headers})
       .map(response => response.text());
 	}
 }
