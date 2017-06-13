@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, NavParams, LoadingController, Events, AlertController } from 'ionic-angular';
+import { NavController, ModalController, NavParams, LoadingController, Events, AlertController ,ToastController} from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import { File } from '@ionic-native/file';
+import { File, FileEntry } from '@ionic-native/file';
+import { ImgUploadService } from './imgUploadService';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class ImgUploadPage {
 			  public modalCtrl: ModalController,
 			  public loadingCtrl: LoadingController, public events: Events,
 			  public alertCtrl: AlertController, private camera: Camera,
-			  private file:File) {
+			  private file:File, private imgUploadService: ImgUploadService,
+			  private toastCtrl: ToastController) {
 		}
   
   
@@ -53,8 +55,66 @@ export class ImgUploadPage {
     });
   }
   
-  uploadPhoto(imageData) {
-	  //TO IMPLEMENT
+  uploadPhoto(imageFileUri: any): void {
+	this.error = null;
+    this.loading = this.loadingCtrl.create({
+      content: 'Uploading...'
+    });
+
+    this.loading.present();
+
+    this.file.resolveLocalFilesystemUrl(imageFileUri)
+      .then(entry => (<FileEntry>entry).file(file => this.readFile(file)))
+      .catch(err => console.log(err));
   }
+  
+  private readFile(file: any) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const formData = new FormData();
+      const imgBlob = new Blob([reader.result], {type: file.type});
+      formData.append('file', imgBlob, file.name);
+      this.postData(formData);
+    };
+    reader.readAsArrayBuffer(file);
+  }
+  
+  private postData(formData: FormData) {
+	this.imgUploadService.upload(formData).subscribe(
+	res => {
+		this.presentToast('image uploaded successfully');
+	}
+	, err => {
+		this.handleError(err);
+	}		);
+  
+  }
+  
+  presentToast(msg) {
+  let toast = this.toastCtrl.create({
+    message: msg,
+    duration: 3000,
+    position: 'top'
+  });
+
+  toast.onDidDismiss(() => {
+    console.log('Dismissed toast');
+  });
+
+  toast.present();
+}
+  
+  presentAlert(str) {
+		let alert = this.alertCtrl.create({
+		  title: 'Alert',
+		  subTitle: str,
+		  buttons: ['OK']
+		});
+		alert.present();
+	}
+
+	handleError(err) {
+		this.presentAlert("error is: " + err.error + " message is: " + err.message);
+	}
   
 }
