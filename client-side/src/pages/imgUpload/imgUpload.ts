@@ -83,9 +83,11 @@ export class ImgUploadPage {
 	this.imgUploadService.upload(formData).subscribe(
 	res => {
 		this.presentToast('image uploaded successfully');
+		this.loading.dismiss();
 	}
 	, err => {
 		this.handleError(err);
+		this.loading.dismiss();
 	}		);
   
   }
