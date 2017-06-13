@@ -3,6 +3,7 @@ import { NavParams, ModalController,App, ViewController } from 'ionic-angular';
 import { AddReviewPage } from '../add-review/add-review';
 import { NavigationPage } from '../navigation/navigation';
 import { LocationListPage } from '../location-list/location-list';
+import { SearchService } from '../mapview/searchService';
 
 @Component({
   selector: 'page-mapclickmenu',
@@ -12,10 +13,15 @@ import { LocationListPage } from '../location-list/location-list';
 export class MapClickMenuPage {
   lat : any;
   lng : any;
-  constructor(public viewCtrl: ViewController,public appCtrl: App, public navParams: NavParams,public modalCtrl: ModalController) {
+  address : any;
+  constructor(public viewCtrl: ViewController,public appCtrl: App, public searchService : SearchService, public navParams: NavParams,public modalCtrl: ModalController) {
 	let temp = navParams.get('latlng');
 	this.lat = temp.lat();
 	this.lng = temp.lng();
+	this.address = "loading...";
+	this.searchService.getAdress(this.lat, this.lng).subscribe(data => {	
+		this.address = data.res;
+	});
   }
 
   ionViewDidLoad() {
