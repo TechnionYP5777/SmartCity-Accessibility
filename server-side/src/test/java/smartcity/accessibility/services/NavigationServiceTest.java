@@ -43,10 +43,7 @@ public class NavigationServiceTest extends ServiceTest {
 		this.mockMvc = webAppContextSetup(webApplicationContext).build();
 		mockMvc.perform(post("/signup?name=me&password=1234"));
 		mockMvc.perform(post("/login?name=me&password=1234"));
-		this.t = Token.calcToken(new UserBuilder().setUsername("me").setPassword("1234").build());// new
-																									// UserImpl("me",
-																									// "1234",
-																									// null));
+		this.t = Token.calcToken(new UserBuilder().setUsername("me").setPassword("1234").build());
 	}
 
 	@Test

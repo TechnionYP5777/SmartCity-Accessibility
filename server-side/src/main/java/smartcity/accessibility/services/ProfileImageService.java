@@ -31,7 +31,7 @@ public class ProfileImageService {
 	private static Logger logger = LoggerFactory.getLogger(ProfileImageService.class);
 
 	@RequestMapping(value = "/profileImg", method = RequestMethod.GET)
-	public void getImageNerrative(HttpServletResponse response, @RequestParam("token") String token)
+	public void getProfileImage(HttpServletResponse response, @RequestParam("token") String token)
 			throws IOException {
 		ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
 		try {
