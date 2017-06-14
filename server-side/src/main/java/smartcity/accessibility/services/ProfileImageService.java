@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,14 +32,15 @@ public class ProfileImageService {
 	private static Logger logger = LoggerFactory.getLogger(ProfileImageService.class);
 
 	@RequestMapping(value = "/profileImg", method = RequestMethod.GET)
-	public void getImageNerrative(HttpServletResponse response, @RequestParam("userName") String UserName)
+	public void getProfileImage(HttpServletResponse response, @RequestParam("token") String token)
 			throws IOException {
 		ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
 		try {
-			BufferedImage image = ImageIO.read(new File("res/profileImgDef.png")); // TODO
-																					// get
-																					// image
-			// instead of default image
+			UserInfo userInfo = LogInService.getUserInfo(token);
+			BufferedImage image = userInfo.getUser().getProfile().getProfileImg();
+			if(image == null){
+				image = ImageIO.read(new File("res/profileImgDef.png")); 
+			}
 			ImageIO.write(image, "png", pngOutputStream);
 		} catch (IllegalArgumentException e) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -57,6 +59,7 @@ public class ProfileImageService {
 		responseOutputStream.close();
 	}
 
+	@CrossOrigin
 	@RequestMapping(value = "/uploadProfileImg", method = RequestMethod.POST)
 	public void uploadProfileImg(@RequestParam("img") MultipartFile img, @RequestHeader("authToken") String token) {
 		if (!img.isEmpty()) {
