@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-2.0.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
 <ion-header>
 
   <ion-navbar>
@@ -38,6 +48,9 @@
     			(clicked)="starClicked($event)">
 			</ion-rating>
 		</ion-item>
+		<ion-item>
+			<ion-checkbox [(ngModel)]="streetReview">Review on the street itself</ion-checkbox>
+		</ion-item>
     <ion-buttons>
   	   <button ion-button round (click)="addreview(reviewinfo)">Submit Review</button>
     </ion-buttons>
@@ -45,3 +58,6 @@
 
 
 </ion-content>
+
+</body>
+</html>

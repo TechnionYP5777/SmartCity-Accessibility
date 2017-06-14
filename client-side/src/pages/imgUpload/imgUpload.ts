@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, NavParams, LoadingController, Events, AlertController ,ToastController} from 'ionic-angular';
+import { NavController, ModalController, NavParams, LoadingController,Loading ,Events, AlertController ,ToastController} from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File, FileEntry } from '@ionic-native/file';
 import { ImgUploadService } from './imgUploadService';
@@ -13,9 +13,10 @@ import { ImgUploadService } from './imgUploadService';
 })
 
 export class ImgUploadPage {
-  myPhoto: any;
-  error: any;
-  loading: any;
+  public myPhoto: any;
+  public myPhotoURL: any;
+  public error: string;
+  private loading: Loading;
   
   constructor(public navCtrl: NavController, public navParams: NavParams,
 			  public modalCtrl: ModalController,
@@ -74,6 +75,7 @@ export class ImgUploadPage {
       const formData = new FormData();
       const imgBlob = new Blob([reader.result], {type: file.type});
       formData.append('file', imgBlob, file.name);
+	  this.presentAlert(formData);
       this.postData(formData);
     };
     reader.readAsArrayBuffer(file);
@@ -82,28 +84,33 @@ export class ImgUploadPage {
   private postData(formData: FormData) {
 	this.imgUploadService.upload(formData).subscribe(
 	res => {
-		this.presentToast('image uploaded successfully');
+		this.presentToast(true);
 		this.loading.dismiss();
 	}
 	, err => {
-		this.handleError(err);
+		this.handleError(false);
 		this.loading.dismiss();
-	}		);
+	});
   
   }
   
-  presentToast(msg) {
-  let toast = this.toastCtrl.create({
-    message: msg,
-    duration: 3000,
-    position: 'top'
-  });
-
-  toast.onDidDismiss(() => {
-    console.log('Dismissed toast');
-  });
-
-  toast.present();
+  presentToast(ok: boolean) {
+	 if (ok) {
+      const toast = this.toastCtrl.create({
+        message: 'Upload successful',
+        duration: 3000,
+        position: 'top'
+      });
+      toast.present();
+    }
+    else {
+      const toast = this.toastCtrl.create({
+        message: 'Upload failed',
+        duration: 3000,
+        position: 'top'
+      });
+      toast.present();
+    }
 }
   
   presentAlert(str) {
