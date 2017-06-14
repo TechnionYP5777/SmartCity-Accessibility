@@ -31,14 +31,15 @@ public class ProfileImageService {
 	private static Logger logger = LoggerFactory.getLogger(ProfileImageService.class);
 
 	@RequestMapping(value = "/profileImg", method = RequestMethod.GET)
-	public void getImageNerrative(HttpServletResponse response, @RequestParam("userName") String UserName)
+	public void getImageNerrative(HttpServletResponse response, @RequestParam("token") String token)
 			throws IOException {
 		ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
 		try {
-			BufferedImage image = ImageIO.read(new File("res/profileImgDef.png")); // TODO
-																					// get
-																					// image
-			// instead of default image
+			UserInfo userInfo = LogInService.getUserInfo(token);
+			BufferedImage image = userInfo.getUser().getProfile().getProfileImg();
+			if(image == null){
+				image = ImageIO.read(new File("res/profileImgDef.png")); 
+			}
 			ImageIO.write(image, "png", pngOutputStream);
 		} catch (IllegalArgumentException e) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
