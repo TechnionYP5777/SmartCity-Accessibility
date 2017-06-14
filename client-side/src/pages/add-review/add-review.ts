@@ -14,9 +14,10 @@ export class AddReviewPage {
   token : any;
   lat : any;
   lng : any;
-  type : any
-  subtype : any
-  name : any
+  type : any;
+  subtype : any;
+  name : any;
+  streetReview : boolean;
 
   reviewinfo = {
 		 review: '',
