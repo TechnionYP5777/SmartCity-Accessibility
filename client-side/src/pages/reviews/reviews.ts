@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import {GetReviewsService} from './ReviewsService';
 import { LoginService } from '../login/LoginService';
 import {AddReviewPage} from '../add-review/add-review';
+import { SearchService } from '../mapview/searchService';
 import { UserInformationService } from '../user-page/userInformationService';
 
 @Component({
@@ -27,6 +28,7 @@ export class GetReviewsPage {
   username : any;
   userReview : any;
   ready : any;
+  address : any;
   
   
   
@@ -39,7 +41,8 @@ export class GetReviewsPage {
    public getreviewsservice: GetReviewsService,
    public loginService : LoginService,
    public alertCtrl: AlertController,
-   public userInformationService : UserInformationService) {
+   public userInformationService : UserInformationService,
+   public searchService : SearchService) {
    
     this.token = window.sessionStorage.getItem('token');
 	this.lat = navParams.get('lat');
@@ -53,6 +56,9 @@ export class GetReviewsPage {
 	this.revs  = [];
 	this.username = '';
 	this.ready = false;
+	this.searchService.getAdress(this.lat, this.lng).subscribe(data => {	
+		this.address = data.res;
+	});
   }
   
 
