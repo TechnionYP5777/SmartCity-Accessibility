@@ -17,7 +17,7 @@ export class ImgUploadService {
 			token = "no token";
 		}
 		this.headers = new Headers();
-		this.headers.append('Content-Type',  'multipart/form-data');
+		this.headers.append('Content-Type',  'multipart/form-data; boundary=&');
 		this.headers.append('authToken',token);
     }
 
