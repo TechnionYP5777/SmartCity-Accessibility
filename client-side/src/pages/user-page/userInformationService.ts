@@ -23,6 +23,19 @@ export class UserInformationService {
 		return this.http.get(Constants.serverAddress +'/userInfo/name', {headers: headers}).map(res=>res.json());
 	}
 	
+	getUserQuries() {
+		try{
+		   var token = JSON.parse(window.sessionStorage.getItem('token')).token;
+		}
+		catch(err){
+			token = "no token";
+		}
+		var headers = new Headers();
+		headers.append('Content-Type', 'application/x-www-form-urlencoded');
+		headers.append('authToken',token);
+		return this.http.get(Constants.serverAddress +'/userInfo/queries', {headers: headers}).map(res=>res.json());
+	}
+	
 	getEasyJsonExample() {
 		return this.http.get(Constants.serverAddress +'/userInfo/JSONEXAMPLE').map(res=>res.json());
 	}

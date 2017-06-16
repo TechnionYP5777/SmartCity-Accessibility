@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AddSearchQueryService } from './AddSearchQueryService';
 
 
 @Component({
@@ -9,10 +10,16 @@ import { NavController, NavParams } from 'ionic-angular';
 
 export class AddSearchQueryPage {
   Queries : any;
-  constructor(public navCtrl: NavController, public navParams: NavParams){	  
+  name : string;
+  adress: string;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public addSearchQueryService: AddSearchQueryService){	  
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapClickMenuPage');
+  }
+  
+  addSearchQuery(){
+	  this.addSearchQueryService.addQuery(this.name, this.adress);
   }
 }

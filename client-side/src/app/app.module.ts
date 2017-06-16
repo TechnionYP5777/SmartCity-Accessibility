@@ -36,6 +36,7 @@ import { AddLocationPage } from '../pages/add-location/add-location';
 import { AddLocationService } from '../pages/add-location/AddLocationService';
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
+import { AddSearchQueryService } from '../pages/addSearchQueryMenu/AddSearchQueryService';
 
 @NgModule({
   declarations: [
@@ -103,7 +104,8 @@ import { Camera } from '@ionic-native/camera';
 	AddLocationService,
 	ImgUploadService,
 	File,
-    Camera
+    Camera,
+	AddSearchQueryService
   ]
 })
 export class AppModule {}

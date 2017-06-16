@@ -22,12 +22,12 @@ public class AddSearchQueryService {
 	public final int adressSearch = 1;
 	public final int typeSearch = 2;
 	
-	@RequestMapping(value = "/addQuery", method = RequestMethod.POST,
-			produces = "application/json")
+	@RequestMapping(value = "/addQuery", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
     public void addQuery(@RequestHeader("authToken") String token,
     		@RequestParam("query") String query, @RequestParam("queryName") String queryName, @RequestParam("querytype") String querytype){
 		
+		System.out.println("starting add query");
 		UserInfo userInfo = LogInService.getUserInfo(token);
 		SearchQuery sq = null;
 		try {
@@ -46,6 +46,7 @@ public class AddSearchQueryService {
 		}
 		
 		userInfo.getUser().addSearchQuery(sq, queryName);
+		System.out.println("added the query, now need to upload it");
 		try {
 			UserManager.updatefavouriteQueries(userInfo.getUser());
 		} catch (UserNotFoundException e) {
