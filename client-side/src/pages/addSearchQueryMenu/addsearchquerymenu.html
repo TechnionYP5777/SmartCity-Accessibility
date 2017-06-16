@@ -10,12 +10,16 @@
 	<ion-list>
 		<label class="item item-input">
 		  <span class="input-label">name</span>
-		  <input type="text" [(ngModel)]="name">
-		  <span class="input-label">adress</span>
-		  <input type="text" [(ngModel)]="adress">
 		</label>
+		  <input type="text" [(ngModel)]="name">
+		<label class="item item-input">
+		  <span class="input-label">adress</span>
+		</label>
+		  <input type="text" [(ngModel)]="adress">
+		
 		
 	</ion-list>
-
+	
 	<button ion-button round (click)="addSearchQuery()">Add</button>
+	{{yay}}
 </ion-content>

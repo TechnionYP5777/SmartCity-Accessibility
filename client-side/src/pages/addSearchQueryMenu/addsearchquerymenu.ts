@@ -12,8 +12,9 @@ export class AddSearchQueryPage {
   Queries : any;
   name : string;
   adress: string;
-  
+  yay: string
   constructor(public navCtrl: NavController, public navParams: NavParams, public addSearchQueryService: AddSearchQueryService){	  
+	this.yay = "vlavlavla";
   }
 
   ionViewDidLoad() {
@@ -21,6 +22,8 @@ export class AddSearchQueryPage {
   }
   
   addSearchQuery(){
-	  this.addSearchQueryService.addQuery();
+	  this.addSearchQueryService.addQuery().subscribe(data => {	
+		this.yay = data.name;
+	  });
   }
 }

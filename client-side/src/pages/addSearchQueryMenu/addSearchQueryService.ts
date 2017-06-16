@@ -20,7 +20,7 @@ export class AddSearchQueryService {
 		headers.append('Content-Type', 'application/x-www-form-urlencoded');
 		headers.append('authToken',token);
 
-		var params = "query=" + "yehalom 70" + "&queryName=" + "wululu";
-		this.http.post(Constants.serverAddress +'/addQuery', params,{headers: headers});
+		var params = "?query=" + "yehalom 70" + "&queryName=" + "wululu";
+		return this.http.post(Constants.serverAddress +'/addQuery'+ params,{headers: headers}).map(res=>res.json());
 	}
 }
