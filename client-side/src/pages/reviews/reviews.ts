@@ -64,11 +64,10 @@ export class GetReviewsPage {
   }
   
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
 	  
-    this.loading = this.presentLoadingCustom();
+    this.presentLoadingCustom();
 	
-	this.loading.present();
 	this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype, this.name).subscribe(data => {
 	    	if(data) {
 	    		this.revs = data.json();
@@ -121,7 +120,7 @@ export class GetReviewsPage {
 	openAddReview(){
 		let addReview = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
 		addReview.onDidDismiss(() => {
-			this.ionViewDidLoad();
+			this.ionViewWillEnter();
 		});
 		addReview.present();
 	}
@@ -175,7 +174,7 @@ export class GetReviewsPage {
 	}
 	
 	presentLoadingCustom() {
-      let loading = this.loadingController.create({
+      this.loading = this.loadingController.create({
 		spinner: 'hide',
 		dismissOnPageChange: true,
         content: `<div class="cssload-container">
@@ -184,7 +183,7 @@ export class GetReviewsPage {
         cssClass: 'loader'
       });
 
-       return loading;
+       this.loading.present();
    }
 
 }
