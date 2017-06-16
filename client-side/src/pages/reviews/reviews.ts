@@ -119,9 +119,11 @@ export class GetReviewsPage {
 	}
 	
 	openAddReview(){
-		let clickMenu = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
-		clickMenu.present();
-//		this.viewCtrl.dismiss();
+		let addReview = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
+		addReview.onDidDismiss(() => {
+			this.ionViewDidLoad();
+		});
+		addReview.present();
 	}
 	
 	subscribeToAddReview(){
@@ -174,6 +176,7 @@ export class GetReviewsPage {
 	
 	presentLoadingCustom() {
       let loading = this.loadingController.create({
+		spinner: 'hide',
 		dismissOnPageChange: true,
         content: `<div class="cssload-container">
                   <div class="cssload-whirlpool"></div>
