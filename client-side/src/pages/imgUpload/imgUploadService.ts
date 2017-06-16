@@ -22,7 +22,8 @@ export class ImgUploadService {
     }
 
 	public upload(formData: FormData) {
-	  return this.http.post(Constants.serverAddress + '/uploadProfileImg', formData, {headers: this.headers})
+	  var params = formData;
+	  return this.http.post(Constants.serverAddress + '/uploadProfileImg', params, {headers: this.headers})
       .map(response => response.text());
 	}
 }

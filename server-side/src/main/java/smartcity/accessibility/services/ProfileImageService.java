@@ -61,7 +61,7 @@ public class ProfileImageService {
 
 	@CrossOrigin
 	@RequestMapping(value = "/uploadProfileImg", method = RequestMethod.POST)
-	public void uploadProfileImg(@RequestParam("img") MultipartFile img, @RequestHeader("authToken") String token) {
+	public void uploadProfileImg(@RequestParam("file") MultipartFile img, @RequestHeader("authToken") String token) {
 		if (!img.isEmpty()) {
 			byte[] bytes = null;
 			try {

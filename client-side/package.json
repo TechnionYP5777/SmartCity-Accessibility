@@ -20,7 +20,7 @@
         "@angular/platform-browser-dynamic": "2.4.8",
         "@angular/platform-server": "2.4.8",
         "@ionic-native/camera": "^3.12.1",
-    "@ionic-native/core": "^3.12.1",
+        "@ionic-native/core": "^3.12.1",
         "@ionic-native/file": "^3.12.1",
         "@ionic-native/geolocation": "^3.4.4",
         "@ionic-native/google-maps": "^3.4.3",
