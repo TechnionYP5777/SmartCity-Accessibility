@@ -60,6 +60,7 @@ export class GetReviewsPage {
 	this.searchService.getAdress(this.lat, this.lng).subscribe(data => {	
 		this.address = data.res;
 	});
+	this.subscribeToAddReview();
   }
   
 
