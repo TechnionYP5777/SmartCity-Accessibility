@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
-import {LoadingController, NavController, NavParams, AlertController, ModalController, ViewController} from 'ionic-angular';
+import {LoadingController, NavController, NavParams, AlertController, ModalController, ViewController, Events} from 'ionic-angular';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {GetReviewsService} from './ReviewsService';
 import { LoginService } from '../login/LoginService';
 import {AddReviewPage} from '../add-review/add-review';
+import { SearchService } from '../mapview/searchService';
 import { UserInformationService } from '../user-page/userInformationService';
 
 @Component({
@@ -27,6 +28,7 @@ export class GetReviewsPage {
   username : any;
   userReview : any;
   ready : any;
+  address : any;
   
   
   
@@ -39,7 +41,9 @@ export class GetReviewsPage {
    public getreviewsservice: GetReviewsService,
    public loginService : LoginService,
    public alertCtrl: AlertController,
-   public userInformationService : UserInformationService) {
+   public userInformationService : UserInformationService,
+   public searchService : SearchService,
+   public events: Events) {
    
     this.token = window.sessionStorage.getItem('token');
 	this.lat = navParams.get('lat');
@@ -53,6 +57,9 @@ export class GetReviewsPage {
 	this.revs  = [];
 	this.username = '';
 	this.ready = false;
+	this.searchService.getAdress(this.lat, this.lng).subscribe(data => {	
+		this.address = data.res;
+	});
   }
   
 
@@ -113,7 +120,13 @@ export class GetReviewsPage {
 	openAddReview(){
 		let clickMenu = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
 		clickMenu.present();
-		this.viewCtrl.dismiss();
+//		this.viewCtrl.dismiss();
+	}
+	
+	subscribeToAddReview(){
+		this.events.subscribe('addreview:done', (rev,loading) => {
+			loading.dismiss();
+		});			
 	}
 	
 	checkAlreadyLiked(rev, like){

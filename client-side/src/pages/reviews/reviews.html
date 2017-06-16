@@ -15,7 +15,7 @@
 <ion-content>
   <ion-list no-lines>
     <ion-list-header>
-      {{name}}, ({{lat}}, {{lng}})
+      {{name}}, {{address}}
     </ion-list-header>
     	<ion-buttons>
       		<button ion-button round *ngIf="isLoggedin && !userHasReview && ready" (click)="openAddReview()">Create Review</button>
