@@ -21,6 +21,6 @@ export class AddSearchQueryService {
 		headers.append('authToken',token);
 
 		var params = "query=" + adress + "&queryName=" + name + "&querytype=" + "1";
-		 return this.http.post(Constants.serverAddress +'/addQuery?', params,{headers: headers}).map(res=>res.json());
+		this.http.post(Constants.serverAddress +'/addQuery?', params,{headers: headers});
 	}
 }
