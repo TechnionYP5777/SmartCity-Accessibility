@@ -12,9 +12,8 @@ export class AddSearchQueryPage {
   Queries : any;
   name : string;
   adress: string;
-  wutwut: string;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, public addSearchQueryService: AddSearchQueryService){	  
-  this.wutwut = "hells no";
   }
 
   ionViewDidLoad() {
@@ -22,7 +21,6 @@ export class AddSearchQueryPage {
   }
   
   addSearchQuery(){
-	  this.wutwut = "hells yeas";
-	  this.addSearchQueryService.addQuery(this.name, this.adress);
+	  this.addSearchQueryService.addQuery();
   }
 }

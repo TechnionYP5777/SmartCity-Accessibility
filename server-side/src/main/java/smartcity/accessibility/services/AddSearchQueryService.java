@@ -24,25 +24,17 @@ public class AddSearchQueryService {
 	
 	@RequestMapping(value = "/addQuery", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-    public void addQuery(@RequestHeader("authToken") String token,
-    		@RequestParam("query") String query, @RequestParam("queryName") String queryName, @RequestParam("querytype") String querytype){
+    public void addQuery(@RequestHeader("authToken") String token, @RequestParam("query") String query, @RequestParam("queryName") String queryName){
 		
 		System.out.println("starting add query");
 		UserInfo userInfo = LogInService.getUserInfo(token);
 		SearchQuery sq = null;
+
 		try {
-			switch(Integer.parseInt(querytype)){
-				case(adressSearch):
-					sq = SearchQuery.adressSearch(query);
-					break;
-				case(typeSearch):
-					sq = SearchQuery.TypeSearch(query);
-					break;
-				default:
-					throw new QueryTypeDoesNotExist();
-			}
-		}catch(illigalString e){
-			e.printStackTrace();
+			sq = SearchQuery.adressSearch(query);
+		} catch (illigalString e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		
 		userInfo.getUser().addSearchQuery(sq, queryName);
