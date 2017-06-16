@@ -55,13 +55,13 @@ public class AddReviewService {
 			l.setLocationSubType(LocationSubTypes.valueOf(subtype.toUpperCase()));
 			l.setName(name);
 			if(LocationTypes.valueOf(type.toUpperCase()).equals(LocationTypes.STREET)){
-				String segmentId;
 				try {
+					String segmentId;
 					segmentId = String.valueOf(Navigation.getMapSegmentOfLatLng(lat, lng).getLinkId());
+					l.setSegmentId(segmentId );
 				} catch (CommunicationFailed e) {
 					throw new AddReviewFailed();
 				}
-				l.setSegmentId(segmentId );
 			}
 			AbstractLocationManager.instance().uploadLocation(l, null);
 		}

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {LoadingController, NavController, NavParams, AlertController, ModalController, ViewController} from 'ionic-angular';
+import {LoadingController, NavController, NavParams, AlertController, ModalController, ViewController, Events} from 'ionic-angular';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {GetReviewsService} from './ReviewsService';
@@ -42,7 +42,8 @@ export class GetReviewsPage {
    public loginService : LoginService,
    public alertCtrl: AlertController,
    public userInformationService : UserInformationService,
-   public searchService : SearchService) {
+   public searchService : SearchService,
+   public events: Events) {
    
     this.token = window.sessionStorage.getItem('token');
 	this.lat = navParams.get('lat');
@@ -59,14 +60,14 @@ export class GetReviewsPage {
 	this.searchService.getAdress(this.lat, this.lng).subscribe(data => {	
 		this.address = data.res;
 	});
+	this.subscribeToAddReview();
   }
   
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
 	  
-    this.loading = this.presentLoadingCustom();
+    this.presentLoadingCustom();
 	
-	this.loading.present();
 	this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype, this.name).subscribe(data => {
 	    	if(data) {
 	    		this.revs = data.json();
@@ -117,9 +118,17 @@ export class GetReviewsPage {
 	}
 	
 	openAddReview(){
-		let clickMenu = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
-		clickMenu.present();
-		this.viewCtrl.dismiss();
+		let addReview = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
+		addReview.onDidDismiss(() => {
+			this.ionViewWillEnter();
+		});
+		addReview.present();
+	}
+	
+	subscribeToAddReview(){
+		this.events.subscribe('addreview:done', (rev,loading) => {
+			loading.dismiss();
+		});			
 	}
 	
 	checkAlreadyLiked(rev, like){
@@ -165,7 +174,8 @@ export class GetReviewsPage {
 	}
 	
 	presentLoadingCustom() {
-      let loading = this.loadingController.create({
+      this.loading = this.loadingController.create({
+		spinner: 'hide',
 		dismissOnPageChange: true,
         content: `<div class="cssload-container">
                   <div class="cssload-whirlpool"></div>
@@ -173,7 +183,7 @@ export class GetReviewsPage {
         cssClass: 'loader'
       });
 
-       return loading;
+       this.loading.present();
    }
 
 }

@@ -13,11 +13,16 @@ import { UserInformationService } from './userInformationService';
 export class UserPagePage {
   output :  any;
   UserName: any;
+  quries: any
   addSearchQueryPage = AddSearchQueryPage;
   viewSearchQueryPage = ViewSearchQueryPage;
 	constructor(public navCtrl: NavController, public navParams: NavParams, public loginService : LoginService, public userInformationService : UserInformationService) {
 		this.userInformationService.getUserProfile().subscribe(data => {
 			this.UserName = data.username;
+		});
+		
+		this.userInformationService.getUserQuries().subscribe(data => {
+			this.quries = data.res2;
 		});
 	}
  

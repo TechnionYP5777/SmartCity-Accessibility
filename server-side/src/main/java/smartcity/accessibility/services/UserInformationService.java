@@ -1,5 +1,7 @@
 package smartcity.accessibility.services;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +29,29 @@ public class UserInformationService {
 		return copyUserProfile;
 	}
 	
+	@RequestMapping(value="/userInfo/queries")
+	@ResponseBody public wrapper getUserInfoQueries(@RequestHeader("authToken") String token) {	
+		UserInfo userInfo = LogInService.getUserInfo(token);
+		return new wrapper(userInfo.getUser().getFavouriteSearchQueries());
+	}
+	
+	@RequestMapping(value="/userInfo/queries/example")
+	@ResponseBody public List<SearchQuery> getUserInfoQueriesExample() {	
+		User ui = new UserBuilder()
+				.setUsername("NAME")
+				.setPassword("PASS")
+				.setPrivilege(User.Privilege.RegularUser)
+				.build();
+		try {
+			ui.addSearchQuery(SearchQuery.adressSearch("yehalom 70"), "home");
+			ui.addSearchQuery(SearchQuery.adressSearch("haifa"), "haifa for some reasons");
+		} catch (illigalString e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ui.getFavouriteSearchQueries();
+	}
+	
 	@RequestMapping(value="/userInfo/JSONEXAMPLE")
 	@ResponseBody public UserProfile getUserInfoName() {	
 		
@@ -35,9 +60,10 @@ public class UserInformationService {
 				.setPassword("PASS")
 				.setPrivilege(User.Privilege.RegularUser)
 				.build();
-				//new UserImpl("NAME", "PASS", User.Privilege.RegularUser);
+		
 		try {
 			ui.addSearchQuery(SearchQuery.adressSearch("yehalom 70"), "home");
+			ui.addSearchQuery(SearchQuery.adressSearch("haifa"), "haifa for some reasons");
 		} catch (illigalString e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
