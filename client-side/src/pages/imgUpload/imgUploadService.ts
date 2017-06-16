@@ -17,13 +17,12 @@ export class ImgUploadService {
 			token = "no token";
 		}
 		this.headers = new Headers();
-		this.headers.append('Content-Type',  'multipart/form-data; boundary=&');
 		this.headers.append('authToken',token);
     }
 
 	public upload(formData: FormData) {
-	  var params = formData;
-	  return this.http.post(Constants.serverAddress + '/uploadProfileImg', params, {headers: this.headers})
+	var params = formData;
+	  return this.http.post(Constants.serverAddress + '/uploadProfileImg',params , {headers: this.headers})
       .map(response => response.text());
 	}
 }
