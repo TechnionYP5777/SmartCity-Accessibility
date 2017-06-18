@@ -44,6 +44,10 @@ export class UserPagePage {
 	  this.presentAlert("currently the usage of search queries is unimplemented");
   }
   
+  ee(query){
+	  this.presentAlert("currently the editing of search queries is unimplemented");
+  }
+  
   presentAlert(string) {
   let alert = this.alertCtrl.create({
 	title: string,
