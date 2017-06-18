@@ -80,34 +80,28 @@ public class ReviewComment {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((comment == null) ? 0 : comment.hashCode());
-		result = prime * result + ((commentator == null) ? 0 : commentator.hashCode());
-		result = prime * result + rating;
-		return result;
+		return 31 * (((commentator == null) ? 0 : commentator.hashCode()) + 31 * (((comment == null) ? 0 : comment.hashCode()) + 31)) + rating;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(Object o) {
+		if (o == this)
 			return true;
-		if (obj == null)
+		if (o == null || getClass() != o.getClass())
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ReviewComment other = (ReviewComment) obj;
-		if (comment == null) {
-			if (other.comment != null)
-				return false;
-		} else if (!comment.equals(other.comment))
-			return false;
+		ReviewComment other = (ReviewComment) o;
 		if (commentator == null) {
 			if (other.commentator != null)
 				return false;
 		} else if (!commentator.equals(other.commentator))
 			return false;
-		if (rating != other.rating)
+		//Commentator is the current commentator
+		/*
+		 * We want a commentator to be able to comment AND rate. So if the "this" comment is
+		 * rating comment (or vice versa) and the other is text comment we want to retain
+		 * both comments (so they not "equal")
+		 */
+		if((rating == 0 && other.rating != 0) || (rating != 0 && other.rating == 0 ))
 			return false;
 		return true;
 	}
