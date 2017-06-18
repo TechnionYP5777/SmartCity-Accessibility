@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams , ModalController, ViewController} from 'ionic-angular';
+import { AlertController, NavController, NavParams , ModalController, ViewController} from 'ionic-angular';
 import { LocationsInRadiusService } from './LocationsInRadiusService';
 import { AddLocationPage } from '../add-location/add-location';
 import { GetReviewsPage } from '../reviews/reviews'; 
@@ -20,7 +20,7 @@ export class LocationListPage {
 	index: any;
 	adress: any;
 	
-	constructor(public viewCtrl: ViewController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public locationsInRadius: LocationsInRadiusService, public searchService : SearchService) {
+	constructor(public alertCtrl: AlertController, public viewCtrl: ViewController, public modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public locationsInRadius: LocationsInRadiusService, public searchService : SearchService) {
 		this.lat = navParams.get('lat');
 		this.lng = navParams.get('lng');	
 		this.output = "Calculating...";
@@ -36,6 +36,9 @@ export class LocationListPage {
 			}
 		this.output = this.locations;
 		this.pleaseWait = false;
+		}, err => {
+			this.notDone = true;
+			this.presentAlert(err.json().message);
 		});
 	}
 
@@ -50,4 +53,12 @@ export class LocationListPage {
 		clickMenu.present();
 		this.viewCtrl.dismiss();
 	}
+	
+	  presentAlert(string) {
+	  let alert = this.alertCtrl.create({
+		title: string,
+		buttons: ['OK']
+	  });
+	  alert.present(alert);
+}
 }
