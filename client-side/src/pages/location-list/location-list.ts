@@ -37,8 +37,8 @@ export class LocationListPage {
 		this.output = this.locations;
 		this.pleaseWait = false;
 		}, err => {
-			this.notDone = true;
-			this.presentAlert(err.json().message);
+			this.presentAlert("problem in finding nearby locations: "+err.json().message);
+			this.viewCtrl.dismiss();
 		});
 	}
 
