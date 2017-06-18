@@ -21,6 +21,13 @@ import smartcity.accessibility.database.AbstractUserProfileManager;
 import smartcity.accessibility.database.ParseDatabase;
 import smartcity.accessibility.socialnetwork.UserBuilder;
 
+
+/**
+ * 
+ * @author Koral Chapnik
+ *
+ */
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @WebAppConfiguration
