@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
 import {AddSearchQueryPage} from '../addSearchQueryMenu/addsearchquerymenu';
 import {ViewSearchQueryPage} from '../viewSearchQuery/viewsearchquery';
 import { LoginService } from '../login/LoginService';
 import { UserInformationService } from './userInformationService';
+import { MapviewPage } from '../mapview/mapview';
 
 @Component({
   selector: 'page-user-page',
@@ -17,7 +18,7 @@ export class UserPagePage {
   addSearchQueryPage = AddSearchQueryPage;
   viewSearchQueryPage = ViewSearchQueryPage;
   
-	constructor(public navCtrl: NavController, public navParams: NavParams, public loginService : LoginService, public userInformationService : UserInformationService) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, public loginService : LoginService, public userInformationService : UserInformationService) {
 		this.userInformationService.getUserProfile().subscribe(data => {
 			this.UserName = data.username;
 		});
@@ -40,7 +41,8 @@ export class UserPagePage {
   }
   
   cc(query){
-	  ;
+	  let clickMenu = this.modalCtrl.create(MapviewPage,{adress:query.adress});
+	  this.viewCtrl.dismiss();
   }
 
 }

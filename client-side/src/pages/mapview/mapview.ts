@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController,ModalController, Events,AlertController, LoadingController } from 'ionic-angular';
+import { NavController, ModalController, NavParams, Events,AlertController, LoadingController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { ImgUploadPage } from '../imgUpload/imgUpload';
 import { MapClickMenuPage } from '../mapclickmenu/mapclickmenu'; 
@@ -27,10 +27,11 @@ export class MapviewPage {
   navigateMarkers : any;
   loading : any;
 
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public alertCtrl: AlertController,public modalCtrl: ModalController, public searchService : SearchService, public events: Events) {
-		this.output = "";
+  constructor(public navCtrl: NavController,  public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController,public modalCtrl: ModalController, public searchService : SearchService, public events: Events) {
 		this.subscribeToNavigation();
 		this.markers = [];
+		this.output = navParams.get('adress');
+		this.searchQuery = navParams.get('adress');
   }
   
     ionViewDidLoad(){
