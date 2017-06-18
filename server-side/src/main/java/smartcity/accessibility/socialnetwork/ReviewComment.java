@@ -15,6 +15,12 @@ public class ReviewComment {
 
 	private int rating;
 	private final UserProfile commentator;
+	
+	/**
+	 * The comment itself.
+	 * @author ArthurSap
+	 */
+	private String comment = "";
 
 	public ReviewComment(UserProfile commentator) {
 		rating = 0;
@@ -24,6 +30,32 @@ public class ReviewComment {
 	public ReviewComment(int rating, UserProfile commentator) {
 		this.rating = rating;
 		this.commentator = commentator;
+	}
+	
+	/**
+	 * This constructor is for "real" comments (rating is 0 because "real" comments should'nt
+	 * conatin rating but only text comment).
+	 * @param content - the content of the comment
+	 * @author ArthurSap
+	 */
+	public ReviewComment(String content, UserProfile commentator){
+		this.rating = 0;
+		this.commentator = commentator;
+		this.comment = content;
+	}
+
+	/**
+	 * @author ArthurSap
+	 */
+	public String getComment() {
+		return comment;
+	}
+
+	/**
+	 * @author ArthurSap
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public int getRating() {
@@ -45,14 +77,11 @@ public class ReviewComment {
 		return i;
 	}
 	
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((commentator == null) ? 0 : commentator.hashCode());
-		result = prime * result + rating;
-		return result;
-	}	
+		return 31 * (((commentator == null) ? 0 : commentator.hashCode()) + 31 * (((comment == null) ? 0 : comment.hashCode()) + 31)) + rating;
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -65,6 +94,14 @@ public class ReviewComment {
 			if (other.commentator != null)
 				return false;
 		} else if (!commentator.equals(other.commentator))
+			return false;
+		//Commentator is the current commentator
+		/*
+		 * We want a commentator to be able to comment AND rate. So if the "this" comment is
+		 * rating comment (or vice versa) and the other is text comment we want to retain
+		 * both comments (so they not "equal")
+		 */
+		if((rating == 0 && other.rating != 0) || (rating != 0 && other.rating == 0 ))
 			return false;
 		return true;
 	}
