@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { AlertController, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AddSearchQueryService } from './AddSearchQueryService';
 
 
@@ -12,9 +12,9 @@ export class AddSearchQueryPage {
   Queries : any;
   name : string;
   adress: string;
-  yay: string
-  constructor(public navCtrl: NavController, public navParams: NavParams, public addSearchQueryService: AddSearchQueryService){	  
-	this.yay = "vlavlavla";
+  loading : any;
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public loadingCtrl: LoadingController, public navParams: NavParams, public addSearchQueryService: AddSearchQueryService){	  
+	
   }
 
   ionViewDidLoad() {
@@ -22,8 +22,31 @@ export class AddSearchQueryPage {
   }
   
   addSearchQuery(){
-	  this.addSearchQueryService.addQuery().subscribe(data => {	
-		this.yay = data.name;
+	  this.presentLoadingCustom();
+	  this.addSearchQueryService.addQuery(this.name, this.adress).subscribe(data => {	
+		this.name = "";
+		this.adress = "";
+		this.loading.dismiss();
+		this.presentAlert("done! :)");
+	  }, err => {
+		 this.presentAlert("problem adding query: "+err.json().message);
 	  });
   }
+  
+  presentLoadingCustom() {
+		this.loading = this.loadingCtrl.create({
+		spinner: 'bubbles',
+		showBackdrop: false,
+		cssClass: 'loader'
+	});
+	this.loading.present();
+ }
+ 
+ presentAlert(string) {
+  let alert = this.alertCtrl.create({
+	title: string,
+	buttons: ['OK']
+  });
+  alert.present(alert);
+ }
 }

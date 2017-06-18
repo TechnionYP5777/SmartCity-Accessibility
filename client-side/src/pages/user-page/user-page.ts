@@ -16,6 +16,7 @@ export class UserPagePage {
   quries: any
   addSearchQueryPage = AddSearchQueryPage;
   viewSearchQueryPage = ViewSearchQueryPage;
+  
 	constructor(public navCtrl: NavController, public navParams: NavParams, public loginService : LoginService, public userInformationService : UserInformationService) {
 		this.userInformationService.getUserProfile().subscribe(data => {
 			this.UserName = data.username;
@@ -36,6 +37,10 @@ export class UserPagePage {
   
   showSearchQueries(){
 	    this.navCtrl.push(this.viewSearchQueryPage);
+  }
+  
+  cc(query){
+	  ;
   }
 
 }

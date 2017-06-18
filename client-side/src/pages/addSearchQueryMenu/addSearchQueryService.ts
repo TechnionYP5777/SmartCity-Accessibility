@@ -8,8 +8,8 @@ export class AddSearchQueryService {
     constructor(public http: Http) {
         this.http = http;
     }
-
-	addQuery(){
+	
+	addQuery(name, adress){
 		try{
 		   var token = JSON.parse(window.sessionStorage.getItem('token')).token;
 		}
@@ -20,7 +20,7 @@ export class AddSearchQueryService {
 		headers.append('Content-Type', 'application/x-www-form-urlencoded');
 		headers.append('authToken',token);
 
-		var params = "?query=" + "yehalom 70" + "&queryName=" + "wululu";
-		return this.http.post(Constants.serverAddress +'/addQuery'+ params,{headers: headers}).map(res=>res.json());
+		var params = "query=" + adress + "&queryName=" + name;
+		return this.http.post(Constants.serverAddress +'/addQuery', params,{headers: headers}).map(res=>res.json());
 	}
 }
