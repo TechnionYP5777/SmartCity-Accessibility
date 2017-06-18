@@ -1,5 +1,6 @@
 package smartcity.accessibility.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -18,20 +19,29 @@ import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 import smartcity.accessibility.services.exceptions.SearchFailed;
 
+/**
+ * 
+ * @author Koral Chapnik
+ *
+ */
+
 @Controller
 public class ComplexSearchServiece {
 	@RequestMapping("/complexSearchAddress")
 	@ResponseBody
-	public List<Location> complexSearch(@RequestHeader("authToken") String token, @RequestParam("") String type,
+	public List<Location> complexSearch(@RequestHeader("authToken") String token, @RequestParam("type") String type,
 			@RequestParam("radius") Integer radius, @RequestParam("startLocation") String startLoc,
 			@RequestParam("threshold") Integer threshold) {
+		System.out.println("got to service");
 
+		
 		SearchQuery $ = null;
 		SearchQueryResult esr;
 
+		
 		try {
 			$ = SearchQuery.TypeSearch(Location.LocationSubTypes.valueOf(type.toUpperCase()).getSearchType());
-			esr = $.searchByType(startLoc, radius);
+			esr = $.searchByType(startLoc, radius);;
 		} catch (illigalString | InterruptedException e) {
 			throw new SearchFailed("illegal strings");
 		}
@@ -44,6 +54,9 @@ public class ComplexSearchServiece {
 		}
 
 		return esr.getLocations();
+		
+		
+//		return new ArrayList<Location> ();
 
 	}
 
@@ -53,6 +66,7 @@ public class ComplexSearchServiece {
 			@RequestParam("type") String type, @RequestParam("radius") Integer radius, @RequestParam("lat") Double lat,
 			@RequestParam("lng") Double lng, @RequestParam("threshold") Integer threshold) {
 
+		
 		SearchQuery $ = null;
 		SearchQueryResult esr;
 
@@ -73,7 +87,7 @@ public class ComplexSearchServiece {
 		}
 
 		return esr.getLocations();
-
+		
 	}
 	
 
