@@ -33,7 +33,7 @@ public class ReviewComment {
 	}
 	
 	/**
-	 * This constructor is for "real" comments (rating is 0 because "real" comments should'nt
+	 * This constructor is for text comments (rating is 0 because text comments should'nt
 	 * conatin rating but only text comment).
 	 * @param content - the content of the comment
 	 * @author ArthurSap
