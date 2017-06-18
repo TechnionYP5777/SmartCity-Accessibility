@@ -16,6 +16,12 @@ import smartcity.accessibility.database.LocationManager;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.socialnetwork.UserProfile;
 
+/**
+ * 
+ * @author Koral Chapnik
+ *
+ */
+
 @RestController
 public class AdminService {
 
