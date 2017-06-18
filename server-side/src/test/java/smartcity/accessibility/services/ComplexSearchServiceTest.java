@@ -51,9 +51,9 @@ public class ComplexSearchServiceTest extends ServiceTest {
 	@Test
 	@Category(UnitTests.class)
 	public void checkComplexSearch() throws Exception {
-		MockHttpServletRequestBuilder r = post("/complexSearchAddress?type=restaurant&radius=1000&startLocation=haifa&threshold=1");
-		r.header("authToken", this.t.getToken()).contentType(contentType);
-		mockMvc.perform(r).andExpect(status().is2xxSuccessful());	
+		mockMvc.perform(post("/complexSearchAddress?type=restaurant&radius=1000&startLocation=haifa&threshold=1")
+				.header("authToken", this.t.getToken()).contentType(contentType))
+		.andExpect(status().is2xxSuccessful());	
 	}
 	
 	
