@@ -101,15 +101,27 @@ export class GetReviewsPage {
 	
 	like_dislike(e, rev, like){
 		if(this.isLoggedin == true){
-			if(this.checkAlreadyLiked(rev, like)){
+			let arr = this.checkAlreadyLiked(rev, like);
+			if(arr[0] && arr[1]){
 				return;
 			}
-			if(like>0) rev.upvotes++;
-			else rev.downvotes++;
+			
+			this.presentLoadingCustom();
+			
+			if(like>0){
+				rev.upvotes++;
+				if(arr[1]) rev.downvotes--;
+			} 
+			else {
+				rev.downvotes++;
+				if(arr[1]) rev.upvotes--;
+			}
+			
 			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, like).then(data => {
 				if(data) {
 					this.navCtrl.pop();
 				}
+				this.loading.dismiss();
 			});
 		}
 		else{
@@ -132,10 +144,16 @@ export class GetReviewsPage {
 	}
 	
 	checkAlreadyLiked(rev, like){
+		let boolArray = [false, false];
 		for(let comm of rev.comments){
-			if(comm.commentator.username == this.username && comm.rating == like) return true;
-			else return false
+			if(comm.commentator.username == this.username){
+				boolArray[0] = true;
+				if(comm.rating == like)
+					boolArray[1] = true;
+			}
 		}
+		
+		return boolArray;
 	}
 	
 	userWroteReview(){
