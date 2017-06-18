@@ -32,7 +32,6 @@ public class ComplexSearchServiece {
 	public List<Location> complexSearch(@RequestHeader("authToken") String token, @RequestParam("type") String type,
 			@RequestParam("radius") Integer radius, @RequestParam("startLocation") String startLoc,
 			@RequestParam("threshold") Integer threshold) {
-		System.out.println("got to service");
 
 		
 		SearchQuery $ = null;
