@@ -103,6 +103,8 @@ public class ReviewComment {
 		 */
 		if((rating == 0 && other.rating != 0) || (rating != 0 && other.rating == 0 ))
 			return false;
+		if(rating == 0 && other.rating == 0)//If its the same comment its the same review.
+			return comment.equals(other.comment);
 		return true;
 	}
 
