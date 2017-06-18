@@ -15,6 +15,12 @@ public class ReviewComment {
 
 	private int rating;
 	private final UserProfile commentator;
+	
+	/**
+	 * The comment itself.
+	 * @author ArthurSap
+	 */
+	private String comment = "";
 
 	public ReviewComment(UserProfile commentator) {
 		rating = 0;
@@ -24,6 +30,32 @@ public class ReviewComment {
 	public ReviewComment(int rating, UserProfile commentator) {
 		this.rating = rating;
 		this.commentator = commentator;
+	}
+	
+	/**
+	 * This constructor is for "real" comments (rating is 0 because "real" comments should'nt
+	 * conatin rating but only text comment).
+	 * @param content - the content of the comment
+	 * @author ArthurSap
+	 */
+	public ReviewComment(String content, UserProfile commentator){
+		this.rating = 0;
+		this.commentator = commentator;
+		this.comment = content;
+	}
+
+	/**
+	 * @author ArthurSap
+	 */
+	public String getComment() {
+		return comment;
+	}
+
+	/**
+	 * @author ArthurSap
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public int getRating() {
@@ -45,26 +77,37 @@ public class ReviewComment {
 		return i;
 	}
 	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((comment == null) ? 0 : comment.hashCode());
 		result = prime * result + ((commentator == null) ? 0 : commentator.hashCode());
 		result = prime * result + rating;
 		return result;
-	}	
+	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (o == this)
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (obj == null)
 			return false;
-		ReviewComment other = (ReviewComment) o;
+		if (getClass() != obj.getClass())
+			return false;
+		ReviewComment other = (ReviewComment) obj;
+		if (comment == null) {
+			if (other.comment != null)
+				return false;
+		} else if (!comment.equals(other.comment))
+			return false;
 		if (commentator == null) {
 			if (other.commentator != null)
 				return false;
 		} else if (!commentator.equals(other.commentator))
+			return false;
+		if (rating != other.rating)
 			return false;
 		return true;
 	}
