@@ -26,6 +26,9 @@ public class Review {
 
 	
 	private List<ReviewComment> comments = new ArrayList<>();
+	
+	//Stores comments that are not up/down-votes
+	private List<ReviewComment> realComments = new ArrayList<>();
 
 	public Review(Location l, int r, String c, UserProfile u) {
 		this.rating = new Score(r);
@@ -102,9 +105,10 @@ public class Review {
 	protected void comment(User u, int rating) throws UnauthorizedAccessException {
 		if (!Privilege.commentReviewPrivilegeLevel(u))
 			throw (new UnauthorizedAccessException(Privilege.minCommentLevel()));
-		if (comments.contains(new ReviewComment(u.getProfile())))
-			comments.remove(new ReviewComment(u.getProfile()));
-		comments.add(new ReviewComment(rating, u.getProfile()));
+		ReviewComment rc = new ReviewComment(rating, u.getProfile());
+		if (comments.contains(rc))
+			comments.remove(rc);
+		comments.add(rc);
 	}
 
 	/**
@@ -136,9 +140,28 @@ public class Review {
 	public List<ReviewComment> getComments() {
 		return comments;
 	}
+	
+	/**
+	 * @author ArthurSap
+	 */
+	public List<ReviewComment> getRealComments(){
+		return realComments;
+	}
 
 	public void addComments(Collection<ReviewComment> comments) {
 		this.comments.addAll(comments);
+		filterRealComments();
+	}
+	
+	/**
+	 * Adds all "real" comments to realComments
+	 * @author ArthurSap
+	 */
+	protected void filterRealComments(){
+		//Real comment have rating 0 so they are the only ones we need
+		for(ReviewComment rc : comments)
+			if(rc.getRating() == 0)
+				realComments.add(rc);
 	}
 
 	@Override
