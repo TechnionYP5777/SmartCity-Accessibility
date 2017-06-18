@@ -12,11 +12,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.google.maps.model.LatLng;
+
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.AbstractUserProfileManager;
 import smartcity.accessibility.database.ParseDatabase;
 import smartcity.accessibility.socialnetwork.UserBuilder;
 
+import org.junit.Assert;
 /**
  * @author ariel
  */
@@ -41,18 +44,10 @@ public class AdressSearchServiceTest extends ServiceTest{
 	@Test
 	@Category(UnitTests.class)
 	public void searchSuccess() throws Exception {
-		/*String res = mockMvc.perform(get("/simpleSearch/Yehalom 70").header("authToken", this.t.getToken())).andReturn().getResponse().getContentAsString();
-		Assert.assertTrue(res.contains(":34.992489"));
-		Assert.assertTrue(res.contains(":31.906953"));
-		Assert.assertTrue(res.contains("Yahalom St 70, Modi'in-Maccabim-Re'ut, Israel"));*/
+		String res = mockMvc.perform(post("/simpleSearch/Yehalom 70").header("authToken", this.t.getToken())).andReturn().getResponse().getContentAsString();
+		System.out.println(res);
+		Assert.assertTrue(res.contains(":34.9924887"));
+		Assert.assertTrue(res.contains(":31.9069527"));
+		Assert.assertTrue(res.contains("Yahalom St 70, Modi'in-Maccabim-Re'ut, Israel"));
 	}
-	
-	@Test
-	@Category(UnitTests.class)
-	public void banana() throws Exception {
-	/*	String res = AdressSearchService.getAdress(new LatLng(40.714224,-73.961452));
-		Assert.assertEquals("277 Bedford Ave, Brooklyn, NY 11211, USA", res);*/
-	}
-	
-	
 }

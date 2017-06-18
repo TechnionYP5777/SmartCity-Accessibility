@@ -43,6 +43,5 @@ public class addQueryTest extends ServiceTest{
 	public void searchSuccess() throws Exception {
 		mockMvc.perform(post("/addQuery?query=Yehalom 70&queryName=wululu").header("authToken", this.t.getToken())).andReturn().getResponse().getContentAsString();
 		System.out.println("dayum");
-		//Assert.assertTrue(res.contains("Yahalom St 70, Modi'in-Maccabim-Re'ut, Israel"));
 	}
 }
