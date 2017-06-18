@@ -13,7 +13,9 @@ import smartcity.accessibility.database.UserManager;
 import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.search.SearchQuery;
+import smartcity.accessibility.services.exceptions.BadQuery;
 import smartcity.accessibility.services.exceptions.QueryTypeDoesNotExist;
+import smartcity.accessibility.socialnetwork.User;
 //import smartcity.accessibility.socialnetwork.User;
 
 @RestController
@@ -26,7 +28,9 @@ public class AddSearchQueryService {
 	@ResponseBody
     public SearchQuery addQuery(@RequestHeader("authToken") String token, @RequestParam("query") String query, @RequestParam("queryName") String queryName){
 		
-		System.out.println("starting add query");
+		if(query.equals("undefined") || query.equals("") || query.replaceAll("\\s+", "").equals("")){
+			throw new BadQuery("No Adress Given!");
+		}
 		UserInfo userInfo = LogInService.getUserInfo(token);
 		SearchQuery sq = null;
 
@@ -36,7 +40,11 @@ public class AddSearchQueryService {
 			e1.printStackTrace();
 		}
 		
-		userInfo.getUser().addSearchQuery(sq, queryName);
+		User u = userInfo.getUser();
+		if(u.getSearchQuery(queryName) != null){
+			throw new BadQuery("Name Already Taken!");
+		};
+		u.addSearchQuery(sq, queryName);
 		System.out.println("added the query, now need to upload it");
 		try {
 			UserManager.updatefavouriteQueries(userInfo.getUser());

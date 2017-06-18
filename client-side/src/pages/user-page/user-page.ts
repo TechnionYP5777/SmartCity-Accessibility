@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
+import { AlertController, NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
 import {AddSearchQueryPage} from '../addSearchQueryMenu/addsearchquerymenu';
 import {ViewSearchQueryPage} from '../viewSearchQuery/viewsearchquery';
 import { LoginService } from '../login/LoginService';
@@ -18,7 +18,7 @@ export class UserPagePage {
   addSearchQueryPage = AddSearchQueryPage;
   viewSearchQueryPage = ViewSearchQueryPage;
   
-	constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, public loginService : LoginService, public userInformationService : UserInformationService) {
+	constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, public loginService : LoginService, public userInformationService : UserInformationService) {
 		this.userInformationService.getUserProfile().subscribe(data => {
 			this.UserName = data.username;
 		});
@@ -41,8 +41,15 @@ export class UserPagePage {
   }
   
   cc(query){
-	  let clickMenu = this.modalCtrl.create(MapviewPage,{adress:query.adress});
-	  this.viewCtrl.dismiss();
+	  this.presentAlert("currently the usage of search queries is unimplemented");
   }
+  
+  presentAlert(string) {
+  let alert = this.alertCtrl.create({
+	title: string,
+	buttons: ['OK']
+  });
+  alert.present(alert);
+}
 
 }

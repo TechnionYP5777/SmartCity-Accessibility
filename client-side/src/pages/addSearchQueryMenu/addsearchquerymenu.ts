@@ -30,6 +30,7 @@ export class AddSearchQueryPage {
 		this.presentAlert("done! :)");
 	  }, err => {
 		 this.presentAlert("problem adding query: "+err.json().message);
+		 this.loading.dismiss();
 	  });
   }
   

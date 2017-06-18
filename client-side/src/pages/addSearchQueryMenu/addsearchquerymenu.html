@@ -14,16 +14,8 @@
 
 <ion-content>
 	<ion-list>
-		<label class="item item-input">
-		  <span class="input-label">name</span>
-		</label>
-		  <input type="text" [(ngModel)]="name">
-		<label class="item item-input">
-		  <span class="input-label">adress</span>
-		</label>
-		  <input type="text" [(ngModel)]="adress">
-		
-		
+		  <ion-input type="text" [(ngModel)]="name" placeholder="Name"> </ion-input>
+		  <ion-input type="text" [(ngModel)]="adress" placeholder="Adress"> </ion-input>
 	</ion-list>
 	
 	<button ion-button round (click)="addSearchQuery()">Add</button>

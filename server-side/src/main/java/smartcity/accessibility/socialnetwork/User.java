@@ -95,11 +95,19 @@ public class User {
 	}
 	
 	public SearchQuery getSearchQuery(String QueryName){
-		return favouriteSearchQueries.get(findQueryIndexByName(QueryName));
+		try {
+			return favouriteSearchQueries.get(findQueryIndexByName(QueryName));
+		}catch (IndexOutOfBoundsException e){
+			return null;
+		}
 	}
 	
 	public void removeSearchQuery(String QueryName){
-		favouriteSearchQueries.remove(findQueryIndexByName(QueryName));
+		try {
+			favouriteSearchQueries.remove(findQueryIndexByName(QueryName));
+		}catch (IndexOutOfBoundsException e){
+			//already gone :O
+		}
 	}
 	
 	public void setFavouriteSearchQueries(String favouriteQueries) {

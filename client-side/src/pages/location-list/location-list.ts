@@ -60,5 +60,5 @@ export class LocationListPage {
 		buttons: ['OK']
 	  });
 	  alert.present(alert);
-}
+	}
 }
