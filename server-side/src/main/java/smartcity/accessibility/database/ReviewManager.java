@@ -25,7 +25,8 @@ import smartcity.accessibility.socialnetwork.UserProfile;
  *
  */
 public class ReviewManager extends AbstractReviewManager {
-
+	private static final String SEPERATOR = "$$$$$";
+	
 	private Database db;
 	public static final String DATABASE_CLASS = "Review";
 
@@ -67,7 +68,7 @@ public class ReviewManager extends AbstractReviewManager {
 		for (ReviewComment rc : lrc){
 			logger.debug("serializing reviewcomment {} {}", rc.getCommentator().getUsername(), rc.getRating());
 			sb.append(ReviewComment.serialize(rc));
-			sb.append("$");
+			sb.append(SEPERATOR);
 		}
 		if (sb.length()>0)
 			sb.setLength(sb.length() - 1);
@@ -97,7 +98,7 @@ public class ReviewManager extends AbstractReviewManager {
 			logger.debug("comments are null or empty");
 			return r;
 		}
-		String[] ls = comments.split("$");
+		String[] ls = comments.split(SEPERATOR);
 		List<ReviewComment> lrc = new ArrayList<>();
 		for (String comment : ls){
 			logger.debug("comments split into {}", comment);

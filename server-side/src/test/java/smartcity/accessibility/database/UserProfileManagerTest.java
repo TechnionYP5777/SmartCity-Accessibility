@@ -2,16 +2,10 @@ package smartcity.accessibility.database;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.imageio.ImageIO;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -20,8 +14,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-import org.parse4j.ParseException;
-import org.parse4j.ParseFile;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;

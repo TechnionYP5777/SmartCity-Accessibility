@@ -80,5 +80,6 @@ public class ReviewCommentTest {
 		assertEquals(6, r1.calculateOpinion());
 
 	}
+	
 
 }
