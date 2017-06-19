@@ -26,20 +26,10 @@
     </ion-list-header>
 
 	<img src='http://localhost:8080/profileImg?userName={{name}}' />
-	
-    <!--<ion-card>
-    <img class="card-image" src='../assets/img/Admin.png'/>
-    <ion-card-content>
-    <ion-card-title class ="cardTitle">
-    Hello {{name}}!
-    </ion-card-title>
-    <p class="cardContent">
-    Welcome to the control panel where you can supervise the app and control it!
-    </p>
-    </ion-card-content>
-    </ion-card>-->
 
-
+	<ion-buttons>
+          <button ion-button round (click)="getUserPage()"> <b>{{name}}</b> as A regular user</button>
+    </ion-buttons>
 
     <ion-card>
       <ion-card-content>
