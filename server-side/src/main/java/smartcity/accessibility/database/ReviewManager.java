@@ -71,7 +71,7 @@ public class ReviewManager extends AbstractReviewManager {
 			sb.append(SEPERATOR);
 		}
 		if (sb.length()>0)
-			sb.setLength(sb.length() - 1);
+			sb.setLength(sb.length() - SEPERATOR.length());
 		map.put(COMMENTS_FIELD_NAME, sb.toString());
 		
 		return map;
