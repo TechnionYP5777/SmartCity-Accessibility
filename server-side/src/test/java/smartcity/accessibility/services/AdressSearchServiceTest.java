@@ -3,6 +3,7 @@ package smartcity.accessibility.services;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -12,14 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.google.maps.model.LatLng;
-
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.AbstractUserProfileManager;
 import smartcity.accessibility.database.ParseDatabase;
 import smartcity.accessibility.socialnetwork.UserBuilder;
-
-import org.junit.Assert;
 /**
  * @author ariel
  */

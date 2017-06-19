@@ -14,7 +14,6 @@ import smartcity.accessibility.exceptions.UserNotFoundException;
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.services.exceptions.BadQuery;
-import smartcity.accessibility.services.exceptions.QueryTypeDoesNotExist;
 import smartcity.accessibility.socialnetwork.User;
 //import smartcity.accessibility.socialnetwork.User;
 

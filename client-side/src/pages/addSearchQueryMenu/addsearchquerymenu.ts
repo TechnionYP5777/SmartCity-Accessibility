@@ -28,6 +28,7 @@ export class AddSearchQueryPage {
 		this.adress = "";
 		this.loading.dismiss();
 		this.presentAlert("done! :)");
+		this.navCtrl.pop();
 	  }, err => {
 		 this.presentAlert("problem adding query: "+err.json().message);
 		 this.loading.dismiss();

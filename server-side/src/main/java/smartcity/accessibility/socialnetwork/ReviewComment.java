@@ -10,6 +10,8 @@ import smartcity.accessibility.database.AbstractUserProfileManager;
  *
  */
 public class ReviewComment {
+	public static final String SEPERATOR = "#";
+	
 	public static final int POSITIVE_RATING = 1;
 	public static final int NEGATIVE_RATING = -1;
 
@@ -109,20 +111,27 @@ public class ReviewComment {
 	}
 
 	public static String serialize(ReviewComment rc) {
-		return rc.commentator.getUsername() + "#" + rc.rating;
+		if (!"".equals(rc.comment)){
+			return rc.commentator.getUsername() + SEPERATOR + rc.comment.replace(SEPERATOR, "");
+		}
+		return rc.commentator.getUsername() + SEPERATOR + rc.rating;
 	}
 
 	public static ReviewComment deserialize(String s) {
-		if (s.contains("#")) {
-			String[] ls = s.split("#");
+		if (s.contains(SEPERATOR)) {
+			String[] ls = s.split(SEPERATOR);
 			if (ls.length >= 2) {
 				Integer i = tryParse(ls[1]);
-				if (i!= null)
+				if (i!= null) {
 					return new ReviewComment(i,
 						AbstractUserProfileManager.instance().get(ls[0], null));
+				} else {
+					return new ReviewComment(ls[1],
+							AbstractUserProfileManager.instance().get(ls[0], null));
+				}
 			}
 		}
-		return new ReviewComment(AbstractUserProfileManager.instance().get(s.replace("#", ""), null));
+		return new ReviewComment(AbstractUserProfileManager.instance().get(s.replace(SEPERATOR, ""), null));
 
 	}
 

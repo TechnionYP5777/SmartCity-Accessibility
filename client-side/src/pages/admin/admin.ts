@@ -4,6 +4,7 @@ import { HelpfulUsersPage } from '../helpfulUsers/helpfulUsers';
 import { MostRatedLocsPage } from '../mostRatedLocs/mostRatedLocs';
 import { AdminService } from './adminService';
 import { Constants } from "../constants";
+import { UserPagePage } from '../user-page/user-page'
 
 @Component({
   selector: 'page-admin',
@@ -45,6 +46,10 @@ export class AdminPage {
 	  let users = this.modalCtrl.create(HelpfulUsersPage,{num: n});
 	  users.present();
 	  this.presentLoadingCustom();
+  }
+  
+  getUserPage() {
+	  this.navCtrl.push(UserPagePage);
   }
   
   showLocations(numOfLocations, radius, initLoc) {
