@@ -21,35 +21,30 @@
 
 
 <ion-content data-tap-disabled="true">
-      <div class="row">
-		  <div class="col">
 		  <ion-item>
-			<ion-input [(ngModel)] = "searchQuery" (change)="callSearch(searchQuery)" type="search" placeholder="Search Adress"></ion-input>
+			     <ion-input [(ngModel)] = "searchQuery" (change)="callSearch(searchQuery)" type="search" placeholder="Search Adress"></ion-input>
 		  </ion-item>
-		  </div>
-		  <div class="col">
-		  <button ion-button round (click)="callSearch(searchQuery)" class="buttons">
-          <ion-icon name='search'></ion-icon>
-			Search!
-		  </button>
-		  </div>
-	  </div>
-    
+
+
       {{output}}
-    
+
     <ion-buttons>
+      <button ion-button round (click)="callSearch(searchQuery)" class="buttons">
+          <ion-icon name='search'></ion-icon>
+			  Search
+		  </button>
       <button ion-button round (click)="callToComplexSearch()" class="buttons">
         <ion-icon name='search'></ion-icon>
         Advanced Search
       </button>
     </ion-buttons>
-	
-	<ion-buttons>
+
+	<!--<ion-buttons>
       <button ion-button round (click)="imgUpload()" class="buttons">
         <ion-icon name='search'></ion-icon>
 			image upload
 		</button>
-    </ion-buttons>
+  </ion-buttons>-->
 
 
   <div #map id="map" data-tap-disabled="true"></div>
