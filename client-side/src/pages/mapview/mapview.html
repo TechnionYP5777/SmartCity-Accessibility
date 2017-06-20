@@ -20,7 +20,7 @@
 
 
 
-<ion-content data-tap-disabled="true">
+<ion-content data-tap-disabled="true" cache-view="false">
 		  <ion-item>
 			     <ion-input [(ngModel)] = "searchQuery" (change)="callSearch(searchQuery)" type="search" placeholder="Search Adress"></ion-input>
 		  </ion-item>
@@ -47,6 +47,6 @@
   </ion-buttons>-->
 
 
-  <div #map id="map" data-tap-disabled="true"></div>
+  <div #map id="map" data-tap-disabled="true" style="height: 76%; width: 100%; margin-top: 5px;" ></div>
 
 </ion-content>
