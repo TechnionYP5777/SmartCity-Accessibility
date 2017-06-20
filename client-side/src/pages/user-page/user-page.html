@@ -7,7 +7,7 @@
   	  </button>
     </ion-buttons>
     <ion-title>
-      User Profile Page
+      Welcome, <b>{{UserName}}</b>!
     </ion-title>
 
   </ion-navbar>
@@ -17,21 +17,43 @@
 
   <ion-list>
     <ion-list-header>
-      Welcome, <b>{{UserName}}</b>!
+      Your Search Queries
     </ion-list-header>
-<!--
-	<button ion-button round (click)="addNewSearchQuery()">add New Search Query</button>
 
-    <ion-card>
+	  <button ion-button round (click)="addNewSearchQuery()">add New Search Query</button>
+
+    <ion-card *ngFor="let query of quries">
+      <ion-card-title class ="cardTitle">
+        <ion-icon name="information-circle"></ion-icon>
+        {{query.name}}
+      </ion-card-title>
       <ion-card-content>
-        <ion-card-title class ="cardTitle">
-          <ion-icon name="information-circle"></ion-icon>
-          Your Search Queries
-        </ion-card-title>
+        <button ion-button round (click)="cc(query)" class="buttons">
+          <ion-icon name='search'></ion-icon>
+          Search
+        </button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--<ion-card>
+      <ion-card-content>
+
 		<ion-list>
 		 <div class="row">
 		  <div class="col">
-		 <button ion-button round *ngFor="let query of quries" (click)="cc(query)" class="buttons">{{query.name}}</button>
+		 <button ion-button round *ngFor="let query of quries" (click)="cc(query)" class="buttons"></button>
 		  </div>
 		  <div class="col">
 		 <button ion-button round *ngFor="let query of quries" (click)="ee(query)" class="buttons">Edit</button>
@@ -41,7 +63,6 @@
 	 </ion-card-content>
     </ion-card>
 
--->
-  </ion-list>
+  </ion-list>-->
 
 </ion-content>
