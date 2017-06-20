@@ -2,6 +2,8 @@ package smartcity.accessibility.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +21,8 @@ import smartcity.accessibility.socialnetwork.UserProfile;
 
 @RestController
 public class UserInformationService {
+	private static Logger logger = LoggerFactory.getLogger(UserInformationService.class);
+	
 	@RequestMapping(value="/userInfo/name")
 	@ResponseBody public UserProfile getUserInfoName(@RequestHeader("authToken") String token) {	
 		UserInfo userInfo = LogInService.getUserInfo(token);
@@ -46,8 +50,7 @@ public class UserInformationService {
 			ui.addSearchQuery(SearchQuery.adressSearch("yehalom 70"), "home");
 			ui.addSearchQuery(SearchQuery.adressSearch("haifa"), "haifa for some reasons");
 		} catch (illigalString e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Illegal String {} ", e);
 		}
 		return ui.getFavouriteSearchQueries();
 	}
@@ -65,8 +68,7 @@ public class UserInformationService {
 			ui.addSearchQuery(SearchQuery.adressSearch("yehalom 70"), "home");
 			ui.addSearchQuery(SearchQuery.adressSearch("haifa"), "haifa for some reasons");
 		} catch (illigalString e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Illegal String {} ", e);
 		}
 		return ui.getProfile();
 	}

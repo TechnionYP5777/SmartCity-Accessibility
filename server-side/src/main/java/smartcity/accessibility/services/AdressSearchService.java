@@ -2,6 +2,8 @@ package smartcity.accessibility.services;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,7 @@ import smartcity.accessibility.services.exceptions.NoAdressFound;
 
 @RestController
 public class AdressSearchService {
+	private static Logger logger = LoggerFactory.getLogger(AdressSearchService.class);
 	
 	
 	private static final GeoApiContext context;
@@ -44,9 +47,9 @@ public class AdressSearchService {
 				SearchQuery $ = SearchQuery.adressSearch(search);
 		        SearchQueryResult sqr1 = $.SearchByAddress();
 		        $.waitOnSearch();
-		        Location location2 = sqr1.getLocations().get(0);
-		        return location2;	
+		        return sqr1.getLocations().get(0);	
 		} catch (illigalString | InterruptedException e) {
+			logger.error(" Exception thrown {} ", e);
 			return null;
 		}
     }
@@ -63,11 +66,11 @@ public class AdressSearchService {
 			if(a.length == 0){
 				throw new NoAdressFound();
 			}else{
-				System.out.println(a[0].formattedAddress);
+				logger.debug(a[0].formattedAddress);
 				return new wrapper(a[0].formattedAddress);
 			}
 		} catch (ApiException | InterruptedException | IOException | NoAdressFound e) {
-			System.out.println("shit fuck");
+			logger.error("Exception thrown {} ", e);
 			throw new NoAdressFound();
 		}
 		
@@ -85,11 +88,11 @@ public class AdressSearchService {
 			if(a.length == 0){
 				throw new NoAdressFound();
 			}else{
-				System.out.println(a[0].formattedAddress);
+				logger.debug(a[0].formattedAddress);
 				return new wrapper(a[0].formattedAddress);
 			}
 		} catch (ApiException | InterruptedException | IOException | NoAdressFound e) {
-			System.out.println("shit fuck");
+			logger.error("Exception thrown {} ", e);
 			throw new NoAdressFound();
 		}
 		

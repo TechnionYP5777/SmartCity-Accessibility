@@ -1,4 +1,6 @@
 package smartcity.accessibility.services;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +24,9 @@ import smartcity.accessibility.socialnetwork.User;
 
 @RestController
 public class AddReviewService {
+	private static Logger logger = LoggerFactory.getLogger(AddReviewService.class);
+	
+	
 	@RequestMapping(value = "/addreview", method = RequestMethod.POST,
 			produces = "application/json")
 	@ResponseBody
@@ -58,6 +63,7 @@ public class AddReviewService {
 					segmentId = String.valueOf(Navigation.getMapSegmentOfLatLng(lat, lng).getLinkId());
 					l.setSegmentId(segmentId );
 				} catch (CommunicationFailed e) {
+					logger.error("CommunicationFailed {} ", e);
 					throw new AddReviewFailed();
 				}
 			}
