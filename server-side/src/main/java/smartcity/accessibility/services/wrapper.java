@@ -23,4 +23,4 @@ public class wrapper{
 	public List<SearchQuery> getRes2(){
 		return this.res2;
 	}
-};
+}

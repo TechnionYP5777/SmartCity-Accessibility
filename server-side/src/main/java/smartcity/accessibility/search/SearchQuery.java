@@ -67,7 +67,7 @@ public class SearchQuery {
 		String[] a = parsedQuery.split(thisIsTheStringSplitter);
 		isAdress = Boolean.parseBoolean(a[0]);
 		this.queryString = a[1];
-		this.QueryName = a[2] == "null" ? null : a[2];
+		this.QueryName = "null".equals(a[2]) ? null : a[2];
 	}
 	
 	public static GeoApiContext getContext(){
@@ -99,7 +99,7 @@ public class SearchQuery {
 	}
 
 	public static String QueriesList2String(List<SearchQuery> qs) {
-		List<String> $ = new ArrayList<String>();
+		List<String> $ = new ArrayList<>();
 		for (SearchQuery ¢ : qs)
 			$.add(¢ + "");
 		return $ + "";
@@ -107,7 +107,7 @@ public class SearchQuery {
 
 	public static List<SearchQuery> String2QueriesList(String favouriteQueries) {
 		String p1 = favouriteQueries.replace("[", "").replace("]", "");
-		List<SearchQuery> $ = new ArrayList<SearchQuery>();
+		List<SearchQuery> $ = new ArrayList<>();
 		String[] split;
 		if (p1.isEmpty())
 			return $;
@@ -170,7 +170,7 @@ public class SearchQuery {
 	public SearchQueryResult typeSearch(Location initLocation, int radius) {
 		SetSearchStatus(SearchStage.Running);
 		List<String> kindsOfLocations = new ArrayList<>();
-		if (queryString.equals("")) {
+		if ("".equals(queryString)) {
 			for (LocationSubTypes lst : LocationSubTypes.values()) {
 				kindsOfLocations.add(lst.getSearchType());
 			}
@@ -188,6 +188,7 @@ public class SearchQuery {
 			waitOnSearch();
 		} catch (InterruptedException e) {
 			logger.error("type search wait interrupted {}", e);
+			Thread.currentThread().interrupt();
 		}
 		List<Location> locationsFromDB =LocationManager.instance().getLocationsAround(
 				initLocation.getCoordinates(), radius, null).
@@ -230,6 +231,7 @@ public class SearchQuery {
 			waitOnSearch();
 		} catch (InterruptedException e) {
 			logger.error("address search wait interrupted {}", e);
+			Thread.currentThread().interrupt();
 		}
 		return new SearchQueryResult($);
 	}
