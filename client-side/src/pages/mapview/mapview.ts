@@ -2,20 +2,20 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, ModalController, NavParams, Events,AlertController, LoadingController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { ImgUploadPage } from '../imgUpload/imgUpload';
-import { MapClickMenuPage } from '../mapclickmenu/mapclickmenu'; 
+import { MapClickMenuPage } from '../mapclickmenu/mapclickmenu';
 import { ComplexSearchPage } from '../complex-search/complex-search';
 import { SearchService } from './searchService';
 import { navigationManeuverPage } from '../navigation_maneuver/navigation_maneuver';
 
-declare var google;  
- 
- 
+declare var google;
+
+
 @Component({
   selector: 'page-mapview',
   templateUrl: 'mapview.html'
 })
 export class MapviewPage {
- 
+
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   markers : any;
@@ -26,18 +26,23 @@ export class MapviewPage {
   output :  any;
   navigateMarkers : any;
   loading : any;
+  userQuery : any;
 
   constructor(public navCtrl: NavController,  public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController,public modalCtrl: ModalController, public searchService : SearchService, public events: Events) {
-		this.subscribeToNavigation();
+    this.subscribeToNavigation();
 		this.markers = [];
 		this.output = navParams.get('adress');
 		this.searchQuery = navParams.get('adress');
+
+    this.userQuery = this.navParams.get("myQuery");
+
   }
-  
+
     ionViewDidLoad(){
         this.loadMap();
+
     }
-  
+
 	addMarker(LatLngArr){
 		for (var i = 0; i < this.markers.length; i++) {
             this.markers[i].setMap(null);
@@ -50,23 +55,23 @@ export class MapviewPage {
                 position: latLng,
                 map: this.map
             });
-		    google.maps.event.addListener(marker,'click',(event)=>{ 
+		    google.maps.event.addListener(marker,'click',(event)=>{
 			    let clickMenu = this.modalCtrl.create(MapClickMenuPage,{latlng : event.latLng});
 			    clickMenu.present();
 		    });
 			this.markers[i] = marker;
         }
     }
-	
+
     callSearch(searchQuery) {
-		this.presentLoadingCustom();
-	    this.searchService.search(searchQuery).subscribe(data => {
-			this.addMarker([data.coordinates]);
-			this.map.setCenter(data.coordinates);
-		});
-		this.loading.dismiss();
+  		this.presentLoadingCustom();
+  	    this.searchService.search(searchQuery).subscribe(data => {
+  			this.addMarker([data.coordinates]);
+  			this.map.setCenter(data.coordinates);
+  		});
+  		this.loading.dismiss();
     }
-	
+
 	callToComplexSearch() {
 			this.navCtrl.push(this.complexSearchPage);
 			let markers_complex = [];
@@ -77,13 +82,13 @@ export class MapviewPage {
 				this.addMarker(markers_complex);
 				this.map.setCenter(initLocation);
 			});
-	
+
 	}
-	
+
 	imgUpload() {
 		this.navCtrl.push(ImgUploadPage);
 	}
-  
+
 	subscribeToNavigation(){
 		this.events.subscribe('navigation:done', (navigationResults,loading) => {
 			if(navigationResults == null){
@@ -115,7 +120,7 @@ export class MapviewPage {
             });
 			route.setMap(this.map);
 			this.navigateMarkers = [route, start_marker, end_marker];
-			google.maps.event.addListener(route,'click',(event)=>{ 
+			google.maps.event.addListener(route,'click',(event)=>{
 				let clickMenu = this.modalCtrl.create(navigationManeuverPage,navigationResults);
 				clickMenu.present();
 			});
@@ -140,45 +145,47 @@ loadMap(){
 			center: latLng,
 			zoom: 15,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
-		}		
+		}
 		this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-		google.maps.event.addListener(this.map,'click',(event)=>{ 
+		google.maps.event.addListener(this.map,'click',(event)=>{
 			let clickMenu = this.modalCtrl.create(MapClickMenuPage,{latlng : event.latLng});
 			clickMenu.present();
 		} );
-		
+
 		this.trackUser();
-		
+    if (!!this.userQuery){
+      this.callSearch(this.userQuery);
+    }
     }, (err) => {
       console.log(err);
-    });	
+    });
   }
-  
+
 trackUser() {
 	this.geolocation.watchPosition().subscribe((position) => {
 		let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-		
+
 		if(this.marker_curr_location != null)
 			this.marker_curr_location.setMap(null);
-		
+
 		this.marker_curr_location = new google.maps.Marker({
 			map: this.map,
 			position: latLng,
 			icon: 'assets/icon/curr_location.png'
 		});
-		
+
 		var infowindow = new google.maps.InfoWindow({
 		    content: 'you are here'
 	    });
-		
+
 		this.marker_curr_location.addListener('click', function() {
             infowindow.open(this.map, this.marker_curr_location);
         });
-		
+
     }, (err) => {
       console.log(err);
-    });	
-}  
+    });
+}
 
 presentLoadingCustom() {
             this.loading = this.loadingCtrl.create({
