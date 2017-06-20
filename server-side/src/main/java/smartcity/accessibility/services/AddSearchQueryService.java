@@ -1,5 +1,8 @@
 package smartcity.accessibility.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 //import java.util.concurrent.ExecutionException;
 
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -19,6 +22,7 @@ import smartcity.accessibility.socialnetwork.User;
 
 @RestController
 public class AddSearchQueryService {
+	private static Logger logger = LoggerFactory.getLogger(AddSearchQueryService.class);
 
 	public final int adressSearch = 1;
 	public final int typeSearch = 2;
@@ -27,7 +31,7 @@ public class AddSearchQueryService {
 	@ResponseBody
     public SearchQuery addQuery(@RequestHeader("authToken") String token, @RequestParam("query") String query, @RequestParam("queryName") String queryName){
 		
-		if(query.equals("undefined") || query.equals("") || query.replaceAll("\\s+", "").equals("")){
+		if("undefined".equals(query) || "".equals(query) || "".equals(query.replaceAll("\\s+", ""))){
 			throw new BadQuery("No Adress Given!");
 		}
 		UserInfo userInfo = LogInService.getUserInfo(token);
@@ -36,19 +40,19 @@ public class AddSearchQueryService {
 		try {
 			sq = SearchQuery.adressSearch(query);
 		} catch (illigalString e1) {
-			e1.printStackTrace();
+			logger.error("Illegal String {} ",e1);
 		}
 		
 		User u = userInfo.getUser();
 		if(u.getSearchQuery(queryName) != null){
 			throw new BadQuery("Name Already Taken!");
-		};
+		}
 		u.addSearchQuery(sq, queryName);
-		System.out.println("added the query, now need to upload it");
+		logger.debug("added the query, now need to upload it");
 		try {
 			UserManager.updatefavouriteQueries(userInfo.getUser());
 		} catch (UserNotFoundException e) {
-			e.printStackTrace();
+			logger.error("User not found {}", e);
 		}	
 		return sq;
     }
