@@ -33,7 +33,7 @@ public class SearchQuery {
 	private static final String API_KEY = "AIzaSyAxFHT3dheK_oTyQu6lERytdi83uaqg5m8";
 	private static Logger logger = LoggerFactory.getLogger(SearchQuery.class);
 	private static final GeoApiContext context;
-	public List<Location> places; // the nearby places result
+	private List<Location> places; // the nearby places result
 
 	public enum SearchStage {
 		NotRunning, Running, Done, Failed;
