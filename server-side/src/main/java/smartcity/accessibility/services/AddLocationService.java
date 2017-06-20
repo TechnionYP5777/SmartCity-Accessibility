@@ -1,5 +1,7 @@
 package smartcity.accessibility.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +17,9 @@ import smartcity.accessibility.services.exceptions.AddLocationFailed;
 
 @RestController
 public class AddLocationService {
+	private static Logger logger = LoggerFactory.getLogger(AddLocationService.class);
+	
+	
 	//private static final String failedResult = "{}"; 
 	@RequestMapping(value = "/addLocation", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
@@ -34,6 +39,7 @@ public class AddLocationService {
 			}
 			return dummy;
 		}catch(Exception e){
+			logger.error("{}", e);
 			throw new AddLocationFailed();
 		}
 	}

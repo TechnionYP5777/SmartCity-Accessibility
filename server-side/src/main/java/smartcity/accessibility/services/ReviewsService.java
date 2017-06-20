@@ -1,5 +1,7 @@
 package smartcity.accessibility.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +24,7 @@ import smartcity.accessibility.socialnetwork.User;
 
 @RestController
 public class ReviewsService {
+	private static Logger logger = LoggerFactory.getLogger(ReviewsService.class);
 	
 	@RequestMapping(value = "/reviews", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
@@ -79,6 +82,7 @@ public class ReviewsService {
 					else r.downvote(u);
 					AbstractReviewManager.instance().updateReview(r, null);
 				} catch (UnauthorizedAccessException e) {
+					logger.error("{}", e);
 					throw new UserIsNotLoggedIn();
 				}
 				break;
