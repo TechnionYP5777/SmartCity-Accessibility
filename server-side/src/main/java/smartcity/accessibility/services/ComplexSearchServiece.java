@@ -39,16 +39,16 @@ public class ComplexSearchServiece {
 		
 		try {
 			$ = SearchQuery.TypeSearch(Location.LocationSubTypes.valueOf(type.toUpperCase()).getSearchType());
-			esr = $.searchByType(startLoc, radius);;
+			esr = $.searchByType(startLoc, radius);
 		} catch (illigalString | InterruptedException e) {
-			throw new SearchFailed("illegal strings");
+			throw new SearchFailed("illegal strings " + e);
 		}
 
 		try {
 			// esr.convertDummiesToReal();
 			esr.filterLocations(threshold);
-		} catch (EmptySearchQuery ¢) {
-			throw new SearchFailed("empty search query");
+		} catch (EmptySearchQuery e) {
+			throw new SearchFailed("empty search query "+e);
 		}
 
 		return esr.getLocations();
@@ -71,7 +71,7 @@ public class ComplexSearchServiece {
 		try {
 			$ = SearchQuery.TypeSearch(Location.LocationSubTypes.valueOf(type.toUpperCase()).getSearchType());
 		} catch (illigalString e) {
-			throw new SearchFailed("type doesn't exists");
+			throw new SearchFailed("type doesn't exists "+ e);
 		}
 		Location l = new LocationBuilder().build();
 		l.setCoordinates(new LatLng(lat, lng));
@@ -80,8 +80,8 @@ public class ComplexSearchServiece {
 		try {
 			// esr.convertDummiesToReal();
 			esr.filterLocations(threshold);
-		} catch (EmptySearchQuery ¢) {
-			throw new SearchFailed("empty search query");
+		} catch (EmptySearchQuery e) {
+			throw new SearchFailed("empty search query "+e);
 		}
 
 		return esr.getLocations();

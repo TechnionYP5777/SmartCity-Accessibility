@@ -3,8 +3,6 @@ package smartcity.accessibility.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//import java.util.concurrent.ExecutionException;
-
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +16,6 @@ import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.services.exceptions.BadQuery;
 import smartcity.accessibility.socialnetwork.User;
-//import smartcity.accessibility.socialnetwork.User;
 
 @RestController
 public class AddSearchQueryService {

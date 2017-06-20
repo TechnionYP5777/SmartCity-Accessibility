@@ -3,9 +3,13 @@ package smartcity.accessibility.socialnetwork;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import smartcity.accessibility.search.SearchQuery;
 
 public class User {
+	private static Logger logger = LoggerFactory.getLogger(User.class);
 	
 	private final UserProfile profile;
 	private final String password;
@@ -98,6 +102,7 @@ public class User {
 		try {
 			return favouriteSearchQueries.get(findQueryIndexByName(QueryName));
 		}catch (IndexOutOfBoundsException e){
+			logger.error("IndexOutOfBounds {}", e);
 			return null;
 		}
 	}
@@ -106,6 +111,7 @@ public class User {
 		try {
 			favouriteSearchQueries.remove(findQueryIndexByName(QueryName));
 		}catch (IndexOutOfBoundsException e){
+			logger.error("IndexOutOfBounds {}", e);
 			//already gone :O
 		}
 	}
