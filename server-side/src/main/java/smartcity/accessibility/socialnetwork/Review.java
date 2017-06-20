@@ -3,7 +3,6 @@ package smartcity.accessibility.socialnetwork;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import smartcity.accessibility.exceptions.UnauthorizedAccessException;
@@ -12,8 +11,7 @@ import smartcity.accessibility.socialnetwork.User.Privilege;
 
 /**
  * 
- * @author Koral Chapnik 
- * This class represents a review of some location
+ * @author Koral Chapnik This class represents a review of some location
  */
 public class Review {
 
@@ -23,10 +21,8 @@ public class Review {
 	private String content;
 	private boolean isPinned;
 
-
-	
 	private List<ReviewComment> comments = new ArrayList<>();
-	
+
 	// @author ArthurSap Stores comments that are not up/down-votes
 	private List<ReviewComment> realComments = new ArrayList<>();
 
@@ -53,8 +49,7 @@ public class Review {
 		return this.content;
 	}
 
-	
-	public void setPinned(boolean pinned){
+	public void setPinned(boolean pinned) {
 		isPinned = pinned;
 	}
 
@@ -97,22 +92,24 @@ public class Review {
 		comment(u, ReviewComment.NEGATIVE_RATING);
 		user.downvote();
 	}
-	
+
 	/**
-	 * Adds a text comment to the review
-	 * AlexKaplan - maybe we can refactor this function with the original "comment()"
-	 * the avoid code duplication.
-	 * @param u - the user
-	 * @param content - the text comment
+	 * Adds a text comment to the review AlexKaplan - maybe we can refactor this
+	 * function with the original "comment()" the avoid code duplication.
+	 * 
+	 * @param u
+	 *            - the user
+	 * @param content
+	 *            - the text comment
 	 * @throws UnauthorizedAccessException
 	 */
-	public void addComment(User u, String content) throws UnauthorizedAccessException{
+	public void addComment(User u, String content) throws UnauthorizedAccessException {
 		if (!Privilege.commentReviewPrivilegeLevel(u))
 			throw (new UnauthorizedAccessException(Privilege.minCommentLevel()));
 		ReviewComment rc = new ReviewComment(content, u.getProfile());
 		if (comments.contains(rc))
 			comments.remove(rc);
-		if(realComments.contains(rc))
+		if (realComments.contains(rc))
 			realComments.remove(rc);
 		comments.add(rc);
 		realComments.add(rc);
@@ -125,10 +122,6 @@ public class Review {
 	protected void comment(User u, int rating) throws UnauthorizedAccessException {
 		if (!Privilege.commentReviewPrivilegeLevel(u))
 			throw (new UnauthorizedAccessException(Privilege.minCommentLevel()));
-		/* TODO @AlexKaplan please look on this change. I believe it is necessary because we
-		 * want users to be able to comment AND rate the review (so if rating == 0 its a comment and
-		 * if rating != 0 its a rating)
-		 */
 		ReviewComment rc = new ReviewComment(rating, u.getProfile());
 		if (comments.contains(rc))
 			comments.remove(rc);
@@ -153,22 +146,18 @@ public class Review {
 	 * @author KaplanAlexander
 	 */
 	protected int getComments(int rating) {
-		return ReviewComment.summarizeComments(comments.stream().filter(new Predicate<ReviewComment>() {
-			@Override
-			public boolean test(ReviewComment ¢) {
-				return (¢.getRating() == rating);
-			}
-		}).collect(Collectors.toList()));
+		return ReviewComment
+				.summarizeComments(comments.stream().filter(r -> r.getRating() == rating).collect(Collectors.toList()));
 	}
 
 	public List<ReviewComment> getComments() {
 		return comments;
 	}
-	
+
 	/**
 	 * @author ArthurSap
 	 */
-	public List<ReviewComment> getRealComments(){
+	public List<ReviewComment> getRealComments() {
 		return realComments;
 	}
 
@@ -176,16 +165,31 @@ public class Review {
 		this.comments.addAll(comments);
 		filterRealComments();
 	}
-	
+
 	/**
 	 * Adds all text comments to realComments
+	 * 
 	 * @author ArthurSap
 	 */
-	protected void filterRealComments(){
-		//Real comment have rating 0 so they are the only ones we need
-		for(ReviewComment rc : comments)
-			if(rc.getRating() == 0)
+	protected void filterRealComments() {
+		// Real comment have rating 0 so they are the only ones we need
+		for (ReviewComment rc : comments)
+			if (rc.getRating() == 0)
 				realComments.add(rc);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
+		result = prime * result + ((content == null) ? 0 : content.hashCode());
+		result = prime * result + (isPinned ? 1231 : 1237);
+		result = prime * result + ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((rating == null) ? 0 : rating.hashCode());
+		result = prime * result + ((realComments == null) ? 0 : realComments.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
 	}
 
 	@Override

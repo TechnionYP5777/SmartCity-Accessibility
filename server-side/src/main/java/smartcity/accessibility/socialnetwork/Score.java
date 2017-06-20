@@ -7,8 +7,8 @@ package smartcity.accessibility.socialnetwork;
  */
 public class Score {
 	private int score;
-	private static int MIN_SCORE = 1;
-	private static int MAX_SCORE = 5;
+	private final static int MIN_SCORE = 1;
+	private final static int MAX_SCORE = 5;
 
 	public Score(int s) {
 		this.score = s;
@@ -31,8 +31,24 @@ public class Score {
 	}
 
 	@Override
-	public boolean equals(Object ¢) {
-		return ¢ == this || (¢ instanceof Score && ((Score) ¢).getScore() == this.score);
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + score;
+		return result;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Score other = (Score) obj;
+		return score != other.score ? false : true;
+	}
+	
+	
 }

@@ -263,8 +263,21 @@ public class SearchQuery {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((QueryName == null) ? 0 : QueryName.hashCode());
+		result = prime * result + (isAdress ? 1231 : 1237);
+		result = prime * result + ((places == null) ? 0 : places.hashCode());
+		result = prime * result + ((queryString == null) ? 0 : queryString.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(final Object o) {
 		return o == this || (o instanceof SearchQuery && this.QueryName.equals(((SearchQuery) o).QueryName));
 	}
+	
+	
 
 }
