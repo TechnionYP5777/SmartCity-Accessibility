@@ -14,10 +14,11 @@
 
     <ion-item *ngIf="isLoggedin">
       <ion-input placeholder="Enter your comment here...." type="text" [(ngModel)]="userComm"></ion-input>
-      <ion-buttons>
-        <button ion-button round (click)="postComment()">Post comment</button>
-      </ion-buttons>
     </ion-item>
+
+    <ion-buttons>
+      <button ion-button round (click)="postComment()" *ngIf="isLoggedin">Post comment</button>
+    </ion-buttons>
 
     <ion-card *ngFor="let comm of allComments">
 
