@@ -65,6 +65,8 @@ export class GetReviewsPage {
   
 
   ionViewWillEnter() {
+	 
+	 console.log('ionViewWillEnter ShowReviewPage');
 	  
     this.presentLoadingCustom();
 	
@@ -140,6 +142,7 @@ export class GetReviewsPage {
 	subscribeToAddReview(){
 		this.events.subscribe('addreview:done', (rev,loading) => {
 			loading.dismiss();
+			console.log('AddReviewPage loading dismissed');
 		});			
 	}
 	
