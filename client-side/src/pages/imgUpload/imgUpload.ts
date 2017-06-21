@@ -59,7 +59,10 @@ export class ImgUploadPage {
   uploadPhoto(imageFileUri: any): void {
 	this.error = null;
     this.loading = this.loadingCtrl.create({
-      content: 'Uploading...'
+      content: 'Uploading...',
+	  spinner: 'bubbles',
+	  showBackdrop: false,
+   	  cssClass: 'loader'
     });
 
     this.loading.present();

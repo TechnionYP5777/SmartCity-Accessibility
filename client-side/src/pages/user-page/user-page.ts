@@ -32,9 +32,9 @@ export class UserPagePage {
 	}
 	
 	
-	imgUpload() {
-		this.navCtrl.push(ImgUploadPage);
-	}
+imgUpload() {
+	this.navCtrl.push(ImgUploadPage);
+}
 	
 	
   ionViewDidLoad() {
