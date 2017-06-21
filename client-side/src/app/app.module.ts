@@ -37,6 +37,8 @@ import { AddLocationService } from '../pages/add-location/AddLocationService';
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import { AddSearchQueryService } from '../pages/addSearchQueryMenu/AddSearchQueryService';
+import {CommentPage} from '../pages/comment/comment';
+import {CommentService} from "../pages/comment/CommentService";
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import { AddSearchQueryService } from '../pages/addSearchQueryMenu/AddSearchQuer
 	AddLocationPage,
 	MostRatedLocsPage,
 	nerrativeMapPage,
-	ImgUploadPage
+	ImgUploadPage,
+    CommentPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -86,7 +89,8 @@ import { AddSearchQueryService } from '../pages/addSearchQueryMenu/AddSearchQuer
 	AddLocationPage,
 	MostRatedLocsPage,
 	nerrativeMapPage,
-	ImgUploadPage
+	ImgUploadPage,
+    CommentPage
   ],
   providers: [
     StatusBar,
@@ -105,6 +109,7 @@ import { AddSearchQueryService } from '../pages/addSearchQueryMenu/AddSearchQuer
 	ImgUploadService,
 	File,
     Camera,
+    CommentService,
 	AddSearchQueryService
   ]
 })
