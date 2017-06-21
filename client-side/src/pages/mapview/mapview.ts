@@ -43,6 +43,10 @@ export class MapviewPage {
 
     }
 
+    ionViewDidEnter(){
+        google.maps.event.trigger(this.map, 'resize');
+    }
+
 	addMarker(LatLngArr){
 		for (var i = 0; i < this.markers.length; i++) {
             this.markers[i].setMap(null);
