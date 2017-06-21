@@ -55,7 +55,7 @@
 					</button>
 				</ion-col>
 				<ion-col>
-					<button ion-button icon-left round>
+					<button ion-button icon-left round (click)="openCommentPage($event, rev)">
 						<ion-icon name="text"></ion-icon>
 						<div>{{rev.realComments.length}} Comments</div>
 					</button>

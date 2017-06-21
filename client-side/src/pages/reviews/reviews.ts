@@ -7,6 +7,7 @@ import { LoginService } from '../login/LoginService';
 import {AddReviewPage} from '../add-review/add-review';
 import { SearchService } from '../mapview/searchService';
 import { UserInformationService } from '../user-page/userInformationService';
+import {CommentPage} from "../comment/comment";
 
 @Component({
   selector: 'page-get-reviews',
@@ -29,9 +30,9 @@ export class GetReviewsPage {
   userReview : any;
   ready : any;
   address : any;
-  
-  
-  
+
+
+
   constructor(public viewCtrl: ViewController,
    public modalCtrl: ModalController,
    public navCtrl: NavController,
@@ -44,7 +45,7 @@ export class GetReviewsPage {
    public userInformationService : UserInformationService,
    public searchService : SearchService,
    public events: Events) {
-   
+
     this.token = window.sessionStorage.getItem('token');
 	this.lat = navParams.get('lat');
 	this.lng = navParams.get('lng');
@@ -52,30 +53,30 @@ export class GetReviewsPage {
 	this.subtype = navParams.get('subtype');
 	this.name = navParams.get('name');
 	this.service = getreviewsservice;
-	this.isLoggedin = this.loginService.isLoggedIn();	
+	this.isLoggedin = this.loginService.isLoggedIn();
 	this.userHasReview = false;
 	this.revs  = [];
 	this.username = '';
 	this.ready = false;
-	this.searchService.getAdress(this.lat, this.lng).subscribe(data => {	
+	this.searchService.getAdress(this.lat, this.lng).subscribe(data => {
 		this.address = data.res;
 	});
 	this.subscribeToAddReview();
   }
-  
+
 
   ionViewWillEnter() {
-	 
+
 	 console.log('ionViewWillEnter ShowReviewPage');
-	  
+
     this.presentLoadingCustom();
-	
+
 	this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype, this.name).subscribe(data => {
 	    	if(data) {
 	    		this.revs = data.json();
-				
+
 				this.getPinnedToFront();
-	
+
 				if(this.isLoggedin){
 					this.userInformationService.getUserProfile().subscribe(data => {
 						if(data){
@@ -85,8 +86,8 @@ export class GetReviewsPage {
 						} else{
 							this.presentAlert("Something went wrong");
 						}
-						
-					});					
+
+					});
 				}
 				this.loading.dismiss();
 				this.ready = true;
@@ -98,27 +99,27 @@ export class GetReviewsPage {
 	    err => {
 	    	this.presentAlert("Something went wrong");
 			this.loading.dismiss();
-	});	
+	});
   }
-	
+
 	like_dislike(e, rev, like){
 		if(this.isLoggedin == true){
 			let arr = this.checkAlreadyLiked(rev, like);
 			if(arr[0] && arr[1]){
 				return;
 			}
-			
+
 			this.presentLoadingCustom();
-			
+
 			if(like>0){
 				rev.upvotes++;
 				if(arr[1]) rev.downvotes--;
-			} 
+			}
 			else {
 				rev.downvotes++;
 				if(arr[1]) rev.upvotes--;
 			}
-			
+
 			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, like).then(data => {
 				if(data) {
 					this.navCtrl.pop();
@@ -130,7 +131,7 @@ export class GetReviewsPage {
 			this.presentAlert("Please login to do that!");
 		}
 	}
-	
+
 	openAddReview(){
 		let addReview = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
 		addReview.onDidDismiss(() => {
@@ -138,14 +139,22 @@ export class GetReviewsPage {
 		});
 		addReview.present();
 	}
-	
+
+	openCommentPage(e, userRev){
+    let commentPage = this.modalCtrl.create(CommentPage, {loggedIn : this.isLoggedin, username : this.username, rev : userRev});
+    commentPage.onDidDismiss(() => {
+      this.ionViewWillEnter();
+    });
+    commentPage.present();
+  }
+
 	subscribeToAddReview(){
 		this.events.subscribe('addreview:done', (rev,loading) => {
 			loading.dismiss();
 			console.log('AddReviewPage loading dismissed');
-		});			
+		});
 	}
-	
+
 	checkAlreadyLiked(rev, like){
 		let boolArray = [false, false];
 		for(let comm of rev.comments){
@@ -155,10 +164,10 @@ export class GetReviewsPage {
 					boolArray[1] = true;
 			}
 		}
-		
+
 		return boolArray;
 	}
-	
+
 	userWroteReview(){
 		for(let rev of this.revs){
 			if(rev.user.username == this.username){
@@ -169,7 +178,7 @@ export class GetReviewsPage {
 			}
 		}
 	}
-	
+
 	userReviewFirst(){
 		if(this.userHasReview){
 			let temp = [this.userReview];
@@ -177,14 +186,14 @@ export class GetReviewsPage {
 			this.revs = temp;
 		}
 	}
-	
+
 	getPinnedToFront(){
 		let pinnedrevs = this.revs.filter(rev => rev.isPinned == true);
 		this.revs = this.revs.filter(rev => rev.isPinned !== true);
 		pinnedrevs = pinnedrevs.concat(this.revs);
 		this.revs = pinnedrevs;
 	}
-	
+
 	presentAlert(str) {
 		let alert = this.alertCtrl.create({
 		  title: 'Error',
@@ -193,7 +202,7 @@ export class GetReviewsPage {
 		});
 		alert.present();
 	}
-	
+
 	presentLoadingCustom() {
       this.loading = this.loadingController.create({
 		spinner: 'hide',
