@@ -19,6 +19,7 @@ export class CommentPage {
   loading : any;
   allComments = [];
   userComm = "";
+  reviewsPage: GetReviewsPage;
 
   constructor(public viewCtrl: ViewController,
               public modalCtrl: ModalController,
@@ -28,8 +29,7 @@ export class CommentPage {
               public loadingController: LoadingController,
               public alertCtrl: AlertController,
               public events: Events,
-              public commentService: CommentService,
-              public reviewsPage: GetReviewsPage) {
+              public commentService: CommentService) {
     this.token = window.sessionStorage.getItem('token');
     this.isLoggedin = navParams.get('loggedIn');
     this.username = navParams.get('username');

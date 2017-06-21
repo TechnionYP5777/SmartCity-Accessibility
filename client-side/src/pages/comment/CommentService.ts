@@ -10,7 +10,7 @@ export class CommentService {
 
   constructor(public http: Http) {
     this.http = http;
-    console.log('Hello GetReviewsService Provider');
+    console.log('Hello CommentService Provider');
   }
 
   addComment(username, rev, comment){
