@@ -13,8 +13,18 @@
   </ion-navbar>
 </ion-header>
 
+
 <ion-content>
 
+  <img src='http://localhost:8080/profileImg?userName={{UserName}}' />
+
+  <ion-buttons>
+	<button ion-button round (click)="imgUpload()" class="buttons">
+		<ion-icon name='search'></ion-icon>
+			image upload
+	</button>
+  </ion-buttons>
+  
   <ion-list>
     <ion-list-header>
       <ion-icon name="information-circle"></ion-icon>

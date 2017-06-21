@@ -1,9 +1,15 @@
 <ion-header>
- <ion-navbar>
-   <ion-title>
-     Upload
-   </ion-title>
- </ion-navbar>
+  <ion-navbar color="dark">
+    <ion-buttons left>
+  	  <button ion-button menuToggle class="menu-toggle">
+  		    <ion-icon name="menu"></ion-icon>
+  	  </button>
+    </ion-buttons>
+    <ion-title>
+      Image Upload
+    </ion-title>
+
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>
@@ -12,11 +18,13 @@
      <ion-col width-50>
        <button ion-button color="danger" type="button" full round large (click)="takePhoto()">
          <ion-icon name="camera"></ion-icon>
+		 From Camera
        </button>
      </ion-col>
      <ion-col width-50>
        <button ion-button color="secondary" type="button" full round large (click)="selectPhoto()">
          <ion-icon name="image"></ion-icon>
+		 From Gallery
        </button>
      </ion-col>
    </ion-row>

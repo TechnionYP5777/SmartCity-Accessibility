@@ -5,6 +5,8 @@ import {ViewSearchQueryPage} from '../viewSearchQuery/viewsearchquery';
 import { LoginService } from '../login/LoginService';
 import { UserInformationService } from './userInformationService';
 import { MapviewPage } from '../mapview/mapview';
+import { ImgUploadPage } from '../imgUpload/imgUpload';
+
 
 
 @Component({
@@ -28,7 +30,13 @@ export class UserPagePage {
 			this.quries = data.res2;
 		});
 	}
-
+	
+	
+imgUpload() {
+	this.navCtrl.push(ImgUploadPage);
+}
+	
+	
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserPagePage');
   }
