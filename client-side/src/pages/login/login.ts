@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Events, LoadingController } from 'ionic-angular';
+import { NavController, Events, LoadingController, AlertController } from 'ionic-angular';
 import { LoginService } from './LoginService';
 import { SignupPage } from '../signup/signup';
 
@@ -14,9 +14,18 @@ export class LoginPage {
 		 password: ''
 	};
 	loading : any;
-    constructor(public navCtrl: NavController, public loginservice: LoginService, public events: Events,public loadingCtrl: LoadingController) {}
+    constructor(public navCtrl: NavController, public loginservice: LoginService, public alertCtrl: AlertController, public events: Events,public loadingCtrl: LoadingController) {}
 
     login(user) {
+		if(user.name == ''){
+			this.presentAlert("please insert a user-name");
+			return;
+		}
+		if(user.password == ''){
+			this.presentAlert("please insert a password");
+			return;
+		}
+		
 		this.presentLoadingCustom();
         this.loginservice.login(user).then(data => {
             if(data) {
@@ -41,4 +50,13 @@ export class LoginPage {
         });
         this.loading.present();
     }
+	
+	presentAlert(str) {
+		let alert = this.alertCtrl.create({
+		  title: 'Alert',
+		  subTitle: str,
+		  buttons: ['OK']
+		});
+		alert.present();
+	}
 }
