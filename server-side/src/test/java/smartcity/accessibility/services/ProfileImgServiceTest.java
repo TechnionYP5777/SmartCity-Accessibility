@@ -68,7 +68,7 @@ public class ProfileImgServiceTest extends ServiceTest {
 		MvcResult result = mockMvc.perform(get("/profileImg" + "?token=" + t.getToken()).contentType(contentType))
 				.andExpect(status().is2xxSuccessful()).andReturn();
 		byte[] content = result.getResponse().getContentAsByteArray();
-		BufferedImage image = ImageIO.read(new File("res/profileImgDef.jpg"));
+		BufferedImage image = ImageIO.read(new File("res/profileImgDef.png"));
 		ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
 		ImageIO.write(image, "png", pngOutputStream);
 		byte[] defaultContent = pngOutputStream.toByteArray();
