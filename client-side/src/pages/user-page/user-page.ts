@@ -6,6 +6,7 @@ import { LoginService } from '../login/LoginService';
 import { UserInformationService } from './userInformationService';
 import { MapviewPage } from '../mapview/mapview';
 import { ImgUploadPage } from '../imgUpload/imgUpload';
+import { Constants } from "../constants";
 
 
 
