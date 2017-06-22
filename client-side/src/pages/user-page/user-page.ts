@@ -20,6 +20,7 @@ export class UserPagePage {
   quries: any;
   addSearchQueryPage = AddSearchQueryPage;
   viewSearchQueryPage = ViewSearchQueryPage;
+  imageProfileUrl : any;  
 
 	constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, public loginService : LoginService, public userInformationService : UserInformationService) {
 		this.userInformationService.getUserProfile().subscribe(data => {
@@ -29,8 +30,19 @@ export class UserPagePage {
 		this.userInformationService.getUserQuries().subscribe(data => {
 			this.quries = data.res2;
 		});
+		
+		this.findImageProfileURL();
 	}
 	
+	findImageProfileURL() {
+		try{
+			var token = JSON.parse(window.sessionStorage.getItem('token')).token;
+		}
+		catch(err){
+			token = "no token";
+		}
+		this.imageProfileUrl = 	Constants.serverAddress+'/profileImg?token='+token;
+  }
 	
 imgUpload() {
 	this.navCtrl.push(ImgUploadPage);
