@@ -35,25 +35,25 @@ public class ProfileImageService {
 	@RequestMapping(value = "/profileImg", method = RequestMethod.GET)
 	public void getProfileImage(HttpServletResponse response, @RequestParam("token") String token)
 			throws IOException {
-		ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
+		ByteArrayOutputStream OutputStream = new ByteArrayOutputStream();
 		try {
 			UserInfo userInfo = LogInService.getUserInfo(token);
 			BufferedImage image = userInfo.getUser().getProfile().getProfileImg();
 			if(image == null){
-				image = ImageIO.read(new File("res/profileImgDef.png")); 
+				image = ImageIO.read(new File("res/profileImgDef.jpg")); 
 			}
-			ImageIO.write(image, "png", pngOutputStream);
+			ImageIO.write(image, "jpg", OutputStream);
 		} catch (IllegalArgumentException e) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			logger.info("problem reading image", e);
 		}
 
-		byte[] imgByte = pngOutputStream.toByteArray();
+		byte[] imgByte = OutputStream.toByteArray();
 
 		response.setHeader("Cache-Control", "no-store");
 		response.setHeader("Pragma", "no-cache");
 		response.setDateHeader("Expires", 0);
-		response.setContentType("image/png");
+		response.setContentType("image/jpg");
 		ServletOutputStream responseOutputStream = response.getOutputStream();
 		responseOutputStream.write(imgByte);
 		responseOutputStream.flush();

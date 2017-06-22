@@ -64,7 +64,7 @@ public class UserProfileManager extends AbstractUserProfileManager {
 		}
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
-			ImageIO.write(u.getProfileImg(), "png", baos);
+			ImageIO.write(u.getProfileImg(), "jpg", baos);
 			baos.flush();
 			byte[] imageInByte = baos.toByteArray();
 			baos.close();
