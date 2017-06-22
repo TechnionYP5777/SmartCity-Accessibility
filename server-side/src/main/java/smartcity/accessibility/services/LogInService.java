@@ -67,6 +67,7 @@ public class LogInService {
 			if (userInfo.getUser() == null) {
 				throw new UserIsNotLoggedIn();
 			}
+			userInfo.getUser().getProfile();
 		} catch (ExecutionException e) {
 			logger.info("getting user from cache failed", e);
 		}

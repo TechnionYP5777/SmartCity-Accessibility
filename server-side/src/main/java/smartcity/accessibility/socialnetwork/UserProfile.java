@@ -9,6 +9,8 @@ import javax.imageio.ImageIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author KaplanAlexander
  *
@@ -17,6 +19,8 @@ public class UserProfile {
 
 	private final String username;
 	private Helpfulness hlp;
+	
+	@JsonIgnore
 	private BufferedImage profileImg;
 
 	private static Logger logger = LoggerFactory.getLogger(UserProfile.class);
