@@ -32,7 +32,7 @@ export class ImgUploadPage {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
       sourceType: this.camera.PictureSourceType.CAMERA,
-      encodingType: this.camera.EncodingType.PNG,
+      encodingType: this.camera.EncodingType.JPEG,
       saveToPhotoAlbum: true
     }).then(imageData => {
       this.myPhoto = imageData;
@@ -47,7 +47,7 @@ export class ImgUploadPage {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.FILE_URI,
       quality: 100,
-      encodingType: this.camera.EncodingType.PNG,
+      encodingType: this.camera.EncodingType.JPEG,
     }).then(imageData => {
       this.myPhoto = imageData;
       this.uploadPhoto(imageData);

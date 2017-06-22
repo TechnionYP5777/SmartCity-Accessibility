@@ -40,9 +40,9 @@ public class ProfileImageService {
 			UserInfo userInfo = LogInService.getUserInfo(token);
 			BufferedImage image = userInfo.getUser().getProfile().getProfileImg();
 			if(image == null){
-				image = ImageIO.read(new File("res/profileImgDef.jpg")); 
+				image = ImageIO.read(new File("res/profileImgDef.png")); 
 			}
-			ImageIO.write(image, "jpg", OutputStream);
+			ImageIO.write(image, "png", OutputStream);
 		} catch (IllegalArgumentException e) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			logger.info("problem reading image", e);
@@ -53,7 +53,7 @@ public class ProfileImageService {
 		response.setHeader("Cache-Control", "no-store");
 		response.setHeader("Pragma", "no-cache");
 		response.setDateHeader("Expires", 0);
-		response.setContentType("image/jpg");
+		response.setContentType("image/png");
 		ServletOutputStream responseOutputStream = response.getOutputStream();
 		responseOutputStream.write(imgByte);
 		responseOutputStream.flush();

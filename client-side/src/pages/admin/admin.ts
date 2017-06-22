@@ -22,6 +22,7 @@ export class AdminPage {
   numOfUsers: any = -1;
   numOfReviews: any = -1;
   serverAddress: any = Constants.serverAddress;
+  imageProfileUrl : any;  
   
   constructor(public navCtrl: NavController, public navParams: NavParams,
 			  public adminService : AdminService, public modalCtrl: ModalController,
@@ -34,8 +35,18 @@ export class AdminPage {
 			(this.numOfReviews == 0) ? this.hlp = 0 : this.hlp = (this.rating / this.numOfReviews);
 			
 		});
-			
+		this.findImageProfileURL();
 		this.adminService.numOfUsers().subscribe(data => this.numOfUsers = data);
+  }
+  
+  findImageProfileURL() {
+	try{
+		var token = JSON.parse(window.sessionStorage.getItem('token')).token;
+	}
+	catch(err){
+		token = "no token";
+	}
+	this.imageProfileUrl = 	Constants.serverAddress+'/profileImg?token='+token;
   }
   
   showUsers(n) {
