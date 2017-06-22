@@ -7,7 +7,10 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import org.junit.Assert;
@@ -17,6 +20,7 @@ import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MvcResult;
@@ -25,11 +29,17 @@ import smartcity.accessibility.database.AbstractUserProfileManager;
 import smartcity.accessibility.database.ParseDatabase;
 import smartcity.accessibility.socialnetwork.UserBuilder;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @WebAppConfiguration
 @Category(UnitTests.class)
+/**
+ * 
+ * @author yael
+ *
+ */
 public class ProfileImgServiceTest extends ServiceTest {
 
 	private Token t;
@@ -41,9 +51,9 @@ public class ProfileImgServiceTest extends ServiceTest {
 		AbstractUserProfileManager.initialize(mock_UserManagerProfile);
 
 		this.mockMvc = webAppContextSetup(webApplicationContext).build();
-		mockMvc.perform(post("/signup?name=me&password=1234"));
-		mockMvc.perform(post("/login?name=me&password=1234"));
-		this.t = Token.calcToken(new UserBuilder().setUsername("me").setPassword("1234").build());
+		mockMvc.perform(post("/signup?name=im&password=1234"));
+		mockMvc.perform(post("/login?name=im&password=1234"));
+		this.t = Token.calcToken(new UserBuilder().setUsername("im").setPassword("1234").build());
 	}
 
 	@Test
@@ -51,7 +61,7 @@ public class ProfileImgServiceTest extends ServiceTest {
 		mockMvc.perform(get("/profileImg" + "?token=" + t.getToken()).contentType(contentType))
 				.andExpect(status().is2xxSuccessful());
 	}
-	
+
 	@Test
 	public void getProfileImageDefault() throws IOException, Exception {
 		MvcResult result = mockMvc.perform(get("/profileImg" + "?token=" + t.getToken()).contentType(contentType))
@@ -59,8 +69,36 @@ public class ProfileImgServiceTest extends ServiceTest {
 		byte[] content = result.getResponse().getContentAsByteArray();
 		BufferedImage image = ImageIO.read(new File("res/profileImgDef.png"));
 		ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
-		ImageIO.write(image, "png", pngOutputStream );
+		ImageIO.write(image, "png", pngOutputStream);
 		byte[] defaultContent = pngOutputStream.toByteArray();
-		Assert.assertArrayEquals(content,defaultContent);
+		Assert.assertArrayEquals(content, defaultContent);
+	}
+
+	@Test
+	public void UpdateProfileImageSuccess() throws IOException, Exception {
+		InputStream s = new FileInputStream("res/profileImgDef.png");
+		MockMultipartFile file = new MockMultipartFile("file", s);
+		mockMvc.perform(fileUpload("/uploadProfileImg").file(file).header("authToken", this.t.getToken())
+				.contentType(contentType)).andExpect(status().is2xxSuccessful()).andReturn();
+	}
+
+	@Test
+	public void UpdateProfileImageChanged() throws IOException, Exception {
+		UserInfo uf = LogInService.getUserInfo(this.t.getToken());
+		BufferedImage beforeImg = uf.getUser().getProfile().getProfileImg();
+
+		InputStream s = new FileInputStream("res/emptyStar.png");
+		MockMultipartFile file = new MockMultipartFile("file", s);
+
+		mockMvc.perform(fileUpload("/uploadProfileImg").file(file).header("authToken", this.t.getToken())
+				.contentType(contentType)).andExpect(status().is2xxSuccessful()).andReturn();
+
+		BufferedImage afterImg = uf.getUser().getProfile().getProfileImg();
+		ByteArrayOutputStream streamBefore = new ByteArrayOutputStream();
+		ImageIO.write(beforeImg, "png", streamBefore);
+		ByteArrayOutputStream streamAfter = new ByteArrayOutputStream();
+		ImageIO.write(afterImg, "png", streamAfter);
+
+		Assert.assertFalse(Arrays.equals(streamBefore.toByteArray(), streamAfter.toByteArray()));
 	}
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import smartcity.accessibility.database.AbstractUserProfileManager;
@@ -61,7 +62,7 @@ public class ProfileImageService {
 
 	@CrossOrigin
 	@RequestMapping(value = "/uploadProfileImg", method = RequestMethod.POST)
-	public void uploadProfileImg(@RequestParam("file") MultipartFile img, @RequestHeader("authToken") String token) {
+	public  @ResponseBody void uploadProfileImg(@RequestParam("file") MultipartFile img, @RequestHeader("authToken") String token) {
 		if (!img.isEmpty()) {
 			byte[] bytes = null;
 			try {
