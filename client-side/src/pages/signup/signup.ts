@@ -17,6 +17,14 @@ export class SignupPage {
   constructor(public navCtrl: NavController, public loginService: LoginService,public loadingCtrl: LoadingController,public events: Events, public alertCtrl: AlertController) {}
 
   register(user) {
+		if(user.name == ''){
+			this.presentAlert("please insert a user-name");
+			return;
+		}
+		if(user.password == ''){
+			this.presentAlert("please insert a password");
+			return;
+		}
 		this.presentLoadingCustom();
         this.loginService.signup(user).then(data => {
             if(data) {
@@ -44,4 +52,13 @@ export class SignupPage {
         });
         this.loading.present();
     }
+	
+	presentAlert(str) {
+		let alert = this.alertCtrl.create({
+		  title: 'Alert',
+		  subTitle: str,
+		  buttons: ['OK']
+		});
+		alert.present();
+	}
 }
