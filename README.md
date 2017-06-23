@@ -1,8 +1,8 @@
 # SmartCity-Accessibility
 ## Development Status
 
-![Build Status](http://kapalex.ddns.net:8080/buildStatus/icon?job=SmartCity-Accessibility%20Server%20Side%20Unit%20Tests)
-![Coverage Report](https://img.shields.io/sonar/http/kapalex.ddns.net:9000/SmartCity-Accessibility:SmartCity-Accessibility/coverage.svg)
+[![Build Status](http://kapalex.ddns.net:8080/buildStatus/icon?job=SmartCity-Accessibility%20Server%20Side%20Unit%20Tests)](http://kapalex.ddns.net:8080/)
+[![Coverage Report](https://img.shields.io/sonar/http/kapalex.ddns.net:9000/SmartCity-Accessibility:SmartCity-Accessibility/coverage.svg)](http://kapalex.ddns.net:9000/dashboard?id=SmartCity-Accessibility%3ASmartCity-Accessibility)
 
 ## The Project
 
@@ -24,41 +24,37 @@ People with movement disabilities find it difficult to move freely in the public
 The application will allow the user to navigate in the city effectively taking into account the limitations of his movement. i.e. the user can find accessible paths in the city and find accessible facilities such as restaurants, cinemas, etc.
 
 
+## Software Implementation
 
-### Programming Environment
+### Frameworks
 
-- Eclipse Neon Java
-- Linux
-- Github
-- JxMaps
-- Parse4j
+- Google Maps Java Api
+- RxJava
 - MapQuest
+- Parse4j
+- Ionic
 
+### Modules
 
+1. Client side
 
-### Use Cases
-Fully detailed at  https://github.com/TechnionYP5777/SmartCity-Accessibility/projects/1
+1.1. Ionic GUI
 
+2. Server side
 
-### Software Implementation
+2.1. Database
 
-Modules :
+2.2. Social network - Reviews and Users
 
-1.	GUI
+2.3. Navigation
 
-2.	Database 
+2.4. Search Queries
 
-3.	Social network - reviews and users
-
-4.	Navigation algorithm
-
-5.	Search queries
-
-A full class diagram can be found in the wiki https://github.com/TechnionYP5777/SmartCity-Accessibility/wiki/Class-Diagram
 
 
 ### User Interface
 
+Implemented with Ionic.
 The interface availabe to the user will consist of the following :
 
 1.	Map of the city.
@@ -73,9 +69,6 @@ The interface availabe to the user will consist of the following :
 
 ## The Code 
 ### Instructions 
-To get started with the code, clone the project to your machine and open in eclipse as a maven project.
-After that you will need to follow the instructions in this wiki 
 
-https://github.com/TechnionYP5777/SmartCity-Accessibility/wiki/JxMaps-dependency 
-
-to set up the JxMaps dependency correctly.
+Can be found at 
+https://github.com/TechnionYP5777/SmartCity-Accessibility/wiki/Developer-installation-instructions
