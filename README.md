@@ -37,12 +37,19 @@ The application will allow the user to navigate in the city effectively taking i
 ### Modules
 
 1. Client side
+
 1.1. Ionic GUI
+
 2. Server side
+
 2.1. Database
+
 2.2. Social network - Reviews and Users
+
 2.3. Navigation
+
 2.4. Search Queries
+
 
 
 ### User Interface
