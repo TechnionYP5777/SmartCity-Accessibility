@@ -22,24 +22,22 @@
     	</ion-buttons>
 		<ion-card *ngFor="let rev of revs">
 			<ion-card-title>
-				{{rev.user.username}}
+                {{rev.user.username}}
+                <p>
+                <ion-icon color="danger" *ngIf="rev.rating.score>=2" name="star"></ion-icon>
+                <ion-icon color="danger" *ngIf="rev.rating.score>=1" name="star"></ion-icon>
+                <ion-icon color="danger" *ngIf="rev.rating.score>=3" name="star"></ion-icon>
+                <ion-icon color="danger" *ngIf="rev.rating.score>=4" name="star"></ion-icon>
+                <ion-icon color="danger" *ngIf="rev.rating.score>=5" name="star"></ion-icon>
+                <ion-icon color="danger" *ngIf="rev.rating.score==0" name="star-outline"></ion-icon>
+                <ion-icon color="danger" *ngIf="rev.rating.score<=1" name="star-outline"></ion-icon>
+                <ion-icon color="danger" *ngIf="rev.rating.score<=2" name="star-outline"></ion-icon>
+                <ion-icon color="danger" *ngIf="rev.rating.score<=3" name="star-outline"></ion-icon>
+                <ion-icon color="danger" *ngIf="rev.rating.score<=4" name="star-outline"></ion-icon>
+                </p>
 			</ion-card-title>
 			<ion-card-content>
-				<p>
-					<ion-item>
-  						<ion-icon *ngIf="rev.rating.score>=1" name="star"></ion-icon>
-  						<ion-icon *ngIf="rev.rating.score>=2" name="star"></ion-icon>
-  						<ion-icon *ngIf="rev.rating.score>=3" name="star"></ion-icon>
-  						<ion-icon *ngIf="rev.rating.score>=4" name="star"></ion-icon>
-  						<ion-icon *ngIf="rev.rating.score>=5" name="star"></ion-icon>
-  						<ion-icon *ngIf="rev.rating.score==0" name="star-outline"></ion-icon>
-  						<ion-icon *ngIf="rev.rating.score<=1" name="star-outline"></ion-icon>
-  						<ion-icon *ngIf="rev.rating.score<=2" name="star-outline"></ion-icon>
-  						<ion-icon *ngIf="rev.rating.score<=3" name="star-outline"></ion-icon>
-  						<ion-icon *ngIf="rev.rating.score<=4" name="star-outline"></ion-icon>
-					</ion-item>
-				</p>
-				<p>{{rev.content}}</p>
+				<pre>{{rev.content}}</pre>
 			</ion-card-content>
 			<ion-row>
 				<ion-col>
