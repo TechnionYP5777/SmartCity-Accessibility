@@ -157,11 +157,11 @@ loadMap(){
 		} );
 
 		this.trackUser();
-    if (!!this.userQuery){
-      this.callSearch(this.userQuery);
-    }
+        if (!!this.userQuery){
+          this.callSearch(this.userQuery);
+        }
     }, (err) => {
-      console.log(err);
+        window.location.reload();
     });
   }
 
