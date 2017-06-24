@@ -13,7 +13,7 @@ export class CommentService {
     console.log('Hello CommentService Provider');
   }
 
-  addComment(username, rev, comment){
+  addComment(lat, lng, type, subtype, rev, comment){
 
     try{
       var token = JSON.parse(window.sessionStorage.getItem('token')).token;
@@ -22,7 +22,7 @@ export class CommentService {
       token = "no token";
     }
 
-    var params = "username=" + username + "&rev=" + JSON.stringify(rev) + "&comment=" + comment;
+    var params = "lat=" + lat + "&lng=" + lng + "&type=" + type + "&subtype=" + subtype + "&rev=" + JSON.stringify(rev) + "&comment=" + comment;
 
     var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
