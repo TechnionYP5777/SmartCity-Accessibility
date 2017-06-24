@@ -22,7 +22,7 @@ export class CommentService {
       token = "no token";
     }
 
-    var params = "username=" + username + "&rev=" + rev + "&comment=" + comment;
+    var params = "username=" + username + "&rev=" + JSON.stringify(rev) + "&comment=" + comment;
 
     var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
