@@ -65,16 +65,16 @@ export class GetReviewsPage {
   }
 
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
 
 	 console.log('ionViewWillEnter ShowReviewPage');
 
     this.presentLoadingCustom();
 
 	this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype, this.name).subscribe(data => {
+            this.loading.dismiss();
 	    	if(data) {
 	    		this.revs = data.json();
-
 				this.getPinnedToFront();
 
 				if(this.isLoggedin){
@@ -89,16 +89,15 @@ export class GetReviewsPage {
 
 					});
 				}
-				this.loading.dismiss();
 				this.ready = true;
 	    	} else{
-				this.loading.dismiss();
 	    		this.presentAlert("Something went wrong");
 	    	}
 	    },
 	    err => {
+            this.loading.dismiss();
 	    	this.presentAlert("Something went wrong");
-			this.loading.dismiss();
+
 	});
   }
 
@@ -121,9 +120,6 @@ export class GetReviewsPage {
 			}
 
 			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, like).then(data => {
-				if(data) {
-					this.navCtrl.pop();
-				}
 				this.loading.dismiss();
 			});
 		}
@@ -134,17 +130,11 @@ export class GetReviewsPage {
 
 	openAddReview(){
 		let addReview = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
-		addReview.onDidDismiss(() => {
-			this.ionViewWillEnter();
-		});
 		addReview.present();
 	}
 
 	openCommentPage(e, userRev){
     let commentPage = this.modalCtrl.create(CommentPage, {loggedIn : this.isLoggedin, username : this.username, rev : userRev});
-    commentPage.onDidDismiss(() => {
-      this.ionViewWillEnter();
-    });
     commentPage.present();
   }
 

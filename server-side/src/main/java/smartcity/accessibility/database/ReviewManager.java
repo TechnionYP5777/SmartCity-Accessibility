@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -98,7 +99,8 @@ public class ReviewManager extends AbstractReviewManager {
 			logger.debug("comments are null or empty");
 			return r;
 		}
-		String[] ls = comments.split(SEPERATOR);
+		Pattern pattern = Pattern.compile(Pattern.quote(SEPERATOR));
+		String[] ls = pattern.split(comments);
 		List<ReviewComment> lrc = new ArrayList<>();
 		for (String comment : ls){
 			logger.debug("comments split into {}", comment);
