@@ -120,9 +120,6 @@ export class GetReviewsPage {
 			}
 
 			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, like).then(data => {
-				if(data) {
-					this.navCtrl.pop();
-				}
 				this.loading.dismiss();
 			});
 		}
