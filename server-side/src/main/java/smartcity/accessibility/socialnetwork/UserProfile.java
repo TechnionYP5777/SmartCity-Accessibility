@@ -37,7 +37,7 @@ public class UserProfile {
 		this.username = username;
 		hlp = new Helpfulness();
 		try {
-			this.profileImg = ImageIO.read(new File("res/profileImgDef.png"));
+			this.profileImg = ImageIO.read(new File("res/profileImgDef.jpg"));
 		} catch (IOException e) {
 			logger.info("failed to read default profile image", e);
 		}
