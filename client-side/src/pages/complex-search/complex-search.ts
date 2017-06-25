@@ -45,8 +45,13 @@ export class ComplexSearchPage {
   }
 
   callComplexSearch(type, radius, initLoc, minRating) {
-	  if (radius < 0) {
+	  if (radius <= 0 ) {
 			this.presentAlert('radius must be a positive number');
+			return;
+	  }
+	  
+	  if (radius == "" ) {
+			this.presentAlert('please enter a radius');
 			return;
 	  }
 	  

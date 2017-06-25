@@ -23,6 +23,7 @@ import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.search.SearchQuery;
 import smartcity.accessibility.search.SearchQueryResult;
 import smartcity.accessibility.services.exceptions.NoAdressFound;
+import smartcity.accessibility.services.exceptions.SearchFailed;
 
 /**
  * @author ariel
@@ -49,8 +50,7 @@ public class AdressSearchService {
 		        $.waitOnSearch();
 		        return sqr1.getLocations().get(0);	
 		} catch (illigalString | InterruptedException e) {
-			logger.error(" Exception thrown {} ", e);
-			return null;
+			throw new SearchFailed("illegal strings " + e);
 		}
     }
 	
