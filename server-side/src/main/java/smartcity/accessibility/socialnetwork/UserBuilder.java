@@ -99,6 +99,7 @@ public class UserBuilder {
 		}
 		if (userProfile != null){
 			u.getProfile().setHelpfulness(userProfile.getHelpfulness());
+			u.getProfile().setProfileImg(userProfile.getProfileImg());
 		} else {
 			u.getProfile().getHelpfulness().setNumOfReviews(numReviews);
 			u.getProfile().getHelpfulness().setRating(rating);
