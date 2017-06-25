@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,9 +25,12 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 import smartcity.accessibility.categories.UnitTests;
 import smartcity.accessibility.database.AbstractUserProfileManager;
 import smartcity.accessibility.database.ParseDatabase;
+import smartcity.accessibility.services.exceptions.UploadImageFailed;
 import smartcity.accessibility.socialnetwork.UserBuilder;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
@@ -100,5 +104,14 @@ public class ProfileImgServiceTest extends ServiceTest {
 		ImageIO.write(afterImg, "jpg", streamAfter);
 
 		Assert.assertFalse(Arrays.equals(streamBefore.toByteArray(), streamAfter.toByteArray()));
+	}
+
+	@Test
+	public void UpdateProfileImageWrongFormat() throws IOException, Exception {
+		InputStream s = new FileInputStream("res/profileImgDef.png");
+		MockMultipartFile file = new MockMultipartFile("file", s);
+		String reason = UploadImageFailed.class.getAnnotation(ResponseStatus.class).reason();
+		mockMvc.perform(fileUpload("/uploadProfileImg").file(file).header("authToken", this.t.getToken())
+				.contentType(contentType)).andExpect(status().isBadRequest()).andExpect(status().reason(reason));
 	}
 }

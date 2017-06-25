@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import smartcity.accessibility.database.AbstractUserProfileManager;
+import smartcity.accessibility.services.exceptions.UploadImageFailed;
 
 /**
  * 
@@ -73,11 +74,22 @@ public class ProfileImageService {
 			try (ByteArrayInputStream stream = new ByteArrayInputStream(bytes)) {
 				UserInfo userInfo = LogInService.getUserInfo(token);
 				BufferedImage profileImg = ImageIO.read(stream);
+				verifyFormat(profileImg);
 				userInfo.getUser().getProfile().setProfileImg(profileImg);
-				 AbstractUserProfileManager.instance().update(userInfo.getUser().getProfile(), null);
+				AbstractUserProfileManager.instance().update(userInfo.getUser().getProfile(), null);
 			} catch (IOException e) {
 				logger.info("problem in writing byte array to stream", e);
 			}
+		}
+	}
+
+	private void verifyFormat(BufferedImage profileImg) {
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		try {
+			ImageIO.write(profileImg, "jpg", outputStream);
+		} catch (IOException e) {
+			logger.info("the image format is not supported", e);
+			throw new UploadImageFailed();
 		}
 	}
 }
