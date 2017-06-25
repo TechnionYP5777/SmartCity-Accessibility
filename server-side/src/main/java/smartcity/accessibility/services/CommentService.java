@@ -47,14 +47,15 @@ public class CommentService {
 		if(rev == null) throw new ReviewDoesNotExist();
 		
 		rev.addComment(u, comment);
-		
+		rev.setLocation(loc);
 		AbstractReviewManager.instance().updateReview(rev, null);
 	}
 	
 	private Review getReviewFromString(String rrev, Location l){
 		int first = rrev.lastIndexOf("\"username\":\"");
-		int second = rrev.lastIndexOf("\",\"avgRating\":") - "\",\"avgRating\":".length();
-		String username = rrev.substring(first, second);
+		String username = rrev.substring(first+"\"username\":".length()).split(",")[0].substring(1);
+		username = username.replace('"', ' ').trim();
+		
 		for(Review r : l.getReviews())
 			if(r.getUser().getUsername().equals(username))
 				return r;
