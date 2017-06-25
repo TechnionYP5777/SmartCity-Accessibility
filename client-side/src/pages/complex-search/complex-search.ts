@@ -96,6 +96,7 @@ export class ComplexSearchPage {
 		}
 		, err => {
 			this.handleError(err.json());
+			return;
 		}
 	);
 	 

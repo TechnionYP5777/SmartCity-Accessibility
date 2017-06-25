@@ -49,8 +49,8 @@ public class AdressSearchService {
 		        SearchQueryResult sqr1 = $.SearchByAddress();
 		        $.waitOnSearch();
 		        return sqr1.getLocations().get(0);	
-		} catch (illigalString | InterruptedException e) {
-			throw new SearchFailed("illegal strings " + e);
+		} catch (Exception e) {
+			throw new SearchFailed("illegal address");
 		}
     }
 	

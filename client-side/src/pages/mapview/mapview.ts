@@ -72,6 +72,8 @@ export class MapviewPage {
   	    this.searchService.search(searchQuery).subscribe(data => {
   			this.addMarker([data.coordinates]);
   			this.map.setCenter(data.coordinates);
+		}, err => {
+			this.handleError(err.json());
   		});
   		this.loading.dismiss();
     }
@@ -86,7 +88,6 @@ export class MapviewPage {
 				this.addMarker(markers_complex);
 				this.map.setCenter(initLocation);
 			});
-
 	}
 
 	imgUpload() {
@@ -140,6 +141,9 @@ export class MapviewPage {
 		alert.present();
 	}
 
+	handleError(err) {
+		this.presentAlert("error: " + err.message);
+    }
 
 loadMap(){
 	this.geolocation = new Geolocation();
