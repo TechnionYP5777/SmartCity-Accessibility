@@ -91,7 +91,7 @@ export class ImgUploadPage {
 		this.loading.dismiss();
 	}
 	, err => {
-		this.handleError(false);
+		this.handleError(err);
 		this.loading.dismiss();
 	});
   
