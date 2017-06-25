@@ -13,6 +13,10 @@ import {GetReviewsPage} from "../reviews/reviews";
 export class CommentPage {
 
   token : any;
+  lat : any;
+  lng : any;
+  type : any;
+  subtype : any;
   isLoggedin = false;
   username = "";
   rev : any;
@@ -31,6 +35,10 @@ export class CommentPage {
               public events: Events,
               public commentService: CommentService) {
     this.token = window.sessionStorage.getItem('token');
+    this.lat = navParams.get('lat');
+    this.lng = navParams.get('lng');
+    this.type = navParams.get('type');
+    this.subtype = navParams.get('subtype');
     this.isLoggedin = navParams.get('loggedIn');
     this.username = navParams.get('username');
     this.rev = navParams.get('rev');
@@ -39,7 +47,7 @@ export class CommentPage {
 
   postComment(){
     this.presentLoadingCustom();
-    this.commentService.addComment(this.username, this.rev, this.userComm).then(data => {
+    this.commentService.addComment(this.lat, this.lng, this.type, this.subtype, this.rev, this.userComm).then(data => {
 
       this.loading.dismiss();
       this.events.publish('commentposted:done', this.rev, this.userComm);

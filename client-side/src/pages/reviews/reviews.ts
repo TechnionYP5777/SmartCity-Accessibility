@@ -134,7 +134,7 @@ export class GetReviewsPage {
 	}
 
 	openCommentPage(e, userRev){
-    let commentPage = this.modalCtrl.create(CommentPage, {loggedIn : this.isLoggedin, username : this.username, rev : userRev});
+    let commentPage = this.modalCtrl.create(CommentPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, loggedIn : this.isLoggedin, username : this.username, rev : userRev});
     commentPage.present();
   }
 
