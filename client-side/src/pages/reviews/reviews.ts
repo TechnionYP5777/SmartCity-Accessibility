@@ -8,6 +8,7 @@ import {AddReviewPage} from '../add-review/add-review';
 import { SearchService } from '../mapview/searchService';
 import { UserInformationService } from '../user-page/userInformationService';
 import {CommentPage} from "../comment/comment";
+import {Constants} from "../constants";
 
 @Component({
   selector: 'page-get-reviews',
@@ -66,48 +67,49 @@ export class GetReviewsPage {
 		this.address = data.res;
 	});
 	this.subscribeToAddReview();
-	this.subscribeToCommentPosted();
+	//this.subscribeToCommentPosted();
   }
 
 
   ionViewDidEnter() {
 
-	 console.log('ionViewDidEnter ShowReviewPage');
+	  console.log('ionViewDidEnter ShowReviewPage');
 
     this.presentLoadingCustom();
 
-	this.service.showMeStuff(this.location, this.name).subscribe(data => {
+	  this.service.showMeStuff(this.location, this.name).subscribe(data => {
 
-	    	if(data) {
-	    		this.revs = data.json();
-				  this.getPinnedToFront();
+	      	if(data) {
+	      		this.revs = data.json();
+	  			  this.getPinnedToFront();
 
-				if(this.isLoggedin){
-				  this.isAdmin = JSON.parse(this.token).admin;
-					this.userInformationService.getUserProfile().subscribe(data => {
-						if(data){
-							this.username = data.username;
-							this.userWroteReview();
-							this.userReviewFirst();
-              this.loading.dismiss();
-						} else{
-              this.loading.dismiss();
-							this.presentAlert("Something went wrong");
-						}
+	  			  if(this.isLoggedin){
+	  			    this.isAdmin = JSON.parse(this.token).admin;
+	  			  	this.userInformationService.getUserProfile().subscribe(data => {
+	  			  		if(data){
+	  			  			this.username = data.username;
+	  			  			this.userWroteReview();
+	  			  			this.userReviewFirst();
+                  this.loading.dismiss();
+	  			  		} else{
+                  this.loading.dismiss();
+	  			  			Constants.presentAlert(Constants.generalError);
+	  			  		}
 
-					});
-				} else {this.loading.dismiss();}
-				this.ready = true;
-	    	} else{
-          this.loading.dismiss();
-	    		this.presentAlert("Something went wrong");
-	    	}
-	    },
-	    err => {
-          this.loading.dismiss();
-          this.presentAlert("Something went wrong");
+	  			  	});
+	  			  } else {this.loading.dismiss();}
 
-	});
+	  			  this.ready = true;
+	      	} else{
+            this.loading.dismiss();
+            Constants.presentAlert(Constants.generalError);
+	      	}
+	      },
+	      err => {
+            this.loading.dismiss();
+            Constants.handleError(err);
+
+	  });
   }
 
 	like_dislike(e, rev, like){
@@ -130,10 +132,13 @@ export class GetReviewsPage {
 
 			this.service.changeRevLikes(rev.user.username, this.location, like).then(data => {
 				this.loading.dismiss();
-			});
+			},
+        err => {
+          this.loading.dismiss();
+          Constants.handleError(err);});
 		}
 		else{
-			this.presentAlert("Please login to do that!");
+		  Constants.presentAlert(Constants.notLoggedIn);
 		}
 	}
 
@@ -149,11 +154,11 @@ export class GetReviewsPage {
       },
       err => {
         this.loading.dismiss();
-        this.presentAlert("<p> error is: "+err.error+ "</p> <p> message is: "+ err.message+"</p>");
+        Constants.handleError(err);
       });
     }
     else{
-      this.presentAlert("Please login to do that!");
+      Constants.presentAlert(Constants.notLoggedIn);
     }
   }
 
@@ -175,7 +180,7 @@ export class GetReviewsPage {
       });
     }
     else{
-      this.presentAlert("Please login to do that!");
+      Constants.presentAlert(Constants.notLoggedIn);
     }
   }
 
@@ -249,14 +254,6 @@ export class GetReviewsPage {
 		this.revs = pinnedrevs;
 	}
 
-	presentAlert(str) {
-		let alert = this.alertCtrl.create({
-		  title: 'Error',
-		  subTitle: str,
-		  buttons: ['OK']
-		});
-		alert.present();
-	}
 
 	presentLoadingCustom() {
       this.loading = this.loadingController.create({

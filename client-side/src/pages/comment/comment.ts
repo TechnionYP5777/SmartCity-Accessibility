@@ -4,6 +4,7 @@ import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {CommentService} from "./CommentService";
 import {GetReviewsPage} from "../reviews/reviews";
+import { Constants } from "../constants";
 
 @Component({
   selector: 'page-comment',
@@ -56,13 +57,8 @@ export class CommentPage {
     }
     , err => {
       this.loading.dismiss();
-      this.handleError(err.json());
+      Constants.handleError(err.json());
     });
-  }
-
-
-  handleError(err) {
-    this.reviewsPage.presentAlert("<p> error is: "+err.error+ "</p> <p> message is: "+ err.message+"</p>");
   }
 
   presentLoadingCustom() {
