@@ -41,7 +41,7 @@ export class AddReviewPage {
 	this.subtype = navParams.get('subtype');
 	this.name = navParams.get('name');
 	this.streetReview = false;
-	this.searchService.getAdress(this.lat, this.lng).subscribe(data => {	
+	this.searchService.getAdress(this.lat, this.lng).subscribe(data => {
 		this.address = data.res;
 	});
   }
@@ -54,7 +54,7 @@ export class AddReviewPage {
   addreview(rev) {
 	 this.loading = this.presentLoadingCustom();
 	 this.loading.present();
-	 
+
      if ( rev.score == "" ){
        rev.score = 0;
      }
@@ -63,13 +63,13 @@ export class AddReviewPage {
      	this.subtype = "default";
      }
   	 this.addreviewservice.addreview(rev, this.lat, this.lng, this.type, this.subtype, this.name).then(data => {
-  	 	if(data) {
-			this.events.publish('addreview:done', rev ,this.loading);
-  	 		this.viewCtrl.dismiss();
-  	 	}
+  	 	  if(data) {
+			    this.events.publish('addreview:done', rev ,this.loading);
+  	 		  this.viewCtrl.dismiss();
+  	 	  }
   	 });
    }
-   
+
 	presentLoadingCustom() {
       let loading = this.loadingController.create({
 		spinner: 'hide',
@@ -82,7 +82,7 @@ export class AddReviewPage {
 
        return loading;
    }
-   
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddReviewPage');
   }
