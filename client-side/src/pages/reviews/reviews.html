@@ -59,6 +59,21 @@
 					</button>
 				</ion-col>
 			</ion-row>
+      <ion-row *ngIf="isAdmin">
+        <ion-col>
+          <button ion-button icon-left small round>
+            <ion-icon name="remove-circle"></ion-icon>
+            <p>Delete review</p>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left small round>
+            <ion-icon></ion-icon>
+            <p *ngIf="!rev.isPinned">Pin review</p>
+            <p *ngIf="rev.isPinned">Unpin review</p>
+          </button>
+        </ion-col>
+      </ion-row>
 		</ion-card>
   </ion-list>
 

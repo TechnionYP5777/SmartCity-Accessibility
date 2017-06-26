@@ -24,6 +24,7 @@ export class GetReviewsPage {
   loading : any;
   service : any;
   isLoggedin : any;
+  isAdmin : any;
   userHasReview : any;
   token : any;
   username : any;
@@ -54,6 +55,7 @@ export class GetReviewsPage {
 	this.name = navParams.get('name');
 	this.service = getreviewsservice;
 	this.isLoggedin = this.loginService.isLoggedIn();
+	this.isAdmin = false;
 	this.userHasReview = false;
 	this.revs  = [];
 	this.username = '';
@@ -72,31 +74,35 @@ export class GetReviewsPage {
     this.presentLoadingCustom();
 
 	this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype, this.name).subscribe(data => {
-            this.loading.dismiss();
+
 	    	if(data) {
 	    		this.revs = data.json();
-				this.getPinnedToFront();
+				  this.getPinnedToFront();
 
 				if(this.isLoggedin){
+				  this.isAdmin = JSON.parse(this.token).admin;
 					this.userInformationService.getUserProfile().subscribe(data => {
 						if(data){
 							this.username = data.username;
 							this.userWroteReview();
 							this.userReviewFirst();
+              this.loading.dismiss();
 						} else{
+              this.loading.dismiss();
 							this.presentAlert("Something went wrong");
 						}
 
 					});
-				}
+				} else {this.loading.dismiss();}
 				this.ready = true;
 	    	} else{
+          this.loading.dismiss();
 	    		this.presentAlert("Something went wrong");
 	    	}
 	    },
 	    err => {
-            this.loading.dismiss();
-	    	this.presentAlert("Something went wrong");
+          this.loading.dismiss();
+          this.presentAlert("Something went wrong");
 
 	});
   }
@@ -112,11 +118,11 @@ export class GetReviewsPage {
 
 			if(like>0){
 				rev.upvotes++;
-				if(arr[1]) rev.downvotes--;
+				if(!arr[1]) rev.downvotes--;
 			}
 			else {
 				rev.downvotes++;
-				if(arr[1]) rev.upvotes--;
+				if(!arr[1]) rev.upvotes--;
 			}
 
 			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, like).then(data => {
@@ -152,6 +158,7 @@ export class GetReviewsPage {
 				boolArray[0] = true;
 				if(comm.rating == like)
 					boolArray[1] = true;
+				comm.rating = like;
 			}
 		}
 
