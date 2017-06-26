@@ -3,6 +3,7 @@ import { NavController, NavParams , Events, AlertController, LoadingController} 
 import {ComplexSearchService} from './complexSearchService';
 import { SearchService } from '../mapview/searchService';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Constants } from "../constants";
 
 declare var google;  
 
@@ -118,7 +119,10 @@ export class ComplexSearchPage {
 	}
 	
 	handleError(err) {
-		this.presentAlert("error: " + err.message);
+		if(err.error == null)
+			this.presentAlert(Constants.serverNotResponding);
+		else 
+			this.presentAlert("error: " + err.message);
     }
 	
 	presentLoadingCustom() {

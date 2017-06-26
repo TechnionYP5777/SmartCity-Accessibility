@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AddSearchQueryService } from './AddSearchQueryService';
+import { Constants } from "../constants";
 
 
 @Component({
@@ -30,7 +31,10 @@ export class AddSearchQueryPage {
 		this.presentAlert("done! :)");
 		this.navCtrl.pop();
 	  }, err => {
-		 this.presentAlert("problem adding query: "+err.json().message);
+		if(err.error == null)
+			this.presentAlert(Constants.serverNotResponding);
+		else 
+			this.presentAlert("problem adding query: "+err.json().message);
 		 this.loading.dismiss();
 	  });
   }

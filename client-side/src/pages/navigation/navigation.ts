@@ -5,6 +5,7 @@ import { LoginService } from '../login/LoginService';
 import { UserPagePage } from '../user-page/user-page';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LoginPage } from '../login/login';
+import { Constants } from "../constants";
 
 @Component({
   selector: 'page-navigation',
@@ -65,7 +66,10 @@ export class NavigationPage {
 	}
 	
 	handleError(err) {
-		this.presentAlert("<p> error is: "+err.error+ "</p> <p> message is: "+ err.message+"</p>");
+		if(err.error == null)
+			this.presentAlert(Constants.serverNotResponding);
+		else 
+			this.presentAlert("<p> error is: "+err.error+ "</p> <p> message is: "+ err.message+"</p>");
 		this.events.publish('navigation:done', null,this.loading);
     }
 	

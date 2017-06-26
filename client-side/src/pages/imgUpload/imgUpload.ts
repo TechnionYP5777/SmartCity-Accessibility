@@ -3,6 +3,7 @@ import { NavController, ModalController, NavParams, LoadingController,Loading ,E
 import { Camera } from '@ionic-native/camera';
 import { File, FileEntry } from '@ionic-native/file';
 import { ImgUploadService } from './imgUploadService';
+import { Constants } from "../constants";
 
 
 @Component({
@@ -126,7 +127,10 @@ export class ImgUploadPage {
 	}
 
 	handleError(err) {
-		this.presentAlert("error is: " + err.error + " message is: " + err.message);
-	}
+		if(err.error == null)
+			this.presentAlert(Constants.serverNotResponding);
+		else 
+			this.presentAlert("error: " + err.message);
+    }
   
 }

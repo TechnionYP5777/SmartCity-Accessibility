@@ -98,6 +98,9 @@ export class AdminPage {
 	}
 	
 	handleError(err) {
-		this.presentAlert("error is: " + err.error + " message is: " + err.message);
+		if(err.error == null)
+			this.presentAlert(Constants.serverNotResponding);
+		else 
+			this.presentAlert("error: " + err.message);
     }
 }
