@@ -12,7 +12,7 @@ export class AddReviewService {
   	this.http = http;
     console.log('Hello AddReviewService Provider');
   }
-  
+
   addreview(rev, lat, lng, type, subtype, name){
     try{
 		var token = JSON.parse(window.sessionStorage.getItem('token')).token;
@@ -24,7 +24,7 @@ export class AddReviewService {
   	var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('authToken',token);
-    
+
     return new Promise(resolve => {
             this.http.post(Constants.serverAddress +'/addreview', params, {headers: headers}).subscribe(data => {
                 if(data.status == 200){
@@ -33,7 +33,7 @@ export class AddReviewService {
                 }
                 else
                     resolve(false);
-            });
+            }, err => {Constants.handleError(err)});
         });
   }
 

@@ -1,4 +1,4 @@
-import {LoadingController, NavController, NavParams, AlertController, ModalController, ViewController, Events} from 'ionic-angular';
+import {LoadingController, AlertController} from 'ionic-angular';
 
 export class Constants {
 

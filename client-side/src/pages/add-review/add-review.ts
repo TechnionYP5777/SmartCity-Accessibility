@@ -3,6 +3,7 @@ import { NavController, NavParams, Events, LoadingController, ViewController } f
 import {AddReviewService} from './AddReviewService';
 import { LoginService } from '../login/LoginService';
 import { SearchService } from '../mapview/searchService';
+import {Constants} from "../constants";
 
 
 @Component({
@@ -35,15 +36,15 @@ export class AddReviewPage {
 			public searchService : SearchService,
 			public events: Events) {
     this.token = window.sessionStorage.getItem('token');
-	this.lat = navParams.get('lat');
-	this.lng = navParams.get('lng');
-	this.type = navParams.get('type');
-	this.subtype = navParams.get('subtype');
-	this.name = navParams.get('name');
-	this.streetReview = false;
-	this.searchService.getAdress(this.lat, this.lng).subscribe(data => {
-		this.address = data.res;
-	});
+	  this.lat = navParams.get('lat');
+	  this.lng = navParams.get('lng');
+	  this.type = navParams.get('type');
+	  this.subtype = navParams.get('subtype');
+	  this.name = navParams.get('name');
+	  this.streetReview = false;
+	  this.searchService.getAdress(this.lat, this.lng).subscribe(data => {
+	  	this.address = data.res;
+	  });
   }
 
   starClicked(value){
@@ -67,20 +68,23 @@ export class AddReviewPage {
 			    this.events.publish('addreview:done', rev ,this.loading);
   	 		  this.viewCtrl.dismiss();
   	 	  }
-  	 });
+  	 }, err => {
+  	   this.loading.dismiss();
+  	   Constants.handleError(err);
+     });
    }
 
 	presentLoadingCustom() {
-      let loading = this.loadingController.create({
-		spinner: 'hide',
-		dismissOnPageChange: true,
-        content: `<div class="cssload-container">
-                  <div class="cssload-whirlpool"></div>
-              </div>`,
-        cssClass: 'loader'
-      });
+    let loading = this.loadingController.create({
+		 spinner: 'hide',
+		 dismissOnPageChange: true,
+         content: `<div class="cssload-container">
+                   <div class="cssload-whirlpool"></div>
+               </div>`,
+         cssClass: 'loader'
+    });
 
-       return loading;
+    return loading;
    }
 
   ionViewDidLoad() {

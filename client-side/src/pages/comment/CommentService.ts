@@ -36,7 +36,7 @@ export class CommentService {
         }
         else
           resolve(false);
-      });
+      }, err => {Constants.handleError(err)});
     });
   }
 

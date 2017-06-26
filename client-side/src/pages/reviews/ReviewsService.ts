@@ -33,12 +33,12 @@ export class GetReviewsService {
     return new Promise(resolve => {
       	this.http.post(Constants.serverAddress +'/reviews?', params, {headers: headers}).subscribe(data => {
                 if(data.status == 200){
-                	console.log('Review liked successfully!')
+                	console.log('Review liked successfully!');
                     resolve(true);
                 }
                 else
                     resolve(false);
-            });
+            }, err => {Constants.handleError(err)});
         });
   }
 
@@ -48,12 +48,12 @@ export class GetReviewsService {
     return new Promise(resolve => {
       this.http.post(Constants.serverAddress +'/deleteReview?', params, {headers: this.headers}).subscribe(data => {
         if(data.status == 200){
-          console.log('Review deleted successfully!')
+          console.log('Review deleted successfully!');
           resolve(true);
         }
         else
           resolve(false);
-      }, err => {console.log("error: " + err +" error is: "+err.error+ "message is: "+ err.message)});
+      }, err => {Constants.handleError(err)});
     });
   }
 
@@ -63,12 +63,12 @@ export class GetReviewsService {
     return new Promise(resolve => {
       this.http.post(Constants.serverAddress +'/pinUnpinReview?', params, {headers: this.headers}).subscribe(data => {
         if(data.status == 200){
-          console.log('Review pin/unpinned successfully!')
+          console.log('Review pin/unpinned successfully!');
           resolve(true);
         }
         else
           resolve(false);
-      }, err => {console.log("error: " + err +" error is: "+err.error+ "message is: "+ err.message)});
+      }, err => {Constants.handleError(err)});
     });
   }
 
