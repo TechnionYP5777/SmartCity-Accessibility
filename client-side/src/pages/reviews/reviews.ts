@@ -50,24 +50,24 @@ export class GetReviewsPage {
    public events: Events) {
 
     this.token = window.sessionStorage.getItem('token');
-	this.lat = navParams.get('lat');
-	this.lng = navParams.get('lng');
-	this.type = navParams.get('type');
-	this.subtype = navParams.get('subtype');
-	this.location = {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype}
-	this.name = navParams.get('name');
-	this.service = getreviewsservice;
-	this.isLoggedin = this.loginService.isLoggedIn();
-	this.isAdmin = false;
-	this.userHasReview = false;
-	this.revs  = [];
-	this.username = '';
-	this.ready = false;
-	this.searchService.getAdress(this.lat, this.lng).subscribe(data => {
-		this.address = data.res;
-	});
-	this.subscribeToAddReview();
-	//this.subscribeToCommentPosted();
+	  this.lat = navParams.get('lat');
+	  this.lng = navParams.get('lng');
+	  this.type = navParams.get('type');
+	  this.subtype = navParams.get('subtype');
+	  this.location = {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype}
+	  this.name = navParams.get('name');
+	  this.service = getreviewsservice;
+	  this.isLoggedin = this.loginService.isLoggedIn();
+	  this.isAdmin = false;
+	  this.userHasReview = false;
+	  this.revs  = [];
+	  this.username = '';
+	  this.ready = false;
+	  this.searchService.getAdress(this.lat, this.lng).subscribe(data => {
+	  	this.address = data.res;
+	  });
+	  this.subscribeToAddReview();
+	  //this.subscribeToCommentPosted();
   }
 
 
