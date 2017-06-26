@@ -5,6 +5,8 @@ import { NavigationPage } from '../navigation/navigation';
 import { LocationListPage } from '../location-list/location-list';
 import { SearchService } from '../mapview/searchService';
 
+declare var google;
+
 @Component({
   selector: 'page-mapclickmenu',
   templateUrl: 'mapclickmenu.html'
@@ -14,6 +16,9 @@ export class MapClickMenuPage {
   lat : any;
   lng : any;
   address : any;
+  mapUrl : any;
+
+
   constructor(public viewCtrl: ViewController,public appCtrl: App, public searchService : SearchService, public navParams: NavParams,public modalCtrl: ModalController) {
 	let temp = navParams.get('latlng');
 	this.lat = temp.lat();
@@ -22,8 +27,9 @@ export class MapClickMenuPage {
 	this.searchService.getAdress(this.lat, this.lng).subscribe(data => {	
 		this.address = data.res;
 	});
+	this.mapUrl = 'https://maps.googleapis.com/maps/api/streetview?size=400x200&location='+this.lat+','+this.lng+'&fov=90';
   }
-
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapClickMenuPage');
   }
