@@ -138,11 +138,41 @@ export class GetReviewsPage {
 	}
 
 	deleteReview(e, rev){
+    if(this.isLoggedin && this.isAdmin){
+      this.presentLoadingCustom();
 
+      this.revs = this.revs.filter(r => r != rev);
+      if(rev == this.userReview) this.userHasReview = false;
+
+      this.service.deleteReview(this.location, rev.user.username).then(data => {
+        this.loading.dismiss();
+      });
+    }
+    else{
+      this.presentAlert("Please login to do that!");
+    }
   }
 
   pinUnpinReview(e, rev){
+    if(this.isLoggedin && this.isAdmin) {
+      this.presentLoadingCustom();
 
+      for (var r in this.revs) {
+        if (this.revs[r] == rev) {
+          this.revs[r].isPinned = (this.revs[r].isPinned ? false : true);
+          this.getPinnedToFront();
+          if(this.userHasReview) this.userReviewFirst();
+          break;
+        }
+      }
+
+      this.service.pinUnpinReview(this.location, rev.user.username).then(data => {
+        this.loading.dismiss();
+      });
+    }
+    else{
+      this.presentAlert("Please login to do that!");
+    }
   }
 
 	openAddReview(){
@@ -169,6 +199,7 @@ export class GetReviewsPage {
         if(this.revs[r] == rev){
           this.revs[r].comments.push(comm);
           this.revs[r].realComments.push(comm);
+          break;
         }
       }
     });
