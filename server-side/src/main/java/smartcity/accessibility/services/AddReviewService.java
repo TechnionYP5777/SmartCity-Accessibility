@@ -72,6 +72,7 @@ public class AddReviewService {
 		
 		
 		Review r = new Review(l, Integer.parseInt(score), review, u.getProfile());
+		if(u.canPinReview()) r.setPinned(true);
 		
 		AbstractReviewManager.instance().uploadReview(r, null);   	
     }
