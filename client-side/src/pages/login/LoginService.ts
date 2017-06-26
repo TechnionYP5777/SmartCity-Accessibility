@@ -63,7 +63,10 @@ export class LoginService {
                     resolve(true);
                 }
 			}, err => {
-					this.presentAlert("<p>error: " + err.json().error  + "</p> <p> message: " + err.json().message + "</p>");
+					if(err.error == null)
+						this.presentAlert(Constants.serverNotResponding);
+					else 
+						this.presentAlert("<p>error: " + err.json().error  + "</p> <p> message: " + err.json().message + "</p>");
                     resolve(false);
             });
         });
@@ -82,20 +85,23 @@ export class LoginService {
                 }
 			}
             , err =>{
-				this.presentAlert("<p>error: " + err.json().error  + "</p> <p> message: " + err.json().message + "</p>");
+				if(err.error == null)
+						this.presentAlert(Constants.serverNotResponding);
+				else 
+						this.presentAlert("<p>error: " + err.json().error  + "</p> <p> message: " + err.json().message + "</p>");
                 resolve(false);
             });
         });
     }
     
     logout() {
-		this.destroyUserCredentials();
 		try{
 			var token = JSON.parse(window.sessionStorage.getItem('token')).token;
 		}
 		catch(err){
 			token = "no token";
 		}
+		this.destroyUserCredentials();
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
 		headers.append('authToken',token);

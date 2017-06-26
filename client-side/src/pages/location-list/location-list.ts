@@ -4,6 +4,7 @@ import { LocationsInRadiusService } from './LocationsInRadiusService';
 import { AddLocationPage } from '../add-location/add-location';
 import { GetReviewsPage } from '../reviews/reviews'; 
 import { SearchService } from '../mapview/searchService';
+import { Constants } from "../constants";
 
 @Component({
   selector: 'page-location-list',
@@ -37,7 +38,10 @@ export class LocationListPage {
 		this.output = this.locations;
 		this.pleaseWait = false;
 		}, err => {
-			this.presentAlert("problem in finding nearby locations: "+err.json().message);
+			if(err.error == null)
+				this.presentAlert(Constants.serverNotResponding);
+			else 
+				this.presentAlert("problem in finding nearby locations: "+err.json().message);
 			this.viewCtrl.dismiss();
 		});
 	}
