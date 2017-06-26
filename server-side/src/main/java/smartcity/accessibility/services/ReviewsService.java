@@ -98,8 +98,7 @@ public class ReviewsService {
 	
 	@RequestMapping(value = "/deleteReview", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public void deleteReview(@RequestHeader("authToken") String token,
-			@RequestParam("lat") Double lat,
+	public void deleteReview(@RequestParam("lat") Double lat,
 			@RequestParam("lng") Double lng,
     		@RequestParam("type") String type,
     		@RequestParam("subtype") String subtype,
@@ -112,8 +111,7 @@ public class ReviewsService {
 	
 	@RequestMapping(value = "/pinUnpinReview", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public void pinUnpinReview(@RequestHeader("authToken") String token,
-			@RequestParam("lat") Double lat,
+	public void pinUnpinReview(@RequestParam("lat") Double lat,
 			@RequestParam("lng") Double lng,
     		@RequestParam("type") String type,
     		@RequestParam("subtype") String subtype,
