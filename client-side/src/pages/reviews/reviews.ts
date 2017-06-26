@@ -17,9 +17,10 @@ import {CommentPage} from "../comment/comment";
 export class GetReviewsPage {
   lat : any;
   lng : any;
-  type : any
-  subtype : any
-  name : any
+  type : any;
+  subtype : any;
+  name : any;
+  location : any;
   revs : any;
   loading : any;
   service : any;
@@ -52,6 +53,7 @@ export class GetReviewsPage {
 	this.lng = navParams.get('lng');
 	this.type = navParams.get('type');
 	this.subtype = navParams.get('subtype');
+	this.location = {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype}
 	this.name = navParams.get('name');
 	this.service = getreviewsservice;
 	this.isLoggedin = this.loginService.isLoggedIn();
@@ -64,16 +66,17 @@ export class GetReviewsPage {
 		this.address = data.res;
 	});
 	this.subscribeToAddReview();
+	this.subscribeToCommentPosted();
   }
 
 
   ionViewDidEnter() {
 
-	 console.log('ionViewWillEnter ShowReviewPage');
+	 console.log('ionViewDidEnter ShowReviewPage');
 
     this.presentLoadingCustom();
 
-	this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype, this.name).subscribe(data => {
+	this.service.showMeStuff(this.location, this.name).subscribe(data => {
 
 	    	if(data) {
 	    		this.revs = data.json();
@@ -125,7 +128,7 @@ export class GetReviewsPage {
 				if(!arr[1]) rev.upvotes--;
 			}
 
-			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, like).then(data => {
+			this.service.changeRevLikes(rev.user.username, this.location, like).then(data => {
 				this.loading.dismiss();
 			});
 		}
@@ -133,6 +136,14 @@ export class GetReviewsPage {
 			this.presentAlert("Please login to do that!");
 		}
 	}
+
+	deleteReview(e, rev){
+
+  }
+
+  pinUnpinReview(e, rev){
+
+  }
 
 	openAddReview(){
 		let addReview = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
@@ -150,6 +161,18 @@ export class GetReviewsPage {
 			console.log('AddReviewPage loading dismissed');
 		});
 	}
+
+  subscribeToCommentPosted(){
+    this.events.subscribe('commentposted:done', (rev,comm) => {
+      console.log('Comment event captured');
+      for(var r in this.revs){
+        if(this.revs[r] == rev){
+          this.revs[r].comments.push(comm);
+          this.revs[r].realComments.push(comm);
+        }
+      }
+    });
+  }
 
 	checkAlreadyLiked(rev, like){
 		let boolArray = [false, false];
