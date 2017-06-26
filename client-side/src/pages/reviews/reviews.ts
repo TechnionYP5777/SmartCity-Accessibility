@@ -9,6 +9,7 @@ import { SearchService } from '../mapview/searchService';
 import { UserInformationService } from '../user-page/userInformationService';
 import {CommentPage} from "../comment/comment";
 import {Constants} from "../constants";
+import {SpecialConstants} from "../special-constants/special-constants"
 
 @Component({
   selector: 'page-get-reviews',
@@ -44,6 +45,7 @@ export class GetReviewsPage {
    public getreviewsservice: GetReviewsService,
    public loginService : LoginService,
    public userInformationService : UserInformationService,
+   public _constants : SpecialConstants,
    public searchService : SearchService,
    public events: Events) {
 
@@ -73,7 +75,7 @@ export class GetReviewsPage {
 
 	  console.log('ionViewDidEnter ShowReviewPage');
 
-    this.loading = Constants.createCustomLoading();
+    this.loading = this._constants.createCustomLoading();
     this.loading.present();
 
 	  this.service.showMeStuff(this.location, this.name).subscribe(data => {
@@ -92,7 +94,7 @@ export class GetReviewsPage {
                   this.loading.dismiss();
 	  			  		} else{
                   this.loading.dismiss();
-	  			  			Constants.presentAlert(Constants.generalError);
+                  this._constants.presentAlert(Constants.generalError);
 	  			  		}
 
 	  			  	});
@@ -101,12 +103,12 @@ export class GetReviewsPage {
 	  			  this.ready = true;
 	      	} else{
             this.loading.dismiss();
-            Constants.presentAlert(Constants.generalError);
+            this._constants.presentAlert(Constants.generalError);
 	      	}
 	      },
 	      err => {
             this.loading.dismiss();
-            Constants.handleError(err);
+          this._constants.handleError(err);
 
 	  });
   }
@@ -118,7 +120,7 @@ export class GetReviewsPage {
 				return;
 			}
 
-      this.loading = Constants.createCustomLoading();
+      this.loading = this._constants.createCustomLoading();
       this.loading.present();
 
 			if(like>0){
@@ -135,16 +137,16 @@ export class GetReviewsPage {
 			},
         err => {
           this.loading.dismiss();
-          Constants.handleError(err);});
+          this._constants.handleError(err);});
 		}
 		else{
-		  Constants.presentAlert(Constants.notLoggedIn);
+      this._constants.presentAlert(Constants.notLoggedIn);
 		}
 	}
 
 	deleteReview(e, rev){
     if(this.isLoggedin && this.isAdmin){
-      this.loading = Constants.createCustomLoading();
+      this.loading = this._constants.createCustomLoading();
       this.loading.present();
 
       this.revs = this.revs.filter(r => r != rev);
@@ -155,17 +157,17 @@ export class GetReviewsPage {
       },
       err => {
         this.loading.dismiss();
-        Constants.handleError(err);
+        this._constants.handleError(err);
       });
     }
     else{
-      Constants.presentAlert(Constants.notLoggedIn);
+      this._constants.presentAlert(Constants.notLoggedIn);
     }
   }
 
   pinUnpinReview(e, rev){
     if(this.isLoggedin && this.isAdmin) {
-      this.loading = Constants.createCustomLoading();
+      this.loading = this._constants.createCustomLoading();
       this.loading.present();
 
       for (var r in this.revs) {
@@ -182,7 +184,7 @@ export class GetReviewsPage {
       });
     }
     else{
-      Constants.presentAlert(Constants.notLoggedIn);
+      this._constants.presentAlert(Constants.notLoggedIn);
     }
   }
 

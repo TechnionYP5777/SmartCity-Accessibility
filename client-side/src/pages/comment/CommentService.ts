@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import {Http, Headers} from "@angular/http";
 import { Constants } from "../constants";
+import {SpecialConstants} from "../special-constants/special-constants"
+
 
 
 
 @Injectable()
 export class CommentService {
 
-  constructor(public http: Http) {
+  constructor(public http: Http, public _constants : SpecialConstants) {
     this.http = http;
     console.log('Hello CommentService Provider');
   }
@@ -36,7 +38,7 @@ export class CommentService {
         }
         else
           resolve(false);
-      }, err => {Constants.handleError(err)});
+      }, err => {this._constants.handleError(err)});
     });
   }
 

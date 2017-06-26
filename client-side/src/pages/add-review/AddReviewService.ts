@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import {Http, Headers} from "@angular/http";
 import { Constants } from "../constants";
+import {SpecialConstants} from "../special-constants/special-constants"
 
 
 
 @Injectable()
 export class AddReviewService {
 
-  constructor(public http: Http) {
+  constructor(public http: Http, public _constants : SpecialConstants) {
   	this.http = http;
     console.log('Hello AddReviewService Provider');
   }
@@ -33,7 +34,7 @@ export class AddReviewService {
                 }
                 else
                     resolve(false);
-            }, err => {Constants.handleError(err)});
+            }, err => {this._constants.handleError(err)});
         });
   }
 

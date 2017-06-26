@@ -3,6 +3,8 @@ import { NavController, NavParams, Events, ViewController } from 'ionic-angular'
 import {AddReviewService} from './AddReviewService';
 import { SearchService } from '../mapview/searchService';
 import {Constants} from "../constants";
+import {SpecialConstants} from "../special-constants/special-constants"
+
 
 
 @Component({
@@ -31,6 +33,7 @@ export class AddReviewPage {
 			public navParams: NavParams,
 			public addreviewservice: AddReviewService,
 			public searchService : SearchService,
+			public _constants : SpecialConstants,
 			public events: Events) {
     this.token = window.sessionStorage.getItem('token');
 	  this.lat = navParams.get('lat');
@@ -50,7 +53,7 @@ export class AddReviewPage {
   }
 
   addreview(rev) {
-    this.loading = Constants.createCustomLoading();
+    this.loading = this._constants.createCustomLoading();
     this.loading.present();
 
      if ( rev.score == "" ){
@@ -67,7 +70,7 @@ export class AddReviewPage {
   	 	  }
   	 }, err => {
   	   this.loading.dismiss();
-  	   Constants.handleError(err);
+       this._constants.handleError(err);
      });
    }
 

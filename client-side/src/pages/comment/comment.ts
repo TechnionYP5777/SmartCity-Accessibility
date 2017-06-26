@@ -5,6 +5,8 @@ import 'rxjs/add/operator/map';
 import {CommentService} from "./CommentService";
 import {GetReviewsPage} from "../reviews/reviews";
 import { Constants } from "../constants";
+import {SpecialConstants} from "../special-constants/special-constants"
+
 
 @Component({
   selector: 'page-comment',
@@ -33,6 +35,7 @@ export class CommentPage {
               public http: Http,
               public alertCtrl: AlertController,
               public events: Events,
+              public _constants : SpecialConstants,
               public commentService: CommentService) {
     this.token = window.sessionStorage.getItem('token');
     this.lat = navParams.get('lat');
@@ -46,7 +49,7 @@ export class CommentPage {
   }
 
   postComment(){
-    this.loading = Constants.createCustomLoading();
+    this.loading = this._constants.createCustomLoading();
     this.loading.present();
 
     this.commentService.addComment(this.lat, this.lng, this.type, this.subtype, this.rev, this.userComm).then(data => {
@@ -58,7 +61,7 @@ export class CommentPage {
     }
     , err => {
       this.loading.dismiss();
-      Constants.handleError(err.json());
+        this._constants.handleError(err.json());
     });
   }
 
