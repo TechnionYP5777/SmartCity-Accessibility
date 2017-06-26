@@ -43,10 +43,10 @@ export class GetReviewsService {
   }
 
   deleteReview(loc, username){
-    var params = this.constructParams(loc, username);
+    var params = "lat=" + loc.lat + "&lng=" + loc.lng + "&type=" + loc.type + "&subtype=" + loc.subtype + "&username=" + username;
 
     return new Promise(resolve => {
-      this.http.post(Constants.serverAddress +'/deleteReview?', params, {headers: params[1]}).subscribe(data => {
+      this.http.post(Constants.serverAddress +'/deleteReview?', params).subscribe(data => {
         if(data.status == 200){
           console.log('Review deleted successfully!')
           resolve(true);
@@ -58,10 +58,10 @@ export class GetReviewsService {
   }
 
   pinUnpinReview(loc, username){
-    var params = this.constructParams(loc, username);
+    var params = "lat=" + loc.lat + "&lng=" + loc.lng + "&type=" + loc.type + "&subtype=" + loc.subtype + "&username=" + username;
 
     return new Promise(resolve => {
-      this.http.post(Constants.serverAddress +'/pinUnpinReview?', params, {headers: params[1]}).subscribe(data => {
+      this.http.post(Constants.serverAddress +'/pinUnpinReview?', params).subscribe(data => {
         if(data.status == 200){
           console.log('Review pin/unpinned successfully!')
           resolve(true);
@@ -72,16 +72,6 @@ export class GetReviewsService {
     });
   }
 
-  private constructParams(loc, user){
-    var params = [];
-    var token = this.getToken();
-    params[0] = "lat=" + loc.lat + "&lng=" + loc.lng + "&type=" + loc.type + "&subtype=" + loc.subtype + "&username=" + user;
-
-    params[1] = this.headers;
-    params[1].append('authToken',token);
-
-    return params;
-  }
   private getToken() {
     try {
       var token = JSON.parse(window.sessionStorage.getItem('token')).token;
