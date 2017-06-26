@@ -16,16 +16,19 @@
 
 <ion-content>
 
-	<img src={{imageProfileUrl}} height="100" width="100"/>
 
-  <ion-buttons>
-	<button ion-button round (click)="imgUpload()" class="buttons">
-		<ion-icon name='search'></ion-icon>
-			image upload
-	</button>
-  </ion-buttons>
   
   <ion-list>
+  
+  	<img src={{imageProfileUrl}} height="100" width="100" style="align-items: center"/>
+
+	  <ion-buttons>
+		<button ion-button round (click)="imgUpload()" class="buttons">
+			<ion-icon name='search'></ion-icon>
+				image upload
+		</button>
+	  </ion-buttons>
+  
     <ion-list-header>
       <ion-icon name="information-circle"></ion-icon>
       Your Search Queries

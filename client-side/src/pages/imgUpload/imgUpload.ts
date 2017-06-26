@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController, NavParams, LoadingController,Loading ,Events, AlertController ,ToastController} from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
 import { File, FileEntry } from '@ionic-native/file';
 import { ImgUploadService } from './imgUploadService';
 
@@ -91,7 +91,7 @@ export class ImgUploadPage {
 		this.loading.dismiss();
 	}
 	, err => {
-		this.handleError(false);
+		this.handleError(err);
 		this.loading.dismiss();
 	});
   
