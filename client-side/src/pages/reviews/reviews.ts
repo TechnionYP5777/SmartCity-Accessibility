@@ -146,6 +146,10 @@ export class GetReviewsPage {
 
       this.service.deleteReview(this.location, rev.user.username).then(data => {
         this.loading.dismiss();
+      },
+      err => {
+        this.loading.dismiss();
+        this.presentAlert("<p> error is: "+err.error+ "</p> <p> message is: "+ err.message+"</p>");
       });
     }
     else{

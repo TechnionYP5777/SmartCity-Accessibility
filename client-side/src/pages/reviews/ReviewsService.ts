@@ -46,14 +46,14 @@ export class GetReviewsService {
     var params = "lat=" + loc.lat + "&lng=" + loc.lng + "&type=" + loc.type + "&subtype=" + loc.subtype + "&username=" + username;
 
     return new Promise(resolve => {
-      this.http.post(Constants.serverAddress +'/deleteReview?', params).subscribe(data => {
+      this.http.post(Constants.serverAddress +'/deleteReview?', params, {headers: this.headers}).subscribe(data => {
         if(data.status == 200){
           console.log('Review deleted successfully!')
           resolve(true);
         }
         else
           resolve(false);
-      });
+      }, err => {console.log("error: " + err +" error is: "+err.error+ "message is: "+ err.message)});
     });
   }
 
@@ -61,14 +61,14 @@ export class GetReviewsService {
     var params = "lat=" + loc.lat + "&lng=" + loc.lng + "&type=" + loc.type + "&subtype=" + loc.subtype + "&username=" + username;
 
     return new Promise(resolve => {
-      this.http.post(Constants.serverAddress +'/pinUnpinReview?', params).subscribe(data => {
+      this.http.post(Constants.serverAddress +'/pinUnpinReview?', params, {headers: this.headers}).subscribe(data => {
         if(data.status == 200){
           console.log('Review pin/unpinned successfully!')
           resolve(true);
         }
         else
           resolve(false);
-      });
+      }, err => {console.log("error: " + err +" error is: "+err.error+ "message is: "+ err.message)});
     });
   }
 
