@@ -8,31 +8,28 @@ import { Constants } from "../constants";
 @Injectable()
 export class GetReviewsService {
 
+  headers : any;
+
   constructor(public http: Http) {
   	this.http = http;
+  	this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
     console.log('Hello GetReviewsService Provider');
   }
-  
-  showMeStuff(lat, lng, type, subtype, name){
-	var params = "lat=" + lat + "&lng=" + lng + "&type=" + type + "&subtype=" + subtype + "&name=" + name;
+
+  showMeStuff(loc, name){
+	var params = "lat=" + loc.lat + "&lng=" + loc.lng + "&type=" + loc.type + "&subtype=" + loc.subtype + "&name=" + name;
 	return this.http.get(Constants.serverAddress +'/reviews?'+params);
   }
-  
-  changeRevLikes(username, lat, lng, type, subtype, like){
-  
-  	try{
-		var token = JSON.parse(window.sessionStorage.getItem('token')).token;
-	}
-	catch(err){
-		token = "no token";
-	}
-	
-  	var params = "lat=" + lat + "&lng=" + lng + "&type=" + type + "&subtype=" + subtype + "&username=" + username + "&likes=" + like;
-  	
-  	var headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+  changeRevLikes(username, loc, like){
+
+  	var token = this.getToken();
+  	var params = "lat=" + loc.lat + "&lng=" + loc.lng + "&type=" + loc.type + "&subtype=" + loc.subtype + "&username=" + username + "&likes=" + like;
+
+    var headers = this.headers;
     headers.append('authToken',token);
-    
+
     return new Promise(resolve => {
       	this.http.post(Constants.serverAddress +'/reviews?', params, {headers: headers}).subscribe(data => {
                 if(data.status == 200){
@@ -43,6 +40,46 @@ export class GetReviewsService {
                     resolve(false);
             });
         });
+  }
+
+  deleteReview(loc, username){
+    var params = "lat=" + loc.lat + "&lng=" + loc.lng + "&type=" + loc.type + "&subtype=" + loc.subtype + "&username=" + username;
+
+    return new Promise(resolve => {
+      this.http.post(Constants.serverAddress +'/deleteReview?', params).subscribe(data => {
+        if(data.status == 200){
+          console.log('Review deleted successfully!')
+          resolve(true);
+        }
+        else
+          resolve(false);
+      });
+    });
+  }
+
+  pinUnpinReview(loc, username){
+    var params = "lat=" + loc.lat + "&lng=" + loc.lng + "&type=" + loc.type + "&subtype=" + loc.subtype + "&username=" + username;
+
+    return new Promise(resolve => {
+      this.http.post(Constants.serverAddress +'/pinUnpinReview?', params).subscribe(data => {
+        if(data.status == 200){
+          console.log('Review pin/unpinned successfully!')
+          resolve(true);
+        }
+        else
+          resolve(false);
+      });
+    });
+  }
+
+  private getToken() {
+    try {
+      var token = JSON.parse(window.sessionStorage.getItem('token')).token;
+    }
+    catch (err) {
+      token = "no token";
+    }
+    return token;
   }
 
 }

@@ -17,13 +17,15 @@ import {CommentPage} from "../comment/comment";
 export class GetReviewsPage {
   lat : any;
   lng : any;
-  type : any
-  subtype : any
-  name : any
+  type : any;
+  subtype : any;
+  name : any;
+  location : any;
   revs : any;
   loading : any;
   service : any;
   isLoggedin : any;
+  isAdmin : any;
   userHasReview : any;
   token : any;
   username : any;
@@ -51,9 +53,11 @@ export class GetReviewsPage {
 	this.lng = navParams.get('lng');
 	this.type = navParams.get('type');
 	this.subtype = navParams.get('subtype');
+	this.location = {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype}
 	this.name = navParams.get('name');
 	this.service = getreviewsservice;
 	this.isLoggedin = this.loginService.isLoggedIn();
+	this.isAdmin = false;
 	this.userHasReview = false;
 	this.revs  = [];
 	this.username = '';
@@ -62,41 +66,46 @@ export class GetReviewsPage {
 		this.address = data.res;
 	});
 	this.subscribeToAddReview();
+	this.subscribeToCommentPosted();
   }
 
 
   ionViewDidEnter() {
 
-	 console.log('ionViewWillEnter ShowReviewPage');
+	 console.log('ionViewDidEnter ShowReviewPage');
 
     this.presentLoadingCustom();
 
-	this.service.showMeStuff(this.lat, this.lng, this.type, this.subtype, this.name).subscribe(data => {
-            this.loading.dismiss();
+	this.service.showMeStuff(this.location, this.name).subscribe(data => {
+
 	    	if(data) {
 	    		this.revs = data.json();
-				this.getPinnedToFront();
+				  this.getPinnedToFront();
 
 				if(this.isLoggedin){
+				  this.isAdmin = JSON.parse(this.token).admin;
 					this.userInformationService.getUserProfile().subscribe(data => {
 						if(data){
 							this.username = data.username;
 							this.userWroteReview();
 							this.userReviewFirst();
+              this.loading.dismiss();
 						} else{
+              this.loading.dismiss();
 							this.presentAlert("Something went wrong");
 						}
 
 					});
-				}
+				} else {this.loading.dismiss();}
 				this.ready = true;
 	    	} else{
+          this.loading.dismiss();
 	    		this.presentAlert("Something went wrong");
 	    	}
 	    },
 	    err => {
-            this.loading.dismiss();
-	    	this.presentAlert("Something went wrong");
+          this.loading.dismiss();
+          this.presentAlert("Something went wrong");
 
 	});
   }
@@ -112,14 +121,14 @@ export class GetReviewsPage {
 
 			if(like>0){
 				rev.upvotes++;
-				if(arr[1]) rev.downvotes--;
+				if(!arr[1]) rev.downvotes--;
 			}
 			else {
 				rev.downvotes++;
-				if(arr[1]) rev.upvotes--;
+				if(!arr[1]) rev.upvotes--;
 			}
 
-			this.service.changeRevLikes(rev.user.username, this.lat, this.lng, this.type, this.subtype, like).then(data => {
+			this.service.changeRevLikes(rev.user.username, this.location, like).then(data => {
 				this.loading.dismiss();
 			});
 		}
@@ -127,6 +136,44 @@ export class GetReviewsPage {
 			this.presentAlert("Please login to do that!");
 		}
 	}
+
+	deleteReview(e, rev){
+    if(this.isLoggedin && this.isAdmin){
+      this.presentLoadingCustom();
+
+      this.revs = this.revs.filter(r => r != rev);
+      if(rev == this.userReview) this.userHasReview = false;
+
+      this.service.deleteReview(this.location, rev.user.username).then(data => {
+        this.loading.dismiss();
+      });
+    }
+    else{
+      this.presentAlert("Please login to do that!");
+    }
+  }
+
+  pinUnpinReview(e, rev){
+    if(this.isLoggedin && this.isAdmin) {
+      this.presentLoadingCustom();
+
+      for (var r in this.revs) {
+        if (this.revs[r] == rev) {
+          this.revs[r].isPinned = (this.revs[r].isPinned ? false : true);
+          this.getPinnedToFront();
+          if(this.userHasReview) this.userReviewFirst();
+          break;
+        }
+      }
+
+      this.service.pinUnpinReview(this.location, rev.user.username).then(data => {
+        this.loading.dismiss();
+      });
+    }
+    else{
+      this.presentAlert("Please login to do that!");
+    }
+  }
 
 	openAddReview(){
 		let addReview = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
@@ -145,6 +192,19 @@ export class GetReviewsPage {
 		});
 	}
 
+  subscribeToCommentPosted(){
+    this.events.subscribe('commentposted:done', (rev,comm) => {
+      console.log('Comment event captured');
+      for(var r in this.revs){
+        if(this.revs[r] == rev){
+          this.revs[r].comments.push(comm);
+          this.revs[r].realComments.push(comm);
+          break;
+        }
+      }
+    });
+  }
+
 	checkAlreadyLiked(rev, like){
 		let boolArray = [false, false];
 		for(let comm of rev.comments){
@@ -152,6 +212,7 @@ export class GetReviewsPage {
 				boolArray[0] = true;
 				if(comm.rating == like)
 					boolArray[1] = true;
+				comm.rating = like;
 			}
 		}
 
