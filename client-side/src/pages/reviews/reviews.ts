@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {LoadingController, NavController, NavParams, AlertController, ModalController, ViewController, Events} from 'ionic-angular';
+import {NavController, NavParams, ModalController, ViewController, Events} from 'ionic-angular';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {GetReviewsService} from './ReviewsService';
@@ -41,10 +41,8 @@ export class GetReviewsPage {
    public navCtrl: NavController,
    public navParams: NavParams,
    public http: Http,
-   public loadingController: LoadingController,
    public getreviewsservice: GetReviewsService,
    public loginService : LoginService,
-   public alertCtrl: AlertController,
    public userInformationService : UserInformationService,
    public searchService : SearchService,
    public events: Events) {
@@ -75,7 +73,8 @@ export class GetReviewsPage {
 
 	  console.log('ionViewDidEnter ShowReviewPage');
 
-    this.presentLoadingCustom();
+    this.loading = Constants.createCustomLoading();
+    this.loading.present();
 
 	  this.service.showMeStuff(this.location, this.name).subscribe(data => {
 
@@ -119,7 +118,8 @@ export class GetReviewsPage {
 				return;
 			}
 
-			this.presentLoadingCustom();
+      this.loading = Constants.createCustomLoading();
+      this.loading.present();
 
 			if(like>0){
 				rev.upvotes++;
@@ -144,7 +144,8 @@ export class GetReviewsPage {
 
 	deleteReview(e, rev){
     if(this.isLoggedin && this.isAdmin){
-      this.presentLoadingCustom();
+      this.loading = Constants.createCustomLoading();
+      this.loading.present();
 
       this.revs = this.revs.filter(r => r != rev);
       if(rev == this.userReview) this.userHasReview = false;
@@ -164,7 +165,8 @@ export class GetReviewsPage {
 
   pinUnpinReview(e, rev){
     if(this.isLoggedin && this.isAdmin) {
-      this.presentLoadingCustom();
+      this.loading = Constants.createCustomLoading();
+      this.loading.present();
 
       for (var r in this.revs) {
         if (this.revs[r] == rev) {
@@ -253,19 +255,5 @@ export class GetReviewsPage {
 		pinnedrevs = pinnedrevs.concat(this.revs);
 		this.revs = pinnedrevs;
 	}
-
-
-	presentLoadingCustom() {
-      this.loading = this.loadingController.create({
-		spinner: 'hide',
-		dismissOnPageChange: true,
-        content: `<div class="cssload-container">
-                  <div class="cssload-whirlpool"></div>
-              </div>`,
-        cssClass: 'loader'
-      });
-
-       this.loading.present();
-   }
 
 }

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {LoadingController, NavController, NavParams, AlertController, ModalController, ViewController, Events} from 'ionic-angular';
+import {NavController, NavParams, AlertController, ModalController, ViewController, Events} from 'ionic-angular';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {CommentService} from "./CommentService";
@@ -31,7 +31,6 @@ export class CommentPage {
               public navCtrl: NavController,
               public navParams: NavParams,
               public http: Http,
-              public loadingController: LoadingController,
               public alertCtrl: AlertController,
               public events: Events,
               public commentService: CommentService) {
@@ -47,7 +46,9 @@ export class CommentPage {
   }
 
   postComment(){
-    this.presentLoadingCustom();
+    this.loading = Constants.createCustomLoading();
+    this.loading.present();
+
     this.commentService.addComment(this.lat, this.lng, this.type, this.subtype, this.rev, this.userComm).then(data => {
 
       this.loading.dismiss();
@@ -61,17 +62,5 @@ export class CommentPage {
     });
   }
 
-  presentLoadingCustom() {
-    this.loading = this.loadingController.create({
-      spinner: 'hide',
-      dismissOnPageChange: true,
-      content: `<div class="cssload-container">
-                  <div class="cssload-whirlpool"></div>
-              </div>`,
-      cssClass: 'loader'
-    });
-
-    this.loading.present();
-  }
 
 }

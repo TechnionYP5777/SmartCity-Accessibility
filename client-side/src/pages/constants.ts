@@ -9,6 +9,7 @@ export class Constants {
 	public static generalError = "Something went wrong";
 
   private static alertCtrl: AlertController;
+  private static loadingController : LoadingController;
 
   public static handleError(err) {
     this.presentAlert("<p> error is: " + err + "</p>");
@@ -21,5 +22,18 @@ export class Constants {
       buttons: ['OK']
     });
     alert.present();
+  }
+
+  public static createCustomLoading() {
+    var loading = this.loadingController.create({
+      spinner: 'hide',
+      dismissOnPageChange: true,
+      content: `<div class="cssload-container">
+                  <div class="cssload-whirlpool"></div>
+              </div>`,
+      cssClass: 'loader'
+    });
+
+    return loading;
   }
 }

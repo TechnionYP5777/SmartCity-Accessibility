@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
-import { NavController, NavParams, Events, LoadingController, ViewController } from 'ionic-angular';
+import { NavController, NavParams, Events, ViewController } from 'ionic-angular';
 import {AddReviewService} from './AddReviewService';
-import { LoginService } from '../login/LoginService';
 import { SearchService } from '../mapview/searchService';
 import {Constants} from "../constants";
 
@@ -30,9 +29,7 @@ export class AddReviewPage {
   constructor(public viewCtrl: ViewController,
 			public navCtrl: NavController,
 			public navParams: NavParams,
-			public loadingController: LoadingController,
 			public addreviewservice: AddReviewService,
-			public loginService : LoginService,
 			public searchService : SearchService,
 			public events: Events) {
     this.token = window.sessionStorage.getItem('token');
@@ -53,8 +50,8 @@ export class AddReviewPage {
   }
 
   addreview(rev) {
-	 this.loading = this.presentLoadingCustom();
-	 this.loading.present();
+    this.loading = Constants.createCustomLoading();
+    this.loading.present();
 
      if ( rev.score == "" ){
        rev.score = 0;
@@ -72,19 +69,6 @@ export class AddReviewPage {
   	   this.loading.dismiss();
   	   Constants.handleError(err);
      });
-   }
-
-	presentLoadingCustom() {
-    let loading = this.loadingController.create({
-		 spinner: 'hide',
-		 dismissOnPageChange: true,
-         content: `<div class="cssload-container">
-                   <div class="cssload-whirlpool"></div>
-               </div>`,
-         cssClass: 'loader'
-    });
-
-    return loading;
    }
 
   ionViewDidLoad() {
