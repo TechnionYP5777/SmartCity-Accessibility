@@ -76,6 +76,19 @@ export class AdminPage {
 		  this.presentAlert('The radius must be a positive number');
 		  return;
 	  }
+	  if (initLoc == null) {
+		 this.presentAlert('Please enter an initial location');
+		  return; 
+	  }
+	  if ( radius > 5 ) {
+		  this.presentConfirmShowLocations(numOfLocations, radius, initLoc);
+	  } else {
+		   this.actualShowLocations(numOfLocations, radius, initLoc);
+	  }
+	  
+  }
+  
+  actualShowLocations(numOfLocations, radius, initLoc) {
 	  let locations = this.modalCtrl.create(MostRatedLocsPage,{n: numOfLocations, r: radius, l: initLoc});
 	  locations.present();
 	  this.presentLoadingCustom();
@@ -90,6 +103,30 @@ export class AdminPage {
         this.loading.present();
 		 this.events.subscribe('gotResults', () => this.loading.dismiss().catch(() => {}) );
    }
+   
+   
+   presentConfirmShowLocations(numOfLocations, radius, initLoc) {
+	  let alert = this.alertCtrl.create({
+		title: 'Alert!',
+		message: 'You have chosen radius higher than 5 KM and this operation can take a few minutes. Are you sure you want to continue?',
+		buttons: [
+		  {
+			text: 'Cancel',
+			role: 'cancel',
+			handler: () => {
+			  console.log('Cancel clicked');
+			}
+		  },
+		  {
+			text: 'Continue',
+			handler: () => {
+			  this.actualShowLocations(numOfLocations, radius, initLoc);
+			}
+		  }
+		]
+	  });
+	  alert.present();
+	}
    
    
    presentAlert(str) {

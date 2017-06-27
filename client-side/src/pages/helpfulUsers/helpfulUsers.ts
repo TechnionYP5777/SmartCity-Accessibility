@@ -15,6 +15,7 @@ import { SpecialConstants } from '../special-constants/special-constants';
 export class HelpfulUsersPage {
   num: any = 0;
   users: any;
+  actualNum: any ;
   
    constructor(public viewCtrl: ViewController,public appCtrl: App, 
 			public navParams: NavParams,public modalCtrl: ModalController,
@@ -28,7 +29,12 @@ export class HelpfulUsersPage {
 	   this.adminService.helpfulUsers(this.num).subscribe(
 	   data => {
 		  this.users = data;
+		  this.actualNum = data.length;
+		  if (this.actualNum > this.num) {
+			  this.constants.presentAlert("there are only " );
+		  }
 		  this.events.publish('gotResults');
+		  
 	   }, err => {
 		  this.constants.handleError(err);
 	   }

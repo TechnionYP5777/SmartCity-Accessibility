@@ -50,8 +50,10 @@ public class BestReviews {
 	 */
 	public List<Review> getMostRated() {
 		List<Review> $ = l.getPinnedReviews();
-		$.sort(new HelpfulnessCompare());
 		List<Review> unPinnedReviews = l.getNotPinnedReviews();
+		if ($.isEmpty() && unPinnedReviews.isEmpty())
+			return $;
+		$.sort(new HelpfulnessCompare());
 		unPinnedReviews.sort(new HelpfulnessCompare());
 		if ($.isEmpty())
 			return unPinnedReviews.size() < n ? unPinnedReviews : unPinnedReviews.subList(0, n);
@@ -73,6 +75,8 @@ public class BestReviews {
 	 */
 	public int getTotalRatingByAvg() {
 		List<Review> $ = getMostRated();
+		if ($.isEmpty())
+			return 0;
 		double sum = 0;
 		double totalhelpfulness = 0;
 		for (Review r : $) {

@@ -34,6 +34,7 @@ export class MostRatedLocsPage {
 			this.coordinates = data.coordinates;
 			this.adminService.mostRatedLocs(this.radius, this.num, this.coordinates.lat, this.coordinates.lng).subscribe(data => {
 			  this.locations = data;
+			  this.events.publish('gotResults');
 			}, err => {
 			this.handleError(err.json());
 			});
@@ -41,12 +42,8 @@ export class MostRatedLocsPage {
 		} , err => {
 			this.handleError(err.json());
 		});
-		
-		while(this.coordinates == null){continue;}
-	   this.adminService.mostRatedLocs(this.radius, this.num, this.coordinates.lat, this.coordinates.lng).subscribe(data => {
-		  this.locations = data;
-		  this.events.publish('gotResults');
-	  });
+	
+	  
 	 
   }
   
