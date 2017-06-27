@@ -20,6 +20,7 @@ import org.junit.rules.Timeout;
 import org.parse4j.ParseException;
 import org.parse4j.ParseGeoPoint;
 import org.parse4j.ParseObject;
+import org.parse4j.ParseUser;
 
 import smartcity.accessibility.categories.NetworkTests;
 import smartcity.accessibility.database.exceptions.ObjectNotFoundException;
@@ -37,6 +38,8 @@ public class ParseDatabaseTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		pd = ParseDatabase.get();
+		if(ParseUser.currentUser != null)
+			ParseUser.currentUser.logout();
 		initTestObjects();
 	}
 
