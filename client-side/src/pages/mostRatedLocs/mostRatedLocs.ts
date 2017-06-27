@@ -18,6 +18,7 @@ export class MostRatedLocsPage {
   radius: any = 0;
   initLoc: any = 'empty';
   coordinates: any = null;
+  numOfLocations : any;
   
    constructor(public viewCtrl: ViewController,public appCtrl: App, 
 			public navParams: NavParams,public modalCtrl: ModalController,
@@ -34,6 +35,7 @@ export class MostRatedLocsPage {
 			this.coordinates = data.coordinates;
 			this.adminService.mostRatedLocs(this.radius, this.num, this.coordinates.lat, this.coordinates.lng).subscribe(data => {
 			  this.locations = data;
+			  this.numOfLocations = data.length;
 			  this.events.publish('gotResults');
 			}, err => {
 			this.handleError(err.json());
