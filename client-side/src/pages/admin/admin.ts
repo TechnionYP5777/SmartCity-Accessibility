@@ -13,6 +13,10 @@ import { UserPagePage } from '../user-page/user-page'
   
 })
 
+/*
+	author: Koral Chapnik
+*/
+
 export class AdminPage {
   output :  any;
   name: any;
@@ -84,7 +88,7 @@ export class AdminPage {
 		    cssClass: 'loader'
         });
         this.loading.present();
-		 this.events.subscribe('gotResults', () => this.loading.dismiss() );
+		 this.events.subscribe('gotResults', () => this.loading.dismiss().catch(() => {}) );
    }
    
    

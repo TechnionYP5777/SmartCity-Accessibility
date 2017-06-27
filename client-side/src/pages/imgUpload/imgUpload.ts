@@ -5,6 +5,9 @@ import { File, FileEntry } from '@ionic-native/file';
 import { ImgUploadService } from './imgUploadService';
 import { Constants } from "../constants";
 
+/*
+	author: Koral Chapnik
+*/
 
 @Component({
   selector: 'page-imgUpload',
@@ -90,6 +93,7 @@ export class ImgUploadPage {
 	res => {
 		this.presentToast(true);
 		this.loading.dismiss();
+		this.navCtrl.pop();
 	}
 	, err => {
 		this.handleError(err);
