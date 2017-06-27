@@ -48,6 +48,17 @@ public class ReviewsService {
 		return null;
 	}
 	
+	private Location createAndAddLocation(Double lat, Double lng, String type, String subtype, String name) {
+		Location loc;
+		loc = new Location();
+		loc.setCoordinates(new LatLng(lat, lng));
+		loc.setLocationType(LocationTypes.valueOf(type.toUpperCase()));
+		loc.setLocationSubType(LocationSubTypes.valueOf(subtype.toUpperCase()));
+		loc.setName(name);
+		AbstractLocationManager.instance().uploadLocation(loc, null);
+		return loc;
+	}
+	
 	@RequestMapping(value = "/reviews", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
     public Review[] showMeStuff(@RequestParam("lat") Double lat,
@@ -58,17 +69,13 @@ public class ReviewsService {
 		
 		Location loc = createLocation(lat, lng, type, subtype);
 		
-		if(loc == null){ //Location "l" doesn't exist
-			loc = new Location();
-			loc.setCoordinates(new LatLng(lat, lng));
-			loc.setLocationType(LocationTypes.valueOf(type.toUpperCase()));
-			loc.setLocationSubType(LocationSubTypes.valueOf(subtype.toUpperCase()));
-			loc.setName(name);
-			AbstractLocationManager.instance().uploadLocation(loc, null);
-		}
+		if(loc == null) //Location "l" doesn't exist
+			loc = createAndAddLocation(lat, lng, type, subtype, name);
 		
 		return loc.getReviews().toArray(new Review[0]);
     }
+
+	
 	
 	@RequestMapping(value = "/reviews", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
