@@ -88,7 +88,7 @@ export class AdminPage {
 		    cssClass: 'loader'
         });
         this.loading.present();
-		 this.events.subscribe('gotResults', () => this.loading.dismiss() );
+		 this.events.subscribe('gotResults', () => this.loading.dismiss().catch(() => {}) );
    }
    
    
