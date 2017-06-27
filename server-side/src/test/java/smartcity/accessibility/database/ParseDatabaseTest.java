@@ -37,9 +37,8 @@ public class ParseDatabaseTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		ParseUser.currentUser = new ParseUser();
 		pd = ParseDatabase.get();
-		if(ParseUser.currentUser != null)
-			ParseUser.currentUser.logout();
 		initTestObjects();
 	}
 
