@@ -2,7 +2,9 @@ import {Component} from '@angular/core';
 import { NavController, NavParams, ViewController, AlertController, ModalController, LoadingController} from 'ionic-angular';
 import { AddLocationService } from './AddLocationService';
 import { GetReviewsPage } from '../reviews/reviews'; 
-
+/*
+	author: Ariel Kolikant
+*/
 
 @Component({
   selector: 'page-add-location',

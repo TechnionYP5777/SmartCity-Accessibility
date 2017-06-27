@@ -2,7 +2,9 @@ import {Injectable} from "@angular/core";
 import { Http, Headers} from "@angular/http";
 import { Constants } from "../constants";
 import 'rxjs/add/operator/map';
-
+/*
+	author: Ariel Kolikant
+*/
 @Injectable()
 export class LocationsInRadiusService {
     constructor(public http: Http) {

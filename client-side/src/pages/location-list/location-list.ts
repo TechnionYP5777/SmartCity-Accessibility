@@ -5,7 +5,9 @@ import { AddLocationPage } from '../add-location/add-location';
 import { GetReviewsPage } from '../reviews/reviews'; 
 import { SearchService } from '../mapview/searchService';
 import { Constants } from "../constants";
-
+/*
+	author: Ariel Kolikant
+*/
 @Component({
   selector: 'page-location-list',
   templateUrl: 'location-list.html'

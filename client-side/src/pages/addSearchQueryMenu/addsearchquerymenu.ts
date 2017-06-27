@@ -1,3 +1,7 @@
+/*
+	author: Ariel Kolikant
+*/
+
 import { Component } from '@angular/core';
 import { AlertController, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AddSearchQueryService } from './AddSearchQueryService';
