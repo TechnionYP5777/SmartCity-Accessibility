@@ -125,11 +125,11 @@ export class GetReviewsPage {
 
 			if(like>0){
 				rev.upvotes++;
-				if(!arr[1]) rev.downvotes--;
+				if(arr[0] && !arr[1]) rev.downvotes--;
 			}
 			else {
 				rev.downvotes++;
-				if(!arr[1]) rev.upvotes--;
+				if(arr[0] && !arr[1]) rev.upvotes--;
 			}
 
 			this.service.changeRevLikes(rev.user.username, this.location, like).then(data => {
