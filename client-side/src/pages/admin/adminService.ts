@@ -3,6 +3,10 @@ import { Http, Headers } from "@angular/http";
 import { Constants } from "../constants";
 import 'rxjs/add/operator/map';
 
+/*
+	author: Koral Chapnik
+*/
+
 @Injectable()
 export class AdminService {
 	headers: any;

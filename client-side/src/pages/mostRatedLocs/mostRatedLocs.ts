@@ -3,6 +3,10 @@ import { NavParams, ModalController,App, ViewController, AlertController, Events
 import { AdminService } from '../admin/adminService';
 import { SearchService } from '../mapview/searchService';
 
+/*
+	author: Koral Chapnik
+*/
+
 @Component({
   selector: 'page-mostRatedLocs',
   templateUrl: 'mostRatedLocs.html',

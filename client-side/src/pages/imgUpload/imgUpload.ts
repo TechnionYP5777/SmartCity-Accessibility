@@ -5,6 +5,9 @@ import { File, FileEntry } from '@ionic-native/file';
 import { ImgUploadService } from './imgUploadService';
 import { Constants } from "../constants";
 
+/*
+	author: Koral Chapnik
+*/
 
 @Component({
   selector: 'page-imgUpload',

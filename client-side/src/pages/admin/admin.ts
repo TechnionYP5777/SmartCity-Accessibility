@@ -13,6 +13,10 @@ import { UserPagePage } from '../user-page/user-page'
   
 })
 
+/*
+	author: Koral Chapnik
+*/
+
 export class AdminPage {
   output :  any;
   name: any;

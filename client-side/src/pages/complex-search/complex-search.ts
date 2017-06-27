@@ -8,11 +8,9 @@ import { Constants } from "../constants";
 declare var google;  
 
 /*
-  Generated class for the ComplexSearch page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
+	author: Koral Chapnik
 */
+
 @Component({
   selector: 'page-complex-search',
   templateUrl: 'complex-search.html'

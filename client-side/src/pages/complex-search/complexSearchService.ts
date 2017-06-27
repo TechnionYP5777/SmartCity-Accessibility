@@ -3,10 +3,7 @@ import { Http, Headers } from "@angular/http";
 import { Constants } from "../constants";
 import 'rxjs/add/operator/map';
 /*
-  Generated class for the ComplexSearchService provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
+	author: Koral Chapnik
 */
 @Injectable()
 export class ComplexSearchService {

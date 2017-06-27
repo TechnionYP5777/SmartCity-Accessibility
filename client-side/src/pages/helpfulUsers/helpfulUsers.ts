@@ -7,6 +7,10 @@ import { AdminService } from '../admin/adminService';
   templateUrl: 'helpfulUsers.html',
 })
 
+/*
+	author: Koral Chapnik
+*/
+
 export class HelpfulUsersPage {
   num: any = 0;
   users: any;
