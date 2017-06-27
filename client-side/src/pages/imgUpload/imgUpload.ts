@@ -93,6 +93,7 @@ export class ImgUploadPage {
 	res => {
 		this.presentToast(true);
 		this.loading.dismiss();
+		this.navCtrl.pop();
 	}
 	, err => {
 		this.handleError(err);
