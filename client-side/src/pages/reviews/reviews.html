@@ -59,14 +59,14 @@
 					</button>
 				</ion-col>
 			</ion-row>
-      <ion-row *ngIf="isAdmin">
+      <ion-row *ngIf="isAdmin || rev == userReview">
         <ion-col>
           <button ion-button icon-left small round (click)="deleteReview($event, rev)">
             <ion-icon name="remove-circle"></ion-icon>
             <p>Delete review</p>
           </button>
         </ion-col>
-        <ion-col>
+        <ion-col *ngIf="isAdmin">
           <button ion-button icon-left small round (click)="pinUnpinReview($event, rev)">
             <ion-icon></ion-icon>
             <p *ngIf="!rev.isPinned">Pin review</p>

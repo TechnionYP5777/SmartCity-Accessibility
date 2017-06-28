@@ -77,7 +77,7 @@ export class GetReviewsPage {
 
     this.loading = this._constants.createCustomLoading();
     this.loading.present();
-	
+
 	this.service.showMeStuff(this.location, this.name).subscribe(data => {
 	      	if(data) {
 	      		this.revs = data.json();
@@ -140,7 +140,7 @@ export class GetReviewsPage {
 	}
 
 	deleteReview(e, rev){
-    if(this.isLoggedin && this.isAdmin){
+    if(this.isLoggedin && (this.isAdmin || rev == this.userReview)){
       this.loading = this._constants.createCustomLoading();
       this.loading.present();
 
