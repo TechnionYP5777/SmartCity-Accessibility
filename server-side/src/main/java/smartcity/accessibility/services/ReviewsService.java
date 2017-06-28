@@ -1,7 +1,5 @@
 package smartcity.accessibility.services;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -81,27 +79,12 @@ public class ReviewsService {
 			@RequestParam("subtype") String subtype,
 			@RequestParam("name") String name) {
 		
-		//Reviews of the location itself
 		Location loc = createLocation(lat, lng, type, subtype);
-		if(loc == null) //Location doesn't exist
+		
+		if(loc == null) //Location "l" doesn't exist
 			loc = createAndAddLocation(lat, lng, type, subtype, name);
 		
-		List<Review> revs = loc.getReviews();
-	
-		//Reviews of the street itself
-		
-		loc = createLocation(lat, lng,
-				Location.LocationTypes.STREET.toString(),
-				Location.LocationSubTypes.DEFAULT.toString());
-		if(loc == null) //Location doesn't exist
-			loc = createAndAddLocation(lat, lng,
-					Location.LocationTypes.STREET.toString(),
-					Location.LocationSubTypes.DEFAULT.toString(),
-					name);
-		
-		revs.addAll(loc.getReviews());
-		
-		return revs.toArray(new Review[0]);
+		return loc.getReviews().toArray(new Review[0]);
     }
 
 	
