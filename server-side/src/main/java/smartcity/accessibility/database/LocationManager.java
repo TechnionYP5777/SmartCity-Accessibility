@@ -20,6 +20,7 @@ import smartcity.accessibility.database.callbacks.ICallback;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
+import smartcity.accessibility.navigation.Navigation;
 import smartcity.accessibility.mapmanagement.LocationBuilder;
 import smartcity.accessibility.socialnetwork.BestReviews;
 
@@ -139,16 +140,26 @@ public class LocationManager extends AbstractLocationManager {
 		Flowable<Optional<Location>> res = Flowable.fromCallable(() -> {
 			Optional<String> id = getId(coordinates, locType, locSubType, null);
 			if (!id.isPresent()) {
-				Location temp = null;
-				return Optional.ofNullable(temp);
+				if (locType == LocationTypes.STREET) {
+					String segId = String
+							.valueOf(Navigation.getMapSegmentOfLatLng(coordinates.lat, coordinates.lng).getLinkId());
+					Location sLoc = new LocationBuilder().setCoordinates(coordinates).setSegmentId(segId)
+							.setType(locType).setSubType(locSubType).build();
+					id = Optional.ofNullable(uploadLocation(sLoc, null));
+				}
+				if (!id.isPresent()) {
+					Location temp = null;
+					return Optional.ofNullable(temp);
+				}
 			}
 			Location l = fromMap(db.get(DATABASE_CLASS, id.get()));
 			if (l.getSegmentId() != null) {
 				logger.debug("location has segment id, getting others with same field name");
 				Map<String, Object> m = new HashMap<>();
 				m.put(SEGMENT_ID_FIELD_NAME, l.getSegmentId());
-				l.addReviews(db.get(DATABASE_CLASS, m).stream()
-						.map(locMap -> AbstractReviewManager.instance().getReviews(locMap.get(ID_FIELD_NAME).toString(), null))
+				l.addReviews(db.get(DATABASE_CLASS, m)
+						.stream().map(locMap -> AbstractReviewManager.instance()
+								.getReviews(locMap.get(ID_FIELD_NAME).toString(), null))
 						.flatMap(List::stream).collect(Collectors.toList()));
 			} else {
 				logger.debug("location has no segment id, getting others with same field name");
@@ -166,8 +177,7 @@ public class LocationManager extends AbstractLocationManager {
 	@Override
 	public List<Location> getLocationsAround(LatLng l, double distance, ICallback<List<Location>> callback) {
 		Flowable<List<Location>> res = Flowable.fromCallable(() -> {
-			List<Map<String, Object>> mapList = db.get(DATABASE_CLASS, LOCATION_FIELD_NAME, l.lat, l.lng,
-					distance);
+			List<Map<String, Object>> mapList = db.get(DATABASE_CLASS, LOCATION_FIELD_NAME, l.lat, l.lng, distance);
 			return mapList.stream().map(m -> {
 				Location ml = fromMap(m);
 				return getLocation(ml.getCoordinates(), ml.getLocationType(), ml.getLocationSubType(), null).get();
