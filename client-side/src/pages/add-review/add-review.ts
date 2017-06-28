@@ -19,7 +19,6 @@ export class AddReviewPage {
   type : any;
   subtype : any;
   name : any;
-  streetReview : boolean;
   address : any;
   loading : any;
 
@@ -41,7 +40,6 @@ export class AddReviewPage {
 	  this.type = navParams.get('type');
 	  this.subtype = navParams.get('subtype');
 	  this.name = navParams.get('name');
-	  this.streetReview = false;
 	  this.searchService.getAdress(this.lat, this.lng).subscribe(data => {
 	  	this.address = data.res;
 	  });
@@ -59,10 +57,7 @@ export class AddReviewPage {
      if ( rev.score == "" ){
        rev.score = 0;
      }
-     if(this.streetReview){
-     	this.type = "street";
-     	this.subtype = "default";
-     }
+	 
   	 this.addreviewservice.addreview(rev, this.lat, this.lng, this.type, this.subtype, this.name).then(data => {
   	 	  if(data) {
 			    this.events.publish('addreview:done', rev ,this.loading);

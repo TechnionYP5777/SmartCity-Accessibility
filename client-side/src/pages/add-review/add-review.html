@@ -18,11 +18,6 @@
 
 <ion-header>
   <ion-navbar color="dark">
-    <ion-buttons left>
-  	  <button ion-button menuToggle class="menu-toggle">
-  		    <ion-icon name="menu"></ion-icon>
-  	  </button>
-    </ion-buttons>
     <ion-title>
       Add Review
     </ion-title>
@@ -47,10 +42,6 @@
     			[value]="0"
     			(clicked)="starClicked($event)">
 			</ion-rating>
-		</ion-item>
-		<ion-item>
-			<ion-label>Leave review on the street itself</ion-label>
-			<ion-checkbox [(ngModel)]="streetReview"></ion-checkbox>
 		</ion-item>
     <ion-buttons>
   	   <button ion-button round (click)="addreview(reviewinfo)">Submit Review</button>

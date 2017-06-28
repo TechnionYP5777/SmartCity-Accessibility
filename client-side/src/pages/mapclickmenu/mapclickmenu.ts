@@ -4,6 +4,7 @@ import { AddReviewPage } from '../add-review/add-review';
 import { NavigationPage } from '../navigation/navigation';
 import { LocationListPage } from '../location-list/location-list';
 import { SearchService } from '../mapview/searchService';
+import { GetReviewsPage } from '../reviews/reviews'; 
 
 declare var google;
 
@@ -34,9 +35,10 @@ export class MapClickMenuPage {
     console.log('ionViewDidLoad MapClickMenuPage');
   }
   
-  addReview(){
-	this.viewCtrl.dismiss();
-    this.appCtrl.getRootNav().push(AddReviewPage,{lat:this.lat,lng:this.lng});
+  reviewAsStreet(){
+		let clickMenu = this.modalCtrl.create(GetReviewsPage, {lat:this.lat,lng:this.lng,type:'street',subtype: 'default',name:'STREET'});
+		clickMenu.present();
+		this.viewCtrl.dismiss();
   }
   
   nearbyLocations() {
