@@ -1,3 +1,6 @@
+/*
+ Author: ArthurSap
+ */
 import { Injectable } from '@angular/core';
 import {LoadingController, AlertController} from 'ionic-angular';
 
