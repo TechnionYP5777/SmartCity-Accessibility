@@ -13,6 +13,9 @@ declare var google;
   templateUrl: 'mapclickmenu.html'
 })
 
+/*
+	author: Yael Amitay
+*/
 export class MapClickMenuPage {
   lat : any;
   lng : any;

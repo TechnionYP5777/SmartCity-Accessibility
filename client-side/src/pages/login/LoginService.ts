@@ -3,6 +3,9 @@ import {Http, Headers} from "@angular/http";
 import { Constants } from "../constants";
 import { AlertController } from 'ionic-angular';
 
+/*
+	author: Yael Amitay
+*/
 @Injectable()
 export class LoginService {
     isLogin: boolean;

@@ -11,6 +11,10 @@ import { Constants } from "../constants";
   selector: 'page-navigation',
   templateUrl: 'navigation.html'
 }) 
+
+/*
+	author: Yael Amitay
+*/
 export class NavigationPage {
     isWork : any;
     isLoggedin : any;

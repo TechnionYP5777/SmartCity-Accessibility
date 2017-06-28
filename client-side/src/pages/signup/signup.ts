@@ -7,6 +7,10 @@ import { LoginService } from '../login/LoginService';
   selector: 'page-signup',
   templateUrl: 'signup.html'
 })
+
+/*
+	author: Yael Amitay
+*/
 export class SignupPage {
 	newcreds = {
 	    name: '',

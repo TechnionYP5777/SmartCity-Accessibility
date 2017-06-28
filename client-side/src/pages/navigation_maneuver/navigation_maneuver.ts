@@ -6,6 +6,10 @@ import { nerrativeMapPage } from './nerrativeMap/nerrativeMap';
   selector: 'page-navigation_maneuver',
   templateUrl: 'navigation_maneuver.html'
 }) 
+
+/*
+	author: Yael Amitay
+*/
 export class navigationManeuverPage {
     time : any;
 	legs : any;

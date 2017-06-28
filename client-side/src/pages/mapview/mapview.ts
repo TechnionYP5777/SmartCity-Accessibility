@@ -15,6 +15,10 @@ declare var google;
   selector: 'page-mapview',
   templateUrl: 'mapview.html'
 })
+
+/*
+	author: Yael Amitay
+*/
 export class MapviewPage {
 
   @ViewChild('map') mapElement: ElementRef;

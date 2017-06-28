@@ -2,6 +2,9 @@ import { Injectable } from "@angular/core";
 import { Http, Headers } from "@angular/http";
 import { Constants } from "../constants";
 
+/*
+	author: Yael Amitay
+*/
 @Injectable()
 export class NavigationService {
     constructor(public http: Http) {

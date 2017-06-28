@@ -7,6 +7,10 @@ import { SignupPage } from '../signup/signup';
   selector: 'page-login',
   templateUrl: 'login.html',
 })
+
+/*
+	author: Yael Amitay
+*/
 export class LoginPage {
 
 	usercreds = {
