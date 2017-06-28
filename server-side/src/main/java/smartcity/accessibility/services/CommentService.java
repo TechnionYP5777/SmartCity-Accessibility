@@ -1,3 +1,6 @@
+/**
+ * @author ArthurSap
+ */
 package smartcity.accessibility.services;
 
 import org.springframework.web.bind.annotation.RequestHeader;
