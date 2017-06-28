@@ -73,6 +73,10 @@ export class MapviewPage {
     }
 
     callSearch(searchQuery) {
+		if(searchQuery == null) {
+			this.presentAlert('please insert a query');
+			return;
+		}
   		this.presentLoadingCustom();
   	    this.searchService.search(searchQuery).subscribe(data => {
   			this.addMarker([data.coordinates]);
