@@ -106,7 +106,7 @@ public class ReviewsService {
 		Review r = getUserReviewFromLocation(username, createLocation(lat, lng, type, subtype));
 		try {
 			if (like > 0) r.upvote(u);
-			else r.downvote(u);
+			else r.downvote(u); 
 			AbstractReviewManager.instance().updateReview(r, null);
 		} catch (UnauthorizedAccessException e) {
 			logger.error("{}", e);
