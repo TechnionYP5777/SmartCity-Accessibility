@@ -1,6 +1,5 @@
 package smartcity.accessibility.services;
 
-import static org.junit.Assert.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -52,7 +51,36 @@ public class AdminServiceTest extends ServiceTest {
 	public void getAdminInfoTest() throws Exception {
 		mockMvc.perform(post("/adminInfo")
 				.header("authToken", this.t.getToken()).contentType(contentType))
+		.andExpect(status().is2xxSuccessful()).andReturn().getResponse().getContentAsString().contains("yaeli");	
+	}
+	
+	@Test
+	@Category(UnitTests.class)
+	public void getMostHelpfulUsersTest() throws Exception {
+		 mockMvc.perform(post("/helpfulUsers?numOfUsers=1")
+				.header("authToken", this.t.getToken()).contentType(contentType))
+		.andExpect(status().is2xxSuccessful()).andReturn().getResponse().getContentAsString();	
+		
+	}
+	
+	@Test
+	@Category(UnitTests.class)
+	public void numOfUsersTest() throws Exception {
+		String num = mockMvc.perform(post("/numOfUsers")
+				.header("authToken", this.t.getToken()).contentType(contentType))
+		.andExpect(status().is2xxSuccessful()).andReturn().getResponse().getContentAsString();
+		
+		assert(AbstractUserProfileManager.instance().userCount(null) == Integer.parseInt(num));
+	}
+	
+	@Test
+	@Category(UnitTests.class)
+	public void getRatedLocsTest() throws Exception {
+		 mockMvc.perform(post("/mostRatedLocs?radius=1&srcLat=31.768909&srcLng=34.627724&numOfLocs=1")
+				.header("authToken", this.t.getToken()).contentType(contentType))
 		.andExpect(status().is2xxSuccessful());	
+		 
+		
 	}
 	
 
