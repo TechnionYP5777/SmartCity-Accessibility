@@ -144,10 +144,9 @@ export class GetReviewsPage {
       this.loading = this._constants.createCustomLoading();
       this.loading.present();
 
-      this.revs = this.revs.filter(r => r != rev);
-      if(rev == this.userReview) this.userHasReview = false;
-
       this.service.deleteReview(this.location, rev.user.username).then(data => {
+        this.revs = this.revs.filter(r => r != rev);
+        if(rev == this.userReview) this.userHasReview = false;
         this.loading.dismiss().catch(() => {});
       },
       err => {
