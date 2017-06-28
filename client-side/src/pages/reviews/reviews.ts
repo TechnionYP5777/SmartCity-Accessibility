@@ -169,7 +169,7 @@ export class GetReviewsPage {
 
       for (var r in this.revs) {
         if (this.revs[r] == rev) {
-          this.revs[r].isPinned = (this.revs[r].isPinned ? false : true);
+          this.revs[r].pinned = (this.revs[r].pinned ? false : true);
           this.getPinnedToFront();
           if(this.userHasReview) this.userReviewFirst();
           break;
@@ -247,14 +247,14 @@ export class GetReviewsPage {
 	userReviewFirst(){
 		if(this.userHasReview){
 			let temp = [this.userReview];
-			temp = temp.concat(this.revs);
+			temp = temp.concat(this.revs.filter(rev => rev !== this.userReview));
 			this.revs = temp;
 		}
 	}
 
 	getPinnedToFront(){
-		let pinnedrevs = this.revs.filter(rev => rev.isPinned == true);
-		this.revs = this.revs.filter(rev => rev.isPinned !== true);
+		let pinnedrevs = this.revs.filter(rev => rev.pinned == true);
+		this.revs = this.revs.filter(rev => rev.pinned !== true);
 		pinnedrevs = pinnedrevs.concat(this.revs);
 		this.revs = pinnedrevs;
 	}

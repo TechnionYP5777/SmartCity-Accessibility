@@ -71,8 +71,8 @@
         <ion-col *ngIf="isAdmin">
           <button ion-button icon-left small round (click)="pinUnpinReview($event, rev)">
             <ion-icon></ion-icon>
-            <p *ngIf="!rev.isPinned">Pin review</p>
-            <p *ngIf="rev.isPinned">Unpin review</p>
+            <p *ngIf="!rev.pinned">Pin review</p>
+            <p *ngIf="rev.pinned">Unpin review</p>
           </button>
         </ion-col>
       </ion-row>
