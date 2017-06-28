@@ -77,12 +77,12 @@ export class GetReviewsPage {
 
     this.loading = this._constants.createCustomLoading();
     this.loading.present();
-
+	
 	  this.service.showMeStuff(this.location, this.name).subscribe(data => {
 
 	      	if(data) {
 	      		this.revs = data.json();
-	  			  this.getPinnedToFront();
+	  			this.getPinnedToFront();
 
 	  			  if(this.isLoggedin){
 	  			    this.isAdmin = JSON.parse(this.token).admin;

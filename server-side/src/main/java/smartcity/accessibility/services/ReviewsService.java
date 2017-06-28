@@ -17,7 +17,10 @@ import smartcity.accessibility.exceptions.UnauthorizedAccessException;
 import smartcity.accessibility.mapmanagement.Location;
 import smartcity.accessibility.mapmanagement.Location.LocationSubTypes;
 import smartcity.accessibility.mapmanagement.Location.LocationTypes;
+import smartcity.accessibility.navigation.Navigation;
+import smartcity.accessibility.navigation.exception.CommunicationFailed;
 import smartcity.accessibility.services.exceptions.LocationDoesNotExistException;
+import smartcity.accessibility.services.exceptions.ReviewFailed;
 import smartcity.accessibility.services.exceptions.UserDoesNotExistException;
 import smartcity.accessibility.services.exceptions.UserIsNotLoggedIn;
 import smartcity.accessibility.socialnetwork.Review;
@@ -55,6 +58,15 @@ public class ReviewsService {
 		loc.setLocationType(LocationTypes.valueOf(type.toUpperCase()));
 		loc.setLocationSubType(LocationSubTypes.valueOf(subtype.toUpperCase()));
 		loc.setName(name);
+		if(LocationTypes.valueOf(type.toUpperCase()).equals(LocationTypes.STREET)){
+			try {
+				String segmentId = String.valueOf(Navigation.getMapSegmentOfLatLng(lat, lng).getLinkId());
+				loc.setSegmentId(segmentId);
+			} catch (CommunicationFailed e) {
+				logger.error("CommunicationFailed {} ", e);
+				throw new ReviewFailed();
+			}
+		}
 		AbstractLocationManager.instance().uploadLocation(loc, null);
 		return loc;
 	}
