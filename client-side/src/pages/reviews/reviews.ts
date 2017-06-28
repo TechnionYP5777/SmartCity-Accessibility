@@ -75,38 +75,38 @@ export class GetReviewsPage {
 
 	console.log('ionViewDidEnter ShowReviewPage');
 
-    this.loading = this._constants.createCustomLoading();
-    this.loading.present();
+   this.loading = this._constants.createCustomLoading();
+   this.loading.present();
 
 	this.service.showMeStuff(this.location, this.name).subscribe(data => {
 	      	if(data) {
 	      		this.revs = data.json();
-	  			this.getPinnedToFront();
-	  			if(this.isLoggedin){
-	  			    this.isAdmin = JSON.parse(this.token).admin;
-	  			  	this.userInformationService.getUserProfile().subscribe(data => {
-	  			  		if(data){
-	  			  			this.username = data.username;
-	  			  			this.userWroteReview();
-	  			  			this.userReviewFirst();
-							this.loading.dismiss().catch(() => {});
-	  			  		} else{
-							this.loading.dismiss().catch(() => {});
-							this._constants.presentAlert(Constants.generalError);
-	  			  		}
-	  			  	});
-	  			} else {this.loading.dismiss().catch(() => {});}
-	  			this.ready = true;
+	  			  this.getPinnedToFront();
+	  			  if(this.isLoggedin && this.revs.length > 0){
+	  			      this.isAdmin = JSON.parse(this.token).admin;
+	  			    	this.userInformationService.getUserProfile().subscribe(data => {
+	  			    		if(data){
+	  			    			this.username = data.username;
+	  			    			this.userWroteReview();
+	  			    			this.userReviewFirst();
+					  		this.loading.dismiss().catch(() => {});
+	  			    		} else{
+					  		this.loading.dismiss().catch(() => {});
+					  		this._constants.presentAlert(Constants.generalError);
+	  			    		}
+	  			    	});
+	  			  } else {this.loading.dismiss().catch(() => {});}
+	  			  this.ready = true;
 	      	} else{
-				this.loading.dismiss().catch(() => {});
-				this._constants.presentAlert(Constants.generalError);
+				      this.loading.dismiss().catch(() => {});
+				      this._constants.presentAlert(Constants.generalError);
 	      	}
 	    },
 	    err => {
-                this.loading.dismiss().catch(() => {});
-                this._constants.handleError(err);
+	      this.loading.dismiss().catch(() => {});
+	      this._constants.handleError(err);
 		});
-    }
+  }
 
 	like_dislike(e, rev, like){
 		if(this.isLoggedin == true){
