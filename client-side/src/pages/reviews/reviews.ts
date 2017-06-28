@@ -73,45 +73,40 @@ export class GetReviewsPage {
 
   ionViewDidEnter() {
 
-	  console.log('ionViewDidEnter ShowReviewPage');
+	console.log('ionViewDidEnter ShowReviewPage');
 
     this.loading = this._constants.createCustomLoading();
     this.loading.present();
 	
-	  this.service.showMeStuff(this.location, this.name).subscribe(data => {
-
+	this.service.showMeStuff(this.location, this.name).subscribe(data => {
 	      	if(data) {
 	      		this.revs = data.json();
 	  			this.getPinnedToFront();
-
-	  			  if(this.isLoggedin){
+	  			if(this.isLoggedin){
 	  			    this.isAdmin = JSON.parse(this.token).admin;
 	  			  	this.userInformationService.getUserProfile().subscribe(data => {
 	  			  		if(data){
 	  			  			this.username = data.username;
 	  			  			this.userWroteReview();
 	  			  			this.userReviewFirst();
-                  this.loading.dismiss();
+							this.loading.dismiss().catch(() => {});
 	  			  		} else{
-                  this.loading.dismiss();
-                  this._constants.presentAlert(Constants.generalError);
+							this.loading.dismiss().catch(() => {});
+							this._constants.presentAlert(Constants.generalError);
 	  			  		}
-
 	  			  	});
-	  			  } else {this.loading.dismiss();}
-
-	  			  this.ready = true;
+	  			} else {this.loading.dismiss().catch(() => {});}
+	  			this.ready = true;
 	      	} else{
-            this.loading.dismiss();
-            this._constants.presentAlert(Constants.generalError);
+				this.loading.dismiss().catch(() => {});
+				this._constants.presentAlert(Constants.generalError);
 	      	}
-	      },
-	      err => {
-            this.loading.dismiss();
-          this._constants.handleError(err);
-
-	  });
-  }
+	    },
+	    err => {
+                this.loading.dismiss().catch(() => {});
+                this._constants.handleError(err);
+		});
+    }
 
 	like_dislike(e, rev, like){
 		if(this.isLoggedin == true){
@@ -133,10 +128,10 @@ export class GetReviewsPage {
 			}
 
 			this.service.changeRevLikes(rev.user.username, this.location, like).then(data => {
-				this.loading.dismiss();
+				this.loading.dismiss().catch(() => {});
 			},
         err => {
-          this.loading.dismiss();
+          this.loading.dismiss().catch(() => {});
           this._constants.handleError(err);});
 		}
 		else{
@@ -153,10 +148,10 @@ export class GetReviewsPage {
       if(rev == this.userReview) this.userHasReview = false;
 
       this.service.deleteReview(this.location, rev.user.username).then(data => {
-        this.loading.dismiss();
+        this.loading.dismiss().catch(() => {});
       },
       err => {
-        this.loading.dismiss();
+        this.loading.dismiss().catch(() => {});
         this._constants.handleError(err);
       });
     }
@@ -180,7 +175,7 @@ export class GetReviewsPage {
       }
 
       this.service.pinUnpinReview(this.location, rev.user.username).then(data => {
-        this.loading.dismiss();
+        this.loading.dismiss().catch(() => {});
       });
     }
     else{
@@ -200,7 +195,7 @@ export class GetReviewsPage {
 
 	subscribeToAddReview(){
 		this.events.subscribe('addreview:done', (rev,loading) => {
-			loading.dismiss();
+			loading.dismiss().catch(() => {});
 			console.log('AddReviewPage loading dismissed');
 		});
 	}
