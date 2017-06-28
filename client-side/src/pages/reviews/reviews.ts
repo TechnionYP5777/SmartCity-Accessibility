@@ -175,6 +175,10 @@ export class GetReviewsPage {
 
       this.service.pinUnpinReview(this.location, rev.user.username).then(data => {
         this.loading.dismiss().catch(() => {});
+      },
+        err => {
+          this.loading.dismiss().catch(() => {});
+          this._constants.handleError(err);
       });
     }
     else{
