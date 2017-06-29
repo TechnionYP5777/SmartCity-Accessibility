@@ -1,3 +1,6 @@
+/*
+ Author: ArthurSap
+ */
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import {Http, Headers} from "@angular/http";

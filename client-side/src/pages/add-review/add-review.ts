@@ -1,11 +1,12 @@
+/*
+ Author: ArthurSap
+ */
 import {Component} from '@angular/core';
 import { NavController, NavParams, Events, ViewController } from 'ionic-angular';
 import {AddReviewService} from './AddReviewService';
 import { SearchService } from '../mapview/searchService';
 import {Constants} from "../constants";
 import {SpecialConstants} from "../special-constants/special-constants"
-
-
 
 @Component({
   selector: 'page-add-review',
@@ -57,7 +58,7 @@ export class AddReviewPage {
      if ( rev.score == "" ){
        rev.score = 0;
      }
-	 
+
   	 this.addreviewservice.addreview(rev, this.lat, this.lng, this.type, this.subtype, this.name).then(data => {
   	 	  if(data) {
 			    this.events.publish('addreview:done', rev ,this.loading);

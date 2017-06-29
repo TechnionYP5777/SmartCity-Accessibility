@@ -1,10 +1,11 @@
+/*
+ Author: ArthurSap
+ */
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import {Http, Headers} from "@angular/http";
 import { Constants } from "../constants";
 import {SpecialConstants} from "../special-constants/special-constants"
-
-
 
 
 @Injectable()

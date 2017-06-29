@@ -1,3 +1,6 @@
+/*
+Author: ArthurSap
+ */
 import {Component} from '@angular/core';
 import {NavController, NavParams, ModalController, ViewController, Events} from 'ionic-angular';
 import {Http} from '@angular/http';
@@ -75,38 +78,38 @@ export class GetReviewsPage {
 
 	console.log('ionViewDidEnter ShowReviewPage');
 
-    this.loading = this._constants.createCustomLoading();
-    this.loading.present();
-	
+   this.loading = this._constants.createCustomLoading();
+   this.loading.present();
+
 	this.service.showMeStuff(this.location, this.name).subscribe(data => {
 	      	if(data) {
 	      		this.revs = data.json();
-	  			this.getPinnedToFront();
-	  			if(this.isLoggedin){
-	  			    this.isAdmin = JSON.parse(this.token).admin;
-	  			  	this.userInformationService.getUserProfile().subscribe(data => {
-	  			  		if(data){
-	  			  			this.username = data.username;
-	  			  			this.userWroteReview();
-	  			  			this.userReviewFirst();
-							this.loading.dismiss().catch(() => {});
-	  			  		} else{
-							this.loading.dismiss().catch(() => {});
-							this._constants.presentAlert(Constants.generalError);
-	  			  		}
-	  			  	});
-	  			} else {this.loading.dismiss().catch(() => {});}
-	  			this.ready = true;
+	  			  this.getPinnedToFront();
+	  			  if(this.isLoggedin && this.revs.length > 0){
+	  			      this.isAdmin = JSON.parse(this.token).admin;
+	  			    	this.userInformationService.getUserProfile().subscribe(data => {
+	  			    		if(data){
+	  			    			this.username = data.username;
+	  			    			this.userWroteReview();
+	  			    			this.userReviewFirst();
+					  		this.loading.dismiss().catch(() => {});
+	  			    		} else{
+					  		this.loading.dismiss().catch(() => {});
+					  		this._constants.presentAlert(Constants.generalError);
+	  			    		}
+	  			    	});
+	  			  } else {this.loading.dismiss().catch(() => {});}
+	  			  this.ready = true;
 	      	} else{
-				this.loading.dismiss().catch(() => {});
-				this._constants.presentAlert(Constants.generalError);
+				      this.loading.dismiss().catch(() => {});
+				      this._constants.presentAlert(Constants.generalError);
 	      	}
 	    },
 	    err => {
-                this.loading.dismiss().catch(() => {});
-                this._constants.handleError(err);
+	      this.loading.dismiss().catch(() => {});
+	      this._constants.handleError(err);
 		});
-    }
+  }
 
 	like_dislike(e, rev, like){
 		if(this.isLoggedin == true){
@@ -140,14 +143,13 @@ export class GetReviewsPage {
 	}
 
 	deleteReview(e, rev){
-    if(this.isLoggedin && this.isAdmin){
+    if(this.isLoggedin && (this.isAdmin || rev == this.userReview)){
       this.loading = this._constants.createCustomLoading();
       this.loading.present();
 
-      this.revs = this.revs.filter(r => r != rev);
-      if(rev == this.userReview) this.userHasReview = false;
-
       this.service.deleteReview(this.location, rev.user.username).then(data => {
+        this.revs = this.revs.filter(r => r != rev);
+        if(rev == this.userReview) this.userHasReview = false;
         this.loading.dismiss().catch(() => {});
       },
       err => {
@@ -167,7 +169,7 @@ export class GetReviewsPage {
 
       for (var r in this.revs) {
         if (this.revs[r] == rev) {
-          this.revs[r].isPinned = (this.revs[r].isPinned ? false : true);
+          this.revs[r].pinned = (this.revs[r].pinned ? false : true);
           this.getPinnedToFront();
           if(this.userHasReview) this.userReviewFirst();
           break;
@@ -176,6 +178,10 @@ export class GetReviewsPage {
 
       this.service.pinUnpinReview(this.location, rev.user.username).then(data => {
         this.loading.dismiss().catch(() => {});
+      },
+        err => {
+          this.loading.dismiss().catch(() => {});
+          this._constants.handleError(err);
       });
     }
     else{
@@ -241,14 +247,14 @@ export class GetReviewsPage {
 	userReviewFirst(){
 		if(this.userHasReview){
 			let temp = [this.userReview];
-			temp = temp.concat(this.revs);
+			temp = temp.concat(this.revs.filter(rev => rev !== this.userReview));
 			this.revs = temp;
 		}
 	}
 
 	getPinnedToFront(){
-		let pinnedrevs = this.revs.filter(rev => rev.isPinned == true);
-		this.revs = this.revs.filter(rev => rev.isPinned !== true);
+		let pinnedrevs = this.revs.filter(rev => rev.pinned == true);
+		this.revs = this.revs.filter(rev => rev.pinned !== true);
 		pinnedrevs = pinnedrevs.concat(this.revs);
 		this.revs = pinnedrevs;
 	}

@@ -1,3 +1,6 @@
+/*
+ Author: ArthurSap
+ */
 import {Component} from '@angular/core';
 import {NavController, NavParams, AlertController, ModalController, ViewController, Events} from 'ionic-angular';
 import {Http} from '@angular/http';
