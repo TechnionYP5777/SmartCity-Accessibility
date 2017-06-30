@@ -166,11 +166,6 @@ public class LocationManagerTest {
 	@Category(UnitTests.class)
 	public void testGetNonAccessibleLocationsInRadius() {
 		List<LatLng> ll = lm.getNonAccessibleLocationsInRadius(new LatLng(0.0,0.0), new LatLng(0.0,0.0), 3, null);
-		assertEquals(2, ll.size());
-		LatLng loc = ll.get(0);
-		assertEquals(1, (int) loc.lat);
-		assertEquals(1, (int) loc.lng);
-		ll = lm.getNonAccessibleLocationsInRadius(new LatLng(0.0,0.0), new LatLng(0.0,0.0), 5, null);
 		assertEquals(0, ll.size());
 	}
 

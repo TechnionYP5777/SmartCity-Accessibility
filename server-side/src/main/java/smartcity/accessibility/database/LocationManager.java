@@ -217,7 +217,7 @@ public class LocationManager extends AbstractLocationManager {
 			return locList.stream()
 					.filter(l -> l.getLocationType().equals(Location.LocationTypes.STREET))
 					.map(BestReviews::new)
-					.filter(br -> br.getTotalRatingByAvg() < accessibilityThreshold)
+					.filter(br -> br.getTotalRatingByAvg() > accessibilityThreshold)
 					.map(br -> br.getLocation().getCoordinates()).distinct().collect(Collectors.toList());
 		}).subscribeOn(Schedulers.io()).observeOn(Schedulers.single());
 		if (callback == null)
