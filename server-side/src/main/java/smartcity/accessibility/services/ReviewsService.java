@@ -55,8 +55,7 @@ public class ReviewsService {
 	}
 	
 	private Location createAndAddLocation(Double lat, Double lng, String type, String subtype, String name) {
-		Location loc;
-		loc = new Location();
+		Location loc = new Location();
 		loc.setCoordinates(new LatLng(lat, lng));
 		loc.setLocationType(LocationTypes.valueOf(type.toUpperCase()));
 		loc.setLocationSubType(LocationSubTypes.valueOf(subtype.toUpperCase()));
