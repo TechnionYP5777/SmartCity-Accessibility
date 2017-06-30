@@ -227,6 +227,7 @@ export class GetReviewsPage {
 				if(comm.rating == like)
 					boolArray[1] = true;
 				comm.rating = like;
+				break;
 			}
 		}
 
