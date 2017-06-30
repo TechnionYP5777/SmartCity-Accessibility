@@ -53,96 +53,98 @@ export class GetReviewsPage {
    public events: Events) {
 
     this.token = window.sessionStorage.getItem('token');
-	  this.lat = navParams.get('lat');
-	  this.lng = navParams.get('lng');
-	  this.type = navParams.get('type');
-	  this.subtype = navParams.get('subtype');
-	  this.location = {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype}
-	  this.name = navParams.get('name');
-	  this.service = getreviewsservice;
-	  this.isLoggedin = this.loginService.isLoggedIn();
-	  this.isAdmin = false;
-	  this.userHasReview = false;
-	  this.revs  = [];
-	  this.username = '';
-	  this.ready = false;
-	  this.searchService.getAdress(this.lat, this.lng).subscribe(data => {
-	  	this.address = data.res;
-	  });
-	  this.subscribeToAddReview();
-	  //this.subscribeToCommentPosted();
+    this.lat = navParams.get('lat');
+    this.lng = navParams.get('lng');
+    this.type = navParams.get('type');
+    this.subtype = navParams.get('subtype');
+    this.location = {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype}
+    this.name = navParams.get('name');
+    this.service = getreviewsservice;
+    this.isLoggedin = this.loginService.isLoggedIn();
+    this.isAdmin = false;
+    this.userHasReview = false;
+    this.revs  = [];
+    this.username = '';
+    this.ready = false;
+    this.searchService.getAdress(this.lat, this.lng).subscribe(data => {
+      this.address = data.res;
+    });
+    this.subscribeToAddReview();
+    //this.subscribeToCommentPosted();
   }
 
 
   ionViewDidEnter() {
 
-	console.log('ionViewDidEnter ShowReviewPage');
+  console.log('ionViewDidEnter ShowReviewPage');
 
    this.loading = this._constants.createCustomLoading();
    this.loading.present();
 
-	this.service.showMeStuff(this.location, this.name).subscribe(data => {
-	      	if(data) {
-	      		this.revs = data.json();
-	  			  this.getPinnedToFront();
-	  			  if(this.isLoggedin && this.revs.length > 0){
-	  			      this.isAdmin = JSON.parse(this.token).admin;
-	  			    	this.userInformationService.getUserProfile().subscribe(data => {
-	  			    		if(data){
-	  			    			this.username = data.username;
-	  			    			this.userWroteReview();
-	  			    			this.userReviewFirst();
-					  		this.loading.dismiss().catch(() => {});
-	  			    		} else{
-					  		this.loading.dismiss().catch(() => {});
-					  		this._constants.presentAlert(Constants.generalError);
-	  			    		}
-	  			    	});
-	  			  } else {this.loading.dismiss().catch(() => {});}
-	  			  this.ready = true;
-	      	} else{
-				      this.loading.dismiss().catch(() => {});
-				      this._constants.presentAlert(Constants.generalError);
-	      	}
-	    },
-	    err => {
-	      this.loading.dismiss().catch(() => {});
-	      this._constants.handleError(err);
-		});
+  this.service.showMeStuff(this.location, this.name).subscribe(data => {
+        if(data) {
+          this.revs = data.json();
+          this.getPinnedToFront();
+          if(this.isLoggedin && this.revs.length > 0){
+            this.isAdmin = JSON.parse(this.token).admin;
+            this.userInformationService.getUserProfile().subscribe(data => {
+              if(data){
+                this.username = data.username;
+                this.userWroteReview();
+                this.userReviewFirst();
+                this.loading.dismiss().catch(() => {});
+              } else{
+                this.loading.dismiss().catch(() => {});
+                this._constants.presentAlert(Constants.generalError);
+              }
+            });
+          } else {this.loading.dismiss().catch(() => {});}
+          this.ready = true;
+        } else{
+            this.loading.dismiss().catch(() => {});
+            this._constants.presentAlert(Constants.generalError);
+        }
+      },
+      err => {
+        this.loading.dismiss().catch(() => {});
+        this._constants.handleError(err);
+    });
   }
 
-	like_dislike(e, rev, like){
-		if(this.isLoggedin == true){
-			let arr = this.checkAlreadyLiked(rev, like);
-			if(arr[0] && arr[1]){
-				return;
-			}
+  like_dislike(e, rev, like){
+    if(this.isLoggedin == true){
+      let arr = this.checkAlreadyLiked(rev, like);
+      if(arr[0] && arr[1])
+          return;
+
 
       this.loading = this._constants.createCustomLoading();
       this.loading.present();
 
-			if(like>0){
-				rev.upvotes++;
-				if(arr[0] && !arr[1]) rev.downvotes--;
-			}
-			else {
-				rev.downvotes++;
-				if(arr[0] && !arr[1]) rev.upvotes--;
-			}
+      if(like>0){
+        rev.upvotes++;
+        if(arr[0] && !arr[1]) rev.downvotes--;
+      }
+      else {
+        rev.downvotes++;
+        if(arr[0] && !arr[1]) rev.upvotes--;
+      }
 
-			this.service.changeRevLikes(rev.user.username, this.location, like).then(data => {
-				this.loading.dismiss().catch(() => {});
-			},
-        err => {
-          this.loading.dismiss().catch(() => {});
-          this._constants.handleError(err);});
-		}
-		else{
+      this.service.changeRevLikes(rev.user.username, this.location, like).then(data => {
+        if(!arr[0])
+          rev.comments.push({comment : "", commentator : {username : this.username}, rating : like});
+        this.loading.dismiss().catch(() => {});
+      },
+      err => {
+        this.loading.dismiss().catch(() => {});
+        this._constants.handleError(err);
+	  });
+    }
+	else
       this._constants.presentAlert(Constants.notLoggedIn);
-		}
-	}
+  }
 
-	deleteReview(e, rev){
+  deleteReview(e, rev){
     if(this.isLoggedin && (this.isAdmin || rev == this.userReview)){
       this.loading = this._constants.createCustomLoading();
       this.loading.present();
@@ -189,22 +191,22 @@ export class GetReviewsPage {
     }
   }
 
-	openAddReview(){
-		let addReview = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
-		addReview.present();
-	}
+  openAddReview(){
+    let addReview = this.modalCtrl.create(AddReviewPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, name : this.name});
+    addReview.present();
+  }
 
-	openCommentPage(e, userRev){
+  openCommentPage(e, userRev){
     let commentPage = this.modalCtrl.create(CommentPage, {lat : this.lat, lng : this.lng, type : this.type, subtype : this.subtype, loggedIn : this.isLoggedin, username : this.username, rev : userRev});
     commentPage.present();
   }
 
-	subscribeToAddReview(){
-		this.events.subscribe('addreview:done', (rev,loading) => {
-			loading.dismiss().catch(() => {});
-			console.log('AddReviewPage loading dismissed');
-		});
-	}
+  subscribeToAddReview(){
+    this.events.subscribe('addreview:done', (rev,loading) => {
+      loading.dismiss().catch(() => {});
+      console.log('AddReviewPage loading dismissed');
+    });
+  }
 
   subscribeToCommentPosted(){
     this.events.subscribe('commentposted:done', (rev,comm) => {
@@ -219,45 +221,45 @@ export class GetReviewsPage {
     });
   }
 
-	checkAlreadyLiked(rev, like){
-		let boolArray = [false, false];
-		for(let comm of rev.comments){
-			if(comm.commentator.username == this.username){
-				boolArray[0] = true;
-				if(comm.rating == like)
-					boolArray[1] = true;
-				comm.rating = like;
-				break;
-			}
-		}
+  checkAlreadyLiked(rev, like){
+    let boolArray = [false, false];
+    for(let comm of rev.comments){
+      if(comm.commentator.username == this.username){
+        boolArray[0] = true;
+        if(comm.rating == like)
+          boolArray[1] = true;
+        comm.rating = like;
+        break;
+      }
+    }
 
-		return boolArray;
-	}
+    return boolArray;
+  }
 
-	userWroteReview(){
-		for(let rev of this.revs){
-			if(rev.user.username == this.username){
-				this.userHasReview = true;
-				this.userReview = rev;
-				this.revs = this.revs.filter(obj => obj !== rev);
-				break;
-			}
-		}
-	}
+  userWroteReview(){
+    for(let rev of this.revs){
+      if(rev.user.username == this.username){
+        this.userHasReview = true;
+        this.userReview = rev;
+        this.revs = this.revs.filter(obj => obj !== rev);
+        break;
+      }
+    }
+  }
 
-	userReviewFirst(){
-		if(this.userHasReview){
-			let temp = [this.userReview];
-			temp = temp.concat(this.revs.filter(rev => rev !== this.userReview));
-			this.revs = temp;
-		}
-	}
+  userReviewFirst(){
+    if(this.userHasReview){
+      let temp = [this.userReview];
+      temp = temp.concat(this.revs.filter(rev => rev !== this.userReview));
+      this.revs = temp;
+    }
+  }
 
-	getPinnedToFront(){
-		let pinnedrevs = this.revs.filter(rev => rev.pinned == true);
-		this.revs = this.revs.filter(rev => rev.pinned !== true);
-		pinnedrevs = pinnedrevs.concat(this.revs);
-		this.revs = pinnedrevs;
-	}
+  getPinnedToFront(){
+    let pinnedrevs = this.revs.filter(rev => rev.pinned == true);
+    this.revs = this.revs.filter(rev => rev.pinned !== true);
+    pinnedrevs = pinnedrevs.concat(this.revs);
+    this.revs = pinnedrevs;
+  }
 
 }
