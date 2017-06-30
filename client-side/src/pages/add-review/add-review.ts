@@ -5,7 +5,6 @@ import {Component} from '@angular/core';
 import { NavController, NavParams, Events, ViewController } from 'ionic-angular';
 import {AddReviewService} from './AddReviewService';
 import { SearchService } from '../mapview/searchService';
-import {Constants} from "../constants";
 import {SpecialConstants} from "../special-constants/special-constants"
 
 @Component({
