@@ -12,7 +12,7 @@ import { SearchService } from '../mapview/searchService';
 import { UserInformationService } from '../user-page/userInformationService';
 import {CommentPage} from "../comment/comment";
 import {Constants} from "../constants";
-import {SpecialConstants} from "../special-constants/special-constants"
+import {SpecialConstants} from "../special-constants/special-constants";
 
 @Component({
   selector: 'page-get-reviews',

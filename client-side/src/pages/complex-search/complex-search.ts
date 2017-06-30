@@ -4,6 +4,7 @@ import {ComplexSearchService} from './complexSearchService';
 import { SearchService } from '../mapview/searchService';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Constants } from "../constants";
+import {SpecialConstants} from "../special-constants/special-constants";
 
 declare var google;  
 
@@ -31,7 +32,8 @@ export class ComplexSearchPage {
   constructor(public events: Events, public searchService: SearchService,
 				public navCtrl: NavController, public navParams: NavParams,
 				public complexSearchService : ComplexSearchService,
-				public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+				public alertCtrl: AlertController, public loadingCtrl: LoadingController,
+				public _constants : SpecialConstants) {
     
   }
 
@@ -65,7 +67,8 @@ export class ComplexSearchPage {
    }
    
    coordsComplexSearch(type, radius, minRating) {
-		this.presentLoadingCustom();
+		this.loading = this._constants.createCustomLoading();
+		this.loading.present();
 		this.geolocation = new Geolocation();
 		this.geolocation.getCurrentPosition().then((position) => {
 			this.startLocationCoordinates = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -87,7 +90,8 @@ export class ComplexSearchPage {
 		this.presentAlert('You did not entered any initial location');
 		return;
 	  }
-	  this.presentLoadingCustom();
+	  this.loading = this._constants.createCustomLoading();
+      this.loading.present();
 	  
 		this.searchService.search(initLoc).subscribe(
 		data => {
@@ -107,7 +111,7 @@ export class ComplexSearchPage {
 		this.navCtrl.pop();
    }
    
-   presentAlert(str) {
+    presentAlert(str) {
 		let alert = this.alertCtrl.create({
 		  title: 'Alert',
 		  subTitle: str,
@@ -117,19 +121,10 @@ export class ComplexSearchPage {
 	}
 	
 	handleError(err) {
-		if(err.error == null)
+		if(err.message == null)
 			this.presentAlert(Constants.serverNotResponding);
 		else 
 			this.presentAlert("error: " + err.message);
-    }
-	
-	presentLoadingCustom() {
-            this.loading = this.loadingCtrl.create({
-            spinner: 'bubbles',
-		    showBackdrop: false,
-		    cssClass: 'loader'
-        });
-        this.loading.present();
     }
 	
 }

@@ -6,6 +6,7 @@ import { UserPagePage } from '../user-page/user-page';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LoginPage } from '../login/login';
 import { Constants } from "../constants";
+import {SpecialConstants} from "../special-constants/special-constants";
 
 @Component({
   selector: 'page-navigation',
@@ -32,17 +33,18 @@ export class NavigationPage {
 	};
 	loading : any;
 	
-    constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl: LoadingController,public alertCtrl: AlertController, public navigationService: NavigationService,public loginService : LoginService,public events: Events) {
+    constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl: LoadingController,
+	            public alertCtrl: AlertController, public navigationService: NavigationService,
+				public loginService : LoginService,public events: Events, public _constants : SpecialConstants) {
 		this.isLoggedin = this.loginService.isLoggedIn();
 		this.dstLocation.lat = navParams.get('lat');
 		this.dstLocation.lng = navParams.get('lng');
 		this.minRating = 5;
 	}
-	ionViewDidLoad(){
-    }
 	
 	startNavigation(){
-	    this.presentLoadingCustom();
+		this.loading = this._constants.createCustomLoading();
+		this.loading.present();
 		this.geolocation = new Geolocation();
 		this.geolocation.getCurrentPosition().then((position) => {
 			this.srcLocation.lat = String(position.coords.latitude);
@@ -75,14 +77,5 @@ export class NavigationPage {
 		else 
 			this.presentAlert("<p> error is: "+err.error+ "</p> <p> message is: "+ err.message+"</p>");
 		this.events.publish('navigation:done', null,this.loading);
-    }
-	
-	presentLoadingCustom() {
-            this.loading = this.loadingCtrl.create({
-            spinner: 'bubbles',
-		    showBackdrop: false,
-		    cssClass: 'loader'
-        });
-        this.loading.present();
     }
 }

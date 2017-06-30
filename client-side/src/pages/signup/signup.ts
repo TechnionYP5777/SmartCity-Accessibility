@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, Events, AlertController, LoadingController } from 'ionic-angular';
 import { LoginService } from '../login/LoginService';
+import {SpecialConstants} from "../special-constants/special-constants";
 
 
 @Component({
@@ -18,7 +19,11 @@ export class SignupPage {
 	};
   
   loading : any;
-  constructor(public navCtrl: NavController, public loginService: LoginService,public loadingCtrl: LoadingController,public events: Events, public alertCtrl: AlertController) {}
+  
+  constructor(public navCtrl: NavController, public loginService: LoginService,
+              public loadingCtrl: LoadingController,public events: Events, 
+			  public alertCtrl: AlertController, public _constants : SpecialConstants) {
+  }
 
   register(user) {
 		if(user.name == ''){
@@ -29,7 +34,8 @@ export class SignupPage {
 			this.presentAlert("please insert a password");
 			return;
 		}
-		this.presentLoadingCustom();
+		this.loading = this._constants.createCustomLoading();
+		this.loading.present();
         this.loginService.signup(user).then(data => {
             if(data) {
                 var alert = this.alertCtrl.create({
@@ -45,17 +51,8 @@ export class SignupPage {
             } else {
 				this.loading.dismiss();
 			}
-    });
+		});
 	}
-	
-	presentLoadingCustom() {
-            this.loading = this.loadingCtrl.create({
-            spinner: 'bubbles',
-		    showBackdrop: false,
-		    cssClass: 'loader'
-        });
-        this.loading.present();
-    }
 	
 	presentAlert(str) {
 		let alert = this.alertCtrl.create({

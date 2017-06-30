@@ -5,7 +5,6 @@ import { LocationListPage } from '../location-list/location-list';
 import { SearchService } from '../mapview/searchService';
 import { GetReviewsPage } from '../reviews/reviews'; 
 
-declare var google;
 
 @Component({
   selector: 'page-mapclickmenu',
@@ -22,7 +21,8 @@ export class MapClickMenuPage {
   mapUrl : any;
 
 
-  constructor(public viewCtrl: ViewController,public appCtrl: App, public searchService : SearchService, public navParams: NavParams,public modalCtrl: ModalController) {
+  constructor(public viewCtrl: ViewController,public appCtrl: App, public searchService : SearchService, 
+              public navParams: NavParams,public modalCtrl: ModalController) {
 	let temp = navParams.get('latlng');
 	this.lat = temp.lat();
 	this.lng = temp.lng();
@@ -31,10 +31,6 @@ export class MapClickMenuPage {
 		this.address = data.res;
 	});
 	this.mapUrl = 'https://maps.googleapis.com/maps/api/streetview?size=400x200&location='+this.lat+','+this.lng+'&fov=90';
-  }
-  
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MapClickMenuPage');
   }
   
   reviewAsStreet(){

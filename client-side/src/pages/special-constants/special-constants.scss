@@ -87,5 +87,8 @@
 
   .loading-wrapper{
     background-color:transparent;
+	box-shadow: none !important;
+	border-color: rgba(0,0,0,0) !important;
+	outline: none !important;
   }
 }

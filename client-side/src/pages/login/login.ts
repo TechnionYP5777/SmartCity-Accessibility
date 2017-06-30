@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, Events, LoadingController, AlertController } from 'ionic-angular';
 import { LoginService } from './LoginService';
 import { SignupPage } from '../signup/signup';
+import { SpecialConstants } from "../special-constants/special-constants";
 
 @Component({
   selector: 'page-login',
@@ -18,7 +19,11 @@ export class LoginPage {
 		 password: ''
 	};
 	loading : any;
-    constructor(public navCtrl: NavController, public loginservice: LoginService, public alertCtrl: AlertController, public events: Events,public loadingCtrl: LoadingController) {}
+	
+    constructor(public navCtrl: NavController, public loginservice: LoginService, 
+	            public alertCtrl: AlertController, public events: Events,
+				public loadingCtrl: LoadingController, public _constants : SpecialConstants) {
+	}
 
     login(user) {
 		if(user.name == ''){
@@ -30,7 +35,8 @@ export class LoginPage {
 			return;
 		}
 		
-		this.presentLoadingCustom();
+		this.loading = this._constants.createCustomLoading();
+		this.loading.present();
         this.loginservice.login(user).then(data => {
             if(data) {
 				setTimeout(() => { this.events.publish('login:updateState'); }, this.loginservice.timeout());
@@ -42,17 +48,9 @@ export class LoginPage {
 			}
 		});
     }
+	
     signup() {
         this.navCtrl.push(SignupPage);
-    }
-
-	presentLoadingCustom() {
-            this.loading = this.loadingCtrl.create({
-            spinner: 'bubbles',
-		    showBackdrop: false,
-		    cssClass: 'loader'
-        });
-        this.loading.present();
     }
 	
 	presentAlert(str) {
