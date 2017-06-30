@@ -5,6 +5,7 @@ import { MostRatedLocsPage } from '../mostRatedLocs/mostRatedLocs';
 import { AdminService } from './adminService';
 import { Constants } from "../constants";
 import { UserPagePage } from '../user-page/user-page'
+import {SpecialConstants} from "../special-constants/special-constants";
 
 @Component({
   selector: 'page-admin',
@@ -31,7 +32,7 @@ export class AdminPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
 			  public adminService : AdminService, public modalCtrl: ModalController,
 			  public loadingCtrl: LoadingController, public events: Events,
-			  public alertCtrl: AlertController) {
+			  public alertCtrl: AlertController, public _constants : SpecialConstants) {
 		this.adminService.getUserProfile().subscribe(data => {
 			this.name = data.username;
 			this.rating=data.rating;
@@ -60,7 +61,9 @@ export class AdminPage {
 	  }
 	  let users = this.modalCtrl.create(HelpfulUsersPage,{num: n});
 	  users.present();
-	  this.presentLoadingCustom();
+	  this.loading = this._constants.createCustomLoading();
+      this.loading.present();
+	  this.events.subscribe('gotResults', () => this.loading.dismiss().catch(() => {}) );
   }
   
   getUserPage() {
@@ -91,18 +94,10 @@ export class AdminPage {
   actualShowLocations(numOfLocations, radius, initLoc) {
 	  let locations = this.modalCtrl.create(MostRatedLocsPage,{n: numOfLocations, r: radius, l: initLoc});
 	  locations.present();
-	  this.presentLoadingCustom();
+	  this.loading = this._constants.createCustomLoading();
+	  this.loading.present();
+	  this.events.subscribe('gotResults', () => this.loading.dismiss().catch(() => {}) );
   }
-  
-	presentLoadingCustom() {
-            this.loading = this.loadingCtrl.create({
-            spinner: 'bubbles',
-		    showBackdrop: false,
-		    cssClass: 'loader'
-        });
-        this.loading.present();
-		 this.events.subscribe('gotResults', () => this.loading.dismiss().catch(() => {}) );
-   }
    
    
    presentConfirmShowLocations(numOfLocations, radius, initLoc) {

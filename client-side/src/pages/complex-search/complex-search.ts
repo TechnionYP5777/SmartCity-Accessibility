@@ -51,7 +51,7 @@ export class ComplexSearchPage {
 			return;
 	  }
 	  
-	  if (radius == "" ) {
+	  if (radius == null ) {
 			this.presentAlert('please enter a radius');
 			return;
 	  }
