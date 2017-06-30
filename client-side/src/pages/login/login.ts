@@ -41,10 +41,10 @@ export class LoginPage {
             if(data) {
 				setTimeout(() => { this.events.publish('login:updateState'); }, this.loginservice.timeout());
 				this.events.publish('login:updateState');
-                this.navCtrl.popToRoot();
-				this.loading.dismiss();
+				//this.loading.dismiss().catch(() => {});
+				this.navCtrl.popToRoot();
             } else{
-				this.loading.dismiss();
+				this.loading.dismiss().catch(() => {});
 			}
 		});
     }

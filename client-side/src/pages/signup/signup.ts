@@ -46,10 +46,10 @@ export class SignupPage {
 				setTimeout(() => { this.events.publish('login:updateState'); }, this.loginService.timeout());
 				this.events.publish('login:updateState');
                 alert.present();
-				this.loading.dismiss();
+				this.loading.dismiss().catch(() => {});
                 this.navCtrl.popToRoot();
             } else {
-				this.loading.dismiss();
+				this.loading.dismiss().catch(() => {});
 			}
 		});
 	}

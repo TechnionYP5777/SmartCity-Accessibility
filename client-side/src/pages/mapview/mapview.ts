@@ -83,9 +83,9 @@ export class MapviewPage {
   	    this.searchService.search(searchQuery).subscribe(data => {
   			this.addMarker([data.coordinates]);
   			this.map.setCenter(data.coordinates);
-			this.loading.dismiss();
+			this.loading.dismiss().catch(() => {});
 		}, err => {
-			this.loading.dismiss();
+			this.loading.dismiss().catch(() => {});
 			this.handleError(err.json());
   		});
     }
@@ -109,7 +109,7 @@ export class MapviewPage {
 	subscribeToNavigation(){
 		this.events.subscribe('navigation:done', (navigationResults,loading) => {
 			if(navigationResults == null){
-				loading.dismiss();
+				loading.dismiss().catch(() => {});
 				return;
 			}
 			if(this.navigateMarkers != null){
@@ -141,7 +141,7 @@ export class MapviewPage {
 				let clickMenu = this.modalCtrl.create(navigationManeuverPage,navigationResults);
 				clickMenu.present();
 			});
-			loading.dismiss();
+			loading.dismiss().catch(() => {});
 		});
 	}
 	presentAlert(str) {
