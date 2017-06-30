@@ -7,7 +7,6 @@ import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {CommentService} from "./CommentService";
 import {GetReviewsPage} from "../reviews/reviews";
-import { Constants } from "../constants";
 import {SpecialConstants} from "../special-constants/special-constants"
 
 
