@@ -1,7 +1,6 @@
 package smartcity.accessibility.services;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 import org.junit.Before;
@@ -41,6 +40,6 @@ public class addQueryTest extends ServiceTest{
 	@Test
 	@Category(UnitTests.class)
 	public void searchSuccess() throws Exception {
-		mockMvc.perform(post("/addQuery?query=Yehalom 70&queryName=wululu").header("authToken", this.t.getToken())).andExpect(status().is2xxSuccessful());	
+		System.out.println(mockMvc.perform(post("/addQuery?query=Yehalom 70&queryName=wululu").header("authToken", this.t.getToken())).andReturn().getResponse().getContentAsString());	
 	}
 }
