@@ -40,7 +40,6 @@ public class addQueryTest extends ServiceTest{
 	@Test
 	@Category(UnitTests.class)
 	public void searchSuccess() throws Exception {
-		mockMvc.perform(post("/addQuery?query=Yehalom 70&queryName=wululu").header("authToken", this.t.getToken())).andReturn().getResponse().getContentAsString();
-		System.out.println("dayum");
+		System.out.println(mockMvc.perform(post("/addQuery?query=Yehalom 70&queryName=wululu").header("authToken", this.t.getToken())).andReturn().getResponse().getContentAsString());	
 	}
 }
