@@ -33,70 +33,70 @@ export class AdminPage {
 			  public adminService : AdminService, public modalCtrl: ModalController,
 			  public loadingCtrl: LoadingController, public events: Events,
 			  public alertCtrl: AlertController, public _constants : SpecialConstants) {
+				  
 		this.adminService.getUserProfile().subscribe(data => {
 			this.name = data.username;
 			this.rating=data.rating;
 			this.numOfReviews=data.numOfReviews;
 			(this.numOfReviews == 0) ? this.hlp = 0 : this.hlp = (this.rating / this.numOfReviews);
-			
 		});
 		this.findImageProfileURL();
 		this.adminService.numOfUsers().subscribe(data => this.numOfUsers = data);
   }
   
   findImageProfileURL() {
-	try{
-		var token = JSON.parse(window.sessionStorage.getItem('token')).token;
-	}
-	catch(err){
-		token = "no token";
-	}
-	this.imageProfileUrl = 	Constants.serverAddress+'/profileImg?token='+token;
+		try {
+			var token = JSON.parse(window.sessionStorage.getItem('token')).token;
+		}
+		catch(err){
+			token = "no token";
+		}
+		this.imageProfileUrl = 	Constants.serverAddress+'/profileImg?token='+token;
   }
   
   showUsers(n) {
-	  if (n <= 0 || n == null) {
+		if (n <= 0 || n == null) {
 			this.presentAlert('Parameter must be a positive number');
 			return;
-	  }
-	  let users = this.modalCtrl.create(HelpfulUsersPage,{num: n});
-	  users.present();
-	  this.loading = this._constants.createCustomLoading();
-      this.loading.present();
-	  this.events.subscribe('gotResults', () => this.loading.dismiss().catch(() => {}) );
+		}
+		let users = this.modalCtrl.create(HelpfulUsersPage,{num: n});
+		users.present();
+		this.loading = this._constants.createCustomLoading();
+		this.loading.present();
+		this.events.subscribe('gotResults', () => this.loading.dismiss().catch(() => {}) );
   }
   
   getUserPage() {
-	  this.navCtrl.push(UserPagePage);
+	    this.navCtrl.push(UserPagePage);
   }
   
   showLocations(numOfLocations, radius, initLoc) {
-	  if (numOfLocations <= 0 || numOfLocations == null) {
-		  this.presentAlert('The number of locations must be a positive number');
-		  return;
-	  }
-	  if (radius <= 0 || radius == null) {
-		  this.presentAlert('The radius must be a positive number');
-		  return;
-	  }
-	  if (initLoc == null) {
-		 this.presentAlert('Please enter an initial location');
-		  return; 
-	  }
-	  if ( radius > 5 ) {
-		  this.presentConfirmShowLocations(numOfLocations, radius, initLoc);
-	  } else {
+	    if (numOfLocations <= 0 || numOfLocations == null) {
+		    this.presentAlert('The number of locations must be a positive number');
+		    return;
+	    }
+	    if (radius <= 0 || radius == null) {
+		    this.presentAlert('The radius must be a positive number');
+		    return;
+	    }
+	    if (initLoc == null) {
+		   this.presentAlert('Please enter an initial location');
+		   return; 
+	    }
+	    if ( radius > 5 ) {
+		   this.presentConfirmShowLocations(numOfLocations, radius, initLoc);
+	    } else {
 		   this.actualShowLocations(numOfLocations, radius, initLoc);
-	  }
+	    }
 	  
   }
   
   actualShowLocations(numOfLocations, radius, initLoc) {
-	  let locations = this.modalCtrl.create(MostRatedLocsPage,{n: numOfLocations, r: radius, l: initLoc});
-	  locations.present();
-	  this.loading = this._constants.createCustomLoading();
-	  this.loading.present();
-	  this.events.subscribe('gotResults', () => this.loading.dismiss().catch(() => {}) );
+		let locations = this.modalCtrl.create(MostRatedLocsPage,{n: numOfLocations, r: radius, l: initLoc});
+		locations.present();
+		this.loading = this._constants.createCustomLoading();
+		this.loading.present();
+		this.events.subscribe('gotResults', () => this.loading.dismiss().catch(() => {}) );
   }
    
    
