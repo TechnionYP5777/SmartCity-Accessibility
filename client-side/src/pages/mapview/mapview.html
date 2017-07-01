@@ -43,7 +43,13 @@
 		</button>
   </ion-buttons>-->
 
-
+  <ion-content *ngIf="pleaseWait">
+	<ion-list>
+		<ion-list-header>
+		 Loading Map; Please wait....
+		</ion-list-header>
+   	</ion-list>
+</ion-content>
   <div #map id="map" data-tap-disabled="true" style="height: 76%; width: 100%; margin-top: 5px;" ></div>
 
 </ion-content>

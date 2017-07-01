@@ -33,10 +33,12 @@ export class MapviewPage {
   navigateMarkers : any;
   loading : any;
   userQuery : any;
+  pleaseWait : any;
 
     constructor(public navCtrl: NavController,  public navParams: NavParams, public loadingCtrl: LoadingController, 
 			  public alertCtrl: AlertController,public modalCtrl: ModalController, public searchService : SearchService,
 			  public events: Events, public _constants : SpecialConstants) {
+		this.pleaseWait = true;
 		this.loading = this._constants.createCustomLoading();
 		this.loading.present();
 		this.subscribeToNavigation();
@@ -48,8 +50,7 @@ export class MapviewPage {
     }
 
     ionViewDidLoad(){
-        this.loadMap();
-
+        this.loadMap(); 
     }
 
     ionViewDidEnter(){
@@ -182,6 +183,7 @@ export class MapviewPage {
 			if (!!this.userQuery){
 			  this.callSearch(this.userQuery);
 			}
+			this.pleaseWait = false;
 		}, (err) => {
 			window.location.reload();
 		});
