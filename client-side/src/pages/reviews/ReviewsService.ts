@@ -31,7 +31,8 @@ export class GetReviewsService {
   	var token = this.getToken();
   	var params = "lat=" + loc.lat + "&lng=" + loc.lng + "&type=" + loc.type + "&subtype=" + loc.subtype + "&username=" + username + "&likes=" + like;
 
-    var headers = this.headers;
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('authToken',token);
 
     return new Promise(resolve => {
