@@ -37,11 +37,14 @@ export class MapviewPage {
     constructor(public navCtrl: NavController,  public navParams: NavParams, public loadingCtrl: LoadingController, 
 			  public alertCtrl: AlertController,public modalCtrl: ModalController, public searchService : SearchService,
 			  public events: Events, public _constants : SpecialConstants) {
-        this.subscribeToNavigation();
+		this.loading = this._constants.createCustomLoading();
+		this.loading.present();
+		this.subscribeToNavigation();
 		this.markers = [];
 		this.output = navParams.get('adress');
 		this.searchQuery = navParams.get('adress');
         this.userQuery = this.navParams.get("myQuery");
+		this.loading.dismiss().catch(() => {});
     }
 
     ionViewDidLoad(){
@@ -51,7 +54,7 @@ export class MapviewPage {
 
     ionViewDidEnter(){
         google.maps.event.trigger(this.map, 'resize');
-    }
+	}
 
 	addMarker(LatLngArr){
 		for (var i = 0; i < this.markers.length; i++) {

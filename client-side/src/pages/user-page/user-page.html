@@ -26,11 +26,12 @@
         Profile
       </ion-list-header>
 
+	  
   	<img src={{imageProfileUrl}} height="100" width="100" style="align-items: center; margin: 5px;"/>
 
 	  <ion-buttons>
 		<button ion-button round (click)="imgUpload()" class="buttons">
-			<ion-icon name='search'></ion-icon>
+			<ion-icon name='upload'></ion-icon>
 				image upload
 		</button>
 	  </ion-buttons>
@@ -39,7 +40,13 @@
       <ion-icon name="information-circle"></ion-icon>
       Your Search Queries
     </ion-list-header>
-
+		<ion-buttons>
+		<button ion-button round (click)="refresh()" class="buttons">
+			<ion-icon name='refresh'></ion-icon>
+				refresh
+		</button>
+	  </ion-buttons>
+	
 	  <button ion-button round (click)="addNewSearchQuery()">add New Search Query</button>
 
     <ion-card *ngFor="let query of quries">

@@ -7,6 +7,7 @@ import { UserInformationService } from './userInformationService';
 import { MapviewPage } from '../mapview/mapview';
 import { ImgUploadPage } from '../imgUpload/imgUpload';
 import { Constants } from "../constants";
+import {SpecialConstants} from "../special-constants/special-constants";
 
 
 
@@ -22,8 +23,16 @@ export class UserPagePage {
   addSearchQueryPage = AddSearchQueryPage;
   viewSearchQueryPage = ViewSearchQueryPage;
   imageProfileUrl : any;  
+  loading : any;
 
-	constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public modalCtrl: ModalController, public loginService : LoginService, public userInformationService : UserInformationService) {
+	constructor(public alertCtrl: AlertController,
+				public navCtrl: NavController,
+				public navParams: NavParams,
+				public viewCtrl: ViewController, 
+				public modalCtrl: ModalController,
+				public loginService : LoginService,
+				public userInformationService : UserInformationService,
+				public _constants : SpecialConstants) {
 		this.userInformationService.getUserProfile().subscribe(data => {
 			this.UserName = data.username;
 		});
@@ -63,8 +72,16 @@ imgUpload() {
   }
 
   cc(query){
+	this.loading = this._constants.createCustomLoading();
+    this.loading.present();
     this.navCtrl.setRoot(MapviewPage, {myQuery : query.query});
-
+	this.loading.dismiss().catch(() => {});
+  }
+  
+  refresh(){
+	this.userInformationService.getUserQuries().subscribe(data => {
+			this.quries = data.res2;
+		});  
   }
 
   presentAlert(string) {
