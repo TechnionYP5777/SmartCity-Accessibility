@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, Events, LoadingController, AlertController } from 'ionic-angular';
 import { LoginService } from './LoginService';
 import { SignupPage } from '../signup/signup';
-import { SpecialConstants } from "../special-constants/special-constants";
 
 @Component({
   selector: 'page-login',
@@ -22,7 +21,7 @@ export class LoginPage {
 	
     constructor(public navCtrl: NavController, public loginservice: LoginService, 
 	            public alertCtrl: AlertController, public events: Events,
-				public loadingCtrl: LoadingController, public _constants : SpecialConstants) {
+				public loadingController: LoadingController) {
 	}
 
     login(user) {
@@ -35,18 +34,29 @@ export class LoginPage {
 			return;
 		}
 		
-		this.loading = this._constants.createCustomLoading();
-		this.loading.present();
+		this.createCustomLoading();
         this.loginservice.login(user).then(data => {
             if(data) {
 				setTimeout(() => { this.events.publish('login:updateState'); }, this.loginservice.timeout());
 				this.events.publish('login:updateState');
-				//this.loading.dismiss().catch(() => {});
+				this.loading.dismiss();
 				this.navCtrl.popToRoot();
             } else{
-				this.loading.dismiss().catch(() => {});
+				this.loading.dismiss();
 			}
 		});
+    }
+	
+	createCustomLoading() {
+		this.loading = this.loadingController.create({
+		  spinner: 'hide',
+		  dismissOnPageChange: false,
+		  content: `<div class="cssload-container">
+					  <div class="cssload-whirlpool"></div>
+				  </div>`,
+		  cssClass: 'loader'
+		});
+		this.loading.present();
     }
 	
     signup() {

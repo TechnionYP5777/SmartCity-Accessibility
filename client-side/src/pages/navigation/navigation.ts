@@ -5,7 +5,6 @@ import { LoginService } from '../login/LoginService';
 import { UserPagePage } from '../user-page/user-page';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LoginPage } from '../login/login';
-import {SpecialConstants} from "../special-constants/special-constants";
 
 @Component({
   selector: 'page-navigation',
@@ -32,9 +31,9 @@ export class NavigationPage {
 	};
 	loading : any;
 	
-    constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl: LoadingController,
+    constructor(public navCtrl: NavController, public navParams: NavParams,public loadingController: LoadingController,
 	            public alertCtrl: AlertController, public navigationService: NavigationService,
-				public loginService : LoginService,public events: Events, public _constants : SpecialConstants) {
+				public loginService : LoginService,public events: Events) {
 		this.isLoggedin = this.loginService.isLoggedIn();
 		this.dstLocation.lat = navParams.get('lat');
 		this.dstLocation.lng = navParams.get('lng');
@@ -42,8 +41,7 @@ export class NavigationPage {
 	}
 	
 	startNavigation(){
-		this.loading = this._constants.createCustomLoading();
-		this.loading.present();
+		this.createCustomLoading();
 		this.geolocation = new Geolocation();
 		this.geolocation.getCurrentPosition().then((position) => {
 			this.srcLocation.lat = String(position.coords.latitude);
@@ -60,6 +58,18 @@ export class NavigationPage {
 		});
 		this.navCtrl.pop();
 	}
+	
+	createCustomLoading() {
+		this.loading = this.loadingController.create({
+		  spinner: 'hide',
+		  dismissOnPageChange: false,
+		  content: `<div class="cssload-container">
+					  <div class="cssload-whirlpool"></div>
+				  </div>`,
+		  cssClass: 'loader'
+		});
+		this.loading.present();
+    }
 	
 	presentAlert(str) {
 		let alert = this.alertCtrl.create({
