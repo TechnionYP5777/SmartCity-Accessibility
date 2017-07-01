@@ -6,7 +6,6 @@ import { MapClickMenuPage } from '../mapclickmenu/mapclickmenu';
 import { ComplexSearchPage } from '../complex-search/complex-search';
 import { SearchService } from './searchService';
 import { navigationManeuverPage } from '../navigation_maneuver/navigation_maneuver';
-import { Constants } from "../constants";
 import {SpecialConstants} from "../special-constants/special-constants";
 
 declare var google;
@@ -78,7 +77,7 @@ export class MapviewPage {
     }
 
     callSearch(searchQuery) {
-		if(searchQuery == null) {
+		if(searchQuery == '') {
 			this.presentAlert('please insert a query');
 			return;
 		}
@@ -158,10 +157,7 @@ export class MapviewPage {
 	}
 
 	handleError(err) {
-		if(err.error == null)
-			this.presentAlert(Constants.serverNotResponding);
-		else 
-			this.presentAlert("error: " + err.message);
+		this.presentAlert("error: " + err.message);
     }
 
 	loadMap(){

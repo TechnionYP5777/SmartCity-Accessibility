@@ -66,10 +66,7 @@ export class LoginService {
                     resolve(true);
                 }
 			}, err => {
-					if(err.error == null)
-						this.presentAlert(Constants.serverNotResponding);
-					else 
-						this.presentAlert("<p>error: " + err.json().error  + "</p> <p> message: " + err.json().message + "</p>");
+					this.presentAlert("<p>error: " + err.json().error  + "</p> <p> message: " + err.json().message + "</p>");
                     resolve(false);
             });
         });
@@ -88,10 +85,7 @@ export class LoginService {
                 }
 			}
             , err =>{
-				if(err.error == null)
-						this.presentAlert(Constants.serverNotResponding);
-				else 
-						this.presentAlert("<p>error: " + err.json().error  + "</p> <p> message: " + err.json().message + "</p>");
+				this.presentAlert("<p>error: " + err.json().error  + "</p> <p> message: " + err.json().message + "</p>");
                 resolve(false);
             });
         });
