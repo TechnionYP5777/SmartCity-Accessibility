@@ -12,12 +12,8 @@ import {SpecialConstants} from "../special-constants/special-constants"
 @Injectable()
 export class GetReviewsService {
 
-  headers : any;
-
   constructor(public http: Http, public _constants : SpecialConstants) {
   	this.http = http;
-  	this.headers = new Headers();
-    this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
     console.log('Hello GetReviewsService Provider');
   }
 
@@ -31,9 +27,7 @@ export class GetReviewsService {
   	var token = this.getToken();
   	var params = "lat=" + loc.lat + "&lng=" + loc.lng + "&type=" + loc.type + "&subtype=" + loc.subtype + "&username=" + username + "&likes=" + like;
 
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    headers.append('authToken',token);
+    var headers = this.createHeaders(token);
 
     return new Promise(resolve => {
       	this.http.post(Constants.serverAddress +'/reviews?', params, {headers: headers}).subscribe(data => {
@@ -50,8 +44,10 @@ export class GetReviewsService {
   deleteReview(loc, username){
     var params = "lat=" + loc.lat + "&lng=" + loc.lng + "&type=" + loc.type + "&subtype=" + loc.subtype + "&username=" + username;
 
+    var headers = this.createHeaders('');
+
     return new Promise(resolve => {
-      this.http.post(Constants.serverAddress +'/deleteReview?', params, {headers: this.headers}).subscribe(data => {
+      this.http.post(Constants.serverAddress +'/deleteReview?', params, {headers: headers}).subscribe(data => {
         if(data.status == 200){
           console.log('Review deleted successfully!');
           resolve(true);
@@ -65,8 +61,10 @@ export class GetReviewsService {
   pinUnpinReview(loc, username){
     var params = "lat=" + loc.lat + "&lng=" + loc.lng + "&type=" + loc.type + "&subtype=" + loc.subtype + "&username=" + username;
 
+    var headers = this.createHeaders('');
+
     return new Promise(resolve => {
-      this.http.post(Constants.serverAddress +'/pinUnpinReview?', params, {headers: this.headers}).subscribe(data => {
+      this.http.post(Constants.serverAddress +'/pinUnpinReview?', params, {headers: headers}).subscribe(data => {
         if(data.status == 200){
           console.log('Review pin/unpinned successfully!');
           resolve(true);
@@ -85,6 +83,13 @@ export class GetReviewsService {
       token = "no token";
     }
     return token;
+  }
+
+  private createHeaders(token) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    if(token !== '') headers.append('authToken', token);
+    return headers;
   }
 
 }
