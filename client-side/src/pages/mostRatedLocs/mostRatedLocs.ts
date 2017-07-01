@@ -33,7 +33,7 @@ export class MostRatedLocsPage {
 	//this.addresses = new String[this.num];
 	for (let i=0; i<this.numOfLocations; i++) {
 		  this.photos.push("");
-		  this.addresses.push("");
+		  this.addresses.push("no address found");
 		}
 	
   } 
@@ -52,8 +52,7 @@ export class MostRatedLocsPage {
 				  data => {	
 					this.addresses[i] = data.res;
 				  }, err => {
-					  this.handleError(err.json());
-					  return;
+					 
 				  });
 			   }
 			  this.events.publish('gotResults');
