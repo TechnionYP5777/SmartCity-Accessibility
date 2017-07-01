@@ -48,7 +48,7 @@ export class MostRatedLocsPage {
 			  
 			    for (let i=0; i<this.numOfLocations; i++) {
 				  this.photos[i] = 'https://maps.googleapis.com/maps/api/streetview?size=400x200&location='+this.locations[i].coordinates.lat+','+this.locations[i].coordinates.lng+'&fov=90';
-				  this.searchService.getAdress(this.locations[i].coordinates.lat, this.locations[i].coordinates.lat).subscribe(
+				  this.searchService.getAdress(this.locations[i].coordinates.lat, this.locations[i].coordinates.lng).subscribe(
 				  data => {	
 					this.addresses[i] = data.res;
 				  }, err => {
