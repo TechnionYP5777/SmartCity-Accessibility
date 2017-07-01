@@ -224,7 +224,7 @@ export class GetReviewsPage {
   checkAlreadyLiked(rev, like){
     let boolArray = [false, false];
     for(let comm of rev.comments){
-      if(comm.commentator.username == this.username){
+      if(comm.rating !== 0 && comm.commentator.username == this.username){
         boolArray[0] = true;
         if(comm.rating == like)
           boolArray[1] = true;

@@ -67,5 +67,9 @@ export class CommentPage {
     });
   }
 
+  backButton(){
+    this.viewCtrl.dismiss();
+  }
+
 
 }
