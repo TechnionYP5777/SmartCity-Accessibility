@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 import { AlertController, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AddSearchQueryService } from './AddSearchQueryService';
 import { Constants } from "../constants";
-
+import {SpecialConstants} from "../special-constants/special-constants";
 
 @Component({
   selector: 'page-addsearchquerymenu',
@@ -18,7 +18,12 @@ export class AddSearchQueryPage {
   name : string;
   adress: string;
   loading : any;
-  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public loadingCtrl: LoadingController, public navParams: NavParams, public addSearchQueryService: AddSearchQueryService){	  
+  constructor(public alertCtrl: AlertController,
+				public navCtrl: NavController,
+				public loadingCtrl: LoadingController,
+				public navParams: NavParams,
+				public addSearchQueryService: AddSearchQueryService,
+				public _constants : SpecialConstants){	  
 	
   }
 
@@ -27,7 +32,8 @@ export class AddSearchQueryPage {
   }
   
   addSearchQuery(){
-	  this.presentLoadingCustom();
+	  this.loading = this._constants.createCustomLoading();
+	  this.loading.present();
 	  this.addSearchQueryService.addQuery(this.name, this.adress).subscribe(data => {	
 		this.name = "";
 		this.adress = "";
@@ -39,7 +45,7 @@ export class AddSearchQueryPage {
 			this.presentAlert(Constants.serverNotResponding);
 		else 
 			this.presentAlert("problem adding query: "+err.json().message);
-		 this.loading.dismiss();
+		this.loading.dismiss().catch(() => {});
 	  });
   }
   

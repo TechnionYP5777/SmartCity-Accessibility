@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import { NavController, NavParams, ViewController, AlertController, ModalController, LoadingController} from 'ionic-angular';
 import { AddLocationService } from './AddLocationService';
 import { GetReviewsPage } from '../reviews/reviews'; 
+import {SpecialConstants} from "../special-constants/special-constants";
+import { SearchService } from '../mapview/searchService';
 /*
 	author: Ariel Kolikant
 */
@@ -22,7 +24,16 @@ export class AddLocationPage {
   retType: any;
   retSubType: any;
   loading : any;
-  constructor(public alertCtrl: AlertController, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public addLocationService: AddLocationService) {
+  adress: any;
+  constructor(public alertCtrl: AlertController,
+				public loadingCtrl: LoadingController,
+				public modalCtrl: ModalController,
+				public viewCtrl: ViewController,
+				public navCtrl: NavController,
+				public navParams: NavParams,
+				public addLocationService: AddLocationService,
+				public _constants : SpecialConstants,
+				public searchService : SearchService,) {
 	this.lat = navParams.get('lat');
 	this.lng = navParams.get('lng');
 	this.notDone = true;
@@ -31,6 +42,9 @@ export class AddLocationPage {
 	this.type = "";
 	this.name = "";
 	this.loading = "";
+	this.searchService.getAdress(this.lat, this.lng).subscribe(data => {
+      this.adress = data.res;
+    });
   }
   
   addToDataBase(){
@@ -44,7 +58,7 @@ export class AddLocationPage {
 				if(this.loading == ""){
 					;
 				}else{
-					this.loading.dismiss();	
+					this.loading.dismiss().catch(() => {});
 					this.openLocationTab();
 				}
 			}, err => {
@@ -68,7 +82,8 @@ export class AddLocationPage {
 
   openLocationTab(){
 	 if(this.retType == "" || this.retSubType == ""){
-		 this.presentLoadingCustom();
+		 this.loading = this._constants.createCustomLoading();
+		 this.loading.present();
 	 }else{
 		let clickMenu = this.modalCtrl.create(GetReviewsPage, {lat:this.lat,lng:this.lng,type:this.retType,subtype:this.retSubType,name:this.name});
 		clickMenu.present();
