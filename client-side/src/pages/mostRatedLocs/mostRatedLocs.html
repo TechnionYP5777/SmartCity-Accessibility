@@ -26,11 +26,13 @@
 
 <ion-content>
 	<ion-list>
-			<ion-card *ngFor="let loc of locations">
-				<ion-card-title >
-					{{loc.name}}
-				</ion-card-title>
-
+	<ion-card *ngFor="let loc of locations; let i=index ">
+		<ion-card-title >
+			{{loc.name}}, {{addresses[i]}}
+		</ion-card-title>
+		<br/>
+			<img src={{photos[i]}} class="center" alt="location image" height="200" width="400"/>
+		<br/>
         <ion-list>
           <ion-item>
             <ion-label class="main-label" >Latitude </ion-label>
