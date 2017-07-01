@@ -82,7 +82,6 @@ export class ImgUploadPage {
       const formData = new FormData();
       const imgBlob = new Blob([reader.result], {type: file.type});
       formData.append('file', imgBlob, file.name);
-	  this.presentAlert(formData.toString());
       this.postData(formData);
     };
     reader.readAsArrayBuffer(file);
