@@ -3,7 +3,6 @@
  */
 import { Injectable } from '@angular/core';
 import {LoadingController, AlertController} from 'ionic-angular';
-import { Constants } from "../constants";
 
 
 @Injectable()

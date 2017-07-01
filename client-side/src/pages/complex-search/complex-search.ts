@@ -3,7 +3,6 @@ import { NavController, NavParams , Events, AlertController, LoadingController} 
 import {ComplexSearchService} from './complexSearchService';
 import { SearchService } from '../mapview/searchService';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Constants } from "../constants";
 import {SpecialConstants} from "../special-constants/special-constants";
 
 declare var google;  
