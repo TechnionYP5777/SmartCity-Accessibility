@@ -56,11 +56,8 @@ export class ComplexSearchPage {
 			return;
 		}
 		  
-		if (this.useCurrLoc) {
-			this.coordsComplexSearch(type, radius, minRating);
-		} else {
-			this.addressComplexSearch(type, radius, initLoc, minRating);
-		}
+		this.addressComplexSearch(type, radius, initLoc, minRating);
+		
 	 
    }
    
