@@ -19,6 +19,8 @@ export class MostRatedLocsPage {
   initLoc: any = 'empty';
   coordinates: any = null;
   numOfLocations : any;
+  photos: String[] = [];
+  addresses: String[] = [];
   
    constructor(public viewCtrl: ViewController,public appCtrl: App, 
 			public navParams: NavParams,public modalCtrl: ModalController,
@@ -27,6 +29,13 @@ export class MostRatedLocsPage {
 	this.num = navParams.get('n');
 	this.radius = navParams.get('r');
 	this.initLoc = navParams.get('l');
+	//this.photos = new String[this.num];
+	//this.addresses = new String[this.num];
+	for (let i=0; i<this.numOfLocations; i++) {
+		  this.photos.push("");
+		  this.addresses.push("no address found");
+		}
+	
   } 
   
   ionViewDidLoad() {
@@ -36,6 +45,16 @@ export class MostRatedLocsPage {
 			this.adminService.mostRatedLocs(this.radius, this.num, this.coordinates.lat, this.coordinates.lng).subscribe(data => {
 			  this.locations = data;
 			  this.numOfLocations = data.length;
+			  
+			    for (let i=0; i<this.numOfLocations; i++) {
+				  this.photos[i] = 'https://maps.googleapis.com/maps/api/streetview?size=400x200&location='+this.locations[i].coordinates.lat+','+this.locations[i].coordinates.lng+'&fov=90';
+				  this.searchService.getAdress(this.locations[i].coordinates.lat, this.locations[i].coordinates.lat).subscribe(
+				  data => {	
+					this.addresses[i] = data.res;
+				  }, err => {
+					 
+				  });
+			   }
 			  this.events.publish('gotResults');
 			}, err => {
 			this.handleError(err.json());

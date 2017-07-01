@@ -46,24 +46,22 @@ export class ComplexSearchPage {
   }
 
   callComplexSearch(type, radius, initLoc, minRating) {
-	  if (radius <= 0 ) {
+		if (radius <= 0 ) {
 			this.presentAlert('radius must be a positive number');
 			return;
-	  }
-	  
-	  if (radius == null ) {
+		}
+		  
+		if (radius == null ) {
 			this.presentAlert('please enter a radius');
 			return;
-	  }
-	  
-	  if (this.useCurrLoc) {
+		}
+		  
+		if (this.useCurrLoc) {
 			this.coordsComplexSearch(type, radius, minRating);
-	  } else {
+		} else {
 			this.addressComplexSearch(type, radius, initLoc, minRating);
-	  }
+		}
 	 
-
-	
    }
    
    coordsComplexSearch(type, radius, minRating) {
@@ -86,28 +84,30 @@ export class ComplexSearchPage {
    }
    
    addressComplexSearch(type, radius, initLoc, minRating){
-	 if (!initLoc) {
-		this.presentAlert('You did not entered any initial location');
-		return;
-	  }
-	  this.loading = this._constants.createCustomLoading();
-      this.loading.present();
-	  
-		this.searchService.search(initLoc).subscribe(
-		data => {
-			this.startLocationCoordinates = data.coordinates;
-		}
-		, err => {
-			this.handleError(err.json());
+		if (!initLoc) {
+			this.presentAlert('You did not entered any initial location');
 			return;
 		}
-	);
+		
+		this.loading = this._constants.createCustomLoading();
+		this.loading.present();
+		  
+		this.searchService.search(initLoc).subscribe(
+			data => {
+				this.startLocationCoordinates = data.coordinates;
+			}
+			, err => {
+				this.handleError(err.json());
+				this.loading.dismiss().catch(() => {});
+				return;
+			}
+		);
 	 
-	    this.complexSearchService.complexSearchAddress(type, radius, initLoc, minRating).subscribe(data => {
-			
+	    this.complexSearchService.complexSearchAddress(type, radius, initLoc, minRating).subscribe(
+		data => {	
 			this.events.publish('complexSearch:pressed', data, this.startLocationCoordinates);
-        });
-		this.loading.dismiss().catch(() => {});
+			this.loading.dismiss().catch(() => {});
+		});
 		this.navCtrl.pop();
    }
    
