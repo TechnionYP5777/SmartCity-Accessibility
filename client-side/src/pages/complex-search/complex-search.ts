@@ -77,7 +77,9 @@ export class ComplexSearchPage {
 			});
 			this.navCtrl.pop();
 		}, (err) => {
-			console.log(err);
+			this.handleError(err.json());
+			this.loading.dismiss().catch(() => {});
+			return;
 		});
 		
 		
