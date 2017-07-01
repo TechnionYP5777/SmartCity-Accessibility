@@ -12,10 +12,7 @@ export class SpecialConstants {
   constructor(public loadingController : LoadingController, public alertCtrl: AlertController){}
 
   handleError(err) {
-    if(err.error == null)
-			this.presentAlert(Constants.serverNotResponding);
-	else 
-		this.presentAlert("<p> error is: " + err + "</p>");
+    this.presentAlert("<p> error is: " + err + "</p>");
   }
 
 	presentAlert(str) {

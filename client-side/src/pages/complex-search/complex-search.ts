@@ -121,10 +121,7 @@ export class ComplexSearchPage {
 	}
 	
 	handleError(err) {
-		if(err.message == null)
-			this.presentAlert(Constants.serverNotResponding);
-		else 
-			this.presentAlert("error: " + err.message);
+		this.presentAlert("error: " + err.message);
     }
 	
 }
