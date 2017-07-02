@@ -1,7 +1,12 @@
 <!--  Author: ArthurSap  -->
 
 <ion-header>
-  <ion-navbar color="dark">
+  <ion-navbar color="dark" hideBackButton>
+    <ion-buttons left>
+      <button ion-button (click)="backButton()">
+        <ion-icon class="customIcon" name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
 
     <ion-title>
       Comments
