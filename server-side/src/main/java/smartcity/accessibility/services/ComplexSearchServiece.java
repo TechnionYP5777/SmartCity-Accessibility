@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.maps.model.LatLng;
 
+import smartcity.accessibility.database.AbstractLocationManager;
 import smartcity.accessibility.exceptions.EmptySearchQuery;
 import smartcity.accessibility.exceptions.illigalString;
 import smartcity.accessibility.mapmanagement.Location;
@@ -35,9 +36,13 @@ public class ComplexSearchServiece {
 		
 		SearchQuery $ = null;
 		SearchQueryResult esr;
-
+		Location initLocation = null;
 		
 		try {
+			SearchQuery query = SearchQuery.adressSearch(startLoc);
+	        SearchQueryResult result = query.SearchByAddress();
+	        query.waitOnSearch();
+	        initLocation = result.getLocations().get(0);
 			$ = SearchQuery.TypeSearch(Location.LocationSubTypes.valueOf(type.toUpperCase()).getSearchType());
 			esr = $.searchByType(startLoc, radius);
 		} catch (illigalString | InterruptedException e) {
@@ -50,7 +55,11 @@ public class ComplexSearchServiece {
 		} catch (EmptySearchQuery e) {
 			throw new SearchFailed("empty search query "+e);
 		}
-
+		
+		
+		List<Location> dbLocs = AbstractLocationManager.instance().getLocationsAround(initLocation.getCoordinates(),
+				radius, null);
+		esr.getLocations().addAll(dbLocs);
 		return esr.getLocations();
 		
 		
