@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
  * @author yael
  *
  */
-@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Signup failed. (1) user already exist; or (2) our DB has some problem try again later.")
+@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Signup failed.user already exist")
 public class SignUpFailed extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 }
