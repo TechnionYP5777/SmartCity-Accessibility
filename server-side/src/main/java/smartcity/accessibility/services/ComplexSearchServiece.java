@@ -40,7 +40,7 @@ public class ComplexSearchServiece {
 		
 		try {
 			SearchQuery query = SearchQuery.adressSearch(startLoc);
-	        SearchQueryResult result = $.SearchByAddress();
+	        SearchQueryResult result = query.SearchByAddress();
 	        query.waitOnSearch();
 	        initLocation = result.getLocations().get(0);
 			$ = SearchQuery.TypeSearch(Location.LocationSubTypes.valueOf(type.toUpperCase()).getSearchType());
