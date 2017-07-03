@@ -42,7 +42,7 @@ public class NavigationService {
 			return Navigation.getRoute(source, destination, accessibilityThreshold);
 		} catch (CommunicationFailed e) {
 			logger.info("navigation failed", e);
-			throw new NavigationFailed();
+			throw new NavigationFailed(e.getMessage());
 		}
 
 	}
